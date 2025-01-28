@@ -1,3 +1,4 @@
+import 'package:dishdrop_app_projekt/core/theme/app_theme.dart';
 import 'package:dishdrop_app_projekt/ui/screens/categories.dart';
 import 'package:flutter/material.dart';
 
@@ -10,8 +11,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Categories(),
+    return MaterialApp(
+      theme: AppTheme.lightTheme,
+      home: const Categories(),
     );
   }
 }
