@@ -12,7 +12,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Recommend me something",
+        title: Text("Recommendation",
             style: Theme.of(context).textTheme.headlineLarge),
       ),
     );

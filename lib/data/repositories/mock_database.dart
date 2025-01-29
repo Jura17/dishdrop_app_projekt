@@ -1,9 +1,52 @@
+import 'package:dishdrop_app_projekt/gen/assets.gen.dart';
+
 import '../models/recipe.dart';
 import '../models/shopping_list.dart';
 import 'database_repository.dart';
 
 class MockDatabase implements DatabaseRepository {
-  final List<Recipe> _recipeData = [];
+  final List<Recipe> _recipeData = [
+    Recipe(
+      title: "Sesame Chicken",
+      category: "Main Courses",
+      difficulty: "Not too tricky",
+      images: {
+        "titleImg": Assets.images.mainCoursesCategoryImg,
+        "cookingDirectionImg": [],
+      },
+      prepTime: 20,
+      cookTime: 20,
+      directions: [],
+      ingredients: [],
+    ),
+    Recipe(
+      title: "Shiitake Mushroom Stir Fry",
+      category: "Main Courses",
+      difficulty: "Not too tricky",
+      images: {
+        "titleImg": Assets.images.shiitake,
+        "cookingDirectionImg": [],
+      },
+      prepTime: 15,
+      cookTime: 20,
+      directions: [],
+      ingredients: [],
+    ),
+    Recipe(
+      title: "3-Ingredient-Pizza",
+      category: "Appetizers",
+      difficulty: "Easy",
+      images: {
+        "titleImg": Assets.images.pizza,
+        "cookingDirectionImg": [],
+      },
+      prepTime: 15,
+      cookTime: 22,
+      directions: [],
+      ingredients: [],
+    ),
+  ];
+
   final List<ShoppingList> _shoppingListData = [
     ShoppingList("All-purpose list", [])
   ];

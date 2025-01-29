@@ -4,22 +4,23 @@ class Recipe {
   String title;
   String category;
   String difficulty;
-  Map<String, dynamic> images = {
-    "titleImg": "",
-    "directionImg": [],
-  };
+  Map<String, dynamic> images;
   int prepTime;
   int cookTime;
   int timesCooked = 0;
-  List<String> directions = [];
-  List<ListItem> ingredients = [];
+  List<String> directions;
+  List<ListItem> ingredients;
 
-  Recipe(
-      {required this.title,
-      required this.category,
-      required this.difficulty,
-      required this.prepTime,
-      required this.cookTime});
+  Recipe({
+    required this.title,
+    required this.category,
+    required this.difficulty,
+    required this.images,
+    required this.prepTime,
+    required this.cookTime,
+    required this.directions,
+    required this.ingredients,
+  });
 
   String getTitle() {
     return title;
