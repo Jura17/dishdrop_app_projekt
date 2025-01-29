@@ -1,5 +1,6 @@
 import 'package:dishdrop_app_projekt/core/theme/app_theme.dart';
-import 'package:dishdrop_app_projekt/ui/screens/categories_grid_view.dart';
+import 'package:dishdrop_app_projekt/dish_drop_app.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: DishDropTheme.lightTheme,
-      home: const Categories(),
+      home: DishDropApp(),
     );
   }
 }

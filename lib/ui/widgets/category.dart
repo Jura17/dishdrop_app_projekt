@@ -3,8 +3,11 @@ import 'package:dishdrop_app_projekt/ui/screens/recipes_grid_view.dart';
 import 'package:flutter/material.dart';
 
 class Category extends StatelessWidget {
-  const Category(
-      {super.key, required this.categoryImg, required this.categoryTitle});
+  const Category({
+    super.key,
+    required this.categoryImg,
+    required this.categoryTitle,
+  });
 
   final String categoryTitle;
   final String categoryImg;
