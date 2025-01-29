@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppTextTheme {
+class DishDropTextTheme {
   static TextTheme get lightTextTheme => TextTheme(
         headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),
         headlineMedium: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
