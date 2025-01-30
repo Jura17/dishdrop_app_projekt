@@ -59,7 +59,7 @@ class CategoriesScreen extends StatelessWidget {
               ),
               CategoryCard(
                 categoryImg: Assets.images.salatCategoryImg.path,
-                categoryTitle: "Salats",
+                categoryTitle: "Salads",
                 db: db,
               ),
               CategoryCard(

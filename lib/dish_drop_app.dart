@@ -27,6 +27,7 @@ class _DishDropAppState extends State<DishDropApp> {
         ShoppingListScreen(),
       ][activeIndex],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: AppColors.backdrop,
         selectedItemColor: AppColors.primary,
         showSelectedLabels: false,
         showUnselectedLabels: false,

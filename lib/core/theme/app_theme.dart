@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class DishDropTheme {
   static ThemeData get lightTheme => ThemeData(
         primaryColor: AppColors.primary,
+        appBarTheme: AppBarTheme(backgroundColor: AppColors.backdrop),
         scaffoldBackgroundColor: AppColors.backdrop,
         textTheme: DishDropTextTheme.lightTextTheme,
       );

@@ -9,6 +9,16 @@ class RecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // var imgURL = recipe.images["titleImg"];
+    // var img;
+
+    // if (imgURL.contains("http")) {
+    //   img = Image.network(recipe.images["titleImg"]);
+    //   print("http found");
+    // } else {
+    //   img = Image(image: AssetImage(recipe.images["titleImg"]));
+    //   print("Asset image!");
+    // }
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -21,53 +31,67 @@ class RecipeCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              child: Image(
+              child: Image.network(
+                errorBuilder: (context, error, stackTrace) => Text("404"),
+                recipe.images["titleImg"],
                 fit: BoxFit.cover,
-                image: AssetImage(recipe.images["titleImg"]),
               ),
+              // Image(
+              //   fit: BoxFit.cover,
+              //   image: AssetImage(recipe.images["titleImg"]),
+              // ),
             ),
             Container(
               decoration: BoxDecoration(
                 // borderRadius: BorderRadius.all(Radius.circular(20)),
                 color: AppColors.lightGrey,
               ),
-              height: 100,
+              height: 130,
               width: double.infinity,
               child: Column(
                 children: [
                   Text(
                     recipe.title,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context).textTheme.titleMedium,
+                    textAlign: TextAlign.center,
                   ),
-                  Row(
-                    spacing: 4,
-                    children: [
-                      Icon(
-                        Icons.timer_outlined,
-                        size: 20,
-                      ),
-                      Text("${recipe.prepTime + recipe.cookTime} min")
-                    ],
-                  ),
-                  Row(
-                    spacing: 4,
-                    children: [
-                      Icon(
-                        Icons.workspace_premium_sharp,
-                        size: 20,
-                      ),
-                      Text(recipe.difficulty)
-                    ],
-                  ),
-                  Row(
-                    spacing: 4,
-                    children: [
-                      Icon(
-                        Icons.check_circle_outline_outlined,
-                        size: 20,
-                      ),
-                      Text("Cooked ${recipe.timesCooked} times")
-                    ],
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          spacing: 4,
+                          children: [
+                            Icon(
+                              Icons.timer_outlined,
+                              size: 20,
+                            ),
+                            Text("${recipe.prepTime + recipe.cookTime} min")
+                          ],
+                        ),
+                        Row(
+                          spacing: 4,
+                          children: [
+                            Icon(
+                              Icons.workspace_premium_sharp,
+                              size: 20,
+                            ),
+                            Text(recipe.difficulty)
+                          ],
+                        ),
+                        Row(
+                          spacing: 4,
+                          children: [
+                            Icon(
+                              Icons.check_circle_outline_outlined,
+                              size: 20,
+                            ),
+                            Text("Cooked ${recipe.timesCooked} times")
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
