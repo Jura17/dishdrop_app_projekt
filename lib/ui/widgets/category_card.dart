@@ -1,22 +1,27 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipes_grid_view.dart';
 import 'package:flutter/material.dart';
 
-class Category extends StatelessWidget {
-  const Category({
-    super.key,
-    required this.categoryImg,
-    required this.categoryTitle,
-  });
+class CategoryCard extends StatelessWidget {
+  const CategoryCard(
+      {super.key,
+      required this.categoryImg,
+      required this.categoryTitle,
+      required this.db});
 
   final String categoryTitle;
   final String categoryImg;
+  final MockDatabase db;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => RecipesGridView(category: categoryTitle))),
+          builder: (context) => RecipesGridView(
+                category: categoryTitle,
+                db: db,
+              ))),
       child: Container(
         width: 100,
         height: 100,

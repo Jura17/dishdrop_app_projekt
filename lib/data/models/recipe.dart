@@ -1,5 +1,3 @@
-import 'list_item.dart';
-
 class Recipe {
   String title;
   String category;
@@ -9,7 +7,7 @@ class Recipe {
   int cookTime;
   int timesCooked = 0;
   List<String> directions;
-  List<ListItem> ingredients;
+  List<String> ingredients;
 
   Recipe({
     required this.title,
@@ -78,11 +76,13 @@ class Recipe {
     directions.removeAt(index);
   }
 
-  void addIngredient(ListItem newIngredient) {
+  // TODO: aus dem String sollte ein ListItem gemacht werden, bevor es ingredients hinzugefügt wird
+  void addIngredient(String newIngredient) {
     ingredients.add(newIngredient);
   }
 
-  void setIngredient(int index, ListItem newIngredient) {
+// TODO: aus dem String sollte ein ListItem gemacht werden, bevor es ingredients hinzugefügt wird
+  void setIngredient(int index, String newIngredient) {
     ingredients[index] = newIngredient;
   }
 

@@ -1,11 +1,15 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
+
 import 'package:dishdrop_app_projekt/ui/screens/categories_screen.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recommendation_screen.dart';
 import 'package:dishdrop_app_projekt/ui/screens/shopping_list_screen.dart';
 import 'package:flutter/material.dart';
 
 class DishDropApp extends StatefulWidget {
-  const DishDropApp({super.key});
+  const DishDropApp({super.key, required this.db});
+
+  final MockDatabase db;
 
   @override
   State<DishDropApp> createState() => _DishDropAppState();
@@ -18,7 +22,7 @@ class _DishDropAppState extends State<DishDropApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: [
-        CategoriesScreen(),
+        CategoriesScreen(db: widget.db),
         RecommendationScreen(),
         ShoppingListScreen(),
       ][activeIndex],
