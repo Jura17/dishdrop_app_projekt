@@ -12,6 +12,8 @@ class RecipeDetailsScreen extends StatefulWidget {
 }
 
 class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
+  double spacing = 20;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,12 +54,12 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                 )
               ],
             ),
-            SizedBox(height: 20),
+            SizedBox(height: spacing),
             RecipeInfoColumn(widget: widget),
-            SizedBox(height: 20),
+            SizedBox(height: spacing),
             if (widget.recipe.tags.isNotEmpty)
-              TagsContainer(recipe: widget.recipe),
-            SizedBox(height: 20),
+              TagsSection(recipe: widget.recipe),
+            SizedBox(height: spacing),
             Align(
               alignment: Alignment.centerRight,
               child: FilledButton(
@@ -67,14 +69,12 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                 child: Text("Jump to recipe"),
               ),
             ),
-            SizedBox(height: 20),
-            Text("Description",
-                style: Theme.of(context).textTheme.headlineMedium),
-            Text(
-              widget.recipe.description,
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            SizedBox(height: 20),
+            SizedBox(height: spacing),
+            if (widget.recipe.description.isNotEmpty)
+              DescriptionSection(recipe: widget.recipe),
+            SizedBox(height: spacing),
+            if (widget.recipe.directions.isNotEmpty)
+              DirectionsSection(recipe: widget.recipe),
           ],
         ),
       ),
@@ -151,8 +151,8 @@ class RecipeInfoColumn extends StatelessWidget {
   }
 }
 
-class TagsContainer extends StatelessWidget {
-  const TagsContainer({super.key, required this.recipe});
+class TagsSection extends StatelessWidget {
+  const TagsSection({super.key, required this.recipe});
 
   final Recipe recipe;
 
@@ -182,6 +182,68 @@ class TagsContainer extends StatelessWidget {
           ),
         ),
         SizedBox(height: 20),
+      ],
+    );
+  }
+}
+
+class DescriptionSection extends StatelessWidget {
+  const DescriptionSection({super.key, required this.recipe});
+
+  final Recipe recipe;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Description", style: Theme.of(context).textTheme.headlineMedium),
+        Text(
+          recipe.description,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+      ],
+    );
+  }
+}
+
+class DirectionsSection extends StatelessWidget {
+  const DirectionsSection({super.key, required this.recipe});
+
+  final Recipe recipe;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Directions", style: Theme.of(context).textTheme.headlineMedium),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: List.generate(
+            recipe.directions.length,
+            (index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${index + 1}. ",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    Expanded(
+                      child: Text(
+                        recipe.directions[index],
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
       ],
     );
   }
