@@ -57,7 +57,17 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             SizedBox(height: 20),
             if (widget.recipe.tags.isNotEmpty)
               TagsContainer(recipe: widget.recipe),
-            SizedBox(height: 40),
+            SizedBox(height: 20),
+            Align(
+              alignment: Alignment.centerRight,
+              child: FilledButton(
+                style: FilledButton.styleFrom(
+                    backgroundColor: Theme.of(context).primaryColor),
+                onPressed: () {},
+                child: Text("Jump to recipe"),
+              ),
+            ),
+            SizedBox(height: 20),
             Text("Description",
                 style: Theme.of(context).textTheme.headlineMedium),
             Text(
@@ -154,20 +164,25 @@ class TagsContainer extends StatelessWidget {
       if (i < recipe.tags.length) tagString = "$tagString, ";
     }
 
-    return RichText(
-      text: TextSpan(
-        text: "Tags: ",
-        style: Theme.of(context)
-            .textTheme
-            .bodyLarge
-            ?.copyWith(fontWeight: FontWeight.bold),
-        children: [
-          TextSpan(
-            text: tagString,
-            style: Theme.of(context).textTheme.bodyLarge,
-          )
-        ],
-      ),
+    return Column(
+      children: [
+        RichText(
+          text: TextSpan(
+            text: "Tags: ",
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(fontWeight: FontWeight.bold),
+            children: [
+              TextSpan(
+                text: tagString,
+                style: Theme.of(context).textTheme.bodyLarge,
+              )
+            ],
+          ),
+        ),
+        SizedBox(height: 20),
+      ],
     );
   }
 }
