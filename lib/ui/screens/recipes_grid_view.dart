@@ -21,14 +21,15 @@ class RecipesGridView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: GridView.count(
-          crossAxisCount: 2,
-          childAspectRatio: 0.6,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          children: [
-            for (final recipe in filteredRecipes) RecipeCard(recipe: recipe)
-          ],
-        ),
+            crossAxisCount: 2,
+            childAspectRatio: 0.6,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+            children:
+                // [for (final recipe in filteredRecipes) RecipeCard(recipe: recipe)]
+                [...filteredRecipes.map((recipe) => RecipeCard(recipe: recipe))]
+            // filteredRecipes.map((recipe) => RecipeCard(recipe: recipe)).toList(),
+            ),
       ),
     );
   }

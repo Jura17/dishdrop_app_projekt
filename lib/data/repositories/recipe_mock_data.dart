@@ -371,7 +371,7 @@ final List<Recipe> recipeData = [
     difficulty: "Easy",
     images: {
       "titleImg":
-          "https://www.foodiecrush.com/wp-content/uploads/2015/03/Caramelized-Carrots-foodiecrush.com-01.jpg",
+          "https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fit,w_730,h_913/k%2FPhoto%2FRecipes%2F2023-11-honey-glazed-carrots%2F33086-Honey-Glazed-Carrots",
       "cookingDirectionImg": [],
     },
     prepTime: 10,
@@ -398,7 +398,7 @@ final List<Recipe> recipeData = [
     difficulty: "Medium",
     images: {
       "titleImg":
-          "https://www.recipetineats.com/wp-content/uploads/2019/04/Vegetable-Fried-Rice_1.jpg",
+          "https://veryveganish.com/wp-content/uploads/2024/07/Vegetable-Fried-Rice-no-egg-oil-free-21.jpg",
       "cookingDirectionImg": [],
     },
     prepTime: 10,
@@ -428,7 +428,7 @@ final List<Recipe> recipeData = [
     difficulty: "Tricky",
     images: {
       "titleImg":
-          "https://www.cookingclassy.com/wp-content/uploads/2017/12/mushroom-risotto-9.jpg",
+          "https://cdn77-s3.lazycatkitchen.com/wp-content/uploads/2019/11/vegan-mushroom-risotto-close-800x1200.jpg",
       "cookingDirectionImg": [],
     },
     prepTime: 10,
@@ -459,7 +459,7 @@ final List<Recipe> recipeData = [
     difficulty: "Medium",
     images: {
       "titleImg":
-          "https://www.culinaryhill.com/wp-content/uploads/2020/03/Lemon-Bars-Culinary-Hill-2.jpg",
+          "https://preppykitchen.com/wp-content/uploads/2020/02/Lemon-Bars-feature-new.jpg",
       "cookingDirectionImg": [],
     },
     prepTime: 15,
@@ -490,7 +490,7 @@ final List<Recipe> recipeData = [
     difficulty: "Easy",
     images: {
       "titleImg":
-          "https://www.cupofjo.com/wp-content/uploads/2020/06/iced-matcha-latte.jpg",
+          "https://coffeecopycat.com/wp-content/uploads/2023/04/IcedMatchaLatte1-1200x1600-1.jpg",
       "cookingDirectionImg": [],
     },
     prepTime: 5,
