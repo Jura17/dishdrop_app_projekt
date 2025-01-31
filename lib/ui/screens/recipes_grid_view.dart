@@ -1,5 +1,6 @@
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_card.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class RecipesGridView extends StatelessWidget {
         allRecipes.where((recipe) => recipe.category == category).toList();
 
     return Scaffold(
+      floatingActionButton: NewRecipeButton(),
       appBar: AppBar(
         title: Text(category, style: Theme.of(context).textTheme.headlineLarge),
       ),

@@ -1,6 +1,7 @@
 class Recipe {
   String title;
   String category;
+  String description;
   String difficulty;
   Map<String, dynamic> images;
   int prepTime;
@@ -12,6 +13,7 @@ class Recipe {
   Recipe({
     required this.title,
     required this.category,
+    required this.description,
     required this.difficulty,
     required this.images,
     required this.prepTime,

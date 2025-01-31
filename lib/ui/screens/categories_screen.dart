@@ -1,6 +1,8 @@
 import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
 import 'package:dishdrop_app_projekt/gen/assets.gen.dart';
+import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/category_card.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_button.dart';
 
 import 'package:flutter/material.dart';
 
@@ -12,22 +14,7 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: TextButton.icon(
-          onPressed: () {},
-          label: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-            Icon(
-              Icons.add,
-              color: Theme.of(context).primaryColor,
-              size: 28,
-            ),
-            Text(
-              "New Recipe",
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge
-                  ?.copyWith(color: Theme.of(context).primaryColor),
-            )
-          ])),
+      floatingActionButton: NewRecipeButton(),
       appBar: AppBar(
         centerTitle: true,
         title: Text("Categories",
