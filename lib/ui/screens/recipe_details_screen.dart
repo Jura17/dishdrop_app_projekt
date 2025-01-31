@@ -53,11 +53,120 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               ],
             ),
             SizedBox(height: 20),
-            Text(widget.recipe.description),
+            RecipeInfoColumn(widget: widget),
             SizedBox(height: 20),
-            Text("Cooked ${widget.recipe.timesCooked.toString()} times"),
+            if (widget.recipe.tags.isNotEmpty)
+              TagsContainer(recipe: widget.recipe),
+            SizedBox(height: 40),
+            Text("Description",
+                style: Theme.of(context).textTheme.headlineMedium),
+            Text(
+              widget.recipe.description,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            SizedBox(height: 20),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class RecipeInfoColumn extends StatelessWidget {
+  const RecipeInfoColumn({
+    super.key,
+    required this.widget,
+  });
+
+  final RecipeDetailsScreen widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: 4,
+      children: [
+        Row(
+          spacing: 4,
+          children: [
+            Icon(
+              Icons.timer_outlined,
+              size: 30,
+            ),
+            Text(
+              "${widget.recipe.prepTime + widget.recipe.cookTime} min (Prep: ${widget.recipe.prepTime} min, Cook: ${widget.recipe.cookTime} min)",
+              style: Theme.of(context).textTheme.bodyLarge,
+            )
+          ],
+        ),
+        Row(
+          spacing: 4,
+          children: [
+            Icon(
+              Icons.workspace_premium_sharp,
+              size: 30,
+            ),
+            Text(
+              widget.recipe.difficulty,
+              style: Theme.of(context).textTheme.bodyLarge,
+            )
+          ],
+        ),
+        Row(
+          spacing: 4,
+          children: [
+            Icon(
+              Icons.check_circle_outline_outlined,
+              size: 30,
+            ),
+            RichText(
+              text: TextSpan(
+                text: "Cooked ",
+                style: Theme.of(context).textTheme.bodyLarge,
+                children: [
+                  TextSpan(
+                    text: "${widget.recipe.timesCooked}",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(text: " times")
+                ],
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class TagsContainer extends StatelessWidget {
+  const TagsContainer({super.key, required this.recipe});
+
+  final Recipe recipe;
+
+  @override
+  Widget build(BuildContext context) {
+    String tagString = "";
+    for (int i = 0; i < recipe.tags.length; i++) {
+      tagString = tagString + recipe.tags[i];
+      if (i < recipe.tags.length) tagString = "$tagString, ";
+    }
+
+    return RichText(
+      text: TextSpan(
+        text: "Tags: ",
+        style: Theme.of(context)
+            .textTheme
+            .bodyLarge
+            ?.copyWith(fontWeight: FontWeight.bold),
+        children: [
+          TextSpan(
+            text: tagString,
+            style: Theme.of(context).textTheme.bodyLarge,
+          )
+        ],
       ),
     );
   }

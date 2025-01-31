@@ -10,6 +10,7 @@ class Recipe {
   List<String> directions;
   List<String> ingredients;
   bool isFavorite = false;
+  List<String> tags;
 
   Recipe({
     required this.title,
@@ -21,6 +22,7 @@ class Recipe {
     required this.cookTime,
     required this.directions,
     required this.ingredients,
+    required this.tags,
   });
 
   String getTitle() {
