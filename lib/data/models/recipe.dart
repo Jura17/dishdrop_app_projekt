@@ -9,6 +9,7 @@ class Recipe {
   int timesCooked = 0;
   List<String> directions;
   List<String> ingredients;
+  bool isFavorite = false;
 
   Recipe({
     required this.title,

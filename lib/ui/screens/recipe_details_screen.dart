@@ -1,5 +1,6 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
 import 'package:flutter/material.dart';
 
 class RecipeDetailsScreen extends StatefulWidget {
@@ -41,26 +42,13 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                     ),
                   ),
                 ),
-                Positioned(
+                LikeButton(
                   top: 20,
                   right: 20,
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withAlpha((0.8 * 255).toInt()),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: AppColors.lightGrey),
-                      ),
-                      child: Icon(
-                        Icons.favorite_border_outlined,
-                        color: Theme.of(context).primaryColor,
-                        size: 40,
-                      ),
-                    ),
-                  ),
+                  width: 60,
+                  height: 60,
+                  iconSize: 40,
+                  recipe: widget.recipe,
                 )
               ],
             ),
