@@ -19,7 +19,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: DishDropTheme.lightTheme,
+      theme: AppTheme.lightTheme,
       home: DishDropApp(db: db),
     );
   }

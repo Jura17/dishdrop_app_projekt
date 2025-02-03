@@ -9,14 +9,14 @@ class LikeButton extends StatefulWidget {
       required this.right,
       required this.width,
       required this.height,
-      required this.iconSize,
+      // required this.iconSize,
       required this.recipe});
 
   final double top;
   final double right;
   final double width;
   final double height;
-  final double iconSize;
+  // final double iconSize;
   final Recipe recipe;
 
   @override
@@ -48,7 +48,7 @@ class _LikeButtonState extends State<LikeButton> {
                 ? Icons.favorite
                 : Icons.favorite_border_outlined,
             color: Theme.of(context).primaryColor,
-            size: widget.iconSize,
+            size: widget.width * 0.625,
           ),
         ),
       ),

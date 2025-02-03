@@ -1,3 +1,5 @@
+import 'package:dishdrop_app_projekt/data/models/list_item.dart';
+
 class Recipe {
   String title;
   String category;
@@ -8,7 +10,7 @@ class Recipe {
   int cookTime;
   int timesCooked = 0;
   List<String> directions;
-  List<String> ingredients;
+  List<ListItem> ingredients;
   bool isFavorite = false;
   List<String> tags;
 
@@ -81,13 +83,11 @@ class Recipe {
     directions.removeAt(index);
   }
 
-  // TODO: aus dem String sollte ein ListItem gemacht werden, bevor es ingredients hinzugefügt wird
-  void addIngredient(String newIngredient) {
+  void addIngredient(ListItem newIngredient) {
     ingredients.add(newIngredient);
   }
 
-// TODO: aus dem String sollte ein ListItem gemacht werden, bevor es ingredients hinzugefügt wird
-  void setIngredient(int index, String newIngredient) {
+  void setIngredient(int index, ListItem newIngredient) {
     ingredients[index] = newIngredient;
   }
 

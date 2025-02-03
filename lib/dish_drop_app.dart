@@ -1,4 +1,3 @@
-import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
 
 import 'package:dishdrop_app_projekt/ui/screens/categories_screen.dart';
@@ -27,10 +26,6 @@ class _DishDropAppState extends State<DishDropApp> {
         ShoppingListScreen(),
       ][activeIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: AppColors.backdrop,
-        selectedItemColor: AppColors.primary,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
         currentIndex: activeIndex,
         onTap: (index) => setState(() {
           activeIndex = index;

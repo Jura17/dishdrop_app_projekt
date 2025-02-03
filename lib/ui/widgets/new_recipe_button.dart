@@ -17,7 +17,7 @@ class NewRecipeButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Icon(
-            Icons.add,
+            Icons.add_box_outlined,
             color: Theme.of(context).primaryColor,
             size: 28,
           ),
