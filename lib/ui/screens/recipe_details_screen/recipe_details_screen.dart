@@ -7,6 +7,7 @@ import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/quick_info
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/tags_section.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_button.dart';
 
 import 'package:flutter/material.dart';
 
@@ -109,9 +110,24 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                     widget.recipe.timesCooked++;
                   });
                 },
-                child: Text("Okay, done!"))
+                child: Text("Okay, done!")),
+            SizedBox(height: 100),
           ],
         ),
+      ),
+      floatingActionButton: Row(
+        spacing: 10,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FilledIconButton(
+            text: "Edit Recipe",
+            iconData: Icons.edit,
+          ),
+          FilledIconButton(
+            text: "Add Recipe",
+            iconData: Icons.add_box_outlined,
+          ),
+        ],
       ),
     );
   }

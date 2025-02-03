@@ -14,7 +14,10 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: NewRecipeButton(),
+      floatingActionButton: FilledIconButton(
+        text: "Add Recipe",
+        iconData: Icons.add_box_outlined,
+      ),
       appBar: AppBar(
         centerTitle: true,
         title: Text("Categories",

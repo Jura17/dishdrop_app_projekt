@@ -1,4 +1,3 @@
-import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_button.dart';
@@ -17,11 +16,6 @@ class RecipesGridView extends StatelessWidget {
         allRecipes.where((recipe) => recipe.category == category).toList();
 
     return Scaffold(
-      floatingActionButton: Container(
-          color: AppColors.backdrop,
-          width: double.infinity,
-          height: 60,
-          child: NewRecipeButton()),
       appBar: AppBar(
         title: Text(category, style: Theme.of(context).textTheme.headlineLarge),
       ),
@@ -40,6 +34,20 @@ class RecipesGridView extends StatelessWidget {
               // alternative 2: filteredRecipes.map((recipe) => RecipeCard(recipe: recipe)).toList(),
               ),
         ),
+      ),
+      floatingActionButton: Row(
+        spacing: 10,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FilledIconButton(
+            text: "Edit Recipe",
+            iconData: Icons.edit,
+          ),
+          FilledIconButton(
+            text: "Add Recipe",
+            iconData: Icons.add_box_outlined,
+          ),
+        ],
       ),
     );
   }
