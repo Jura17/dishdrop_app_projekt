@@ -10,7 +10,8 @@ class Recipe {
   int cookTime;
   int timesCooked = 0;
   List<String> directions;
-  List<ListItem> ingredients;
+  List<ListItem>
+      ingredients; // TODO: probably needs to be a map so I can have ingredient group titles
   bool isFavorite = false;
   List<String> tags;
 
