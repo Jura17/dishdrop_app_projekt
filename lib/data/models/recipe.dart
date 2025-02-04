@@ -11,8 +11,8 @@ class Recipe {
   int cookTime;
   int timesCooked = 0;
   List<String> directions;
-  List<ListItem>
-      ingredients; // TODO: probably needs to be a map so I can have ingredient group titles
+  // TODO: ingredients probably needs to be a map so I can have ingredient group titles
+  List<ListItem> ingredients;
   bool isFavorite = false;
 
   Recipe({

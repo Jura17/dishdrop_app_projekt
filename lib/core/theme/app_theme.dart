@@ -8,7 +8,6 @@ class AppTheme {
         appBarTheme: AppBarTheme(backgroundColor: AppColors.backdrop),
         scaffoldBackgroundColor: AppColors.backdrop,
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          // backgroundColor: const Color.fromARGB(218, 73, 182, 37)),
           backgroundColor: AppColors.backdrop,
           selectedItemColor: AppColors.primary,
           showSelectedLabels: false,
@@ -36,6 +35,11 @@ class AppTheme {
             backgroundColor: WidgetStateColor.resolveWith(
               (states) => AppColors.lightGreen,
             ),
+          ),
+        ),
+        segmentedButtonTheme: SegmentedButtonThemeData(
+          style: SegmentedButton.styleFrom(
+            side: BorderSide(color: AppColors.primary),
           ),
         ),
       );

@@ -15,7 +15,9 @@ class NewRecipeScreen extends StatefulWidget {
 class _NewRecipeScreenState extends State<NewRecipeScreen> {
   final Map<String, TextEditingController> _allTextFormCtrl = {
     "titleCtrl": TextEditingController(),
+    "categoryCtrl": TextEditingController(),
     "imgUrlCtrl": TextEditingController(),
+    "difficultyCtrl": TextEditingController(),
     "tagsCtrl": TextEditingController(),
     "descCtrl": TextEditingController(),
     "prepTimeCtrl": TextEditingController(),
@@ -62,34 +64,14 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
             child: Column(
               spacing: 10,
               children: [
-                TextFormField(
-                  controller: _allTextFormCtrl["titleCtrl"],
-                  onChanged: (value) => _userInputValues["title"] = value,
-                  decoration: const InputDecoration(
-                    hintText: "Title",
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                DropdownMenu(
-                  onSelected: (value) => _userInputValues["category"] = value,
-                  inputDecorationTheme: InputDecorationTheme(
-                    border: OutlineInputBorder(),
-                  ),
-                  width: double.infinity,
-                  dropdownMenuEntries: [
-                    DropdownMenuEntry(value: "Appetizers", label: "Appetizers"),
-                    DropdownMenuEntry(
-                        value: "Main Courses", label: "Main Courses"),
-                    DropdownMenuEntry(
-                        value: "Side Dishes", label: "Side Dishes"),
-                    DropdownMenuEntry(value: "Salads", label: "Salads"),
-                    DropdownMenuEntry(
-                        value: "Sweet Stuff", label: "Sweet Stuff"),
-                    DropdownMenuEntry(value: "Drinks", label: "Drinks")
-                  ],
-                  hintText: "Select category",
-                ),
+                TitleField(
+                    allTextFormCtrl: _allTextFormCtrl,
+                    userInputValues: _userInputValues),
+                CategoryDropDownMenu(
+                    allTextFormCtrl: _allTextFormCtrl,
+                    userInputValues: _userInputValues),
                 GestureDetector(
+                  // TODO: implement image picker here
                   onTap: () {},
                   child: Column(
                     children: [
@@ -124,6 +106,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                   ),
                 ),
                 DropdownMenu(
+                  controller: _allTextFormCtrl["difficultyCtrl"],
                   onSelected: (value) => _userInputValues["difficulty"] = value,
                   inputDecorationTheme: InputDecorationTheme(
                     border: OutlineInputBorder(),
@@ -369,14 +352,17 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                         ))
                   ],
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 5),
                 Row(
                   children: [
                     TextButton(
-                        onPressed: () => resetAllCtrl(),
-                        child: Text("Reset all fields")),
+                      style: TextButton.styleFrom(foregroundColor: Colors.red),
+                      onPressed: () => resetAllCtrl(),
+                      child: Text("Reset all fields"),
+                    ),
                   ],
                 ),
+                SizedBox(height: 30),
                 Row(
                   spacing: 10,
                   children: [
@@ -426,5 +412,62 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     for (var key in _allTextFormCtrl.keys) {
       _allTextFormCtrl[key]!.clear();
     }
+  }
+}
+
+class CategoryDropDownMenu extends StatelessWidget {
+  const CategoryDropDownMenu({
+    super.key,
+    required Map<String, TextEditingController> allTextFormCtrl,
+    required Map<String, dynamic> userInputValues,
+  })  : _allTextFormCtrl = allTextFormCtrl,
+        _userInputValues = userInputValues;
+
+  final Map<String, TextEditingController> _allTextFormCtrl;
+  final Map<String, dynamic> _userInputValues;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownMenu(
+      controller: _allTextFormCtrl["categoryCtrl"],
+      onSelected: (value) => _userInputValues["category"] = value,
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(),
+      ),
+      width: double.infinity,
+      dropdownMenuEntries: [
+        DropdownMenuEntry(value: "Appetizers", label: "Appetizers"),
+        DropdownMenuEntry(value: "Main Courses", label: "Main Courses"),
+        DropdownMenuEntry(value: "Side Dishes", label: "Side Dishes"),
+        DropdownMenuEntry(value: "Salads", label: "Salads"),
+        DropdownMenuEntry(value: "Sweet Stuff", label: "Sweet Stuff"),
+        DropdownMenuEntry(value: "Drinks", label: "Drinks")
+      ],
+      hintText: "Select category",
+    );
+  }
+}
+
+class TitleField extends StatelessWidget {
+  const TitleField({
+    super.key,
+    required Map<String, TextEditingController> allTextFormCtrl,
+    required Map<String, dynamic> userInputValues,
+  })  : _allTextFormCtrl = allTextFormCtrl,
+        _userInputValues = userInputValues;
+
+  final Map<String, TextEditingController> _allTextFormCtrl;
+  final Map<String, dynamic> _userInputValues;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: _allTextFormCtrl["titleCtrl"],
+      onChanged: (value) => _userInputValues["title"] = value,
+      decoration: const InputDecoration(
+        hintText: "Title",
+        border: OutlineInputBorder(),
+      ),
+    );
   }
 }

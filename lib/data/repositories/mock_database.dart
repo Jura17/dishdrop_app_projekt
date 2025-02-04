@@ -32,7 +32,7 @@ class MockDatabase implements DatabaseRepository {
   }
 
   @override
-  void removeShoppingList(String id) {
-    shoppingListData.remove(id);
+  void removeShoppingList(int id) {
+    shoppingListData.removeAt(id);
   }
 }

@@ -20,7 +20,7 @@ abstract class DatabaseRepository {
   List<ShoppingList> getAllShoppingLists();
 
   // delete
-  void removeShoppingList(String id);
+  void removeShoppingList(int id);
 
   // Die einzelnen items einer Einkaufsliste verwalte ich vermutlich fürs erste in der App.
   // Das heißt, wenn der Nutzer ein Item zu einer Liste hinzufügt, aktualisiert, entfernt etc. dann geschieht das in der App

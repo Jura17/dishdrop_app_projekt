@@ -1,11 +1,17 @@
 import 'list_item.dart';
 
 class ShoppingList {
-  bool isGeneralPurposeList = false;
+  bool isGeneralPurposeList;
   String title;
+  int servings;
   List<ListItem> shoppingItems = [];
 
-  ShoppingList(this.title, this.shoppingItems);
+  ShoppingList({
+    this.isGeneralPurposeList = false,
+    required this.title,
+    this.servings = 0,
+    required this.shoppingItems,
+  });
 
   void addShoppingItem(ListItem newShoppingItem) {
     shoppingItems.add(newShoppingItem);
