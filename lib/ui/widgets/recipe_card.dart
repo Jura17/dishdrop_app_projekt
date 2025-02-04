@@ -112,7 +112,7 @@ class GreyRecipeInfoBox extends StatelessWidget {
                       Icons.timer_outlined,
                       size: 22,
                     ),
-                    Text("${recipe.prepTime + recipe.cookTime} min")
+                    Text("${recipe.prepTime + recipe.cookingTime} min")
                   ],
                 ),
                 Row(

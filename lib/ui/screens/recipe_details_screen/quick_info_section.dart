@@ -22,7 +22,7 @@ class QuickInfoSection extends StatelessWidget {
               size: 30,
             ),
             Text(
-              "${widget.recipe.prepTime + widget.recipe.cookTime} min (Prep: ${widget.recipe.prepTime} min, Cook: ${widget.recipe.cookTime} min)",
+              "${widget.recipe.prepTime + widget.recipe.cookingTime} min (Prep: ${widget.recipe.prepTime} min, Cook: ${widget.recipe.cookingTime} min)",
               style: Theme.of(context).textTheme.bodyLarge,
             )
           ],

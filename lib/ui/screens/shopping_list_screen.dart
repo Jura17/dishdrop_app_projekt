@@ -8,7 +8,7 @@ class ShoppingListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Shopping List",
+        title: Text("Shopping Lists",
             style: Theme.of(context).textTheme.headlineLarge),
       ),
       body: Scaffold(),

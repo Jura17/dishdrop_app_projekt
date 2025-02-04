@@ -15,7 +15,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 20,
-    cookTime: 20,
+    cookingTime: 20,
     directions: [
       "Place the eggs, salt and pepper in a bowl. Stir to combine",
       "Place the flour and 1/2 cup of cornstarch in a shallow bowl or on a plate. Stir to combine.",
@@ -61,7 +61,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 15,
-    cookTime: 20,
+    cookingTime: 20,
     directions: [],
     ingredients: [],
   ),
@@ -78,7 +78,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 15,
-    cookTime: 22,
+    cookingTime: 22,
     directions: [],
     ingredients: [],
   ),
@@ -95,7 +95,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 15,
-    cookTime: 5,
+    cookingTime: 5,
     directions: [
       "Preheat oven to 400°F (200°C).",
       "Slice baguette and brush with olive oil.",
@@ -125,7 +125,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 10,
-    cookTime: 0,
+    cookingTime: 0,
     directions: [
       "Chop romaine lettuce and place in a bowl.",
       "Add croutons and Parmesan cheese.",
@@ -153,7 +153,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 15,
-    cookTime: 25,
+    cookingTime: 25,
     directions: [
       "Preheat oven to 350°F (175°C).",
       "Melt butter and mix with sugar and cocoa powder.",
@@ -185,7 +185,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 5,
-    cookTime: 0,
+    cookingTime: 0,
     directions: [
       "Rub the rim of a glass with lime and dip in salt.",
       "Fill the glass with ice cubes.",
@@ -214,7 +214,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 15,
-    cookTime: 15,
+    cookingTime: 15,
     directions: [
       "Grill chicken breasts until fully cooked, about 7-8 minutes per side.",
       "Toss mixed greens, cherry tomatoes, cucumbers, and red onion in a large bowl.",
@@ -244,7 +244,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 10,
-    cookTime: 15,
+    cookingTime: 15,
     directions: [
       "Cook spaghetti according to package instructions until al dente.",
       "In a separate pan, cook the pancetta or bacon until crispy.",
@@ -274,7 +274,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 15,
-    cookTime: 15,
+    cookingTime: 15,
     directions: [
       "Preheat the oven to 425°F (220°C).",
       "Butter and flour four ramekins.",
@@ -307,7 +307,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 5,
-    cookTime: 0,
+    cookingTime: 0,
     directions: [
       "Juice the lemons into a pitcher.",
       "Add the sugar and stir until dissolved.",
@@ -335,7 +335,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 10,
-    cookTime: 20,
+    cookingTime: 20,
     directions: [
       "Cook pasta according to package instructions.",
       "In a separate pan, sauté mixed vegetables (like zucchini, bell peppers, and tomatoes) with olive oil until tender.",
@@ -367,7 +367,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 15,
-    cookTime: 20,
+    cookingTime: 20,
     directions: [
       "Press tofu to remove excess moisture and cut into cubes.",
       "Heat oil in a pan and fry tofu until golden and crispy.",
@@ -398,7 +398,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 5,
-    cookTime: 0,
+    cookingTime: 0,
     directions: [
       "In a glass, muddle fresh mint leaves with sugar and lime juice.",
       "Add ice and rum, then top with soda water.",
@@ -427,7 +427,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 10,
-    cookTime: 20,
+    cookingTime: 20,
     directions: [
       "Peel and slice the carrots into uniform pieces.",
       "Heat butter and olive oil in a pan over medium heat.",
@@ -458,7 +458,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 10,
-    cookTime: 15,
+    cookingTime: 15,
     directions: [
       "Cook rice ahead of time and let it cool.",
       "Heat oil in a large pan or wok. Add chopped vegetables and cook until tender.",
@@ -494,7 +494,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 10,
-    cookTime: 25,
+    cookingTime: 25,
     directions: [
       "Heat oil and butter in a pan, then sauté onions and garlic until soft.",
       "Add sliced mushrooms and cook until golden brown.",
@@ -529,7 +529,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 15,
-    cookTime: 30,
+    cookingTime: 30,
     directions: [
       "Preheat the oven to 350°F (175°C).",
       "Make the crust by mixing flour, sugar, and butter, then press into the bottom of a baking dish.",
@@ -564,7 +564,7 @@ final List<Recipe> recipeData = [
       "cookingDirectionImg": [],
     },
     prepTime: 5,
-    cookTime: 0,
+    cookingTime: 0,
     directions: [
       "Whisk the matcha powder with a little hot water to create a smooth paste.",
       "Fill a glass with ice cubes and pour the matcha mixture over.",

@@ -8,7 +8,7 @@ class Recipe {
   List<String> tags;
   Map<String, dynamic> images;
   int prepTime;
-  int cookTime;
+  int cookingTime;
   int timesCooked = 0;
   List<String> directions;
   // TODO: ingredients probably needs to be a map so I can have ingredient group titles
@@ -23,7 +23,7 @@ class Recipe {
     required this.tags,
     required this.images,
     required this.prepTime,
-    required this.cookTime,
+    required this.cookingTime,
     required this.directions,
     required this.ingredients,
   });
@@ -41,11 +41,11 @@ class Recipe {
   }
 
   int getCookTime() {
-    return cookTime;
+    return cookingTime;
   }
 
   int getTotalTime() {
-    return prepTime + cookTime;
+    return prepTime + cookingTime;
   }
 
   int getTimesCooked() {
@@ -64,8 +64,8 @@ class Recipe {
     prepTime = newPrepTime;
   }
 
-  void setCookTime(int newCookTime) {
-    cookTime = newCookTime;
+  void setCookingTime(int newCookingTime) {
+    cookingTime = newCookingTime;
   }
 
   void increaseTimesCooked() {

@@ -13,6 +13,7 @@ class NewRecipeScreen extends StatefulWidget {
 }
 
 class _NewRecipeScreenState extends State<NewRecipeScreen> {
+  // TODO: _allTextFormCtrl is currently passed down to every single field => only one specific ctrl needed in each case though
   final Map<String, TextEditingController> _allTextFormCtrl = {
     "titleCtrl": TextEditingController(),
     "categoryCtrl": TextEditingController(),
@@ -21,7 +22,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     "tagsCtrl": TextEditingController(),
     "descCtrl": TextEditingController(),
     "prepTimeCtrl": TextEditingController(),
-    "cookTimeCtrl": TextEditingController(),
+    "cookingTimeCtrl": TextEditingController(),
     "notesCtrl": TextEditingController(),
     "ingredientAmountCtrl": TextEditingController(),
     "ingredientUnitCtrl": TextEditingController(),
@@ -40,7 +41,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     "tags": <String>[],
     "description": "",
     "prepTime": 0,
-    "cookTime": 0,
+    "cookingTime": 0,
     "notes": "",
     "directions": <String>[],
     "ingredients": <ListItem>[],
@@ -67,113 +68,40 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                 TitleField(
                     allTextFormCtrl: _allTextFormCtrl,
                     userInputValues: _userInputValues),
-                CategoryDropDownMenu(
+                CategoryDropdownMenu(
                     allTextFormCtrl: _allTextFormCtrl,
                     userInputValues: _userInputValues),
-                GestureDetector(
-                  // TODO: implement image picker here
-                  onTap: () {},
-                  child: Column(
-                    children: [
-                      SizedBox(height: 30),
-                      Container(
-                        width: 250,
-                        height: 250,
-                        decoration: BoxDecoration(
-                          color: AppColors.lightGrey,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: AppColors.dishDropBlack),
-                        ),
-                        child: Icon(
-                          Icons.camera_alt_outlined,
-                          size: 50,
-                          color: AppColors.dishDropBlack,
-                        ),
-                      ),
-                      SizedBox(height: 30),
-                      TextFormField(
-                        controller: _allTextFormCtrl["imgUrlCtrl"],
-                        onChanged: (value) =>
-                            _userInputValues["images"]["titleImg"] = value,
-                        decoration: const InputDecoration(
-                          filled: true,
-                          fillColor: AppColors.lightGrey,
-                          hintText: "Image-URL",
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                DropdownMenu(
-                  controller: _allTextFormCtrl["difficultyCtrl"],
-                  onSelected: (value) => _userInputValues["difficulty"] = value,
-                  inputDecorationTheme: InputDecorationTheme(
-                    border: OutlineInputBorder(),
-                  ),
-                  width: double.infinity,
-                  dropdownMenuEntries: [
-                    DropdownMenuEntry(value: "Simple", label: "Simple"),
-                    DropdownMenuEntry(
-                        value: "Not Too Tricky", label: "Not Too Tricky"),
-                    DropdownMenuEntry(value: "Impressive", label: "Impressive"),
-                  ],
-                  hintText: "Select difficulty",
-                ),
-                TextFormField(
-                  controller: _allTextFormCtrl["tagsCtrl"],
-                  decoration: const InputDecoration(
-                    hintText: "Tags",
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                TextFormField(
-                  controller: _allTextFormCtrl["descCtrl"],
-                  onChanged: (value) => _userInputValues["description"] = value,
-                  decoration: const InputDecoration(
-                    hintText: "Description",
-                    border: OutlineInputBorder(),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 50, horizontal: 16),
-                  ),
-                ),
+                SizedBox(height: 30),
+                ImagePickerField(),
+                SizedBox(height: 30),
+                ImageUrlField(
+                    allTextFormCtrl: _allTextFormCtrl,
+                    userInputValues: _userInputValues),
+                DifficultyDropdownMenu(
+                    allTextFormCtrl: _allTextFormCtrl,
+                    userInputValues: _userInputValues),
+                TagsField(allTextFormCtrl: _allTextFormCtrl),
+                DescriptionField(
+                    allTextFormCtrl: _allTextFormCtrl,
+                    userInputValues: _userInputValues),
                 Row(
                   spacing: 10,
                   children: [
                     Expanded(
-                      child: TextFormField(
-                        controller: _allTextFormCtrl["prepTimeCtrl"],
-                        onChanged: (value) =>
-                            _userInputValues["prepTime"] = int.tryParse(value),
-                        decoration: const InputDecoration(
-                            filled: true,
-                            fillColor: AppColors.lightGrey,
-                            border: OutlineInputBorder(),
-                            hintText: "Prep Time"),
-                      ),
+                      child: PrepTimeField(
+                          allTextFormCtrl: _allTextFormCtrl,
+                          userInputValues: _userInputValues),
                     ),
                     Expanded(
-                      child: TextFormField(
-                        controller: _allTextFormCtrl["cookTimeCtrl"],
-                        onChanged: (value) =>
-                            _userInputValues["cookTime"] = int.tryParse(value),
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: "Cook Time"),
-                      ),
+                      child: CookingTimeField(
+                          allTextFormCtrl: _allTextFormCtrl,
+                          userInputValues: _userInputValues),
                     ),
                   ],
                 ),
-                TextFormField(
-                  controller: _allTextFormCtrl["notesCtrl"],
-                  onChanged: (value) => _userInputValues["notes"] = value,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Notes",
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 50, horizontal: 16),
-                  ),
-                ),
+                NotesField(
+                    allTextFormCtrl: _allTextFormCtrl,
+                    userInputValues: _userInputValues),
                 SizedBox(height: 30),
                 Row(
                   children: [
@@ -399,7 +327,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
       tags: userInputValues["tags"],
       images: userInputValues["images"],
       prepTime: userInputValues["prepTime"],
-      cookTime: userInputValues["cookTime"],
+      cookingTime: userInputValues["cookingTime"],
       directions: userInputValues["directions"],
       ingredients: userInputValues["ingredients"],
     );
@@ -415,8 +343,210 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
   }
 }
 
-class CategoryDropDownMenu extends StatelessWidget {
-  const CategoryDropDownMenu({
+class NotesField extends StatelessWidget {
+  const NotesField({
+    super.key,
+    required Map<String, TextEditingController> allTextFormCtrl,
+    required Map<String, dynamic> userInputValues,
+  })  : _allTextFormCtrl = allTextFormCtrl,
+        _userInputValues = userInputValues;
+
+  final Map<String, TextEditingController> _allTextFormCtrl;
+  final Map<String, dynamic> _userInputValues;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: _allTextFormCtrl["notesCtrl"],
+      onChanged: (value) => _userInputValues["notes"] = value,
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(),
+        hintText: "Notes",
+        contentPadding: EdgeInsets.symmetric(vertical: 50, horizontal: 16),
+      ),
+    );
+  }
+}
+
+class CookingTimeField extends StatelessWidget {
+  const CookingTimeField({
+    super.key,
+    required Map<String, TextEditingController> allTextFormCtrl,
+    required Map<String, dynamic> userInputValues,
+  })  : _allTextFormCtrl = allTextFormCtrl,
+        _userInputValues = userInputValues;
+
+  final Map<String, TextEditingController> _allTextFormCtrl;
+  final Map<String, dynamic> _userInputValues;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: _allTextFormCtrl["cookingTimeCtrl"],
+      onChanged: (value) =>
+          _userInputValues["cookingTime"] = int.tryParse(value),
+      decoration: const InputDecoration(
+          border: OutlineInputBorder(), hintText: "Cooking Time"),
+    );
+  }
+}
+
+class PrepTimeField extends StatelessWidget {
+  const PrepTimeField({
+    super.key,
+    required Map<String, TextEditingController> allTextFormCtrl,
+    required Map<String, dynamic> userInputValues,
+  })  : _allTextFormCtrl = allTextFormCtrl,
+        _userInputValues = userInputValues;
+
+  final Map<String, TextEditingController> _allTextFormCtrl;
+  final Map<String, dynamic> _userInputValues;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: _allTextFormCtrl["prepTimeCtrl"],
+      onChanged: (value) => _userInputValues["prepTime"] = int.tryParse(value),
+      decoration: const InputDecoration(
+          filled: true,
+          fillColor: AppColors.lightGrey,
+          border: OutlineInputBorder(),
+          hintText: "Prep Time"),
+    );
+  }
+}
+
+class DescriptionField extends StatelessWidget {
+  const DescriptionField({
+    super.key,
+    required Map<String, TextEditingController> allTextFormCtrl,
+    required Map<String, dynamic> userInputValues,
+  })  : _allTextFormCtrl = allTextFormCtrl,
+        _userInputValues = userInputValues;
+
+  final Map<String, TextEditingController> _allTextFormCtrl;
+  final Map<String, dynamic> _userInputValues;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: _allTextFormCtrl["descCtrl"],
+      onChanged: (value) => _userInputValues["description"] = value,
+      decoration: const InputDecoration(
+        hintText: "Description",
+        border: OutlineInputBorder(),
+        contentPadding: EdgeInsets.symmetric(vertical: 50, horizontal: 16),
+      ),
+    );
+  }
+}
+
+class TagsField extends StatelessWidget {
+  const TagsField({
+    super.key,
+    required Map<String, TextEditingController> allTextFormCtrl,
+  }) : _allTextFormCtrl = allTextFormCtrl;
+
+  final Map<String, TextEditingController> _allTextFormCtrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: _allTextFormCtrl["tagsCtrl"],
+      decoration: const InputDecoration(
+        hintText: "Tags",
+        border: OutlineInputBorder(),
+      ),
+    );
+  }
+}
+
+class DifficultyDropdownMenu extends StatelessWidget {
+  const DifficultyDropdownMenu({
+    super.key,
+    required Map<String, TextEditingController> allTextFormCtrl,
+    required Map<String, dynamic> userInputValues,
+  })  : _allTextFormCtrl = allTextFormCtrl,
+        _userInputValues = userInputValues;
+
+  final Map<String, TextEditingController> _allTextFormCtrl;
+  final Map<String, dynamic> _userInputValues;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownMenu(
+      controller: _allTextFormCtrl["difficultyCtrl"],
+      onSelected: (value) => _userInputValues["difficulty"] = value,
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(),
+      ),
+      width: double.infinity,
+      dropdownMenuEntries: [
+        DropdownMenuEntry(value: "Simple", label: "Simple"),
+        DropdownMenuEntry(value: "Not Too Tricky", label: "Not Too Tricky"),
+        DropdownMenuEntry(value: "Impressive", label: "Impressive"),
+      ],
+      hintText: "Select difficulty",
+    );
+  }
+}
+
+class ImageUrlField extends StatelessWidget {
+  const ImageUrlField({
+    super.key,
+    required Map<String, TextEditingController> allTextFormCtrl,
+    required Map<String, dynamic> userInputValues,
+  })  : _allTextFormCtrl = allTextFormCtrl,
+        _userInputValues = userInputValues;
+
+  final Map<String, TextEditingController> _allTextFormCtrl;
+  final Map<String, dynamic> _userInputValues;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: _allTextFormCtrl["imgUrlCtrl"],
+      onChanged: (value) => _userInputValues["images"]["titleImg"] = value,
+      decoration: const InputDecoration(
+        filled: true,
+        fillColor: AppColors.lightGrey,
+        hintText: "Image-URL",
+        border: OutlineInputBorder(),
+      ),
+    );
+  }
+}
+
+class ImagePickerField extends StatelessWidget {
+  const ImagePickerField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      // TODO: implement image picker here
+      onTap: () {},
+      child: Container(
+        width: 250,
+        height: 250,
+        decoration: BoxDecoration(
+          color: AppColors.lightGrey,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: AppColors.dishDropBlack),
+        ),
+        child: Icon(
+          Icons.camera_alt_outlined,
+          size: 50,
+          color: AppColors.dishDropBlack,
+        ),
+      ),
+    );
+  }
+}
+
+class CategoryDropdownMenu extends StatelessWidget {
+  const CategoryDropdownMenu({
     super.key,
     required Map<String, TextEditingController> allTextFormCtrl,
     required Map<String, dynamic> userInputValues,
