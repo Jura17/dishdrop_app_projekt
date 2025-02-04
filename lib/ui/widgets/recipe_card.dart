@@ -24,11 +24,14 @@ class _RecipeCardState extends State<RecipeCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
+        Navigator.of(context).push(
+          MaterialPageRoute(
             builder: (context) => RecipeDetailsScreen(
-                  recipe: widget.recipe,
-                  db: widget.db,
-                )));
+              recipe: widget.recipe,
+              db: widget.db,
+            ),
+          ),
+        );
       },
       child: Container(
         decoration: BoxDecoration(

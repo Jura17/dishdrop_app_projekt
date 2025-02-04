@@ -12,12 +12,8 @@ class ShoppingListScreen extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineLarge),
       ),
       body: Scaffold(),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ShoppingListSegmentButton(),
-        ],
-      ),
+      floatingActionButton: ShoppingListSegmentButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

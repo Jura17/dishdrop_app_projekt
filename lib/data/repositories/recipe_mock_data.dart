@@ -104,8 +104,8 @@ final List<Recipe> recipeData = [
       "Top toasted bread with tomato mixture and serve."
     ],
     ingredients: [
-      ListItem(amount: 1, unit: "baguette", description: ""),
-      ListItem(amount: 4, unit: "ripe tomatoes", description: ""),
+      ListItem(amount: 1, description: "baguette"),
+      ListItem(amount: 4, description: "ripe tomatoes"),
       ListItem(amount: 2, unit: "cloves", description: "garlic"),
       ListItem(description: "Fresh basil leaves"),
       ListItem(description: "Olive oil"),
@@ -166,7 +166,7 @@ final List<Recipe> recipeData = [
       ListItem(amount: 0.5, unit: "cup", description: "butter"),
       ListItem(amount: 1, unit: "cup", description: "sugar"),
       ListItem(amount: 0.33, unit: "cup", description: "cocoa powder"),
-      ListItem(amount: 2, unit: "eggs", description: ""),
+      ListItem(amount: 2, description: "eggs"),
       ListItem(amount: 1, unit: "tsp", description: "vanilla extract"),
       ListItem(amount: 0.5, unit: "cup", description: "flour"),
       ListItem(amount: 0.25, unit: "tsp", description: "salt"),
@@ -226,7 +226,7 @@ final List<Recipe> recipeData = [
       ListItem(amount: 4, unit: "cups", description: "mixed greens"),
       ListItem(
           amount: 0.5, unit: "cup", description: "cherry tomatoes, halved"),
-      ListItem(amount: 1, description: "sliced cucumber"),
+      ListItem(amount: 1, description: "cucumber, sliced"),
       ListItem(amount: 0.25, description: "red onion, thinly sliced"),
       ListItem(description: "Salad dressing of choice"),
     ],
@@ -255,7 +255,7 @@ final List<Recipe> recipeData = [
     ingredients: [
       ListItem(amount: 12, unit: "oz", description: "spaghetti"),
       ListItem(amount: 4, unit: "oz", description: "pancetta or bacon, diced"),
-      ListItem(amount: 2, unit: "large eggs", description: ""),
+      ListItem(amount: 2, description: "large eggs"),
       ListItem(
           amount: 0.5, unit: "cup", description: "Parmesan cheese, grated"),
       ListItem(amount: 0.25, unit: "tsp", description: "black pepper"),
@@ -288,8 +288,8 @@ final List<Recipe> recipeData = [
       ListItem(amount: 0.5, unit: "cup", description: "unsalted butter"),
       ListItem(amount: 6, unit: "oz", description: "dark chocolate"),
       ListItem(amount: 0.5, unit: "cup", description: "sugar"),
-      ListItem(amount: 2, unit: "large eggs", description: ""),
-      ListItem(amount: 2, unit: "egg yolks", description: ""),
+      ListItem(amount: 2, description: "large eggs"),
+      ListItem(amount: 2, description: "egg yolks"),
       ListItem(amount: 0.25, unit: "cup", description: "all-purpose flour"),
       ListItem(description: "Vanilla ice cream or berries for serving"),
     ],
@@ -344,8 +344,8 @@ final List<Recipe> recipeData = [
     ],
     ingredients: [
       ListItem(amount: 8, unit: "oz", description: "pasta"),
-      ListItem(amount: 1, description: "sliced zucchini"),
-      ListItem(amount: 1, unit: "bell pepper", description: "sliced"),
+      ListItem(amount: 1, description: "zucchini, sliced"),
+      ListItem(amount: 1, description: "bell pepper, sliced"),
       ListItem(amount: 1, unit: "cup", description: "cherry tomatoes, halved"),
       ListItem(amount: 2, unit: "tbsp", description: "olive oil"),
       ListItem(amount: 2, unit: "cloves", description: "garlic, minced"),
@@ -378,7 +378,7 @@ final List<Recipe> recipeData = [
     ingredients: [
       ListItem(amount: 1, unit: "block", description: "firm tofu"),
       ListItem(amount: 1, unit: "tbsp", description: "oil"),
-      ListItem(amount: 1, unit: "bell pepper", description: "sliced"),
+      ListItem(amount: 1, description: "bell pepper, sliced"),
       ListItem(amount: 1, unit: "cup", description: "broccoli florets"),
       ListItem(amount: 2, unit: "tbsp", description: "soy sauce"),
       ListItem(amount: 2, unit: "cloves", description: "garlic, minced"),
@@ -405,7 +405,7 @@ final List<Recipe> recipeData = [
       "Stir gently and garnish with mint sprigs and lime slices."
     ],
     ingredients: [
-      ListItem(amount: 10, unit: "fresh mint leaves", description: ""),
+      ListItem(amount: 10, description: "fresh mint leaves"),
       ListItem(amount: 1, unit: "tbsp", description: "sugar"),
       ListItem(description: "Juice of 1 lime"),
       ListItem(amount: 2, unit: "oz", description: "white rum"),
@@ -476,7 +476,7 @@ final List<Recipe> recipeData = [
       ListItem(amount: 2, unit: "cloves", description: "garlic, minced"),
       ListItem(amount: 1, unit: "inch piece", description: "ginger, grated"),
       ListItem(amount: 2, unit: "tbsp", description: "soy sauce"),
-      ListItem(amount: 2, unit: "eggs", description: "beaten"),
+      ListItem(amount: 2, description: "eggs, beaten"),
       ListItem(amount: 1, unit: "tbsp", description: "oil"),
       ListItem(description: "Green onions for garnish"),
     ],
@@ -506,7 +506,7 @@ final List<Recipe> recipeData = [
     ingredients: [
       ListItem(amount: 2, unit: "tbsp", description: "butter"),
       ListItem(amount: 1, unit: "tbsp", description: "olive oil"),
-      ListItem(amount: 0.5, unit: "onion", description: "diced"),
+      ListItem(amount: 0.5, description: "onion, diced"),
       ListItem(amount: 2, unit: "cloves", description: "garlic, minced"),
       ListItem(amount: 8, unit: "oz", description: "mushrooms, sliced"),
       ListItem(amount: 1, unit: "cup", description: "Arborio rice"),
@@ -543,7 +543,7 @@ final List<Recipe> recipeData = [
       ListItem(amount: 0.25, unit: "cup", description: "sugar"),
       ListItem(
           amount: 0.5, unit: "cup", description: "unsalted butter, softened"),
-      ListItem(amount: 2, unit: "large eggs", description: ""),
+      ListItem(amount: 2, description: "large eggs"),
       ListItem(amount: 1, unit: "cup", description: "sugar"),
       ListItem(amount: 2, unit: "tbsp", description: "flour"),
       ListItem(amount: 0.25, unit: "cup", description: "lemon juice"),

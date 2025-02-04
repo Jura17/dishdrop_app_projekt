@@ -146,8 +146,8 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
         ),
       ),
       floatingActionButton: Row(
+        mainAxisSize: MainAxisSize.min,
         spacing: 10,
-        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           CustomFilledIconButton(
             text: "Edit Recipe",
@@ -161,6 +161,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
           ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
