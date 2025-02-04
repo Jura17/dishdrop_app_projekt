@@ -2,34 +2,16 @@ class ListItem {
   String description;
   double? amount;
   String? unit;
-  bool isShoppingListItem = false;
-  bool isDone = false;
+  bool isShoppingListItem;
+  bool isDone;
 
-  ListItem({required this.description, this.amount, this.unit});
-
-  void setDescription(String newDescription) {
-    description = newDescription;
-  }
-
-  String getDescription() {
-    return description;
-  }
-
-  void setAmount(double newAmount) {
-    amount = newAmount;
-  }
-
-  double? getAmount() {
-    return amount;
-  }
-
-  void setUnit(String newUnit) {
-    unit = newUnit;
-  }
-
-  String? getUnit() {
-    return unit;
-  }
+  ListItem({
+    required this.description,
+    this.amount,
+    this.unit,
+    this.isShoppingListItem = false,
+    this.isDone = false,
+  });
 }
 
 /*

@@ -121,7 +121,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                       widget.recipe.timesCooked++;
                     });
                   },
-                  label: Text("Okay, done!"),
+                  label: Text("I'm done cooking!"),
                 ),
                 TextButton.icon(
                   style: TextButton.styleFrom(
