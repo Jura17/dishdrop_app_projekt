@@ -5,20 +5,28 @@ import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
 import 'package:flutter/material.dart';
 
 class NewRecipeScreen extends StatefulWidget {
-  NewRecipeScreen({super.key, required this.db});
-  MockDatabase db;
+  const NewRecipeScreen({super.key, required this.db});
+  final MockDatabase db;
 
   @override
   State<NewRecipeScreen> createState() => _NewRecipeScreenState();
 }
 
 class _NewRecipeScreenState extends State<NewRecipeScreen> {
-  final TextEditingController _ingredientAmountCtrl = TextEditingController();
-  final TextEditingController _ingredientUnitCtrl = TextEditingController();
-  final TextEditingController _ingredientDescriptionCtrl =
-      TextEditingController();
-  final TextEditingController _directionDescriptionCtrl =
-      TextEditingController();
+  final Map<String, TextEditingController> _allTextFormCtrl = {
+    "titleCtrl": TextEditingController(),
+    "imgUrlCtrl": TextEditingController(),
+    "tagsCtrl": TextEditingController(),
+    "descCtrl": TextEditingController(),
+    "prepTimeCtrl": TextEditingController(),
+    "cookTimeCtrl": TextEditingController(),
+    "notesCtrl": TextEditingController(),
+    "ingredientAmountCtrl": TextEditingController(),
+    "ingredientUnitCtrl": TextEditingController(),
+    "ingredientDescCtrl": TextEditingController(),
+    "directionDescCtrl": TextEditingController(),
+  };
+
   final Map<String, dynamic> _userInputValues = {
     "title": "",
     "category": "",
@@ -29,8 +37,8 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     "difficulty": "",
     "tags": <String>[],
     "description": "",
-    "prepTime": "",
-    "cookTime": "",
+    "prepTime": 0,
+    "cookTime": 0,
     "notes": "",
     "directions": <String>[],
     "ingredients": <ListItem>[],
@@ -55,6 +63,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
               spacing: 10,
               children: [
                 TextFormField(
+                  controller: _allTextFormCtrl["titleCtrl"],
                   onChanged: (value) => _userInputValues["title"] = value,
                   decoration: const InputDecoration(
                     hintText: "Title",
@@ -101,6 +110,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                       ),
                       SizedBox(height: 30),
                       TextFormField(
+                        controller: _allTextFormCtrl["imgUrlCtrl"],
                         onChanged: (value) =>
                             _userInputValues["images"]["titleImg"] = value,
                         decoration: const InputDecoration(
@@ -128,12 +138,14 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                   hintText: "Select difficulty",
                 ),
                 TextFormField(
+                  controller: _allTextFormCtrl["tagsCtrl"],
                   decoration: const InputDecoration(
                     hintText: "Tags",
                     border: OutlineInputBorder(),
                   ),
                 ),
                 TextFormField(
+                  controller: _allTextFormCtrl["descCtrl"],
                   onChanged: (value) => _userInputValues["description"] = value,
                   decoration: const InputDecoration(
                     hintText: "Description",
@@ -147,6 +159,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                   children: [
                     Expanded(
                       child: TextFormField(
+                        controller: _allTextFormCtrl["prepTimeCtrl"],
                         onChanged: (value) =>
                             _userInputValues["prepTime"] = int.tryParse(value),
                         decoration: const InputDecoration(
@@ -158,6 +171,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                     ),
                     Expanded(
                       child: TextFormField(
+                        controller: _allTextFormCtrl["cookTimeCtrl"],
                         onChanged: (value) =>
                             _userInputValues["cookTime"] = int.tryParse(value),
                         decoration: const InputDecoration(
@@ -168,6 +182,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                   ],
                 ),
                 TextFormField(
+                  controller: _allTextFormCtrl["notesCtrl"],
                   onChanged: (value) => _userInputValues["notes"] = value,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -214,7 +229,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                   children: [
                     Expanded(
                       child: TextFormField(
-                        controller: _directionDescriptionCtrl,
+                        controller: _allTextFormCtrl["directionDescCtrl"],
                         onChanged: (value) => _directionDescription = value,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
@@ -227,7 +242,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                             if (_directionDescription != "") {
                               _userInputValues["directions"]
                                   .add(_directionDescription);
-                              _directionDescriptionCtrl.clear();
+                              _allTextFormCtrl["directionDescCtrl"]!.clear();
                             }
                           });
                         },
@@ -285,7 +300,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                         spacing: 10,
                         children: [
                           TextFormField(
-                            controller: _ingredientDescriptionCtrl,
+                            controller: _allTextFormCtrl["ingredientDescCtrl"],
                             onChanged: (value) =>
                                 _ingredientDescription = value,
                             decoration: const InputDecoration(
@@ -297,19 +312,22 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                             children: [
                               Expanded(
                                 child: TextFormField(
-                                  controller: _ingredientAmountCtrl,
+                                  controller:
+                                      _allTextFormCtrl["ingredientAmountCtrl"],
                                   onChanged: (value) => _ingredientAmount =
                                       double.tryParse(value),
                                   decoration: const InputDecoration(
-                                      filled: true,
-                                      fillColor: AppColors.lightGrey,
-                                      border: OutlineInputBorder(),
-                                      hintText: "Amount"),
+                                    filled: true,
+                                    fillColor: AppColors.lightGrey,
+                                    border: OutlineInputBorder(),
+                                    hintText: "Amount",
+                                  ),
                                 ),
                               ),
                               Expanded(
                                 child: TextFormField(
-                                  controller: _ingredientUnitCtrl,
+                                  controller:
+                                      _allTextFormCtrl["ingredientUnitCtrl"],
                                   onChanged: (value) => value == ""
                                       ? _ingredientUnit = null
                                       : _ingredientUnit = value,
@@ -340,9 +358,9 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                                 unit: _ingredientUnit,
                               ),
                             );
-                            _ingredientAmountCtrl.clear();
-                            _ingredientUnitCtrl.clear();
-                            _ingredientDescriptionCtrl.clear();
+                            _allTextFormCtrl["ingredientAmountCtrl"]!.clear();
+                            _allTextFormCtrl["ingredientUnitCtrl"]!.clear();
+                            _allTextFormCtrl["ingredientDescCtrl"]!.clear();
                           });
                         },
                         icon: Icon(
@@ -353,29 +371,26 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                 ),
                 SizedBox(height: 30),
                 Row(
+                  children: [
+                    TextButton(
+                        onPressed: () => resetAllCtrl(),
+                        child: Text("Reset all fields")),
+                  ],
+                ),
+                Row(
                   spacing: 10,
                   children: [
                     FilledButton(
                       onPressed: () {
-                        Recipe newRecipe = Recipe(
-                          title: _userInputValues["title"],
-                          category: _userInputValues["category"],
-                          description: _userInputValues["description"],
-                          difficulty: _userInputValues["difficulty"],
-                          tags: _userInputValues["tags"],
-                          images: _userInputValues["images"],
-                          prepTime: _userInputValues["prepTime"],
-                          cookTime: _userInputValues["cookTime"],
-                          directions: _userInputValues["directions"],
-                          ingredients: _userInputValues["ingredients"],
-                        );
-
-                        widget.db.addRecipe(newRecipe);
+                        addRecipeToDb(_userInputValues);
                       },
                       child: Text("Save recipe"),
                     ),
                     FilledButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        addRecipeToDb(_userInputValues);
+                        Navigator.of(context).pop();
+                      },
                       child: Text("Save and open recipe"),
                     )
                   ],
@@ -387,5 +402,29 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
         ),
       ),
     );
+  }
+
+  void addRecipeToDb(Map<String, dynamic> userInputValues) {
+    Recipe newRecipe = Recipe(
+      title: userInputValues["title"],
+      category: userInputValues["category"],
+      description: userInputValues["description"],
+      difficulty: userInputValues["difficulty"],
+      tags: userInputValues["tags"],
+      images: userInputValues["images"],
+      prepTime: userInputValues["prepTime"],
+      cookTime: userInputValues["cookTime"],
+      directions: userInputValues["directions"],
+      ingredients: userInputValues["ingredients"],
+    );
+
+    widget.db.addRecipe(newRecipe);
+    resetAllCtrl();
+  }
+
+  void resetAllCtrl() {
+    for (var key in _allTextFormCtrl.keys) {
+      _allTextFormCtrl[key]!.clear();
+    }
   }
 }

@@ -21,7 +21,7 @@ class RecipesGridView extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8),
           child: GridView.count(
               crossAxisCount: 2,
               childAspectRatio: 0.6,
