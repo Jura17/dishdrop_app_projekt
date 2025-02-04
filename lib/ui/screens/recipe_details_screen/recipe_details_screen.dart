@@ -1,5 +1,6 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
+import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/description_section.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/directions_section.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/ingredients_section.dart';
@@ -7,13 +8,18 @@ import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/quick_info
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/tags_section.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_button.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/filled_icon_button.dart';
 
 import 'package:flutter/material.dart';
 
 class RecipeDetailsScreen extends StatefulWidget {
-  const RecipeDetailsScreen({super.key, required this.recipe});
+  const RecipeDetailsScreen({
+    super.key,
+    required this.recipe,
+    required this.db,
+  });
   final Recipe recipe;
+  final MockDatabase db;
 
   @override
   State<RecipeDetailsScreen> createState() => _RecipeDetailsScreenState();
@@ -122,10 +128,12 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
           FilledIconButton(
             text: "Edit Recipe",
             iconData: Icons.edit,
+            db: widget.db,
           ),
           FilledIconButton(
             text: "Add Recipe",
             iconData: Icons.add_box_outlined,
+            db: widget.db,
           ),
         ],
       ),

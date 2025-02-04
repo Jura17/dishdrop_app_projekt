@@ -1,6 +1,6 @@
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_button.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/filled_icon_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_card.dart';
 import 'package:flutter/material.dart';
 
@@ -28,26 +28,20 @@ class RecipesGridView extends StatelessWidget {
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
               children: [
-                ...filteredRecipes.map((recipe) => RecipeCard(recipe: recipe))
+                ...filteredRecipes.map((recipe) => RecipeCard(
+                      recipe: recipe,
+                      db: db,
+                    ))
               ]
               // alternative 1: [for (final recipe in filteredRecipes) RecipeCard(recipe: recipe)]
               // alternative 2: filteredRecipes.map((recipe) => RecipeCard(recipe: recipe)).toList(),
               ),
         ),
       ),
-      floatingActionButton: Row(
-        spacing: 10,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FilledIconButton(
-            text: "Edit Recipe",
-            iconData: Icons.edit,
-          ),
-          FilledIconButton(
-            text: "Add Recipe",
-            iconData: Icons.add_box_outlined,
-          ),
-        ],
+      floatingActionButton: FilledIconButton(
+        text: "Add Recipe",
+        iconData: Icons.add_box_outlined,
+        db: db,
       ),
     );
   }

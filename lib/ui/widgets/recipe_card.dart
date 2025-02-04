@@ -1,13 +1,19 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
+import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/recipe_details_screen.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
 import 'package:flutter/material.dart';
 
 class RecipeCard extends StatefulWidget {
-  const RecipeCard({super.key, required this.recipe});
+  const RecipeCard({
+    super.key,
+    required this.recipe,
+    required this.db,
+  });
 
   final Recipe recipe;
+  final MockDatabase db;
 
   @override
   State<RecipeCard> createState() => _RecipeCardState();
@@ -19,7 +25,10 @@ class _RecipeCardState extends State<RecipeCard> {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => RecipeDetailsScreen(recipe: widget.recipe)));
+            builder: (context) => RecipeDetailsScreen(
+                  recipe: widget.recipe,
+                  db: widget.db,
+                )));
       },
       child: Container(
         decoration: BoxDecoration(

@@ -5,6 +5,7 @@ class Recipe {
   String category;
   String description;
   String difficulty;
+  List<String> tags;
   Map<String, dynamic> images;
   int prepTime;
   int cookTime;
@@ -13,19 +14,18 @@ class Recipe {
   List<ListItem>
       ingredients; // TODO: probably needs to be a map so I can have ingredient group titles
   bool isFavorite = false;
-  List<String> tags;
 
   Recipe({
     required this.title,
     required this.category,
     required this.description,
     required this.difficulty,
+    required this.tags,
     required this.images,
     required this.prepTime,
     required this.cookTime,
     required this.directions,
     required this.ingredients,
-    required this.tags,
   });
 
   String getTitle() {

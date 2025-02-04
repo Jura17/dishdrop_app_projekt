@@ -2,7 +2,7 @@ import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
 import 'package:dishdrop_app_projekt/gen/assets.gen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/category_card.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_button.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/filled_icon_button.dart';
 
 import 'package:flutter/material.dart';
 
@@ -17,6 +17,7 @@ class CategoriesScreen extends StatelessWidget {
       floatingActionButton: FilledIconButton(
         text: "Add Recipe",
         iconData: Icons.add_box_outlined,
+        db: db,
       ),
       appBar: AppBar(
         centerTitle: true,
