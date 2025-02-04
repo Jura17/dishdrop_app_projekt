@@ -10,7 +10,7 @@ abstract class DatabaseRepository {
   List<Recipe> getAllRecipes();
 
   // delete
-  void removeRecipe(String id);
+  void removeRecipe(int id);
 
   // SHOPPING LIST:
   // create

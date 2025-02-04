@@ -20,8 +20,8 @@ class MockDatabase implements DatabaseRepository {
   }
 
   @override
-  void removeRecipe(String id) {
-    recipeData.remove(id);
+  void removeRecipe(int id) {
+    recipeData.removeAt(id);
   }
 
   @override

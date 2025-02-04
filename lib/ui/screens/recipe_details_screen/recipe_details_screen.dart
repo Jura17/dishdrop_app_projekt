@@ -8,7 +8,7 @@ import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/quick_info
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/tags_section.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/filled_icon_button.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';
 
 import 'package:flutter/material.dart';
 
@@ -110,14 +110,38 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               ),
             ),
             SizedBox(height: 20),
-            FilledButton(
-                onPressed: () {
-                  setState(() {
-                    widget.recipe.timesCooked++;
-                  });
-                },
-                child: Text("Okay, done!")),
-            SizedBox(height: 100),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 30,
+              children: [
+                FilledButton.icon(
+                  icon: Icon(Icons.check),
+                  onPressed: () {
+                    setState(() {
+                      widget.recipe.timesCooked++;
+                    });
+                  },
+                  label: Text("Okay, done!"),
+                ),
+                TextButton.icon(
+                  style: TextButton.styleFrom(
+                      foregroundColor: Colors.red, iconColor: Colors.red),
+                  onPressed: () {
+                    int id = widget.db.getAllRecipes().indexOf(widget.recipe);
+                    setState(() {
+                      widget.db.removeRecipe(id);
+                    });
+                    Navigator.of(context).pop();
+                  },
+                  label: Text("Remove recipe"),
+                  icon: Icon(
+                    Icons.delete,
+                    size: 30,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 130),
           ],
         ),
       ),
@@ -125,12 +149,12 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
         spacing: 10,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FilledIconButton(
+          CustomFilledIconButton(
             text: "Edit Recipe",
             iconData: Icons.edit,
             db: widget.db,
           ),
-          FilledIconButton(
+          CustomFilledIconButton(
             text: "Add Recipe",
             iconData: Icons.add_box_outlined,
             db: widget.db,

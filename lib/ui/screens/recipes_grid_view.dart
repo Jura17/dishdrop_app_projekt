@@ -1,6 +1,6 @@
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/filled_icon_button.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_card.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +38,7 @@ class RecipesGridView extends StatelessWidget {
               ),
         ),
       ),
-      floatingActionButton: FilledIconButton(
+      floatingActionButton: CustomFilledIconButton(
         text: "Add Recipe",
         iconData: Icons.add_box_outlined,
         db: db,

@@ -13,10 +13,12 @@ class NewRecipeScreen extends StatefulWidget {
 }
 
 class _NewRecipeScreenState extends State<NewRecipeScreen> {
-  TextEditingController _ingredientAmountCtrl = TextEditingController();
-  TextEditingController _ingredientUnitCtrl = TextEditingController();
-  TextEditingController _ingredientDescriptionCtrl = TextEditingController();
-  TextEditingController _directionDescriptionCtrl = TextEditingController();
+  final TextEditingController _ingredientAmountCtrl = TextEditingController();
+  final TextEditingController _ingredientUnitCtrl = TextEditingController();
+  final TextEditingController _ingredientDescriptionCtrl =
+      TextEditingController();
+  final TextEditingController _directionDescriptionCtrl =
+      TextEditingController();
   final Map<String, dynamic> _userInputValues = {
     "title": "",
     "category": "",

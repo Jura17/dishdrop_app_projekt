@@ -3,12 +3,18 @@ import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
 import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen.dart';
 import 'package:flutter/material.dart';
 
-class FilledIconButton extends StatelessWidget {
-  const FilledIconButton(
-      {super.key, required this.text, required this.iconData, this.db});
+class CustomFilledIconButton extends StatelessWidget {
+  const CustomFilledIconButton({
+    super.key,
+    required this.text,
+    required this.iconData,
+    this.backgroundColor,
+    this.db,
+  });
 
   final String text;
   final IconData iconData;
+  final Color? backgroundColor;
   final MockDatabase? db;
 
   @override
@@ -27,7 +33,7 @@ class FilledIconButton extends StatelessWidget {
       label: Text(
         text,
         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: AppColors.primary,
+              color: backgroundColor ?? AppColors.primary,
             ),
       ),
       icon: Icon(
