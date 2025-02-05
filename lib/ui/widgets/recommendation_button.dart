@@ -18,7 +18,7 @@ class RecommendationButton extends StatelessWidget {
       onPressed: () {
         int randomIndex = Random().nextInt(allRecipes.length);
         Recipe randomRecipe = allRecipes[randomIndex];
-        showModalBottomSheet(
+        showDialog(
           context: context,
           builder: (BuildContext context) {
             return RecommendationCard(recipe: randomRecipe, db: db);

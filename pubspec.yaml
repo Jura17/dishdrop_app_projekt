@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  alert_banner: ^1.0.1
   
 
 dev_dependencies:

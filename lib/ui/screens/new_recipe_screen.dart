@@ -1,3 +1,4 @@
+import 'package:alert_banner/exports.dart';
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
@@ -333,6 +334,22 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     );
 
     widget.db.addRecipe(newRecipe);
+    showAlertBanner(
+        context,
+        () {},
+        Container(
+          color: Colors.green,
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              textAlign: TextAlign.center,
+              "Success! Recipe added to cookbook.",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+        alertBannerLocation: AlertBannerLocation.bottom);
     resetAllCtrl();
   }
 

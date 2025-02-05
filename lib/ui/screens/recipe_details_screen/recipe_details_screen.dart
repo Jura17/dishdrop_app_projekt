@@ -53,6 +53,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
+                      errorBuilder: (context, error, stackTrace) => Text("404"),
                       widget.recipe.images["titleImg"],
                       fit: BoxFit.cover,
                     ),
