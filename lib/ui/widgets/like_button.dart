@@ -5,18 +5,21 @@ import 'package:flutter/material.dart';
 class LikeButton extends StatefulWidget {
   const LikeButton(
       {super.key,
-      required this.top,
-      required this.right,
+      this.top,
+      this.left,
+      this.bottom,
+      this.right,
       required this.width,
       required this.height,
-      // required this.iconSize,
       required this.recipe});
 
-  final double top;
-  final double right;
+  final double? top;
+  final double? left;
+  final double? bottom;
+  final double? right;
   final double width;
   final double height;
-  // final double iconSize;
+
   final Recipe recipe;
 
   @override
@@ -28,7 +31,9 @@ class _LikeButtonState extends State<LikeButton> {
   Widget build(BuildContext context) {
     return Positioned(
       top: widget.top,
-      right: widget.top,
+      right: widget.right,
+      left: widget.left,
+      bottom: widget.bottom,
       child: GestureDetector(
         onTap: () {
           setState(() {

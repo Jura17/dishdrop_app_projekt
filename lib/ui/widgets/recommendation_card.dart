@@ -2,15 +2,22 @@ import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/recipe_details_screen.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/dismiss_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
 
 import 'package:flutter/material.dart';
 
 class RecommendationCard extends StatelessWidget {
-  const RecommendationCard({super.key, required this.recipe, required this.db});
+  const RecommendationCard({
+    super.key,
+    required this.recipe,
+    required this.db,
+    required this.getRandomRecipeFunc,
+  });
 
   final Recipe recipe;
   final MockDatabase db;
+  final Function getRandomRecipeFunc;
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +35,12 @@ class RecommendationCard extends StatelessWidget {
                       width: double.infinity,
                       height: double.infinity,
                       child: Image.network(
-                        errorBuilder: (context, error, stackTrace) =>
-                            Text("404"),
+                        errorBuilder: (context, error, stackTrace) => Center(
+                          child: Text(
+                            "404",
+                            style: Theme.of(context).textTheme.headlineLarge,
+                          ),
+                        ),
                         recipe.images["titleImg"],
                         fit: BoxFit.cover,
                       ),
@@ -40,6 +51,12 @@ class RecommendationCard extends StatelessWidget {
                       width: 60,
                       height: 60,
                       recipe: recipe,
+                    ),
+                    DismissButton(
+                      top: 20,
+                      left: 20,
+                      width: 40,
+                      height: 40,
                     ),
                   ],
                 ),
@@ -52,7 +69,7 @@ class RecommendationCard extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
-                      spacing: 5,
+                      spacing: 4,
                       children: [
                         Text(
                           recipe.title,
@@ -62,11 +79,11 @@ class RecommendationCard extends StatelessWidget {
                               ?.copyWith(fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 5),
                         Text(
                           recipe.description,
                           overflow: TextOverflow.ellipsis,
-                          maxLines: 4,
+                          maxLines: 3,
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         Spacer(),
@@ -75,6 +92,7 @@ class RecommendationCard extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.timer_outlined,
+                              color: AppColors.dishDropBlack,
                               size: 30,
                             ),
                             Text(
@@ -91,6 +109,7 @@ class RecommendationCard extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.workspace_premium_sharp,
+                              color: AppColors.dishDropBlack,
                               size: 30,
                             ),
                             Text(
@@ -107,6 +126,7 @@ class RecommendationCard extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.check_circle_outline_outlined,
+                              color: AppColors.dishDropBlack,
                               size: 30,
                             ),
                             Text(
@@ -118,7 +138,7 @@ class RecommendationCard extends StatelessWidget {
                             )
                           ],
                         ),
-                        Spacer(),
+                        SizedBox(height: 10),
                         Row(
                           spacing: 20,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -126,6 +146,7 @@ class RecommendationCard extends StatelessWidget {
                             FilledButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
+                                getRandomRecipeFunc(context);
                               },
                               style: FilledButton.styleFrom(
                                 side: BorderSide(color: AppColors.primary),

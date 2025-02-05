@@ -15,22 +15,28 @@ class RecommendationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton.filled(
+      padding: EdgeInsets.all(25),
       onPressed: () {
-        int randomIndex = Random().nextInt(allRecipes.length);
-        Recipe randomRecipe = allRecipes[randomIndex];
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return RecommendationCard(recipe: randomRecipe, db: db);
-          },
-        );
+        getRandomRecipe(context);
       },
       icon: Icon(
         Icons.lightbulb_outline_rounded,
-        size: 150,
+        size: 125,
       ),
       style:
           IconButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
+    );
+  }
+
+  void getRandomRecipe(context) {
+    int randomIndex = Random().nextInt(allRecipes.length);
+    Recipe randomRecipe = allRecipes[randomIndex];
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return RecommendationCard(
+            recipe: randomRecipe, db: db, getRandomRecipeFunc: getRandomRecipe);
+      },
     );
   }
 }

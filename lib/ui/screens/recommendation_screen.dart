@@ -15,17 +15,22 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: FittedBox(
-          child: Text("Recommend Me Something!",
-              style: Theme.of(context).textTheme.headlineLarge),
-        ),
-      ),
-      body: Center(
-        child: RecommendationButton(
-          db: widget.db,
-          allRecipes: widget.db.getAllRecipes(),
-        ),
+      appBar: AppBar(),
+      body: Column(
+        children: [
+          Text(
+            "Tap the button to find a recipe for today!",
+            style: Theme.of(context).textTheme.headlineLarge,
+            textAlign: TextAlign.center,
+          ),
+          Spacer(),
+          // FilledButton(onPressed: () {}, child: Text("Main Courses")),
+          RecommendationButton(
+            db: widget.db,
+            allRecipes: widget.db.getAllRecipes(),
+          ),
+          Spacer(),
+        ],
       ),
     );
   }
