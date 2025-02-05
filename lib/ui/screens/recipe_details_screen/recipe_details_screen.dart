@@ -90,7 +90,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               DirectionsSection(recipe: widget.recipe),
             SizedBox(height: defaultSpacing),
             if (widget.recipe.ingredients.isNotEmpty)
-              IngredientsSection(recipe: widget.recipe),
+              IngredientsSection(recipe: widget.recipe, db: widget.db),
             SizedBox(height: 40),
             RichText(
               text: TextSpan(

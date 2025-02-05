@@ -24,7 +24,6 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
             textAlign: TextAlign.center,
           ),
           Spacer(),
-          // FilledButton(onPressed: () {}, child: Text("Main Courses")),
           RecommendationButton(
             db: widget.db,
             allRecipes: widget.db.getAllRecipes(),

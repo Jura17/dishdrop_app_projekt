@@ -22,7 +22,6 @@ class _IngredientListViewState extends State<IngredientListView> {
             (index) {
               return Container(
                 decoration: BoxDecoration(
-                    // borderRadius: BorderRadius.circular(20),
                     color: index.isEven ? AppColors.lightGrey : null),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),

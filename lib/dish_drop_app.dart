@@ -23,7 +23,7 @@ class _DishDropAppState extends State<DishDropApp> {
       body: [
         CategoriesScreen(db: widget.db),
         RecommendationScreen(db: widget.db),
-        ShoppingListScreen(),
+        ShoppingListScreen(db: widget.db),
       ][activeIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: activeIndex,
