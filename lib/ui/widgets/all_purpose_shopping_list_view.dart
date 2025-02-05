@@ -16,24 +16,23 @@ class _AllPurposeShoppingListViewState
     extends State<AllPurposeShoppingListView> {
   @override
   Widget build(BuildContext context) {
-    // List allShoppingLists = widget.db.getAllShoppingLists();
-    // ShoppingList allPurposeShoppingList = allShoppingLists[0];
+    ShoppingList allPurposeShoppingList = widget.db.getAllShoppingLists().first;
 
-    return Center(child: Text("All-purpose Shopping List"));
+    // return Center(child: Text("All-purpose Shopping List"));
 
-    // return SingleChildScrollView(
-    //   child: Column(
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: [
-    //       Text(
-    //         allPurposeShoppingList.title,
-    //         style: Theme.of(context).textTheme.headlineLarge,
-    //       ),
-    //       ...allPurposeShoppingList.shoppingItems.map(
-    //         (item) => Text(item.description),
-    //       )
-    //     ],
-    //   ),
-    // );
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            allPurposeShoppingList.title,
+            style: Theme.of(context).textTheme.headlineLarge,
+          ),
+          ...allPurposeShoppingList.shoppingItems.map(
+            (item) => Text(item.description),
+          )
+        ],
+      ),
+    );
   }
 }
