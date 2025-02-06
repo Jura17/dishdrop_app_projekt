@@ -1,6 +1,6 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/core/utils/check_amount_and_convert.dart';
 import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
-import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/servings_picker.dart';
@@ -110,10 +110,15 @@ class _RecipeShoppingListViewState extends State<RecipeShoppingListView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "${shoppingItem.amount?.toString() ?? ''} ${shoppingItem.unit?.toString() ?? ''}",
+                                    "${checkAmountAndConvert(shoppingItem.amount)} ${shoppingItem.unit?.toString() ?? ''}",
                                     style:
                                         Theme.of(context).textTheme.bodyLarge,
                                   ),
+                                  // Text(
+                                  //   "${shoppingItem.amount?.toString() ?? ''} ${shoppingItem.unit?.toString() ?? ''}",
+                                  //   style:
+                                  //       Theme.of(context).textTheme.bodyLarge,
+                                  // ),
                                   const SizedBox(width: 10),
                                   Expanded(
                                     child: Text(

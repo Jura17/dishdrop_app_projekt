@@ -1,5 +1,6 @@
 import 'package:alert_banner/exports.dart';
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/core/utils/check_amount_and_convert.dart';
 import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
@@ -183,9 +184,14 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${_userInputValues["ingredients"][index].amount?.toString() ?? ''} ${_userInputValues["ingredients"][index].unit?.toString() ?? ''}",
+                              "${checkAmountAndConvert(_userInputValues["ingredients"][index].amount)} ${_userInputValues["ingredients"][index].unit?.toString() ?? ''}",
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
+                            // Text(
+                            //   "${_userInputValues["ingredients"][index].amount?.toString() ?? ''} ${_userInputValues["ingredients"][index].unit?.toString() ?? ''}",
+                            //   style: Theme.of(context).textTheme.bodyLarge,
+                            // ),
+
                             Expanded(
                               child: Text(
                                 _userInputValues["ingredients"][index]

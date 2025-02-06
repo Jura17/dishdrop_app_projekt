@@ -1,4 +1,5 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/core/utils/check_amount_and_convert.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
@@ -28,6 +29,26 @@ class _AllPurposeShoppingListViewState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              allPurposeShoppingList.title,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.dishDropBlack),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(
+                  allPurposeShoppingList.imgUrl,
+                  height: 250,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
             Column(
               children: List.generate(
                   allPurposeShoppingList.shoppingItems.length, (index) {
@@ -42,9 +63,13 @@ class _AllPurposeShoppingListViewState
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "${allPurposeShoppingList.shoppingItems[index].amount?.toString() ?? ''} ${allPurposeShoppingList.shoppingItems[index].unit?.toString() ?? ''}",
+                          "${checkAmountAndConvert(allPurposeShoppingList.shoppingItems[index].amount)} ${allPurposeShoppingList.shoppingItems[index].unit?.toString() ?? ''}",
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
+                        // Text(
+                        //   "${allPurposeShoppingList.shoppingItems[index].amount?.toString() ?? ''} ${allPurposeShoppingList.shoppingItems[index].unit?.toString() ?? ''}",
+                        //   style: Theme.of(context).textTheme.bodyLarge,
+                        // ),
                         Expanded(
                           child: Text(
                             allPurposeShoppingList
@@ -58,7 +83,8 @@ class _AllPurposeShoppingListViewState
                   ),
                 );
               }),
-            )
+            ),
+            SizedBox(height: 100)
           ],
         ),
       ),

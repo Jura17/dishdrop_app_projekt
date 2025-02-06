@@ -1,4 +1,5 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/core/utils/check_amount_and_convert.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,7 @@ class _IngredientListViewState extends State<IngredientListView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${widget.recipe.ingredients[index].amount?.toString() ?? ''} ${widget.recipe.ingredients[index].unit?.toString() ?? ''}",
+                        "${checkAmountAndConvert(widget.recipe.ingredients[index].amount)} ${widget.recipe.ingredients[index].unit?.toString() ?? ''}",
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       Expanded(

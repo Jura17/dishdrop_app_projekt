@@ -3,8 +3,9 @@ import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 
 final List<ShoppingList> shoppingListData = [
   ShoppingList(
-    title: "All-purpose list",
-    imgUrl: "",
+    title: "All-Purpose List",
+    imgUrl:
+        "https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fill,g_center,w_730,h_913/k%2Farchive%2F0b899275c51c6251094201819ec32fbc1f4e33b7",
     shoppingItems: [
       ListItem(
         description: "milk",
