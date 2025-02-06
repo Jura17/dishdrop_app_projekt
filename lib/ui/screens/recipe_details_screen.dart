@@ -1,11 +1,11 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
-import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/description_section.dart';
-import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/directions_section.dart';
-import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/ingredients_section.dart';
-import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/quick_info_section.dart';
-import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/tags_section.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/description_section.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/directions_section.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/ingredients_section.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/quick_info_section.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/tags_section.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';

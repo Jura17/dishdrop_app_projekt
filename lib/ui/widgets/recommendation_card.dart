@@ -1,7 +1,7 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
-import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/recipe_details_screen.dart';
+import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/dismiss_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
 

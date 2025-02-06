@@ -1,6 +1,6 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen/new_recipe_screen.dart';
+import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen.dart';
 import 'package:flutter/material.dart';
 
 class CustomFilledIconButton extends StatelessWidget {

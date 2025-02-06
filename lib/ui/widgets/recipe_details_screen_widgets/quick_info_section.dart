@@ -1,4 +1,4 @@
-import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen/recipe_details_screen.dart';
+import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class QuickInfoSection extends StatelessWidget {

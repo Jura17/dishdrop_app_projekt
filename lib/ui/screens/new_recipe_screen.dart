@@ -3,17 +3,17 @@ import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen/category_dropdown_menu.dart';
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen/cooking_time_text_form_field.dart';
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen/description_text_form_field.dart';
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen/difficulty_dropdown_menu.dart';
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen/directions_list_view.dart';
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen/image_picker_field.dart';
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen/image_url_text_form_field.dart';
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen/notes_text_form_field.dart';
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen/prep_time_text_form_field.dart';
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen/tags_text_form_field.dart';
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen/title_text_form_field.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/category_dropdown_menu.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/cooking_time_text_form_field.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/description_text_form_field.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/difficulty_dropdown_menu.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/directions_list_view.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/image_picker_field.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/image_url_text_form_field.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/notes_text_form_field.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/prep_time_text_form_field.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/tags_text_form_field.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/title_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class NewRecipeScreen extends StatefulWidget {
