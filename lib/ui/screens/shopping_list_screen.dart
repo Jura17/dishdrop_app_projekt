@@ -28,9 +28,9 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
         ),
       ),
       body: [
-        AllPurposeShoppingListView(
-            shoppingListController: widget.shoppingListController),
         RecipeShoppingListView(
+            shoppingListController: widget.shoppingListController),
+        AllPurposeShoppingListView(
             shoppingListController: widget.shoppingListController),
       ][activeIndex],
       floatingActionButton:
@@ -75,8 +75,8 @@ class _ShoppingListSegmentButtonState extends State<ShoppingListSegmentButton> {
       showSelectedIcon: false,
       multiSelectionEnabled: false,
       segments: <ButtonSegment<int>>[
-        ButtonSegment(value: 0, label: Text("All-Purpose List")),
-        ButtonSegment(value: 1, label: Text("By Recipe")),
+        ButtonSegment(value: 0, label: Text("By Recipe")),
+        ButtonSegment(value: 1, label: Text("All-Purpose List")),
       ],
       selected: _selected,
       onSelectionChanged: updateSelected,
