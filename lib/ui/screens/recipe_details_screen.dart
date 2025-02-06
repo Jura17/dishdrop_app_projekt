@@ -1,4 +1,5 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
@@ -140,6 +141,8 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                         .indexOf(widget.recipe);
                     setState(() {
                       widget.recipeController.removeRecipe(id);
+                      showCustomAlertBanner(
+                          context, Colors.red, "Recipe removed from cookbook.");
                     });
                     Navigator.of(context).pop();
                   },
@@ -163,11 +166,13 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             text: "Edit Recipe",
             iconData: Icons.edit,
             recipeController: widget.recipeController,
+            shoppingListController: widget.shoppingListController,
           ),
           CustomFilledIconButton(
             text: "Add Recipe",
             iconData: Icons.add_box_outlined,
             recipeController: widget.recipeController,
+            shoppingListController: widget.shoppingListController,
           ),
         ],
       ),

@@ -79,6 +79,7 @@ class CategoriesScreen extends StatelessWidget {
         text: "Add Recipe",
         iconData: Icons.add_box_outlined,
         recipeController: recipeController,
+        shoppingListController: shoppingListController,
       ),
     );
   }

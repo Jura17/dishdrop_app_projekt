@@ -1,3 +1,4 @@
+import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 
@@ -30,6 +31,11 @@ class IngredientsSection extends StatelessWidget {
                 shoppingListController.addShoppingList(
                   ShoppingList(
                       title: recipe.title, shoppingItems: recipe.ingredients),
+                );
+                showCustomAlertBanner(
+                  context,
+                  Theme.of(context).primaryColor,
+                  "Ingredients added to shopping list!",
                 );
               },
               style: Theme.of(context).filledButtonTheme.style,

@@ -1,8 +1,11 @@
 import 'package:alert_banner/exports.dart';
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
+import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
+import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/category_dropdown_menu.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/cooking_time_text_form_field.dart';
@@ -18,8 +21,13 @@ import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/title_
 import 'package:flutter/material.dart';
 
 class NewRecipeScreen extends StatefulWidget {
-  const NewRecipeScreen({super.key, required this.recipeController});
+  const NewRecipeScreen({
+    super.key,
+    required this.recipeController,
+    required this.shoppingListController,
+  });
   final RecipeController recipeController;
+  final ShoppingListController shoppingListController;
 
   @override
   State<NewRecipeScreen> createState() => _NewRecipeScreenState();
@@ -284,14 +292,29 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                   children: [
                     FilledButton(
                       onPressed: () {
-                        addRecipeToDb(_userInputValues);
+                        Recipe newRecipe = prepareRecipeForDb(_userInputValues);
+                        widget.recipeController.addRecipe(newRecipe);
+                        showCustomAlertBanner(
+                            context, Colors.green, "Recipe added to cookbook!");
                       },
                       child: Text("Save recipe"),
                     ),
                     FilledButton(
                       onPressed: () {
-                        addRecipeToDb(_userInputValues);
-                        Navigator.of(context).pop();
+                        Recipe newRecipe = prepareRecipeForDb(_userInputValues);
+                        widget.recipeController.addRecipe(newRecipe);
+                        showCustomAlertBanner(
+                            context, Colors.green, "Recipe added to cookbook!");
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                RecipeDetailsScreen(
+                                    recipe: newRecipe,
+                                    recipeController: widget.recipeController,
+                                    shoppingListController:
+                                        widget.shoppingListController),
+                          ),
+                        );
                       },
                       child: Text("Save and open recipe"),
                     )
@@ -306,7 +329,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     );
   }
 
-  void addRecipeToDb(Map<String, dynamic> userInputValues) {
+  Recipe prepareRecipeForDb(Map<String, dynamic> userInputValues) {
     Recipe newRecipe = Recipe(
       title: userInputValues["title"],
       category: userInputValues["category"],
@@ -320,24 +343,8 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
       ingredients: userInputValues["ingredients"],
     );
 
-    widget.recipeController.addRecipe(newRecipe);
-    showAlertBanner(
-        context,
-        () {},
-        Container(
-          color: Colors.green,
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              textAlign: TextAlign.center,
-              "Success! Recipe added to cookbook.",
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        ),
-        alertBannerLocation: AlertBannerLocation.bottom);
     resetAllCtrl();
+    return newRecipe;
   }
 
   void resetAllCtrl() {
