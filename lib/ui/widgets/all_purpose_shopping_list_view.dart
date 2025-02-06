@@ -21,8 +21,6 @@ class _AllPurposeShoppingListViewState
     ShoppingList allPurposeShoppingList =
         widget.shoppingListController.getAllShoppingLists().first;
 
-    // return Center(child: Text("All-purpose Shopping List"));
-
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

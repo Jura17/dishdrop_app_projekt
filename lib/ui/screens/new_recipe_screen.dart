@@ -172,7 +172,9 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                       _userInputValues["ingredients"].length, (index) {
                     return Container(
                       decoration: BoxDecoration(
-                          color: index.isEven ? AppColors.lightGrey : null),
+                          color: index.isEven
+                              ? AppColors.lightGrey
+                              : Colors.white),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(

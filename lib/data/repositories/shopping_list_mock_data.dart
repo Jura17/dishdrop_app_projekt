@@ -4,6 +4,7 @@ import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 final List<ShoppingList> shoppingListData = [
   ShoppingList(
     title: "All-purpose list",
+    imgUrl: "",
     shoppingItems: [
       ListItem(
         description: "olive oil",
@@ -21,6 +22,8 @@ final List<ShoppingList> shoppingListData = [
   ),
   ShoppingList(
     title: "Sesame Chicken",
+    imgUrl:
+        "https://www.dinneratthezoo.com/wp-content/uploads/2015/04/sesame-chicken-2.jpg",
     servings: 4,
     shoppingItems: [
       ListItem(

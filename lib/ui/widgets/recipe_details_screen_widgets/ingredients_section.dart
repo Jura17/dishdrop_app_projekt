@@ -30,7 +30,9 @@ class IngredientsSection extends StatelessWidget {
               onPressed: () {
                 shoppingListController.addShoppingList(
                   ShoppingList(
-                      title: recipe.title, shoppingItems: recipe.ingredients),
+                      title: recipe.title,
+                      imgUrl: recipe.images["titleImg"],
+                      shoppingItems: recipe.ingredients),
                 );
                 showCustomAlertBanner(
                   context,
