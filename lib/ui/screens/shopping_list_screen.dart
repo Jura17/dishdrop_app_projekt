@@ -35,7 +35,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
       ][activeIndex],
       floatingActionButton:
           ShoppingListSegmentButton(onSelectionChangedFunc: onSelectionChanged),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 

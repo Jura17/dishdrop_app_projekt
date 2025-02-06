@@ -85,6 +85,7 @@ class CategoriesScreen extends StatelessWidget {
             recipeController: recipeController,
             shoppingListController: shoppingListController),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

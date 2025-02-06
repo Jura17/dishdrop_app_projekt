@@ -46,7 +46,8 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding:
+            const EdgeInsets.only(top: 16, bottom: 80, left: 16, right: 16),
         child: ListView(
           children: [
             Stack(
@@ -188,7 +189,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
           ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

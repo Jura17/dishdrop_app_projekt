@@ -150,6 +150,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                               _userInputValues["directions"]
                                   .add(_directionDescription);
                               _allTextFormCtrl["directionDescCtrl"]!.clear();
+                              _directionDescription = "";
                             }
                           });
                         },
@@ -275,6 +276,9 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                             _allTextFormCtrl["ingredientAmountCtrl"]!.clear();
                             _allTextFormCtrl["ingredientUnitCtrl"]!.clear();
                             _allTextFormCtrl["ingredientDescCtrl"]!.clear();
+                            _ingredientAmount = 0;
+                            _ingredientUnit = "";
+                            _ingredientDescription = "";
                           });
                         },
                         icon: Icon(

@@ -160,6 +160,9 @@ class _AllPurposeShoppingListViewState
                         _amountCtrl.clear();
                         _unitCtrl.clear();
                         _descriptionCtrl.clear();
+                        _ingredientAmount = 0;
+                        _ingredientUnit = "";
+                        _ingredientDescription = "";
                       });
                     },
                     icon: Icon(
