@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   alert_banner: ^1.0.1
-  
+  flutter_launcher_icons: ^0.14.3
 
 dev_dependencies:
   flutter_test:
@@ -25,3 +25,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/icons/
