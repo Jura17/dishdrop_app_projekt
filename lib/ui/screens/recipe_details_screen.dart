@@ -4,6 +4,8 @@ import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
+import 'package:dishdrop_app_projekt/ui/screens/edit_recipe_screen.dart';
+import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/description_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/directions_section.dart';
@@ -59,7 +61,11 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
-                      errorBuilder: (context, error, stackTrace) => Text("404"),
+                      errorBuilder: (context, error, stackTrace) => Center(
+                          child: Text(
+                        "404",
+                        style: Theme.of(context).textTheme.headlineLarge,
+                      )),
                       widget.recipe.images["titleImg"],
                       fit: BoxFit.cover,
                     ),
@@ -167,12 +173,18 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             iconData: Icons.edit,
             recipeController: widget.recipeController,
             shoppingListController: widget.shoppingListController,
+            newScreen: EditRecipeScreen(
+                recipeController: widget.recipeController,
+                shoppingListController: widget.shoppingListController),
           ),
           CustomFilledIconButton(
             text: "Add Recipe",
             iconData: Icons.add_box_outlined,
             recipeController: widget.recipeController,
             shoppingListController: widget.shoppingListController,
+            newScreen: NewRecipeScreen(
+                recipeController: widget.recipeController,
+                shoppingListController: widget.shoppingListController),
           ),
         ],
       ),

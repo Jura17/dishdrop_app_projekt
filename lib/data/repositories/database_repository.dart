@@ -1,3 +1,5 @@
+import 'package:dishdrop_app_projekt/data/models/list_item.dart';
+
 import '../models/recipe.dart';
 import '../models/shopping_list.dart';
 
@@ -15,6 +17,7 @@ abstract class DatabaseRepository {
   // SHOPPING LIST:
   // create
   void addShoppingList(ShoppingList newShoppingList);
+  void addToAllPurposeShoppingList(ListItem listItem);
 
   // read
   List<ShoppingList> getAllShoppingLists();

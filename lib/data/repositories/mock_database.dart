@@ -1,3 +1,4 @@
+import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/repositories/recipe_mock_data.dart';
 import 'package:dishdrop_app_projekt/data/repositories/shopping_list_mock_data.dart';
 
@@ -24,6 +25,11 @@ class MockDatabase implements DatabaseRepository {
   @override
   void addShoppingList(ShoppingList newShoppingList) {
     shoppingListData.add(newShoppingList);
+  }
+
+  @override
+  void addToAllPurposeShoppingList(ListItem listItem) {
+    shoppingListData[0].addShoppingItem(listItem);
   }
 
   @override

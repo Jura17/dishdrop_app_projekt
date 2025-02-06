@@ -20,8 +20,8 @@ import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/tags_t
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/title_text_form_field.dart';
 import 'package:flutter/material.dart';
 
-class NewRecipeScreen extends StatefulWidget {
-  const NewRecipeScreen({
+class EditRecipeScreen extends StatefulWidget {
+  const EditRecipeScreen({
     super.key,
     required this.recipeController,
     required this.shoppingListController,
@@ -30,10 +30,10 @@ class NewRecipeScreen extends StatefulWidget {
   final ShoppingListController shoppingListController;
 
   @override
-  State<NewRecipeScreen> createState() => _NewRecipeScreenState();
+  State<EditRecipeScreen> createState() => _EditRecipeScreenState();
 }
 
-class _NewRecipeScreenState extends State<NewRecipeScreen> {
+class _EditRecipeScreenState extends State<EditRecipeScreen> {
   // TODO: _allTextFormCtrl is currently passed down to every single field => only one specific ctrl needed in each case though
   final Map<String, TextEditingController> _allTextFormCtrl = {
     "titleCtrl": TextEditingController(),
@@ -76,7 +76,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("New recipe",
+        title: Text("Edit recipe",
             style: Theme.of(context).textTheme.headlineLarge),
       ),
       body: Form(

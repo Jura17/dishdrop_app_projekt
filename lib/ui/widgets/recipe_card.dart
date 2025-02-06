@@ -56,8 +56,11 @@ class _RecipeCardState extends State<RecipeCard> {
                         width: double.infinity,
                         height: double.infinity,
                         child: Image.network(
-                          errorBuilder: (context, error, stackTrace) =>
-                              Text("404"),
+                          errorBuilder: (context, error, stackTrace) => Center(
+                              child: Text(
+                            "404",
+                            style: Theme.of(context).textTheme.headlineLarge,
+                          )),
                           widget.recipe.images["titleImg"],
                           fit: BoxFit.cover,
                         ),

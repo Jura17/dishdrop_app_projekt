@@ -2,6 +2,7 @@ import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
 
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 import 'package:dishdrop_app_projekt/gen/assets.gen.dart';
+import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/category_card.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';
@@ -80,6 +81,9 @@ class CategoriesScreen extends StatelessWidget {
         iconData: Icons.add_box_outlined,
         recipeController: recipeController,
         shoppingListController: shoppingListController,
+        newScreen: NewRecipeScreen(
+            recipeController: recipeController,
+            shoppingListController: shoppingListController),
       ),
     );
   }
