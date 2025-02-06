@@ -1,11 +1,13 @@
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
-import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
+
+import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 import 'package:flutter/material.dart';
 
 class AllPurposeShoppingListView extends StatefulWidget {
-  const AllPurposeShoppingListView({super.key, required this.db});
+  const AllPurposeShoppingListView(
+      {super.key, required this.shoppingListController});
 
-  final MockDatabase db;
+  final ShoppingListController shoppingListController;
 
   @override
   State<AllPurposeShoppingListView> createState() =>
@@ -16,7 +18,8 @@ class _AllPurposeShoppingListViewState
     extends State<AllPurposeShoppingListView> {
   @override
   Widget build(BuildContext context) {
-    ShoppingList allPurposeShoppingList = widget.db.getAllShoppingLists().first;
+    ShoppingList allPurposeShoppingList =
+        widget.shoppingListController.getAllShoppingLists().first;
 
     // return Center(child: Text("All-purpose Shopping List"));
 

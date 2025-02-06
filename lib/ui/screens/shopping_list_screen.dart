@@ -1,14 +1,15 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
-import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
+import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
+
 import 'package:dishdrop_app_projekt/ui/widgets/all_purpose_shopping_list_view.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_view.dart';
 import 'package:flutter/material.dart';
 
 class ShoppingListScreen extends StatefulWidget {
-  const ShoppingListScreen({super.key, required this.db});
+  const ShoppingListScreen({super.key, required this.shoppingListController});
 
-  final MockDatabase db;
+  final ShoppingListController shoppingListController;
 
   @override
   State<ShoppingListScreen> createState() => _ShoppingListScreenState();
@@ -27,8 +28,10 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
         ),
       ),
       body: [
-        AllPurposeShoppingListView(db: widget.db),
-        RecipeShoppingListView(db: widget.db),
+        AllPurposeShoppingListView(
+            shoppingListController: widget.shoppingListController),
+        RecipeShoppingListView(
+            shoppingListController: widget.shoppingListController),
       ][activeIndex],
       floatingActionButton:
           ShoppingListSegmentButton(onSelectionChangedFunc: onSelectionChanged),

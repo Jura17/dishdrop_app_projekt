@@ -1,4 +1,6 @@
-import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
+import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
+
+import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 import 'package:dishdrop_app_projekt/gen/assets.gen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/category_card.dart';
@@ -7,9 +9,14 @@ import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({super.key, required this.db});
+  const CategoriesScreen({
+    super.key,
+    required this.recipeController,
+    required this.shoppingListController,
+  });
 
-  final MockDatabase db;
+  final RecipeController recipeController;
+  final ShoppingListController shoppingListController;
 
   @override
   Widget build(BuildContext context) {
@@ -31,32 +38,38 @@ class CategoriesScreen extends StatelessWidget {
               CategoryCard(
                 categoryImg: Assets.images.appetizersCategoryImg.path,
                 categoryTitle: "Appetizers",
-                db: db,
+                recipeController: recipeController,
+                shoppingListController: shoppingListController,
               ),
               CategoryCard(
                 categoryImg: Assets.images.mainCoursesCategoryImg.path,
                 categoryTitle: "Main Courses",
-                db: db,
+                recipeController: recipeController,
+                shoppingListController: shoppingListController,
               ),
               CategoryCard(
                 categoryImg: Assets.images.sideDishesCategoryImg.path,
                 categoryTitle: "Side Dishes",
-                db: db,
+                recipeController: recipeController,
+                shoppingListController: shoppingListController,
               ),
               CategoryCard(
                 categoryImg: Assets.images.salatCategoryImg.path,
                 categoryTitle: "Salads",
-                db: db,
+                recipeController: recipeController,
+                shoppingListController: shoppingListController,
               ),
               CategoryCard(
                 categoryImg: Assets.images.sweetStuffCategoryImg.path,
                 categoryTitle: "Sweet Stuff",
-                db: db,
+                recipeController: recipeController,
+                shoppingListController: shoppingListController,
               ),
               CategoryCard(
                 categoryImg: Assets.images.drinksCategoryImg.path,
                 categoryTitle: "Drinks",
-                db: db,
+                recipeController: recipeController,
+                shoppingListController: shoppingListController,
               ),
             ],
           ),
@@ -65,7 +78,7 @@ class CategoriesScreen extends StatelessWidget {
       floatingActionButton: CustomFilledIconButton(
         text: "Add Recipe",
         iconData: Icons.add_box_outlined,
-        db: db,
+        recipeController: recipeController,
       ),
     );
   }

@@ -1,12 +1,13 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 
-import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
+import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 import 'package:flutter/material.dart';
 
 class RecipeShoppingListView extends StatefulWidget {
-  const RecipeShoppingListView({super.key, required this.db});
+  const RecipeShoppingListView(
+      {super.key, required this.shoppingListController});
 
-  final MockDatabase db;
+  final ShoppingListController shoppingListController;
 
   @override
   State<RecipeShoppingListView> createState() => _RecipeShoppingListViewState();
@@ -16,7 +17,7 @@ class _RecipeShoppingListViewState extends State<RecipeShoppingListView> {
   @override
   Widget build(BuildContext context) {
     List allRecipeShoppingLists =
-        widget.db.getAllShoppingLists().skip(1).toList();
+        widget.shoppingListController.getAllShoppingLists().skip(1).toList();
 
     return ListView.builder(
       itemCount: allRecipeShoppingLists.length,

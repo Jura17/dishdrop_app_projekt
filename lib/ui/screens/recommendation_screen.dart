@@ -1,11 +1,18 @@
-import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
+import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
+import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
+
 import 'package:dishdrop_app_projekt/ui/widgets/recommendation_button.dart';
 import 'package:flutter/material.dart';
 
 class RecommendationScreen extends StatefulWidget {
-  const RecommendationScreen({super.key, required this.db});
+  const RecommendationScreen({
+    super.key,
+    required this.recipeController,
+    required this.shoppingListController,
+  });
 
-  final MockDatabase db;
+  final RecipeController recipeController;
+  final ShoppingListController shoppingListController;
 
   @override
   State<RecommendationScreen> createState() => _RecommendationScreenState();
@@ -25,8 +32,9 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
           ),
           Spacer(),
           RecommendationButton(
-            db: widget.db,
-            allRecipes: widget.db.getAllRecipes(),
+            shoppingListController: widget.shoppingListController,
+            recipeController: widget.recipeController,
+            allRecipes: widget.recipeController.getAllRecipes(),
           ),
           Spacer(),
         ],

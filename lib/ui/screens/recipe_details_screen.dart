@@ -1,6 +1,9 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
-import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
+
+import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
+import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
+
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/description_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/directions_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/ingredients_section.dart';
@@ -16,10 +19,12 @@ class RecipeDetailsScreen extends StatefulWidget {
   const RecipeDetailsScreen({
     super.key,
     required this.recipe,
-    required this.db,
+    required this.recipeController,
+    required this.shoppingListController,
   });
   final Recipe recipe;
-  final MockDatabase db;
+  final RecipeController recipeController;
+  final ShoppingListController shoppingListController;
 
   @override
   State<RecipeDetailsScreen> createState() => _RecipeDetailsScreenState();
@@ -90,7 +95,9 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               DirectionsSection(recipe: widget.recipe),
             SizedBox(height: defaultSpacing),
             if (widget.recipe.ingredients.isNotEmpty)
-              IngredientsSection(recipe: widget.recipe, db: widget.db),
+              IngredientsSection(
+                  recipe: widget.recipe,
+                  shoppingListController: widget.shoppingListController),
             SizedBox(height: 40),
             RichText(
               text: TextSpan(
@@ -128,9 +135,11 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                   style: TextButton.styleFrom(
                       foregroundColor: Colors.red, iconColor: Colors.red),
                   onPressed: () {
-                    int id = widget.db.getAllRecipes().indexOf(widget.recipe);
+                    int id = widget.recipeController
+                        .getAllRecipes()
+                        .indexOf(widget.recipe);
                     setState(() {
-                      widget.db.removeRecipe(id);
+                      widget.recipeController.removeRecipe(id);
                     });
                     Navigator.of(context).pop();
                   },
@@ -153,12 +162,12 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
           CustomFilledIconButton(
             text: "Edit Recipe",
             iconData: Icons.edit,
-            db: widget.db,
+            recipeController: widget.recipeController,
           ),
           CustomFilledIconButton(
             text: "Add Recipe",
             iconData: Icons.add_box_outlined,
-            db: widget.db,
+            recipeController: widget.recipeController,
           ),
         ],
       ),

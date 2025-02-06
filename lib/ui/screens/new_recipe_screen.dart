@@ -2,7 +2,8 @@ import 'package:alert_banner/exports.dart';
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
-import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
+import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
+
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/category_dropdown_menu.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/cooking_time_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/description_text_form_field.dart';
@@ -17,8 +18,8 @@ import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/title_
 import 'package:flutter/material.dart';
 
 class NewRecipeScreen extends StatefulWidget {
-  const NewRecipeScreen({super.key, required this.db});
-  final MockDatabase db;
+  const NewRecipeScreen({super.key, required this.recipeController});
+  final RecipeController recipeController;
 
   @override
   State<NewRecipeScreen> createState() => _NewRecipeScreenState();
@@ -319,7 +320,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
       ingredients: userInputValues["ingredients"],
     );
 
-    widget.db.addRecipe(newRecipe);
+    widget.recipeController.addRecipe(newRecipe);
     showAlertBanner(
         context,
         () {},

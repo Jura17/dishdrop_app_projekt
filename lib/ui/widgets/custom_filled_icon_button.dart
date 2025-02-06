@@ -1,5 +1,6 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
-import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
+import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
+
 import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -9,13 +10,13 @@ class CustomFilledIconButton extends StatelessWidget {
     required this.text,
     required this.iconData,
     this.backgroundColor,
-    this.db,
+    this.recipeController,
   });
 
   final String text;
   final IconData iconData;
   final Color? backgroundColor;
-  final MockDatabase? db;
+  final RecipeController? recipeController;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class CustomFilledIconButton extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => NewRecipeScreen(
-              db: db!,
+              recipeController: recipeController!,
             ),
           ),
         );

@@ -1,16 +1,23 @@
 import 'dart:math';
 
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
-import 'package:dishdrop_app_projekt/data/repositories/mock_database.dart';
+import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
+
+import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recommendation_card.dart';
 import 'package:flutter/material.dart';
 
 class RecommendationButton extends StatelessWidget {
-  const RecommendationButton(
-      {super.key, required this.allRecipes, required this.db});
+  const RecommendationButton({
+    super.key,
+    required this.allRecipes,
+    required this.recipeController,
+    required this.shoppingListController,
+  });
 
   final List<Recipe> allRecipes;
-  final MockDatabase db;
+  final RecipeController recipeController;
+  final ShoppingListController shoppingListController;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +42,10 @@ class RecommendationButton extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return RecommendationCard(
-            recipe: randomRecipe, db: db, getRandomRecipeFunc: getRandomRecipe);
+            recipe: randomRecipe,
+            recipeController: recipeController,
+            shoppingListController: shoppingListController,
+            getRandomRecipeFunc: getRandomRecipe);
       },
     );
   }
