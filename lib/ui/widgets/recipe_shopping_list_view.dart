@@ -24,10 +24,35 @@ class _RecipeShoppingListViewState extends State<RecipeShoppingListView> {
 
     return allRecipeShoppingLists.isEmpty
         ? Center(
-            child: Text(
-              "Your shopping list is empty",
-              style: Theme.of(context).textTheme.headlineMedium,
+            child: RichText(
+              text: TextSpan(
+                text: "This list is empty right now.\n\nGo to your ",
+                style: Theme.of(context).textTheme.headlineMedium,
+                children: [
+                  TextSpan(
+                    text: "recipes ",
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor),
+                  ),
+                  TextSpan(
+                      text: "to add some ",
+                      style: Theme.of(context).textTheme.headlineMedium),
+                  TextSpan(
+                    text: "shopping items!",
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  )
+                ],
+              ),
+              textAlign: TextAlign.center,
             ),
+            // child: Text(
+            //   "This list is empty right now.\n\nGo to your recipes to add some shopping items!",
+            //   style: Theme.of(context).textTheme.headlineMedium,
+            //   textAlign: TextAlign.center,
+            // ),
           )
         : SingleChildScrollView(
             child: Padding(
