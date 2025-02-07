@@ -25,9 +25,20 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
       appBar: AppBar(),
       body: Column(
         children: [
-          Text(
-            "Tap the button to find a recipe for today!",
-            style: Theme.of(context).textTheme.headlineLarge,
+          RichText(
+            text: TextSpan(
+              text: "Tap the ",
+              style: Theme.of(context).textTheme.headlineLarge,
+              children: [
+                TextSpan(
+                  text: "button",
+                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor),
+                ),
+                TextSpan(text: " to find a recipe for today!")
+              ],
+            ),
             textAlign: TextAlign.center,
           ),
           Spacer(),
