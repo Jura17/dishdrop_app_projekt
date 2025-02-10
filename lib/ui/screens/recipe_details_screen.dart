@@ -1,4 +1,3 @@
-import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 
@@ -11,9 +10,9 @@ import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/de
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/directions_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/ingredients_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/quick_info_section.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/recipe_details_title_image.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/tags_section.dart';
 
-import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';
 
 import 'package:flutter/material.dart';
@@ -50,37 +49,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             const EdgeInsets.only(top: 16, bottom: 80, left: 16, right: 16),
         child: ListView(
           children: [
-            Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: AppColors.dishDropBlack),
-                  ),
-                  height: 300,
-                  width: double.infinity,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.network(
-                      errorBuilder: (context, error, stackTrace) => Center(
-                          child: Text(
-                        "404",
-                        style: Theme.of(context).textTheme.headlineLarge,
-                      )),
-                      widget.recipe.images["titleImg"],
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                LikeButton(
-                  top: 20,
-                  right: 20,
-                  width: 60,
-                  height: 60,
-                  recipe: widget.recipe,
-                )
-              ],
-            ),
+            RecipeDetailsTitleImage(widget: widget),
             SizedBox(height: defaultSpacing),
             QuickInfoSection(widget: widget),
             SizedBox(height: defaultSpacing),
@@ -126,41 +95,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               ),
             ),
             SizedBox(height: 20),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 30,
-              children: [
-                FilledButton.icon(
-                  icon: Icon(Icons.check),
-                  onPressed: () {
-                    setState(() {
-                      widget.recipe.timesCooked++;
-                    });
-                  },
-                  label: Text("I'm done cooking!"),
-                ),
-                TextButton.icon(
-                  style: TextButton.styleFrom(
-                      foregroundColor: Colors.red, iconColor: Colors.red),
-                  onPressed: () {
-                    int id = widget.recipeController
-                        .getAllRecipes()
-                        .indexOf(widget.recipe);
-                    setState(() {
-                      widget.recipeController.removeRecipe(id);
-                      showCustomAlertBanner(
-                          context, Colors.red, "Recipe removed from cookbook.");
-                    });
-                    Navigator.of(context).pop();
-                  },
-                  label: Text("Remove recipe"),
-                  icon: Icon(
-                    Icons.delete,
-                    size: 30,
-                  ),
-                ),
-              ],
-            ),
+            buildFooterButtonSection(context),
             SizedBox(height: 130),
           ],
         ),
@@ -190,6 +125,43 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+
+  Column buildFooterButtonSection(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      spacing: 30,
+      children: [
+        FilledButton.icon(
+          icon: Icon(Icons.check),
+          onPressed: () {
+            setState(() {
+              widget.recipe.timesCooked++;
+            });
+          },
+          label: Text("I'm done cooking!"),
+        ),
+        TextButton.icon(
+          style: TextButton.styleFrom(
+              foregroundColor: Colors.red, iconColor: Colors.red),
+          onPressed: () {
+            int id =
+                widget.recipeController.getAllRecipes().indexOf(widget.recipe);
+            setState(() {
+              widget.recipeController.removeRecipe(id);
+              showCustomAlertBanner(
+                  context, Colors.red, "Recipe removed from cookbook.");
+            });
+            Navigator.of(context).pop();
+          },
+          label: Text("Remove recipe"),
+          icon: Icon(
+            Icons.delete,
+            size: 30,
+          ),
+        ),
+      ],
     );
   }
 }

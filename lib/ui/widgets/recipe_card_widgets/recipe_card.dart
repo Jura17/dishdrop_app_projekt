@@ -5,6 +5,7 @@ import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_card_widgets/recipe_card_info_box.dart';
 import 'package:flutter/material.dart';
 
 class RecipeCard extends StatefulWidget {
@@ -75,78 +76,11 @@ class _RecipeCardState extends State<RecipeCard> {
                     ],
                   ),
                 ),
-                GreyRecipeInfoBox(recipe: widget.recipe)
+                RecipeCardInfoBox(recipe: widget.recipe)
               ],
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class GreyRecipeInfoBox extends StatelessWidget {
-  const GreyRecipeInfoBox({
-    super.key,
-    required this.recipe,
-  });
-
-  final Recipe recipe;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.lightGrey,
-      ),
-      height: 130,
-      width: double.infinity,
-      child: Column(
-        children: [
-          Text(
-            recipe.title,
-            style: Theme.of(context).textTheme.titleMedium,
-            textAlign: TextAlign.center,
-          ),
-          Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
-                  spacing: 4,
-                  children: [
-                    Icon(
-                      Icons.timer_outlined,
-                      size: 22,
-                    ),
-                    Text("${recipe.prepTime + recipe.cookingTime} min")
-                  ],
-                ),
-                Row(
-                  spacing: 4,
-                  children: [
-                    Icon(
-                      Icons.workspace_premium_sharp,
-                      size: 22,
-                    ),
-                    Text(recipe.difficulty)
-                  ],
-                ),
-                Row(
-                  spacing: 4,
-                  children: [
-                    Icon(
-                      Icons.check_circle_outline_outlined,
-                      size: 22,
-                    ),
-                    Text("Cooked ${recipe.timesCooked} times")
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
