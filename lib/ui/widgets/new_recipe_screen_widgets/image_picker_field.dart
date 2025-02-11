@@ -11,18 +11,20 @@ class ImagePickerField extends StatelessWidget {
     return GestureDetector(
       // TODO: implement image picker here
       onTap: () {},
-      child: Container(
-        width: 250,
-        height: 250,
-        decoration: BoxDecoration(
-          color: AppColors.lightGrey,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppColors.dishDropBlack),
-        ),
-        child: Icon(
-          Icons.camera_alt_outlined,
-          size: 50,
-          color: AppColors.dishDropBlack,
+      child: Center(
+        child: Container(
+          width: 250,
+          height: 250,
+          decoration: BoxDecoration(
+            color: AppColors.lightGrey,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: AppColors.dishDropBlack),
+          ),
+          child: Icon(
+            Icons.camera_alt_outlined,
+            size: 50,
+            color: AppColors.dishDropBlack,
+          ),
         ),
       ),
     );

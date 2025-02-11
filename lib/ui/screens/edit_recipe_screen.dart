@@ -79,260 +79,257 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
         title: Text("Edit recipe",
             style: Theme.of(context).textTheme.headlineLarge),
       ),
-      body: Form(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              spacing: 10,
-              children: [
-                TitleTextFormField(
-                    allTextFormCtrl: _allTextFormCtrl,
-                    userInputValues: _userInputValues),
-                CategoryDropdownMenu(
-                    allTextFormCtrl: _allTextFormCtrl,
-                    userInputValues: _userInputValues),
-                SizedBox(height: 30),
-                ImagePickerField(),
-                SizedBox(height: 30),
-                ImageUrlTextFormField(
-                    allTextFormCtrl: _allTextFormCtrl,
-                    userInputValues: _userInputValues),
-                DifficultyDropdownMenu(
-                    allTextFormCtrl: _allTextFormCtrl,
-                    userInputValues: _userInputValues),
-                TagsTextFormField(allTextFormCtrl: _allTextFormCtrl),
-                DescriptionTextFormField(
-                    allTextFormCtrl: _allTextFormCtrl,
-                    userInputValues: _userInputValues),
-                Row(
-                  spacing: 10,
-                  children: [
-                    Expanded(
-                      child: PrepTimeTextFormField(
-                          allTextFormCtrl: _allTextFormCtrl,
-                          userInputValues: _userInputValues),
-                    ),
-                    Expanded(
-                      child: CookingTimeTextFormField(
-                          allTextFormCtrl: _allTextFormCtrl,
-                          userInputValues: _userInputValues),
-                    ),
-                  ],
-                ),
-                NotesTextFormField(
-                    allTextFormCtrl: _allTextFormCtrl,
-                    userInputValues: _userInputValues),
-                SizedBox(height: 30),
-                Row(
-                  children: [
-                    Text("Directions",
-                        style: Theme.of(context).textTheme.headlineMedium),
-                    Spacer(),
-                  ],
-                ),
-                DirectionsListView(userInputValues: _userInputValues),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _allTextFormCtrl["directionDescCtrl"],
-                        onChanged: (value) => _directionDescription = value,
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: "Add cooking directions"),
-                      ),
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          setState(() {
-                            if (_directionDescription != "") {
-                              _userInputValues["directions"]
-                                  .add(_directionDescription);
-                              _allTextFormCtrl["directionDescCtrl"]!.clear();
-                            }
-                          });
-                        },
-                        icon: Icon(
-                          Icons.add_box_outlined,
-                          size: 35,
-                        ))
-                  ],
-                ),
-                SizedBox(height: 30),
-                Row(
-                  children: [
-                    Text("Ingredients",
-                        style: Theme.of(context).textTheme.headlineMedium),
-                    Spacer(),
-                  ],
-                ),
-                Column(
-                  children: List.generate(
-                      _userInputValues["ingredients"].length, (index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                          color: index.isEven
-                              ? AppColors.lightGrey
-                              : Colors.white),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          spacing: 10,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "${checkAmountAndConvert(_userInputValues["ingredients"][index].amount)} ${_userInputValues["ingredients"][index].unit?.toString() ?? ''}",
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                            // Text(
-                            //   "${_userInputValues["ingredients"][index].amount?.toString() ?? ''} ${_userInputValues["ingredients"][index].unit?.toString() ?? ''}",
-                            //   style: Theme.of(context).textTheme.bodyLarge,
-                            // ),
-
-                            Expanded(
-                              child: Text(
-                                _userInputValues["ingredients"][index]
-                                    .description,
-                                style: Theme.of(context).textTheme.bodyLarge,
-                                textAlign: TextAlign.right,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 10,
-                        children: [
-                          TextFormField(
-                            controller: _allTextFormCtrl["ingredientDescCtrl"],
-                            onChanged: (value) =>
-                                _ingredientDescription = value,
-                            decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: "Ingredient description"),
-                          ),
-                          Row(
-                            spacing: 10,
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  controller:
-                                      _allTextFormCtrl["ingredientAmountCtrl"],
-                                  onChanged: (value) => _ingredientAmount =
-                                      double.tryParse(value),
-                                  decoration: const InputDecoration(
-                                    filled: true,
-                                    fillColor: AppColors.lightGrey,
-                                    border: OutlineInputBorder(),
-                                    hintText: "Amount",
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  controller:
-                                      _allTextFormCtrl["ingredientUnitCtrl"],
-                                  onChanged: (value) => value == ""
-                                      ? _ingredientUnit = null
-                                      : _ingredientUnit = value,
-                                  decoration: const InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      hintText: "Unit"),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Text(
-                            "You can enter fractional amounts like 1½ as 1.5",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium
-                                ?.copyWith(fontStyle: FontStyle.italic),
-                          )
-                        ],
-                      ),
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _userInputValues["ingredients"].add(
-                              ListItem(
-                                description: _ingredientDescription,
-                                amount: _ingredientAmount,
-                                unit: _ingredientUnit,
-                              ),
-                            );
-                            _allTextFormCtrl["ingredientAmountCtrl"]!.clear();
-                            _allTextFormCtrl["ingredientUnitCtrl"]!.clear();
-                            _allTextFormCtrl["ingredientDescCtrl"]!.clear();
-                          });
-                        },
-                        icon: Icon(
-                          Icons.add_box_outlined,
-                          size: 35,
-                        ))
-                  ],
-                ),
-                SizedBox(height: 5),
-                Row(
-                  children: [
-                    TextButton(
-                      style: TextButton.styleFrom(foregroundColor: Colors.red),
-                      onPressed: () => resetAllCtrl(),
-                      child: Text("Reset all fields"),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 30),
-                Row(
-                  spacing: 10,
-                  children: [
-                    FilledButton(
-                      onPressed: () {
-                        Recipe newRecipe = prepareRecipeForDb(_userInputValues);
-                        widget.recipeController.addRecipe(newRecipe);
-                        showCustomAlertBanner(
-                            context, Colors.green, "Recipe added to cookbook!");
-                      },
-                      child: Text("Save recipe"),
-                    ),
-                    FilledButton(
-                      onPressed: () {
-                        Recipe newRecipe = prepareRecipeForDb(_userInputValues);
-                        widget.recipeController.addRecipe(newRecipe);
-                        showCustomAlertBanner(
-                            context, Colors.green, "Recipe added to cookbook!");
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                RecipeDetailsScreen(
-                                    recipe: newRecipe,
-                                    recipeController: widget.recipeController,
-                                    shoppingListController:
-                                        widget.shoppingListController),
-                          ),
-                        );
-                      },
-                      child: Text("Save and open recipe"),
-                    )
-                  ],
-                ),
-                SizedBox(height: 100),
-              ],
-            ),
-          ),
-        ),
-      ),
+      // body: Form(
+      //   child: Padding(
+      //     padding: const EdgeInsets.all(16.0),
+      //     child: SingleChildScrollView(
+      //       child: Column(
+      //         spacing: 10,
+      //         children: [
+      //           TitleTextFormField(
+      //               allTextFormCtrl: _allTextFormCtrl,
+      //               userInputValues: _userInputValues),
+      //           CategoryDropdownMenu(
+      //               allTextFormCtrl: _allTextFormCtrl,
+      //               userInputValues: _userInputValues),
+      //           SizedBox(height: 30),
+      //           ImagePickerField(),
+      //           SizedBox(height: 30),
+      //           ImageUrlTextFormField(
+      //               allTextFormCtrl: _allTextFormCtrl,
+      //               userInputValues: _userInputValues),
+      //           DifficultyDropdownMenu(
+      //               allTextFormCtrl: _allTextFormCtrl,
+      //               userInputValues: _userInputValues),
+      //           TagsTextFormField(allTextFormCtrl: _allTextFormCtrl),
+      //           DescriptionTextFormField(
+      //               allTextFormCtrl: _allTextFormCtrl,
+      //               userInputValues: _userInputValues),
+      //           Row(
+      //             spacing: 10,
+      //             children: [
+      //               Expanded(
+      //                 child: PrepTimeTextFormField(
+      //                     allTextFormCtrl: _allTextFormCtrl,
+      //                     userInputValues: _userInputValues),
+      //               ),
+      //               Expanded(
+      //                 child: CookingTimeTextFormField(
+      //                     allTextFormCtrl: _allTextFormCtrl,
+      //                     userInputValues: _userInputValues),
+      //               ),
+      //             ],
+      //           ),
+      //           NotesTextFormField(
+      //               allTextFormCtrl: _allTextFormCtrl,
+      //               userInputValues: _userInputValues),
+      //           SizedBox(height: 30),
+      //           Row(
+      //             children: [
+      //               Text("Directions",
+      //                   style: Theme.of(context).textTheme.headlineMedium),
+      //               Spacer(),
+      //             ],
+      //           ),
+      //           DirectionsListView(userInputValues: _userInputValues),
+      //           Row(
+      //             children: [
+      //               Expanded(
+      //                 child: TextFormField(
+      //                   controller: _allTextFormCtrl["directionDescCtrl"],
+      //                   onChanged: (value) => _directionDescription = value,
+      //                   decoration: const InputDecoration(
+      //                       border: OutlineInputBorder(),
+      //                       hintText: "Add cooking directions"),
+      //                 ),
+      //               ),
+      //               IconButton(
+      //                   onPressed: () {
+      //                     setState(() {
+      //                       if (_directionDescription != "") {
+      //                         _userInputValues["directions"]
+      //                             .add(_directionDescription);
+      //                         _allTextFormCtrl["directionDescCtrl"]!.clear();
+      //                       }
+      //                     });
+      //                   },
+      //                   icon: Icon(
+      //                     Icons.add_box_outlined,
+      //                     size: 35,
+      //                   ))
+      //             ],
+      //           ),
+      //           SizedBox(height: 30),
+      //           Row(
+      //             children: [
+      //               Text("Ingredients",
+      //                   style: Theme.of(context).textTheme.headlineMedium),
+      //               Spacer(),
+      //             ],
+      //           ),
+      //           Column(
+      //             children: List.generate(
+      //               _userInputValues["ingredients"].length,
+      //               (index) {
+      //                 return Container(
+      //                   decoration: BoxDecoration(
+      //                       color: index.isEven
+      //                           ? AppColors.lightGrey
+      //                           : Colors.white),
+      //                   child: Padding(
+      //                     padding: const EdgeInsets.all(8.0),
+      //                     child: Row(
+      //                       spacing: 10,
+      //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                       crossAxisAlignment: CrossAxisAlignment.start,
+      //                       children: [
+      //                         Text(
+      //                           "${checkAmountAndConvert(_userInputValues["ingredients"][index].amount)} ${_userInputValues["ingredients"][index].unit?.toString() ?? ''}",
+      //                           style: Theme.of(context).textTheme.bodyLarge,
+      //                         ),
+      //                         Expanded(
+      //                           child: Text(
+      //                             _userInputValues["ingredients"][index]
+      //                                 .description,
+      //                             style: Theme.of(context).textTheme.bodyLarge,
+      //                             textAlign: TextAlign.right,
+      //                           ),
+      //                         )
+      //                       ],
+      //                     ),
+      //                   ),
+      //                 );
+      //               },
+      //             ),
+      //           ),
+      //           SizedBox(height: 20),
+      //           Row(
+      //             children: [
+      //               Expanded(
+      //                 child: Column(
+      //                   crossAxisAlignment: CrossAxisAlignment.start,
+      //                   spacing: 10,
+      //                   children: [
+      //                     TextFormField(
+      //                       controller: _allTextFormCtrl["ingredientDescCtrl"],
+      //                       onChanged: (value) =>
+      //                           _ingredientDescription = value,
+      //                       decoration: const InputDecoration(
+      //                           border: OutlineInputBorder(),
+      //                           hintText: "Ingredient description"),
+      //                     ),
+      //                     Row(
+      //                       spacing: 10,
+      //                       children: [
+      //                         Expanded(
+      //                           child: TextFormField(
+      //                             controller:
+      //                                 _allTextFormCtrl["ingredientAmountCtrl"],
+      //                             onChanged: (value) => _ingredientAmount =
+      //                                 double.tryParse(value),
+      //                             decoration: const InputDecoration(
+      //                               filled: true,
+      //                               fillColor: AppColors.lightGrey,
+      //                               border: OutlineInputBorder(),
+      //                               hintText: "Amount",
+      //                             ),
+      //                           ),
+      //                         ),
+      //                         Expanded(
+      //                           child: TextFormField(
+      //                             controller:
+      //                                 _allTextFormCtrl["ingredientUnitCtrl"],
+      //                             onChanged: (value) => value == ""
+      //                                 ? _ingredientUnit = null
+      //                                 : _ingredientUnit = value,
+      //                             decoration: const InputDecoration(
+      //                                 border: OutlineInputBorder(),
+      //                                 hintText: "Unit"),
+      //                           ),
+      //                         ),
+      //                       ],
+      //                     ),
+      //                     Text(
+      //                       "You can enter fractional amounts like 1½ as 1.5",
+      //                       style: Theme.of(context)
+      //                           .textTheme
+      //                           .labelMedium
+      //                           ?.copyWith(fontStyle: FontStyle.italic),
+      //                     )
+      //                   ],
+      //                 ),
+      //               ),
+      //               IconButton(
+      //                   onPressed: () {
+      //                     setState(() {
+      //                       _userInputValues["ingredients"].add(
+      //                         ListItem(
+      //                           description: _ingredientDescription,
+      //                           amount: _ingredientAmount,
+      //                           unit: _ingredientUnit,
+      //                         ),
+      //                       );
+      //                       _allTextFormCtrl["ingredientAmountCtrl"]!.clear();
+      //                       _allTextFormCtrl["ingredientUnitCtrl"]!.clear();
+      //                       _allTextFormCtrl["ingredientDescCtrl"]!.clear();
+      //                     });
+      //                   },
+      //                   icon: Icon(
+      //                     Icons.add_box_outlined,
+      //                     size: 35,
+      //                   ))
+      //             ],
+      //           ),
+      //           SizedBox(height: 5),
+      //           Row(
+      //             children: [
+      //               TextButton(
+      //                 style: TextButton.styleFrom(foregroundColor: Colors.red),
+      //                 onPressed: () => resetAllCtrl(),
+      //                 child: Text("Reset all fields"),
+      //               ),
+      //             ],
+      //           ),
+      //           SizedBox(height: 30),
+      //           Row(
+      //             spacing: 10,
+      //             children: [
+      //               FilledButton(
+      //                 onPressed: () {
+      //                   Recipe newRecipe = prepareRecipeForDb(_userInputValues);
+      //                   widget.recipeController.addRecipe(newRecipe);
+      //                   showCustomAlertBanner(
+      //                       context, Colors.green, "Recipe added to cookbook!");
+      //                 },
+      //                 child: Text("Save recipe"),
+      //               ),
+      //               FilledButton(
+      //                 onPressed: () {
+      //                   Recipe newRecipe = prepareRecipeForDb(_userInputValues);
+      //                   widget.recipeController.addRecipe(newRecipe);
+      //                   showCustomAlertBanner(
+      //                       context, Colors.green, "Recipe added to cookbook!");
+      //                   Navigator.of(context).push(
+      //                     MaterialPageRoute(
+      //                       builder: (BuildContext context) =>
+      //                           RecipeDetailsScreen(
+      //                               recipe: newRecipe,
+      //                               recipeController: widget.recipeController,
+      //                               shoppingListController:
+      //                                   widget.shoppingListController),
+      //                     ),
+      //                   );
+      //                 },
+      //                 child: Text("Save and open recipe"),
+      //               )
+      //             ],
+      //           ),
+      //           SizedBox(height: 100),
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
     );
   }
 
@@ -341,6 +338,7 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
       title: userInputValues["title"],
       category: userInputValues["category"],
       description: userInputValues["description"],
+      notes: userInputValues["notes"],
       difficulty: userInputValues["difficulty"],
       tags: userInputValues["tags"],
       images: userInputValues["images"],

@@ -4,6 +4,7 @@ class Recipe {
   String title;
   String category;
   String description;
+  String notes;
   String difficulty;
   List<String> tags;
   Map<String, dynamic> images;
@@ -19,6 +20,7 @@ class Recipe {
     required this.title,
     required this.category,
     required this.description,
+    required this.notes,
     required this.difficulty,
     required this.tags,
     required this.images,

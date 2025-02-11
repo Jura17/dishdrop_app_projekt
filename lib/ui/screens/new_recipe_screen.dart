@@ -34,7 +34,6 @@ class NewRecipeScreen extends StatefulWidget {
 }
 
 class _NewRecipeScreenState extends State<NewRecipeScreen> {
-  // TODO: _allTextFormCtrl is currently passed down to every single field => only one specific ctrl needed in each case though
   final Map<String, TextEditingController> _allTextFormCtrl = {
     "titleCtrl": TextEditingController(),
     "categoryCtrl": TextEditingController(),
@@ -51,27 +50,15 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     "directionDescCtrl": TextEditingController(),
   };
 
-  final Map<String, dynamic> _userInputValues = {
-    "title": "",
-    "category": "",
+  final Map<String, dynamic> complexInputValues = {
     "images": {
       "titleImg": "",
       "cookingDirectionImg": [],
     },
-    "difficulty": "",
     "tags": <String>[],
-    "description": "",
-    "prepTime": 0,
-    "cookingTime": 0,
-    "notes": "",
-    "directions": <String>[],
     "ingredients": <ListItem>[],
+    "directions": <String>[]
   };
-
-  double? _ingredientAmount = 0;
-  String? _ingredientUnit = "";
-  String _ingredientDescription = "";
-  String _directionDescription = "";
 
   @override
   Widget build(BuildContext context) {
@@ -85,75 +72,198 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 10,
               children: [
-                TitleTextFormField(
-                    allTextFormCtrl: _allTextFormCtrl,
-                    userInputValues: _userInputValues),
+                TitleTextFormField(titleCtrl: _allTextFormCtrl["titleCtrl"]!),
                 CategoryDropdownMenu(
-                    allTextFormCtrl: _allTextFormCtrl,
-                    userInputValues: _userInputValues),
+                    categoryCtrl: _allTextFormCtrl["categoryCtrl"]!),
                 SizedBox(height: 30),
                 ImagePickerField(),
                 SizedBox(height: 30),
                 ImageUrlTextFormField(
-                    allTextFormCtrl: _allTextFormCtrl,
-                    userInputValues: _userInputValues),
+                    imgUrlCtrl: _allTextFormCtrl["imgUrlCtrl"]!),
                 DifficultyDropdownMenu(
-                    allTextFormCtrl: _allTextFormCtrl,
-                    userInputValues: _userInputValues),
-                TagsTextFormField(allTextFormCtrl: _allTextFormCtrl),
+                    difficultyCtrl: _allTextFormCtrl["difficultyCtrl"]!),
+                TagsTextFormField(tagsCtrl: _allTextFormCtrl["tagsCtrl"]!),
                 DescriptionTextFormField(
-                    allTextFormCtrl: _allTextFormCtrl,
-                    userInputValues: _userInputValues),
+                    descCtrl: _allTextFormCtrl["descCtrl"]!),
                 Row(
                   spacing: 10,
                   children: [
                     Expanded(
                       child: PrepTimeTextFormField(
-                          allTextFormCtrl: _allTextFormCtrl,
-                          userInputValues: _userInputValues),
+                          prepTimeCtrl: _allTextFormCtrl["prepTimeCtrl"]!),
                     ),
                     Expanded(
                       child: CookingTimeTextFormField(
-                          allTextFormCtrl: _allTextFormCtrl,
-                          userInputValues: _userInputValues),
+                          cookingTimeCtrl:
+                              _allTextFormCtrl["cookingTimeCtrl"]!),
                     ),
                   ],
                 ),
-                NotesTextFormField(
-                    allTextFormCtrl: _allTextFormCtrl,
-                    userInputValues: _userInputValues),
+                NotesTextFormField(notesCtrl: _allTextFormCtrl["notesCtrl"]!),
                 SizedBox(height: 30),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Directions",
-                      style: Theme.of(context).textTheme.headlineMedium),
+                Text("Directions",
+                    style: Theme.of(context).textTheme.headlineMedium),
+                DirectionsListView(complexInputValues: complexInputValues),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: _allTextFormCtrl["directionDescCtrl"],
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: "Add cooking directions"),
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          final directionDescription =
+                              _allTextFormCtrl["directionDescCtrl"]!.text;
+                          setState(() {
+                            if (_allTextFormCtrl["directionDescCtrl"]!.text !=
+                                "") {
+                              complexInputValues["directions"]
+                                  .add(directionDescription);
+                              _allTextFormCtrl["directionDescCtrl"]!.clear();
+                            }
+                          });
+                        },
+                        icon: Icon(
+                          Icons.add_box_outlined,
+                          size: 50,
+                        ))
+                  ],
                 ),
-                DirectionsListView(userInputValues: _userInputValues),
-                buildCookingDirectionInputSection(),
                 SizedBox(height: 30),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Ingredients",
-                      style: Theme.of(context).textTheme.headlineMedium),
-                ),
+                Text("Ingredients",
+                    style: Theme.of(context).textTheme.headlineMedium),
                 Column(
-                  children: generateIngredientList(context),
+                  children: List.generate(
+                      complexInputValues["ingredients"].length, (index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                          color: index.isEven
+                              ? AppColors.lightGrey
+                              : Colors.white),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          spacing: 10,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${checkAmountAndConvert(complexInputValues["ingredients"][index].amount)} ${complexInputValues["ingredients"][index].unit?.toString() ?? ''}",
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                            // Text(
+                            //   "${_userInputValues["ingredients"][index].amount?.toString() ?? ''} ${_userInputValues["ingredients"][index].unit?.toString() ?? ''}",
+                            //   style: Theme.of(context).textTheme.bodyLarge,
+                            // ),
+
+                            Expanded(
+                              child: Text(
+                                complexInputValues["ingredients"][index]
+                                    .description,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                                textAlign: TextAlign.right,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
                 ),
                 SizedBox(height: 20),
-                buildIngredientInputSection(context),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 10,
+                        children: [
+                          TextFormField(
+                            controller: _allTextFormCtrl["ingredientDescCtrl"],
+                            decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: "Ingredient description"),
+                          ),
+                          Row(
+                            spacing: 10,
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller:
+                                      _allTextFormCtrl["ingredientAmountCtrl"],
+                                  decoration: const InputDecoration(
+                                    filled: true,
+                                    fillColor: AppColors.lightGrey,
+                                    border: OutlineInputBorder(),
+                                    hintText: "Amount",
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: TextFormField(
+                                  controller:
+                                      _allTextFormCtrl["ingredientUnitCtrl"],
+                                  decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintText: "Unit"),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            "You can enter fractional amounts like 1½ as 1.5",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium
+                                ?.copyWith(fontStyle: FontStyle.italic),
+                          )
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          complexInputValues["ingredients"].add(
+                            ListItem(
+                              description:
+                                  _allTextFormCtrl["ingredientDescCtrl"]!.text,
+                              amount: double.tryParse(
+                                  _allTextFormCtrl["ingredientAmountCtrl"]!
+                                      .text),
+                              unit:
+                                  _allTextFormCtrl["ingredientUnitCtrl"]!.text,
+                            ),
+                          );
+                          _allTextFormCtrl["ingredientAmountCtrl"]!.clear();
+                          _allTextFormCtrl["ingredientUnitCtrl"]!.clear();
+                          _allTextFormCtrl["ingredientDescCtrl"]!.clear();
+                        });
+                      },
+                      icon: Icon(
+                        Icons.add_box_outlined,
+                        size: 50,
+                      ),
+                    )
+                  ],
+                ),
                 SizedBox(height: 5),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: TextButton(
-                    style: TextButton.styleFrom(foregroundColor: Colors.red),
-                    onPressed: () => resetAllCtrl(),
-                    child: Text("Reset all fields"),
-                  ),
+                TextButton(
+                  style: TextButton.styleFrom(foregroundColor: Colors.red),
+                  onPressed: () => resetAllCtrl(_allTextFormCtrl),
+                  child: Text("Reset all fields"),
                 ),
                 SizedBox(height: 30),
-                buildFooterButtonSection(context),
+                RecipeFormFooterButtonSection(
+                    complexInputValues: complexInputValues,
+                    widget: widget,
+                    allTextFormCtrl: _allTextFormCtrl),
                 SizedBox(height: 100),
               ],
             ),
@@ -162,14 +272,30 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
       ),
     );
   }
+}
 
-  Row buildFooterButtonSection(BuildContext context) {
+class RecipeFormFooterButtonSection extends StatelessWidget {
+  const RecipeFormFooterButtonSection({
+    super.key,
+    required this.complexInputValues,
+    required this.widget,
+    required this.allTextFormCtrl,
+  });
+
+  final Map<String, dynamic> complexInputValues;
+
+  final NewRecipeScreen widget;
+  final Map<String, TextEditingController> allTextFormCtrl;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       spacing: 10,
       children: [
         FilledButton(
           onPressed: () {
-            Recipe newRecipe = prepareRecipeForDb(_userInputValues);
+            Recipe newRecipe =
+                getCtrlInputValues(allTextFormCtrl, complexInputValues);
             widget.recipeController.addRecipe(newRecipe);
             showCustomAlertBanner(
                 context, Colors.green, "Recipe added to cookbook!");
@@ -178,7 +304,9 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
         ),
         FilledButton(
           onPressed: () {
-            Recipe newRecipe = prepareRecipeForDb(_userInputValues);
+            Recipe newRecipe =
+                getCtrlInputValues(allTextFormCtrl, complexInputValues);
+            resetAllCtrl(allTextFormCtrl);
             widget.recipeController.addRecipe(newRecipe);
             showCustomAlertBanner(
                 context, Colors.green, "Recipe added to cookbook!");
@@ -196,173 +324,45 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
       ],
     );
   }
+}
 
-  Row buildCookingDirectionInputSection() {
-    return Row(
-      children: [
-        Expanded(
-          child: TextFormField(
-            controller: _allTextFormCtrl["directionDescCtrl"],
-            onChanged: (value) => _directionDescription = value,
-            decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: "Add cooking directions"),
-          ),
-        ),
-        IconButton(
-            onPressed: () {
-              setState(() {
-                if (_directionDescription != "") {
-                  _userInputValues["directions"].add(_directionDescription);
-                  _allTextFormCtrl["directionDescCtrl"]!.clear();
-                  _directionDescription = "";
-                }
-              });
-            },
-            icon: Icon(
-              Icons.add_box_outlined,
-              size: 50,
-            ))
-      ],
-    );
-  }
+Recipe getCtrlInputValues(
+    Map<String, TextEditingController> allTextFormCtrl, complexInputValues) {
+  complexInputValues["images"]["titleImg"] =
+      allTextFormCtrl["imgUrlCtrl"]?.text ?? "";
 
-  Row buildIngredientInputSection(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 10,
-            children: [
-              TextFormField(
-                controller: _allTextFormCtrl["ingredientDescCtrl"],
-                onChanged: (value) => _ingredientDescription = value,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Ingredient description"),
-              ),
-              Row(
-                spacing: 10,
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: _allTextFormCtrl["ingredientAmountCtrl"],
-                      onChanged: (value) =>
-                          _ingredientAmount = double.tryParse(value),
-                      decoration: const InputDecoration(
-                        filled: true,
-                        fillColor: AppColors.lightGrey,
-                        border: OutlineInputBorder(),
-                        hintText: "Amount",
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _allTextFormCtrl["ingredientUnitCtrl"],
-                      onChanged: (value) => value == ""
-                          ? _ingredientUnit = null
-                          : _ingredientUnit = value,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(), hintText: "Unit"),
-                    ),
-                  ),
-                ],
-              ),
-              Text(
-                "You can enter fractional amounts like 1½ as 1.5",
-                style: Theme.of(context)
-                    .textTheme
-                    .labelMedium
-                    ?.copyWith(fontStyle: FontStyle.italic),
-              )
-            ],
-          ),
-        ),
-        IconButton(
-          onPressed: () {
-            setState(() {
-              _userInputValues["ingredients"].add(
-                ListItem(
-                  description: _ingredientDescription,
-                  amount: _ingredientAmount,
-                  unit: _ingredientUnit,
-                ),
-              );
-              _allTextFormCtrl["ingredientAmountCtrl"]!.clear();
-              _allTextFormCtrl["ingredientUnitCtrl"]!.clear();
-              _allTextFormCtrl["ingredientDescCtrl"]!.clear();
-              _ingredientAmount = 0;
-              _ingredientUnit = "";
-              _ingredientDescription = "";
-            });
-          },
-          icon: Icon(
-            Icons.add_box_outlined,
-            size: 50,
-          ),
-        )
-      ],
-    );
-  }
+  final String title = allTextFormCtrl["titleCtrl"]?.text ?? "";
+  final String category = allTextFormCtrl["categoryCtrl"]?.text ?? "";
+  final String description = allTextFormCtrl["descCtrl"]?.text ?? "";
+  final String notes = allTextFormCtrl["notesCtrl"]?.text ?? "";
+  final String difficulty = allTextFormCtrl["difficultyCtrl"]?.text ?? "";
+  final List<String> tags = complexInputValues["tags"];
+  final Map<String, dynamic> imagesInput = complexInputValues["images"];
+  final int prepTime = int.tryParse(allTextFormCtrl["prepTimeCtrl"]!.text) ?? 0;
+  final int cookingTime =
+      int.tryParse(allTextFormCtrl["cookingTimeCtrl"]!.text) ?? 0;
+  final List<String> directions = complexInputValues["directions"];
+  final List<ListItem> ingredients = complexInputValues["ingredients"];
 
-  List<Widget> generateIngredientList(BuildContext context) {
-    return List.generate(_userInputValues["ingredients"].length, (index) {
-      return Container(
-        decoration: BoxDecoration(
-            color: index.isEven ? AppColors.lightGrey : Colors.white),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            spacing: 10,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "${checkAmountAndConvert(_userInputValues["ingredients"][index].amount)} ${_userInputValues["ingredients"][index].unit?.toString() ?? ''}",
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              // Text(
-              //   "${_userInputValues["ingredients"][index].amount?.toString() ?? ''} ${_userInputValues["ingredients"][index].unit?.toString() ?? ''}",
-              //   style: Theme.of(context).textTheme.bodyLarge,
-              // ),
+  Recipe newRecipe = Recipe(
+    title: title,
+    category: category,
+    description: description,
+    notes: notes,
+    difficulty: difficulty,
+    tags: tags,
+    images: imagesInput,
+    prepTime: prepTime,
+    cookingTime: cookingTime,
+    directions: directions,
+    ingredients: ingredients,
+  );
 
-              Expanded(
-                child: Text(
-                  _userInputValues["ingredients"][index].description,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.right,
-                ),
-              )
-            ],
-          ),
-        ),
-      );
-    });
-  }
+  return newRecipe;
+}
 
-  Recipe prepareRecipeForDb(Map<String, dynamic> userInputValues) {
-    Recipe newRecipe = Recipe(
-      title: userInputValues["title"],
-      category: userInputValues["category"],
-      description: userInputValues["description"],
-      difficulty: userInputValues["difficulty"],
-      tags: userInputValues["tags"],
-      images: userInputValues["images"],
-      prepTime: userInputValues["prepTime"],
-      cookingTime: userInputValues["cookingTime"],
-      directions: userInputValues["directions"],
-      ingredients: userInputValues["ingredients"],
-    );
-
-    resetAllCtrl();
-    return newRecipe;
-  }
-
-  void resetAllCtrl() {
-    for (var key in _allTextFormCtrl.keys) {
-      _allTextFormCtrl[key]!.clear();
-    }
+void resetAllCtrl(Map<String, TextEditingController> allTextFormCtrl) {
+  for (var key in allTextFormCtrl.keys) {
+    allTextFormCtrl[key]!.clear();
   }
 }

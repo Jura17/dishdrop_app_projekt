@@ -65,7 +65,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               ),
             ),
             SizedBox(height: defaultSpacing),
-            if (widget.recipe.description.isNotEmpty)
+            if (widget.recipe.description != "")
               DescriptionSection(recipe: widget.recipe),
             SizedBox(height: defaultSpacing),
             if (widget.recipe.directions.isNotEmpty)

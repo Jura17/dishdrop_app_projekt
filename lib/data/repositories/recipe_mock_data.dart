@@ -8,6 +8,7 @@ final List<Recipe> recipeData = [
     difficulty: "Not too tricky",
     description:
         "Crispy, golden-brown chicken bites coated in a sweet and savory sesame sauce—this takeout favorite is surprisingly easy to make at home. With a perfect balance of crunch and flavor, it’s a guaranteed crowd-pleaser!",
+    notes: "",
     tags: ["comfort food", "chicken", "Friday night", "high protein"],
     images: {
       "titleImg":
@@ -54,6 +55,7 @@ final List<Recipe> recipeData = [
     difficulty: "Not too tricky",
     description:
         "A rich umami-packed dish featuring tender shiitake mushrooms stir-fried with garlic, soy sauce, and fresh vegetables. This quick and healthy meal is bursting with deep, earthy flavors and pairs perfectly with rice or noodles.",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -71,6 +73,7 @@ final List<Recipe> recipeData = [
     difficulty: "Easy",
     description:
         "Who knew homemade pizza could be this easy? With just three simple ingredients, you’ll have a crispy, cheesy, and absolutely delicious pizza ready in minutes. Perfect for busy days or last-minute cravings!",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -88,6 +91,7 @@ final List<Recipe> recipeData = [
     difficulty: "Easy",
     description:
         "Crispy toasted baguette slices topped with juicy, marinated tomatoes, fresh basil, and a drizzle of olive oil—this classic Italian appetizer is light, refreshing, and bursting with flavor. A must-try for any gathering!",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -118,6 +122,7 @@ final List<Recipe> recipeData = [
     difficulty: "Easy",
     description:
         "A crisp and refreshing salad made with crunchy romaine lettuce, crunchy croutons, and a creamy, garlicky Caesar dressing. Topped with Parmesan cheese, this classic dish is simple yet incredibly satisfying.",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -146,6 +151,7 @@ final List<Recipe> recipeData = [
     difficulty: "Not too tricky",
     description:
         "Fudgy, rich, and irresistibly chocolatey—these homemade brownies are the perfect indulgence. With a crackly top and gooey center, every bite melts in your mouth, making it impossible to eat just one!",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -178,6 +184,7 @@ final List<Recipe> recipeData = [
     difficulty: "Easy",
     description:
         "The ultimate refreshing cocktail! A perfect blend of tangy lime juice, smooth tequila, and a hint of orange liqueur, served over ice with a salted rim. One sip, and you’ll feel like you’re on a beach vacation!",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -207,6 +214,7 @@ final List<Recipe> recipeData = [
     difficulty: "Medium",
     description:
         "Juicy, seasoned grilled chicken served over a fresh bed of crisp greens, cherry tomatoes, and cucumbers, drizzled with a light vinaigrette. It’s the perfect balance of protein, crunch, and vibrant flavors.",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -237,6 +245,7 @@ final List<Recipe> recipeData = [
     difficulty: "Medium",
     description:
         "A rich and creamy Italian classic made with just a handful of ingredients—al dente spaghetti tossed in a silky sauce of eggs, Parmesan cheese, crispy pancetta, and black pepper. Simple, yet deeply satisfying!",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -267,6 +276,7 @@ final List<Recipe> recipeData = [
     difficulty: "Tricky",
     description:
         "A decadent dessert with a perfectly baked outer shell and a warm, gooey chocolate center. One bite into this rich, molten treat, and you’ll be in chocolate heaven! Best served with a scoop of vanilla ice cream.",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -300,6 +310,7 @@ final List<Recipe> recipeData = [
     difficulty: "Easy",
     description:
         "A timeless thirst-quencher made with freshly squeezed lemons, a touch of sugar, and ice-cold water. Sweet, tart, and incredibly refreshing—perfect for a hot summer day!",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -328,6 +339,7 @@ final List<Recipe> recipeData = [
     difficulty: "Medium",
     description:
         "A vibrant, veggie-packed pasta dish that celebrates the freshness of the season. Lightly sautéed vegetables tossed with tender pasta in a simple garlic and olive oil sauce—healthy, colorful, and full of flavor!",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -360,6 +372,7 @@ final List<Recipe> recipeData = [
     difficulty: "Medium",
     description:
         "Golden, crispy tofu tossed with colorful stir-fried veggies and a flavorful soy-garlic sauce. This protein-packed dish is crunchy on the outside, tender on the inside, and perfect for a quick meal!",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -391,6 +404,7 @@ final List<Recipe> recipeData = [
     difficulty: "Easy",
     description:
         "A refreshingly cool cocktail with muddled fresh mint, tangy lime juice, and a splash of white rum, topped with sparkling soda water. Crisp, zesty, and incredibly thirst-quenching!",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -420,6 +434,7 @@ final List<Recipe> recipeData = [
     difficulty: "Easy",
     description:
         "Sweet and buttery, these caramelized carrots are cooked to perfection, bringing out their natural sugars and deep flavors. A simple yet elegant side dish that pairs beautifully with any meal!",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -451,6 +466,7 @@ final List<Recipe> recipeData = [
     difficulty: "Medium",
     description:
         "A quick and flavorful dish made with perfectly stir-fried rice, crisp vegetables, and savory soy sauce. Light, delicious, and a great way to use up leftover rice!",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -487,6 +503,7 @@ final List<Recipe> recipeData = [
     difficulty: "Tricky",
     description:
         "Creamy, rich, and deeply comforting, this risotto is loaded with the earthy goodness of mushrooms and a touch of Parmesan cheese. A luxurious dish that’s worth every stir!",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -522,6 +539,7 @@ final List<Recipe> recipeData = [
     difficulty: "Medium",
     description:
         "Tangy, buttery, and perfectly sweet, these bright and zesty lemon bars are the perfect dessert for citrus lovers. With a melt-in-your-mouth shortbread crust and a smooth lemon filling, they’re simply irresistible!",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
@@ -557,6 +575,7 @@ final List<Recipe> recipeData = [
     difficulty: "Easy",
     description:
         "A creamy and energizing drink made with high-quality matcha green tea, lightly sweetened, and served over ice with milk. Smooth, refreshing, and packed with antioxidants!",
+    notes: "",
     tags: [],
     images: {
       "titleImg":
