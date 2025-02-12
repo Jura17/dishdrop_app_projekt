@@ -61,6 +61,14 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
   };
 
   @override
+  void dispose() {
+    super.dispose();
+    for (var ctrlKey in allTextFormCtrl.keys) {
+      allTextFormCtrl[ctrlKey]?.dispose();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
