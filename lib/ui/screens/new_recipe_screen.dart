@@ -34,6 +34,9 @@ class NewRecipeScreen extends StatefulWidget {
 }
 
 class _NewRecipeScreenState extends State<NewRecipeScreen> {
+  final formKey = GlobalKey<FormState>();
+  late List<Recipe> allRecipes;
+
   final Map<String, TextEditingController> allTextFormCtrl = {
     "titleCtrl": TextEditingController(),
     "categoryCtrl": TextEditingController(),
@@ -61,6 +64,12 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
   };
 
   @override
+  void initState() {
+    super.initState();
+    allRecipes = widget.recipeController.getAllRecipes();
+  }
+
+  @override
   void dispose() {
     super.dispose();
     for (var ctrlKey in allTextFormCtrl.keys) {
@@ -76,6 +85,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
             style: Theme.of(context).textTheme.headlineLarge),
       ),
       body: Form(
+        key: formKey,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
@@ -83,7 +93,10 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 10,
               children: [
-                TitleTextFormField(titleCtrl: allTextFormCtrl["titleCtrl"]!),
+                TitleTextFormField(
+                  titleCtrl: allTextFormCtrl["titleCtrl"]!,
+                  allRecipes: allRecipes,
+                ),
                 CategoryDropdownMenu(
                     categoryCtrl: allTextFormCtrl["categoryCtrl"]!),
                 SizedBox(height: 30),
@@ -138,9 +151,11 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                 ),
                 SizedBox(height: 30),
                 RecipeFormFooterButtonSection(
-                    complexInputValues: complexInputValues,
-                    widget: widget,
-                    allTextFormCtrl: allTextFormCtrl),
+                  complexInputValues: complexInputValues,
+                  widget: widget,
+                  allTextFormCtrl: allTextFormCtrl,
+                  formKey: formKey,
+                ),
                 SizedBox(height: 100),
               ],
             ),

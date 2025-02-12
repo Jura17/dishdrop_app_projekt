@@ -10,12 +10,14 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
     required this.complexInputValues,
     required this.widget,
     required this.allTextFormCtrl,
+    required this.formKey,
   });
 
   final Map<String, dynamic> complexInputValues;
 
   final NewRecipeScreen widget;
   final Map<String, TextEditingController> allTextFormCtrl;
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +26,13 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
       children: [
         FilledButton(
           onPressed: () {
-            Recipe newRecipe =
-                getCtrlInputValues(allTextFormCtrl, complexInputValues);
-            widget.recipeController.addRecipe(newRecipe);
-            showCustomAlertBanner(
-                context, Colors.green, "Recipe added to cookbook!");
+            if (formKey.currentState!.validate()) {
+              Recipe newRecipe =
+                  getCtrlInputValues(allTextFormCtrl, complexInputValues);
+              widget.recipeController.addRecipe(newRecipe);
+              showCustomAlertBanner(
+                  context, Colors.green, "Recipe added to cookbook!");
+            }
           },
           child: Text("Save recipe"),
         ),
