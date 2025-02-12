@@ -8,6 +8,7 @@ import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/description_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/directions_section.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/footer_button_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/ingredients_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/quick_info_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/recipe_details_title_image.dart';
@@ -95,7 +96,11 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               ),
             ),
             SizedBox(height: 20),
-            buildFooterButtonSection(context),
+            FooterButtonSection(
+                recipeController: widget.recipeController,
+                recipe: widget.recipe,
+                updateCounterTimesCooked: updateCounterTimesCooked,
+                showBanner: showBanner),
             SizedBox(height: 130),
           ],
         ),
@@ -128,40 +133,19 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
     );
   }
 
-  Column buildFooterButtonSection(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      spacing: 30,
-      children: [
-        FilledButton.icon(
-          icon: Icon(Icons.check),
-          onPressed: () {
-            setState(() {
-              widget.recipe.timesCooked++;
-            });
-          },
-          label: Text("I'm done cooking!"),
-        ),
-        TextButton.icon(
-          style: TextButton.styleFrom(
-              foregroundColor: Colors.red, iconColor: Colors.red),
-          onPressed: () {
-            int id =
-                widget.recipeController.getAllRecipes().indexOf(widget.recipe);
-            setState(() {
-              widget.recipeController.removeRecipe(id);
-              showCustomAlertBanner(
-                  context, Colors.red, "Recipe removed from cookbook.");
-            });
-            Navigator.of(context).pop();
-          },
-          label: Text("Remove recipe"),
-          icon: Icon(
-            Icons.delete,
-            size: 30,
-          ),
-        ),
-      ],
-    );
+  void updateCounterTimesCooked() {
+    setState(() {
+      widget.recipe.timesCooked++;
+    });
+  }
+
+  void showBanner() {
+    int id = widget.recipeController.getAllRecipes().indexOf(widget.recipe);
+    setState(() {
+      widget.recipeController.removeRecipe(id);
+      showCustomAlertBanner(
+          context, Colors.red, "Recipe removed from cookbook.");
+    });
+    Navigator.of(context).pop();
   }
 }
