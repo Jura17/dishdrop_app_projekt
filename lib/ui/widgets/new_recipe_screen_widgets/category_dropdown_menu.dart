@@ -11,6 +11,7 @@ class CategoryDropdownMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownMenu(
+      // TODO: DropdownMenu has no validator property as of Feb 2025. Needs a custom check.
       controller: categoryCtrl,
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(),

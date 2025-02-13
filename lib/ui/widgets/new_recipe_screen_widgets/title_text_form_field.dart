@@ -13,7 +13,7 @@ class TitleTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       validator: (value) {
-        if (value == null) {
+        if (value == '') {
           return "Please enter a title for your recipe.";
         }
 
@@ -25,7 +25,6 @@ class TitleTextFormField extends StatelessWidget {
         return null;
       },
       controller: titleCtrl,
-      // onChanged: (value) => _userInputValues["title"] = value,
       decoration: const InputDecoration(
         hintText: "Title",
         border: OutlineInputBorder(),
@@ -33,29 +32,3 @@ class TitleTextFormField extends StatelessWidget {
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-
-// class TitleTextFormField extends StatelessWidget {
-//   const TitleTextFormField({
-//     super.key,
-//     required Map<String, TextEditingController> allTextFormCtrl,
-//     required Map<String, dynamic> userInputValues,
-//   })  : _allTextFormCtrl = allTextFormCtrl,
-//         _userInputValues = userInputValues;
-
-//   final Map<String, TextEditingController> _allTextFormCtrl;
-//   final Map<String, dynamic> _userInputValues;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return TextFormField(
-//       controller: _allTextFormCtrl["titleCtrl"],
-//       onChanged: (value) => _userInputValues["title"] = value,
-//       decoration: const InputDecoration(
-//         hintText: "Title",
-//         border: OutlineInputBorder(),
-//       ),
-//     );
-//   }
-// }

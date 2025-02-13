@@ -1,45 +1,46 @@
 import 'package:flutter/material.dart';
 
-class TagsTextFormField extends StatelessWidget {
-  const TagsTextFormField({
+class TagsInputSection extends StatefulWidget {
+  const TagsInputSection({
     super.key,
+    required this.complexInputValues,
     required this.tagsCtrl,
-    // required this.userInputValues,
+    required this.updateTagsList,
   });
 
+  final Map<String, dynamic> complexInputValues;
   final TextEditingController tagsCtrl;
-  // final Map<String, dynamic> userInputValues;
+  final Function updateTagsList;
 
   @override
+  State<TagsInputSection> createState() => _TagsInputSectionState();
+}
+
+class _TagsInputSectionState extends State<TagsInputSection> {
+  @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: tagsCtrl,
-      decoration: const InputDecoration(
-        hintText: "Tags",
-        border: OutlineInputBorder(),
-      ),
+    return Row(
+      children: [
+        Expanded(
+          child: TextFormField(
+            onFieldSubmitted: (value) => widget.updateTagsList(),
+            controller: widget.tagsCtrl,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: "Tags",
+            ),
+          ),
+        ),
+        IconButton(
+          onPressed: () {
+            widget.updateTagsList();
+          },
+          icon: Icon(
+            Icons.add_box_outlined,
+            size: 50,
+          ),
+        )
+      ],
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-
-// class TagsTextFormField extends StatelessWidget {
-//   const TagsTextFormField({
-//     super.key,
-//     required Map<String, TextEditingController> allTextFormCtrl,
-//   }) : _allTextFormCtrl = allTextFormCtrl;
-
-//   final Map<String, TextEditingController> _allTextFormCtrl;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return TextFormField(
-//       controller: _allTextFormCtrl["tagsCtrl"],
-//       decoration: const InputDecoration(
-//         hintText: "Tags",
-//         border: OutlineInputBorder(),
-//       ),
-//     );
-//   }
-// }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class DirectionsListView extends StatelessWidget {
-  const DirectionsListView({
+class CookingDirectionsListView extends StatelessWidget {
+  const CookingDirectionsListView({
     super.key,
     required this.complexInputValues,
   });

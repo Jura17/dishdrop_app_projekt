@@ -26,6 +26,7 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
       children: [
         FilledButton(
           onPressed: () {
+            print(allTextFormCtrl["categoryCtrl"]?.text);
             if (formKey.currentState!.validate()) {
               Recipe newRecipe =
                   getCtrlInputValues(allTextFormCtrl, complexInputValues);

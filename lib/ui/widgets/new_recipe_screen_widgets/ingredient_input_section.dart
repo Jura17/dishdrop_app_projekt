@@ -1,8 +1,8 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class RecipeFormIngredientInputSection extends StatefulWidget {
-  const RecipeFormIngredientInputSection({
+class IngredientInputSection extends StatefulWidget {
+  const IngredientInputSection({
     super.key,
     required this.allTextFormCtrl,
     required this.complexInputValues,
@@ -14,12 +14,10 @@ class RecipeFormIngredientInputSection extends StatefulWidget {
   final Function updateIngredientList;
 
   @override
-  State<RecipeFormIngredientInputSection> createState() =>
-      _RecipeFormIngredientInputSectionState();
+  State<IngredientInputSection> createState() => _IngredientInputSectionState();
 }
 
-class _RecipeFormIngredientInputSectionState
-    extends State<RecipeFormIngredientInputSection> {
+class _IngredientInputSectionState extends State<IngredientInputSection> {
   @override
   Widget build(BuildContext context) {
     return Row(

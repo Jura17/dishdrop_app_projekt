@@ -7,15 +7,16 @@ import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/catego
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/cooking_time_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/description_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/difficulty_dropdown_menu.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/directions_list_view.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/cooking_directions_list_view.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/image_picker_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/image_url_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/notes_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/prep_time_text_form_field.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/recipe_form_direction_input_section.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/cooking_direction_input_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/recipe_form_footer_button_section.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/recipe_form_ingredient_input_section.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/ingredient_input_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/recipe_form_ingredient_list_view.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/tags_list_view.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/tags_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/title_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -106,7 +107,12 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                     imgUrlCtrl: allTextFormCtrl["imgUrlCtrl"]!),
                 DifficultyDropdownMenu(
                     difficultyCtrl: allTextFormCtrl["difficultyCtrl"]!),
-                TagsTextFormField(tagsCtrl: allTextFormCtrl["tagsCtrl"]!),
+                TagsInputSection(
+                  complexInputValues: complexInputValues,
+                  tagsCtrl: allTextFormCtrl["tagsCtrl"]!,
+                  updateTagsList: updateTagsList,
+                ),
+                TagsListView(complexInputValues: complexInputValues),
                 DescriptionTextFormField(
                     descCtrl: allTextFormCtrl["descCtrl"]!),
                 Row(
@@ -126,10 +132,11 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                 SizedBox(height: 30),
                 Text("Directions",
                     style: Theme.of(context).textTheme.headlineMedium),
-                DirectionsListView(complexInputValues: complexInputValues),
-                RecipeFormDirectionInputSection(
+                CookingDirectionsListView(
+                    complexInputValues: complexInputValues),
+                CookingDirectionInputSection(
                   complexInputValues: complexInputValues,
-                  allTextFormCtrl: allTextFormCtrl,
+                  cookingDirectionCtrl: allTextFormCtrl["directionDescCtrl"]!,
                   updateDirectionList: updateDirectionList,
                 ),
                 SizedBox(height: 30),
@@ -138,7 +145,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                 RecipeFormIngredientListView(
                     complexInputValues: complexInputValues),
                 SizedBox(height: 20),
-                RecipeFormIngredientInputSection(
+                IngredientInputSection(
                   allTextFormCtrl: allTextFormCtrl,
                   complexInputValues: complexInputValues,
                   updateIngredientList: updateIngredientList,
@@ -190,6 +197,22 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
       }
     });
   }
+
+  void updateTagsList() {
+    final tagsTitle = allTextFormCtrl["tagsCtrl"]!.text;
+    setState(() {
+      if (allTextFormCtrl["tagsCtrl"]!.text != "") {
+        complexInputValues["tags"].add(tagsTitle);
+        allTextFormCtrl["tagsCtrl"]!.clear();
+      }
+    });
+  }
+}
+
+void resetAllCtrl(Map<String, TextEditingController> allTextFormCtrl) {
+  for (var key in allTextFormCtrl.keys) {
+    allTextFormCtrl[key]!.clear();
+  }
 }
 
 Recipe getCtrlInputValues(
@@ -225,10 +248,4 @@ Recipe getCtrlInputValues(
   );
 
   return newRecipe;
-}
-
-void resetAllCtrl(Map<String, TextEditingController> allTextFormCtrl) {
-  for (var key in allTextFormCtrl.keys) {
-    allTextFormCtrl[key]!.clear();
-  }
 }
