@@ -63,13 +63,10 @@ class _RecipeShoppingListViewState extends State<RecipeShoppingListView> {
                                 foregroundColor: Colors.red,
                                 iconColor: Colors.red),
                             onPressed: () {
-                              int id = widget.shoppingListController
-                                  .getAllShoppingLists()
-                                  .indexOf(recipeShoppingList);
                               setState(
                                 () {
                                   widget.shoppingListController
-                                      .removeShoppingList(id);
+                                      .removeShoppingList(recipeShoppingList);
                                   showCustomAlertBanner(context, Colors.red,
                                       "Ingredients removed from shopping list.");
                                 },

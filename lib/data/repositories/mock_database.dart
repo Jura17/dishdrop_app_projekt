@@ -8,18 +8,26 @@ import 'database_repository.dart';
 
 class MockDatabase implements DatabaseRepository {
   @override
-  void addRecipe(Recipe newRecipe) {
-    recipeData.add(newRecipe);
-  }
-
-  @override
   List<Recipe> getAllRecipes() {
     return recipeData;
   }
 
   @override
-  void removeRecipe(int id) {
-    recipeData.removeAt(id);
+  void addRecipe(Recipe newRecipe) {
+    recipeData.add(newRecipe);
+  }
+
+  @override
+  void removeRecipe(Recipe recipe) {
+    recipeData.remove(recipe);
+  }
+
+  @override
+  void updateRecipe(Recipe oldRecipe, Recipe newRecipe) {
+    if (recipeData.contains(oldRecipe)) {
+      final index = recipeData.indexOf(oldRecipe);
+      recipeData[index] = newRecipe;
+    }
   }
 
   @override
@@ -38,7 +46,16 @@ class MockDatabase implements DatabaseRepository {
   }
 
   @override
-  void removeShoppingList(int id) {
-    shoppingListData.removeAt(id);
+  void removeShoppingList(ShoppingList shoppingList) {
+    shoppingListData.remove(shoppingList);
+  }
+
+  @override
+  void updateShoppingList(
+      ShoppingList oldShoppingList, ShoppingList newShoppingList) {
+    if (shoppingListData.contains(oldShoppingList)) {
+      final index = shoppingListData.indexOf(oldShoppingList);
+      shoppingListData[index] = newShoppingList;
+    }
   }
 }

@@ -5,7 +5,30 @@ class RecipeController {
   final DatabaseRepository _databaseRepository;
   RecipeController(this._databaseRepository);
 
+  Future<List<Recipe>> getAllRecipesFuture() => Future.delayed(
+        Duration(seconds: 3),
+        () => _databaseRepository.getAllRecipes(),
+      );
+
+  Future<void> addRecipeFuture(Recipe newRecipe) => Future.delayed(
+        Duration(seconds: 3),
+        () => _databaseRepository.addRecipe(newRecipe),
+      );
+
+  Future<void> removeRecipeFuture(Recipe recipe) => Future.delayed(
+        Duration(seconds: 3),
+        () => _databaseRepository.removeRecipe(recipe),
+      );
+
+  Future<void> updateRecipeFuture(Recipe oldRecipe, Recipe newRecipe) =>
+      Future.delayed(
+        Duration(seconds: 3),
+        () => _databaseRepository.updateRecipe(oldRecipe, newRecipe),
+      );
+
   List<Recipe> getAllRecipes() => _databaseRepository.getAllRecipes();
   void addRecipe(Recipe newRecipe) => _databaseRepository.addRecipe(newRecipe);
-  void removeRecipe(int id) => _databaseRepository.removeRecipe(id);
+  void removeRecipe(Recipe recipe) => _databaseRepository.removeRecipe(recipe);
+  void updateRecipe(Recipe oldRecipe, Recipe newRecipe) =>
+      _databaseRepository.updateRecipe(oldRecipe, newRecipe);
 }

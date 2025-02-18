@@ -140,9 +140,8 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
   }
 
   void showBanner() {
-    int id = widget.recipeController.getAllRecipes().indexOf(widget.recipe);
     setState(() {
-      widget.recipeController.removeRecipe(id);
+      widget.recipeController.removeRecipe(widget.recipe);
       showCustomAlertBanner(
           context, Colors.red, "Recipe removed from cookbook.");
     });

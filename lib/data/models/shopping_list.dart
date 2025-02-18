@@ -23,13 +23,7 @@ class ShoppingList {
     shoppingItems[index] = newShoppingItem;
   }
 
-  void removeIngredient(int index) {
-    shoppingItems.removeAt(index);
+  void removeFromShoppingList(ListItem listItem) {
+    shoppingItems.remove(listItem);
   }
-
-  /*
-  isGeneralPurposeList bestimmt später, ob es sich um die allgemeine Einkaufsliste handelt, 
-  die nicht vom Nutzer erstellt oder gelöscht werden kann und genutzt wird, 
-  um auch Dinge wie Spülmittel oder anderes was nicht speziell zu einem Rezept passt, auf die Liste zu setzen
-   */
 }

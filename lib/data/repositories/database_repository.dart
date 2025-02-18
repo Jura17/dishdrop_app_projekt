@@ -12,7 +12,10 @@ abstract class DatabaseRepository {
   List<Recipe> getAllRecipes();
 
   // delete
-  void removeRecipe(int id);
+  void removeRecipe(Recipe recipe);
+
+  // update
+  void updateRecipe(Recipe oldRecipe, Recipe newRecipe);
 
   // SHOPPING LIST:
   // create
@@ -23,10 +26,9 @@ abstract class DatabaseRepository {
   List<ShoppingList> getAllShoppingLists();
 
   // delete
-  void removeShoppingList(int id);
+  void removeShoppingList(ShoppingList shoppingList);
 
-  // Die einzelnen items einer Einkaufsliste verwalte ich vermutlich fürs erste in der App.
-  // Das heißt, wenn der Nutzer ein Item zu einer Liste hinzufügt, aktualisiert, entfernt etc. dann geschieht das in der App
-  // Anschließend wird die Einkaufsliste wieder in die Datenbank geschoben und überschreibt die alte.
-  // Dies könnte in regelmäßigen Abständen passieren oder jedes Mal, wenn sich etwas ändert.
+  // update
+  void updateShoppingList(
+      ShoppingList oldShoppingList, ShoppingList newShoppingList);
 }
