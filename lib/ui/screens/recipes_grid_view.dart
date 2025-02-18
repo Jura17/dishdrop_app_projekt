@@ -26,13 +26,6 @@ class _RecipesGridViewState extends State<RecipesGridView> {
   List<Recipe> allRecipes = [];
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print("init state");
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
