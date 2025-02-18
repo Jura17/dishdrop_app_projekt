@@ -20,78 +20,99 @@ class RecipeShoppingListView extends StatefulWidget {
 class _RecipeShoppingListViewState extends State<RecipeShoppingListView> {
   @override
   Widget build(BuildContext context) {
-    List allRecipeShoppingLists =
-        widget.shoppingListController.getAllShoppingLists().skip(1).toList();
+    List allRecipeShoppingLists = [];
 
-    return allRecipeShoppingLists.isEmpty
-        ? RecipeShoppingListIsEmptyText()
-        : SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: allRecipeShoppingLists.map((recipeShoppingList) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        recipeShoppingList.title,
-                        style: Theme.of(context).textTheme.headlineMedium,
+    return Center(
+      child: FutureBuilder(
+          future: widget.shoppingListController.getAllShoppingListsFuture(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text("Error while fetching data: ${snapshot.error}");
+            }
+            allRecipeShoppingLists = snapshot.data!.skip(1).toList();
+            return allRecipeShoppingLists.isEmpty
+                ? RecipeShoppingListIsEmptyText()
+                : SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children:
+                            allRecipeShoppingLists.map((recipeShoppingList) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                recipeShoppingList.title,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
+                              ),
+                              SizedBox(height: 10),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: AppColors.dishDropBlack),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.network(
+                                    recipeShoppingList.imgUrl,
+                                    height: 250,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ServingsPicker(),
+                                  TextButton.icon(
+                                    style: TextButton.styleFrom(
+                                        foregroundColor: Colors.red,
+                                        iconColor: Colors.red),
+                                    onPressed: () {
+                                      setState(
+                                        () {
+                                          widget.shoppingListController
+                                              .removeShoppingList(
+                                                  recipeShoppingList);
+                                          showCustomAlertBanner(
+                                              context,
+                                              Colors.red,
+                                              "Ingredients removed from shopping list.");
+                                        },
+                                      );
+                                    },
+                                    label: Text("Remove from list"),
+                                    icon: Icon(
+                                      Icons.delete,
+                                      size: 30,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Text("Ingredients",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall),
+                              const SizedBox(height: 10),
+                              generateRecipeShoppingList(
+                                  recipeShoppingList, context),
+                              SizedBox(height: 50)
+                            ],
+                          );
+                        }).toList(),
                       ),
-                      SizedBox(height: 10),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.dishDropBlack),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.network(
-                            recipeShoppingList.imgUrl,
-                            height: 250,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ServingsPicker(),
-                          TextButton.icon(
-                            style: TextButton.styleFrom(
-                                foregroundColor: Colors.red,
-                                iconColor: Colors.red),
-                            onPressed: () {
-                              setState(
-                                () {
-                                  widget.shoppingListController
-                                      .removeShoppingList(recipeShoppingList);
-                                  showCustomAlertBanner(context, Colors.red,
-                                      "Ingredients removed from shopping list.");
-                                },
-                              );
-                            },
-                            label: Text("Remove from list"),
-                            icon: Icon(
-                              Icons.delete,
-                              size: 30,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Text("Ingredients",
-                          style: Theme.of(context).textTheme.headlineSmall),
-                      const SizedBox(height: 10),
-                      generateRecipeShoppingList(recipeShoppingList, context),
-                      SizedBox(height: 50)
-                    ],
+                    ),
                   );
-                }).toList(),
-              ),
-            ),
-          );
+          }),
+    );
   }
 
   Column generateRecipeShoppingList(recipeShoppingList, BuildContext context) {

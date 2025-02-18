@@ -29,15 +29,13 @@ class ShoppingListController {
           () => _databaseRepository.updateShoppingList(
               oldShoppingList, newShoppingList));
 
+  // TODO: remove old methods later
   List<ShoppingList> getAllShoppingLists() =>
       _databaseRepository.getAllShoppingLists();
-
   void addShoppingList(ShoppingList newShoppingList) =>
       _databaseRepository.addShoppingList(newShoppingList);
-
   void removeShoppingList(ShoppingList shoppingList) =>
       _databaseRepository.removeShoppingList(shoppingList);
-
   void updateShoppingList(
           ShoppingList oldShoppingList, ShoppingList newShoppingList) =>
       _databaseRepository.updateShoppingList(oldShoppingList, newShoppingList);

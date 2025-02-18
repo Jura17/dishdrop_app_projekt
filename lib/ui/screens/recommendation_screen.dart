@@ -23,32 +23,47 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          RichText(
-            text: TextSpan(
-              text: "Tap the ",
-              style: Theme.of(context).textTheme.headlineLarge,
+      body: Center(
+        child: FutureBuilder(
+          future: widget.recipeController.getAllRecipesFuture(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text("Error while collecting data: ${snapshot.error}");
+            }
+            return Column(
               children: [
-                TextSpan(
-                  text: "button",
-                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor),
+                RichText(
+                  text: TextSpan(
+                    text: "Tap the ",
+                    style: Theme.of(context).textTheme.headlineLarge,
+                    children: [
+                      TextSpan(
+                        text: "button",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineLarge
+                            ?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).primaryColor),
+                      ),
+                      TextSpan(text: " to find a recipe for today!")
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                TextSpan(text: " to find a recipe for today!")
+                Spacer(),
+                RecommendationButton(
+                  shoppingListController: widget.shoppingListController,
+                  recipeController: widget.recipeController,
+                  allRecipes: widget.recipeController.getAllRecipes(),
+                ),
+                Spacer(),
               ],
-            ),
-            textAlign: TextAlign.center,
-          ),
-          Spacer(),
-          RecommendationButton(
-            shoppingListController: widget.shoppingListController,
-            recipeController: widget.recipeController,
-            allRecipes: widget.recipeController.getAllRecipes(),
-          ),
-          Spacer(),
-        ],
+            );
+          },
+        ),
       ),
     );
   }

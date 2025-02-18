@@ -30,31 +30,44 @@ class _AllPurposeShoppingListViewState
 
   @override
   Widget build(BuildContext context) {
-    ShoppingList allPurposeShoppingList =
-        widget.shoppingListController.getAllShoppingLists().first;
+    ShoppingList allPurposeShoppingList;
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              allPurposeShoppingList.title,
-              style: Theme.of(context).textTheme.headlineMedium,
+    return Center(
+      child: FutureBuilder(
+        future: widget.shoppingListController.getAllShoppingListsFuture(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text("Error while fetching data: ${snapshot.error}");
+          }
+          allPurposeShoppingList = snapshot.data!.first;
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    allPurposeShoppingList.title,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  AllPurposeListTitleImage(
+                      allPurposeShoppingList: allPurposeShoppingList),
+                  const SizedBox(height: 20),
+                  Column(
+                    children: generateAllPurposeListItems(
+                        allPurposeShoppingList, context),
+                  ),
+                  SizedBox(height: 20),
+                  buildAllPurposeListInputSection(
+                      context, allPurposeShoppingList),
+                  SizedBox(height: 100)
+                ],
+              ),
             ),
-            AllPurposeListTitleImage(
-                allPurposeShoppingList: allPurposeShoppingList),
-            const SizedBox(height: 20),
-            Column(
-              children:
-                  generateAllPurposeListItems(allPurposeShoppingList, context),
-            ),
-            SizedBox(height: 20),
-            buildAllPurposeListInputSection(context, allPurposeShoppingList),
-            SizedBox(height: 100)
-          ],
-        ),
+          );
+        },
       ),
     );
   }

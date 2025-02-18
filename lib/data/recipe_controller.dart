@@ -26,6 +26,7 @@ class RecipeController {
         () => _databaseRepository.updateRecipe(oldRecipe, newRecipe),
       );
 
+  // TODO: remove old methods later
   List<Recipe> getAllRecipes() => _databaseRepository.getAllRecipes();
   void addRecipe(Recipe newRecipe) => _databaseRepository.addRecipe(newRecipe);
   void removeRecipe(Recipe recipe) => _databaseRepository.removeRecipe(recipe);
