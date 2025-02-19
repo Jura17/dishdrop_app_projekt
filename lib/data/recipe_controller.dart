@@ -6,23 +6,23 @@ class RecipeController {
   RecipeController(this._databaseRepository);
 
   Future<List<Recipe>> getAllRecipesFuture() => Future.delayed(
-        Duration(seconds: 3),
+        Duration(seconds: 2),
         () => _databaseRepository.getAllRecipes(),
       );
 
   Future<void> addRecipeFuture(Recipe newRecipe) => Future.delayed(
-        Duration(seconds: 3),
+        Duration(seconds: 2),
         () => _databaseRepository.addRecipe(newRecipe),
       );
 
   Future<void> removeRecipeFuture(Recipe recipe) => Future.delayed(
-        Duration(seconds: 3),
+        Duration(seconds: 2),
         () => _databaseRepository.removeRecipe(recipe),
       );
 
   Future<void> updateRecipeFuture(Recipe oldRecipe, Recipe newRecipe) =>
       Future.delayed(
-        Duration(seconds: 3),
+        Duration(seconds: 2),
         () => _databaseRepository.updateRecipe(oldRecipe, newRecipe),
       );
 

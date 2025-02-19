@@ -6,26 +6,26 @@ class ShoppingListController {
   ShoppingListController(this._databaseRepository);
 
   Future<List<ShoppingList>> getAllShoppingListsFuture() => Future.delayed(
-        Duration(seconds: 3),
+        Duration(seconds: 2),
         () => _databaseRepository.getAllShoppingLists(),
       );
 
   Future<void> addShoppingListFuture(ShoppingList newShoppingList) =>
       Future.delayed(
-        Duration(seconds: 3),
+        Duration(seconds: 2),
         () => _databaseRepository.addShoppingList(newShoppingList),
       );
 
   Future<void> removeShoppingListFuture(ShoppingList shoppingList) =>
       Future.delayed(
-        Duration(seconds: 3),
+        Duration(seconds: 2),
         () => _databaseRepository.removeShoppingList(shoppingList),
       );
 
   Future<void> updateShoppingListFuture(
           ShoppingList oldShoppingList, ShoppingList newShoppingList) =>
       Future.delayed(
-          Duration(seconds: 3),
+          Duration(seconds: 2),
           () => _databaseRepository.updateShoppingList(
               oldShoppingList, newShoppingList));
 

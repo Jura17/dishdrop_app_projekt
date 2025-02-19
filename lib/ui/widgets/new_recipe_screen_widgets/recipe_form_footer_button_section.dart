@@ -25,12 +25,11 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
       spacing: 10,
       children: [
         FilledButton(
-          onPressed: () {
-            print(allTextFormCtrl["categoryCtrl"]?.text);
+          onPressed: () async {
             if (formKey.currentState!.validate()) {
               Recipe newRecipe =
                   getCtrlInputValues(allTextFormCtrl, complexInputValues);
-              widget.recipeController.addRecipe(newRecipe);
+              await widget.recipeController.addRecipeFuture(newRecipe);
               showCustomAlertBanner(
                   context, Colors.green, "Recipe added to cookbook!");
             }
@@ -38,11 +37,11 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
           child: Text("Save recipe"),
         ),
         FilledButton(
-          onPressed: () {
+          onPressed: () async {
             Recipe newRecipe =
                 getCtrlInputValues(allTextFormCtrl, complexInputValues);
             resetAllCtrl(allTextFormCtrl);
-            widget.recipeController.addRecipe(newRecipe);
+            await widget.recipeController.addRecipeFuture(newRecipe);
             showCustomAlertBanner(
                 context, Colors.green, "Recipe added to cookbook!");
             Navigator.of(context).push(

@@ -38,7 +38,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
   final formKey = GlobalKey<FormState>();
   late List<Recipe> allRecipes;
 
-  final Map<String, TextEditingController> allTextFormCtrl = {
+  final Map<String, TextEditingController> allTextControllers = {
     "titleCtrl": TextEditingController(),
     "categoryCtrl": TextEditingController(),
     "imgUrlCtrl": TextEditingController(),
@@ -73,8 +73,8 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
   @override
   void dispose() {
     super.dispose();
-    for (var ctrlKey in allTextFormCtrl.keys) {
-      allTextFormCtrl[ctrlKey]?.dispose();
+    for (var ctrlKey in allTextControllers.keys) {
+      allTextControllers[ctrlKey]?.dispose();
     }
   }
 
@@ -95,40 +95,41 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
               spacing: 10,
               children: [
                 TitleTextFormField(
-                  titleCtrl: allTextFormCtrl["titleCtrl"]!,
+                  titleCtrl: allTextControllers["titleCtrl"]!,
                   allRecipes: allRecipes,
                 ),
                 CategoryDropdownMenu(
-                    categoryCtrl: allTextFormCtrl["categoryCtrl"]!),
+                    categoryCtrl: allTextControllers["categoryCtrl"]!),
                 SizedBox(height: 30),
                 ImagePickerField(),
                 SizedBox(height: 30),
                 ImageUrlTextFormField(
-                    imgUrlCtrl: allTextFormCtrl["imgUrlCtrl"]!),
+                    imgUrlCtrl: allTextControllers["imgUrlCtrl"]!),
                 DifficultyDropdownMenu(
-                    difficultyCtrl: allTextFormCtrl["difficultyCtrl"]!),
+                    difficultyCtrl: allTextControllers["difficultyCtrl"]!),
                 TagsInputSection(
                   complexInputValues: complexInputValues,
-                  tagsCtrl: allTextFormCtrl["tagsCtrl"]!,
+                  tagsCtrl: allTextControllers["tagsCtrl"]!,
                   updateTagsList: updateTagsList,
                 ),
                 TagsListView(complexInputValues: complexInputValues),
                 DescriptionTextFormField(
-                    descCtrl: allTextFormCtrl["descCtrl"]!),
+                    descCtrl: allTextControllers["descCtrl"]!),
                 Row(
                   spacing: 10,
                   children: [
                     Expanded(
                       child: PrepTimeTextFormField(
-                          prepTimeCtrl: allTextFormCtrl["prepTimeCtrl"]!),
+                          prepTimeCtrl: allTextControllers["prepTimeCtrl"]!),
                     ),
                     Expanded(
                       child: CookingTimeTextFormField(
-                          cookingTimeCtrl: allTextFormCtrl["cookingTimeCtrl"]!),
+                          cookingTimeCtrl:
+                              allTextControllers["cookingTimeCtrl"]!),
                     ),
                   ],
                 ),
-                NotesTextFormField(notesCtrl: allTextFormCtrl["notesCtrl"]!),
+                NotesTextFormField(notesCtrl: allTextControllers["notesCtrl"]!),
                 SizedBox(height: 30),
                 Text("Directions",
                     style: Theme.of(context).textTheme.headlineMedium),
@@ -136,7 +137,8 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                     complexInputValues: complexInputValues),
                 CookingDirectionInputSection(
                   complexInputValues: complexInputValues,
-                  cookingDirectionCtrl: allTextFormCtrl["directionDescCtrl"]!,
+                  cookingDirectionCtrl:
+                      allTextControllers["directionDescCtrl"]!,
                   updateDirectionList: updateDirectionList,
                 ),
                 SizedBox(height: 30),
@@ -146,21 +148,21 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                     complexInputValues: complexInputValues),
                 SizedBox(height: 20),
                 IngredientInputSection(
-                  allTextFormCtrl: allTextFormCtrl,
+                  allTextFormCtrl: allTextControllers,
                   complexInputValues: complexInputValues,
                   updateIngredientList: updateIngredientList,
                 ),
                 SizedBox(height: 5),
                 TextButton(
                   style: TextButton.styleFrom(foregroundColor: Colors.red),
-                  onPressed: () => resetAllCtrl(allTextFormCtrl),
+                  onPressed: () => resetAllCtrl(allTextControllers),
                   child: Text("Reset all fields"),
                 ),
                 SizedBox(height: 30),
                 RecipeFormFooterButtonSection(
                   complexInputValues: complexInputValues,
                   widget: widget,
-                  allTextFormCtrl: allTextFormCtrl,
+                  allTextFormCtrl: allTextControllers,
                   formKey: formKey,
                 ),
                 SizedBox(height: 100),
@@ -176,34 +178,36 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     setState(() {
       complexInputValues["ingredients"].add(
         ListItem(
-          description: allTextFormCtrl["ingredientDescCtrl"]!.text,
+          description: allTextControllers["ingredientDescCtrl"]!.text,
           amount:
-              double.tryParse(allTextFormCtrl["ingredientAmountCtrl"]!.text),
-          unit: allTextFormCtrl["ingredientUnitCtrl"]!.text,
+              double.tryParse(allTextControllers["ingredientAmountCtrl"]!.text),
+          unit: allTextControllers["ingredientUnitCtrl"]!.text,
         ),
       );
-      allTextFormCtrl["ingredientAmountCtrl"]!.clear();
-      allTextFormCtrl["ingredientUnitCtrl"]!.clear();
-      allTextFormCtrl["ingredientDescCtrl"]!.clear();
+      allTextControllers["ingredientAmountCtrl"]!.clear();
+      allTextControllers["ingredientUnitCtrl"]!.clear();
+      allTextControllers["ingredientDescCtrl"]!.clear();
     });
   }
 
   void updateDirectionList() {
-    final directionDescription = allTextFormCtrl["directionDescCtrl"]!.text;
-    setState(() {
-      if (allTextFormCtrl["directionDescCtrl"]!.text != "") {
-        complexInputValues["directions"].add(directionDescription);
-        allTextFormCtrl["directionDescCtrl"]!.clear();
-      }
-    });
+    final directionDescription = allTextControllers["directionDescCtrl"]!.text;
+    setState(
+      () {
+        if (allTextControllers["directionDescCtrl"]!.text != "") {
+          complexInputValues["directions"].add(directionDescription);
+          allTextControllers["directionDescCtrl"]!.clear();
+        }
+      },
+    );
   }
 
   void updateTagsList() {
-    final tagsTitle = allTextFormCtrl["tagsCtrl"]!.text;
+    final tagsTitle = allTextControllers["tagsCtrl"]!.text;
     setState(() {
-      if (allTextFormCtrl["tagsCtrl"]!.text != "") {
+      if (allTextControllers["tagsCtrl"]!.text != "") {
         complexInputValues["tags"].add(tagsTitle);
-        allTextFormCtrl["tagsCtrl"]!.clear();
+        allTextControllers["tagsCtrl"]!.clear();
       }
     });
   }
