@@ -1,4 +1,4 @@
-import 'package:dishdrop_app_projekt/core/utils/check_amount_and_convert.dart';
+import 'package:dishdrop_app_projekt/core/utils/check_and_convert_amount.dart';
 import 'package:flutter/material.dart';
 
 class ListItemRow extends StatelessWidget {
@@ -15,6 +15,7 @@ class ListItemRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> convertedAmount = checkAndconvertAmount(amount);
     return Row(
       spacing: 10,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -22,11 +23,11 @@ class ListItemRow extends StatelessWidget {
       children: [
         RichText(
           text: TextSpan(
-            text: getWholeNumberOfAmount(amount),
+            text: convertedAmount[0],
             style: Theme.of(context).textTheme.bodyLarge,
             children: [
               TextSpan(
-                text: getFractionalPartOfAmount(amount),
+                text: convertedAmount[1],
                 style: TextStyle(
                   fontFeatures: [FontFeature.fractions()],
                 ),

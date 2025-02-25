@@ -74,8 +74,9 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             SizedBox(height: defaultSpacing),
             if (widget.recipe.ingredients.isNotEmpty)
               IngredientsSection(
-                  recipe: widget.recipe,
-                  shoppingListController: widget.shoppingListController),
+                recipe: widget.recipe,
+                shoppingListController: widget.shoppingListController,
+              ),
             SizedBox(height: 40),
             RichText(
               text: TextSpan(

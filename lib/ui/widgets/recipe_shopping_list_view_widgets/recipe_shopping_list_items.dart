@@ -1,6 +1,7 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
-import 'package:dishdrop_app_projekt/core/utils/check_amount_and_convert.dart';
+
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/list_item_row.dart';
 import 'package:flutter/material.dart';
 
 class RecipeShoppingListItems extends StatelessWidget {
@@ -20,29 +21,10 @@ class RecipeShoppingListItems extends StatelessWidget {
           color: innerIndex.isEven ? AppColors.lightGrey : Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
-              spacing: 10,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "${checkAmountAndConvert(shoppingItem.amount)} ${shoppingItem.unit?.toString() ?? ''}",
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                // Text(
-                //   "${shoppingItem.amount?.toString() ?? ''} ${shoppingItem.unit?.toString() ?? ''}",
-                //   style:
-                //       Theme.of(context).textTheme.bodyLarge,
-                // ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    shoppingItem.description,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    textAlign: TextAlign.right,
-                  ),
-                ),
-              ],
+            child: ListItemRow(
+              amount: shoppingItem.amount,
+              unit: shoppingItem.unit,
+              description: shoppingItem.description,
             ),
           ),
         );

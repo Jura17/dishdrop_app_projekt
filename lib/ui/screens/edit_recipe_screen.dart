@@ -1,5 +1,5 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
-import 'package:dishdrop_app_projekt/core/utils/check_amount_and_convert.dart';
+import 'package:dishdrop_app_projekt/core/utils/check_and_convert_amount.dart';
 import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';

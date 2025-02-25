@@ -1,6 +1,7 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
-import 'package:dishdrop_app_projekt/core/utils/check_amount_and_convert.dart';
+
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/list_item_row.dart';
 import 'package:flutter/material.dart';
 
 class AllPurposeListItems extends StatelessWidget {
@@ -19,27 +20,11 @@ class AllPurposeListItems extends StatelessWidget {
                 color: index.isEven ? AppColors.lightGrey : Colors.white),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
-                spacing: 10,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${checkAmountAndConvert(allPurposeShoppingList.shoppingItems[index].amount)} ${allPurposeShoppingList.shoppingItems[index].unit?.toString() ?? ''}",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  // Text(
-                  //   "${allPurposeShoppingList.shoppingItems[index].amount?.toString() ?? ''} ${allPurposeShoppingList.shoppingItems[index].unit?.toString() ?? ''}",
-                  //   style: Theme.of(context).textTheme.bodyLarge,
-                  // ),
-                  Expanded(
-                    child: Text(
-                      allPurposeShoppingList.shoppingItems[index].description,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      textAlign: TextAlign.right,
-                    ),
-                  )
-                ],
+              child: ListItemRow(
+                amount: allPurposeShoppingList.shoppingItems[index].amount,
+                unit: allPurposeShoppingList.shoppingItems[index].unit,
+                description:
+                    allPurposeShoppingList.shoppingItems[index].description,
               ),
             ),
           );
