@@ -1,23 +1,23 @@
-import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
-import 'package:dishdrop_app_projekt/core/utils/check_and_convert_amount.dart';
-import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
-import 'package:dishdrop_app_projekt/data/models/list_item.dart';
+// import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+// import 'package:dishdrop_app_projekt/core/utils/check_and_convert_amount.dart';
+// import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
+// import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
-import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
+// import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/category_dropdown_menu.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/cooking_time_text_form_field.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/description_text_form_field.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/difficulty_dropdown_menu.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/cooking_directions_list_view.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/image_picker_field.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/image_url_text_form_field.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/notes_text_form_field.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/prep_time_text_form_field.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/tags_text_form_field.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/title_text_form_field.dart';
+// import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/category_dropdown_menu.dart';
+// import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/cooking_time_text_form_field.dart';
+// import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/description_text_form_field.dart';
+// import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/difficulty_dropdown_menu.dart';
+// import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/cooking_directions_list_view.dart';
+// import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/image_picker_field.dart';
+// import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/image_url_text_form_field.dart';
+// import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/notes_text_form_field.dart';
+// import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/prep_time_text_form_field.dart';
+// import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/tags_text_form_field.dart';
+// import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/title_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class EditRecipeScreen extends StatefulWidget {
@@ -34,7 +34,6 @@ class EditRecipeScreen extends StatefulWidget {
 }
 
 class _EditRecipeScreenState extends State<EditRecipeScreen> {
-  // TODO: _allTextFormCtrl is currently passed down to every single field => only one specific ctrl needed in each case though
   final Map<String, TextEditingController> _allTextFormCtrl = {
     "titleCtrl": TextEditingController(),
     "categoryCtrl": TextEditingController(),
@@ -51,26 +50,26 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
     "directionDescCtrl": TextEditingController(),
   };
 
-  final Map<String, dynamic> _userInputValues = {
-    "title": "",
-    "category": "",
-    "images": {
-      "titleImg": "",
-      "cookingDirectionImg": [],
-    },
-    "difficulty": "",
-    "tags": <String>[],
-    "description": "",
-    "prepTime": 0,
-    "cookingTime": 0,
-    "notes": "",
-    "directions": <String>[],
-    "ingredients": <ListItem>[],
-  };
-  double? _ingredientAmount = 0;
-  String? _ingredientUnit = "";
-  String _ingredientDescription = "";
-  String _directionDescription = "";
+  // final Map<String, dynamic> _userInputValues = {
+  //   "title": "",
+  //   "category": "",
+  //   "images": {
+  //     "titleImg": "",
+  //     "cookingDirectionImg": [],
+  //   },
+  //   "difficulty": "",
+  //   "tags": <String>[],
+  //   "description": "",
+  //   "prepTime": 0,
+  //   "cookingTime": 0,
+  //   "notes": "",
+  //   "directions": <String>[],
+  //   "ingredients": <ListItem>[],
+  // };
+  // double? _ingredientAmount = 0;
+  // String? _ingredientUnit = "";
+  // String _ingredientDescription = "";
+  // String _directionDescription = "";
 
   @override
   Widget build(BuildContext context) {
