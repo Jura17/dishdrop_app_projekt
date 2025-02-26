@@ -17,7 +17,6 @@ class DescriptionTextFormField extends StatelessWidget {
         if ((value?.length ?? 0) > 1000) {
           return "The description is limited to 1000 characters.";
         }
-
         return null;
       },
       controller: descCtrl,
