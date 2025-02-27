@@ -35,6 +35,7 @@ class NewRecipeScreen extends StatefulWidget {
 }
 
 class _NewRecipeScreenState extends State<NewRecipeScreen> {
+  bool _imageURLFieldEnabled = true;
   final formKey = GlobalKey<FormState>();
   late List<Recipe> allRecipes;
 
@@ -101,10 +102,13 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                 CategoryDropdownMenu(
                     categoryCtrl: allTextControllers["categoryCtrl"]!),
                 SizedBox(height: 30),
-                ImagePickerField(),
-                SizedBox(height: 30),
+                ImagePickerField(
+                  checkIfImagePicked: checkIfImagePicked,
+                ),
                 ImageUrlTextFormField(
+                    fieldDisabled: _imageURLFieldEnabled,
                     imgUrlCtrl: allTextControllers["imgUrlCtrl"]!),
+                SizedBox(height: 30),
                 DifficultyDropdownMenu(
                     difficultyCtrl: allTextControllers["difficultyCtrl"]!),
                 TagsInputSection(
@@ -172,6 +176,12 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
         ),
       ),
     );
+  }
+
+  void checkIfImagePicked(bool fieldEnabled) {
+    setState(() {
+      _imageURLFieldEnabled = fieldEnabled;
+    });
   }
 
   void updateIngredientList() {
