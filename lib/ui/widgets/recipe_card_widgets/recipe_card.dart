@@ -4,7 +4,9 @@ import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
 
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_card_widgets/recipe_card_info_box.dart';
 import 'package:flutter/material.dart';
 
@@ -56,15 +58,11 @@ class _RecipeCardState extends State<RecipeCard> {
                       SizedBox(
                         width: double.infinity,
                         height: double.infinity,
-                        child: Image.network(
-                          errorBuilder: (context, error, stackTrace) => Center(
-                              child: Text(
-                            "404",
-                            style: Theme.of(context).textTheme.headlineLarge,
-                          )),
-                          widget.recipe.images["titleImg"],
-                          fit: BoxFit.cover,
-                        ),
+                        child: widget.recipe.images["titleImg"].contains("http")
+                            ? NetworkTitleImg(
+                                imgPath: widget.recipe.images["titleImg"])
+                            : FileTitleImg(
+                                imgPath: widget.recipe.images["titleImg"]),
                       ),
                       LikeButton(
                         top: 10,

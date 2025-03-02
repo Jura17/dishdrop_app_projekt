@@ -1,6 +1,8 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
 import 'package:flutter/material.dart';
 
 class RecipeDetailsTitleImage extends StatelessWidget {
@@ -24,15 +26,9 @@ class RecipeDetailsTitleImage extends StatelessWidget {
           width: double.infinity,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              errorBuilder: (context, error, stackTrace) => Center(
-                  child: Text(
-                "404",
-                style: Theme.of(context).textTheme.headlineLarge,
-              )),
-              widget.recipe.images["titleImg"],
-              fit: BoxFit.cover,
-            ),
+            child: widget.recipe.images["titleImg"].contains("http")
+                ? NetworkTitleImg(imgPath: widget.recipe.images["titleImg"])
+                : FileTitleImg(imgPath: widget.recipe.images["titleImg"]),
           ),
         ),
         LikeButton(

@@ -5,16 +5,13 @@ class ImageUrlTextFormField extends StatelessWidget {
   const ImageUrlTextFormField({
     super.key,
     required this.imgUrlCtrl,
-    required this.fieldDisabled,
   });
 
-  final bool fieldDisabled;
   final TextEditingController imgUrlCtrl;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      enabled: fieldDisabled,
       controller: imgUrlCtrl,
       // onChanged: (value) => userInputValues["images"]["titleImg"] = value,
       decoration: const InputDecoration(

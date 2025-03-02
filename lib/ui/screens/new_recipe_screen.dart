@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
@@ -9,7 +11,7 @@ import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/descri
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/difficulty_dropdown_menu.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/cooking_directions_list_view.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/image_picker_field.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/image_url_text_form_field.dart';
+
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/notes_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/prep_time_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/cooking_direction_input_section.dart';
@@ -35,7 +37,6 @@ class NewRecipeScreen extends StatefulWidget {
 }
 
 class _NewRecipeScreenState extends State<NewRecipeScreen> {
-  bool _imageURLFieldEnabled = true;
   final formKey = GlobalKey<FormState>();
   late List<Recipe> allRecipes;
 
@@ -57,8 +58,8 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
 
   final Map<String, dynamic> complexInputValues = {
     "images": {
-      "titleImg": "",
-      "cookingDirectionImg": [],
+      "titleImg": File(""),
+      "cookingDirectionImg": <File>[],
     },
     "tags": <String>[],
     "ingredients": <ListItem>[],
@@ -102,12 +103,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                 CategoryDropdownMenu(
                     categoryCtrl: allTextControllers["categoryCtrl"]!),
                 SizedBox(height: 30),
-                ImagePickerField(
-                  checkIfImagePicked: checkIfImagePicked,
-                ),
-                ImageUrlTextFormField(
-                    fieldDisabled: _imageURLFieldEnabled,
-                    imgUrlCtrl: allTextControllers["imgUrlCtrl"]!),
+                ImagePickerField(updateImagesFunc: updateImages),
                 SizedBox(height: 30),
                 DifficultyDropdownMenu(
                     difficultyCtrl: allTextControllers["difficultyCtrl"]!),
@@ -178,12 +174,6 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     );
   }
 
-  void checkIfImagePicked(bool fieldEnabled) {
-    setState(() {
-      _imageURLFieldEnabled = fieldEnabled;
-    });
-  }
-
   void updateIngredientList() {
     setState(() {
       complexInputValues["ingredients"].add(
@@ -221,6 +211,12 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
       }
     });
   }
+
+  void updateImages(String imagesKey, String imgFilePath) {
+    if (imagesKey == "titleImg") {
+      complexInputValues["images"][imagesKey] = imgFilePath;
+    }
+  }
 }
 
 void resetAllCtrl(Map<String, TextEditingController> allTextFormCtrl) {
@@ -231,9 +227,6 @@ void resetAllCtrl(Map<String, TextEditingController> allTextFormCtrl) {
 
 Recipe getCtrlInputValues(
     Map<String, TextEditingController> allTextFormCtrl, complexInputValues) {
-  complexInputValues["images"]["titleImg"] =
-      allTextFormCtrl["imgUrlCtrl"]?.text ?? "";
-
   final String title = allTextFormCtrl["titleCtrl"]?.text ?? "";
   final String category = allTextFormCtrl["categoryCtrl"]?.text ?? "";
   final String description = allTextFormCtrl["descCtrl"]?.text ?? "";
