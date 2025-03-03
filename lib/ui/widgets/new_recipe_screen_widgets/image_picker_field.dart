@@ -6,30 +6,37 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagePickerField extends StatefulWidget {
-  const ImagePickerField({
+  ImagePickerField({
     super.key,
     required this.updateImagesFunc,
+    required this.emptyImgPickerFunc,
+    required this.imagePath,
+    required this.showError,
   });
 
   final Function updateImagesFunc;
+  final Function emptyImgPickerFunc;
+  String? imagePath;
+  bool showError;
 
   @override
   State<ImagePickerField> createState() => _ImagePickerFieldState();
 }
 
 class _ImagePickerFieldState extends State<ImagePickerField> {
-  String? imagePath;
-
   Future<void> pickImage() async {
     final ImagePicker imagePicker = ImagePicker();
     final XFile? selectedImage =
         await imagePicker.pickImage(source: ImageSource.gallery);
     if (selectedImage != null) {
       setState(() {
-        imagePath = selectedImage.path;
-        imagePath == null
-            ? widget.updateImagesFunc("titleImg", "")
-            : widget.updateImagesFunc("titleImg", imagePath);
+        widget.imagePath = selectedImage.path;
+        if (widget.imagePath == null) {
+          widget.updateImagesFunc("titleImg", "");
+        } else {
+          widget.updateImagesFunc("titleImg", widget.imagePath);
+          widget.showError = false;
+        }
       });
     }
   }
@@ -43,46 +50,55 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
           pickImage();
         },
         child: Center(
-          child: Stack(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AspectRatio(
-                aspectRatio: 1,
-                child: Card(
-                  clipBehavior: Clip.antiAlias,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    side: BorderSide(color: AppColors.dishDropBlack),
-                  ),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.lightGrey,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: AppColors.dishDropBlack),
+              Stack(
+                children: [
+                  AspectRatio(
+                    aspectRatio: 1,
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        side: widget.showError
+                            ? BorderSide(color: Colors.red)
+                            : BorderSide(color: AppColors.dishDropBlack),
+                      ),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: AppColors.lightGrey,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: AppColors.dishDropBlack),
+                        ),
+                        child: widget.imagePath == null
+                            ? Icon(
+                                Icons.camera_alt_outlined,
+                                size: 50,
+                                color: AppColors.dishDropBlack,
+                              )
+                            : Image.file(File(widget.imagePath!),
+                                fit: BoxFit.cover),
+                      ),
                     ),
-                    child: imagePath == null
-                        ? Icon(
-                            Icons.camera_alt_outlined,
-                            size: 50,
-                            color: AppColors.dishDropBlack,
-                          )
-                        : Image.file(File(imagePath!), fit: BoxFit.cover),
                   ),
-                ),
+                  if (widget.imagePath != null)
+                    EmptyImagePickerButton(
+                        emptyImagePickerFunction: widget.emptyImgPickerFunc)
+                ],
               ),
-              EmptyImagePickerButton(emptyImagePickerFunction: emptyImagePicker)
+              SizedBox(height: 10),
+              if (widget.showError)
+                Text(
+                  "Please select a photo for your recipe.",
+                  style: TextStyle(color: Colors.red),
+                ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  void emptyImagePicker() {
-    setState(() {
-      imagePath = null;
-      widget.updateImagesFunc("titleImg", "");
-    });
   }
 }
 
@@ -109,8 +125,8 @@ class _EmptyImagePickerButtonState extends State<EmptyImagePickerButton> {
           widget.emptyImagePickerFunction();
         },
         child: Container(
-          width: 60,
-          height: 60,
+          width: 55,
+          height: 55,
           decoration: BoxDecoration(
             color: Colors.white.withAlpha((0.8 * 255).toInt()),
             shape: BoxShape.circle,
@@ -119,7 +135,7 @@ class _EmptyImagePickerButtonState extends State<EmptyImagePickerButton> {
           child: Icon(
             Icons.delete,
             color: Colors.red,
-            size: 35,
+            size: 30,
           ),
         ),
       ),

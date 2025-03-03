@@ -1,4 +1,5 @@
 import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
+import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
@@ -11,6 +12,8 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
     required this.widget,
     required this.allTextFormCtrl,
     required this.formKey,
+    required this.inputValuesValidFunc,
+    required this.resetAllCtrl,
   });
 
   final Map<String, dynamic> complexInputValues;
@@ -18,6 +21,8 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
   final NewRecipeScreen widget;
   final Map<String, TextEditingController> allTextFormCtrl;
   final GlobalKey<FormState> formKey;
+  final Function inputValuesValidFunc;
+  final Function resetAllCtrl;
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +31,16 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
       children: [
         FilledButton(
           onPressed: () async {
-            if (formKey.currentState!.validate()) {
+            if (formKey.currentState!.validate() &&
+                inputValuesValidFunc(allTextFormCtrl, complexInputValues)) {
               Recipe newRecipe =
-                  getCtrlInputValues(allTextFormCtrl, complexInputValues);
+                  createNewRecipe(complexInputValues, allTextFormCtrl);
               await widget.recipeController.addRecipeFuture(newRecipe);
               showCustomAlertBanner(
                   context, Colors.green, "Recipe added to cookbook!");
+            } else {
+              showCustomAlertBanner(context, Colors.red,
+                  "Please make sure all fields are filled correctly.");
             }
           },
           child: Text("Save recipe"),
@@ -39,7 +48,7 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
         FilledButton(
           onPressed: () async {
             Recipe newRecipe =
-                getCtrlInputValues(allTextFormCtrl, complexInputValues);
+                inputValuesValidFunc(allTextFormCtrl, complexInputValues);
             resetAllCtrl(allTextFormCtrl);
             await widget.recipeController.addRecipeFuture(newRecipe);
             showCustomAlertBanner(
@@ -57,5 +66,38 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
         )
       ],
     );
+  }
+
+  Recipe createNewRecipe(Map<String, dynamic> complexInputValues,
+      Map<String, TextEditingController> allTextFormCtrl) {
+    final String title = allTextFormCtrl["titleCtrl"]!.text;
+    final String category = allTextFormCtrl["categoryCtrl"]!.text;
+    final String description = allTextFormCtrl["descCtrl"]?.text ?? "";
+    final String notes = allTextFormCtrl["notesCtrl"]?.text ?? "";
+    final String difficulty = allTextFormCtrl["difficultyCtrl"]!.text;
+    final Map<String, dynamic> imagesInput = complexInputValues["images"];
+    final List<String> tags = complexInputValues["tags"];
+    final int prepTime =
+        int.tryParse(allTextFormCtrl["prepTimeCtrl"]!.text) ?? 0;
+    final int cookingTime =
+        int.tryParse(allTextFormCtrl["cookingTimeCtrl"]!.text) ?? 0;
+    final List<String> directions = complexInputValues["directions"];
+    final List<ListItem> ingredients = complexInputValues["ingredients"];
+
+    Recipe newRecipe = Recipe(
+      title: title,
+      category: category,
+      description: description,
+      notes: notes,
+      difficulty: difficulty,
+      tags: tags,
+      images: imagesInput,
+      prepTime: prepTime,
+      cookingTime: cookingTime,
+      directions: directions,
+      ingredients: ingredients,
+    );
+    resetAllCtrl(allTextFormCtrl, null);
+    return newRecipe;
   }
 }

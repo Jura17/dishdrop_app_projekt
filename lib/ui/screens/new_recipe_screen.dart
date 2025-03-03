@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
@@ -39,6 +37,10 @@ class NewRecipeScreen extends StatefulWidget {
 class _NewRecipeScreenState extends State<NewRecipeScreen> {
   final formKey = GlobalKey<FormState>();
   late List<Recipe> allRecipes;
+  bool showImgPickerError = false;
+  bool showCategoryError = false;
+  bool showDifficultyError = false;
+  String? imgPickerPath;
 
   final Map<String, TextEditingController> allTextControllers = {
     "titleCtrl": TextEditingController(),
@@ -56,10 +58,10 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     "directionDescCtrl": TextEditingController(),
   };
 
-  final Map<String, dynamic> complexInputValues = {
+  Map<String, dynamic> complexInputValues = {
     "images": {
-      "titleImg": File(""),
-      "cookingDirectionImg": <File>[],
+      "titleImg": "",
+      "cookingDirectionImg": [],
     },
     "tags": <String>[],
     "ingredients": <ListItem>[],
@@ -101,12 +103,21 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                   allRecipes: allRecipes,
                 ),
                 CategoryDropdownMenu(
-                    categoryCtrl: allTextControllers["categoryCtrl"]!),
+                  categoryCtrl: allTextControllers["categoryCtrl"]!,
+                  showError: showCategoryError,
+                ),
                 SizedBox(height: 30),
-                ImagePickerField(updateImagesFunc: updateImages),
-                SizedBox(height: 30),
+                ImagePickerField(
+                  updateImagesFunc: updateImage,
+                  emptyImgPickerFunc: emptyImagePicker,
+                  showError: showImgPickerError,
+                  imagePath: imgPickerPath,
+                ),
+                SizedBox(height: 20),
                 DifficultyDropdownMenu(
-                    difficultyCtrl: allTextControllers["difficultyCtrl"]!),
+                  difficultyCtrl: allTextControllers["difficultyCtrl"]!,
+                  showError: showDifficultyError,
+                ),
                 TagsInputSection(
                   complexInputValues: complexInputValues,
                   tagsCtrl: allTextControllers["tagsCtrl"]!,
@@ -155,7 +166,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                 SizedBox(height: 5),
                 TextButton(
                   style: TextButton.styleFrom(foregroundColor: Colors.red),
-                  onPressed: () => resetAllCtrl(allTextControllers),
+                  onPressed: () => resetAllCtrl(allTextControllers, formKey),
                   child: Text("Reset all fields"),
                 ),
                 SizedBox(height: 30),
@@ -164,6 +175,8 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                   widget: widget,
                   allTextFormCtrl: allTextControllers,
                   formKey: formKey,
+                  inputValuesValidFunc: checkNoneTextfieldValues,
+                  resetAllCtrl: resetAllCtrl,
                 ),
                 SizedBox(height: 100),
               ],
@@ -212,47 +225,88 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     });
   }
 
-  void updateImages(String imagesKey, String imgFilePath) {
+  void updateImage(String imagesKey, String imgFilePath) {
     if (imagesKey == "titleImg") {
       complexInputValues["images"][imagesKey] = imgFilePath;
     }
   }
-}
 
-void resetAllCtrl(Map<String, TextEditingController> allTextFormCtrl) {
-  for (var key in allTextFormCtrl.keys) {
-    allTextFormCtrl[key]!.clear();
+  void emptyImagePicker() {
+    print("EmptyImagePicker called!");
+    setState(() {
+      imgPickerPath = null;
+      updateImage("titleImg", "");
+      showImgPickerError = false;
+    });
   }
-}
 
-Recipe getCtrlInputValues(
-    Map<String, TextEditingController> allTextFormCtrl, complexInputValues) {
-  final String title = allTextFormCtrl["titleCtrl"]?.text ?? "";
-  final String category = allTextFormCtrl["categoryCtrl"]?.text ?? "";
-  final String description = allTextFormCtrl["descCtrl"]?.text ?? "";
-  final String notes = allTextFormCtrl["notesCtrl"]?.text ?? "";
-  final String difficulty = allTextFormCtrl["difficultyCtrl"]?.text ?? "";
-  final List<String> tags = complexInputValues["tags"];
-  final Map<String, dynamic> imagesInput = complexInputValues["images"];
-  final int prepTime = int.tryParse(allTextFormCtrl["prepTimeCtrl"]!.text) ?? 0;
-  final int cookingTime =
-      int.tryParse(allTextFormCtrl["cookingTimeCtrl"]!.text) ?? 0;
-  final List<String> directions = complexInputValues["directions"];
-  final List<ListItem> ingredients = complexInputValues["ingredients"];
+  void resetAllCtrl(
+      Map<String, TextEditingController> allTextFormCtrl, formKey) {
+    for (var key in allTextFormCtrl.keys) {
+      allTextFormCtrl[key]!.clear();
+    }
+    showImgPickerError = false;
+    showCategoryError = false;
+    showDifficultyError = false;
 
-  Recipe newRecipe = Recipe(
-    title: title,
-    category: category,
-    description: description,
-    notes: notes,
-    difficulty: difficulty,
-    tags: tags,
-    images: imagesInput,
-    prepTime: prepTime,
-    cookingTime: cookingTime,
-    directions: directions,
-    ingredients: ingredients,
-  );
+    if (formKey != null) {
+      formKey.currentState?.reset();
+    }
+    emptyImagePicker();
+    setState(() {
+      complexInputValues = {
+        "images": {
+          "titleImg": "",
+          "cookingDirectionImg": [],
+        },
+        "tags": <String>[],
+        "ingredients": <ListItem>[],
+        "directions": <String>[]
+      };
+    });
+  }
 
-  return newRecipe;
+  bool checkNoneTextfieldValues(
+      Map<String, TextEditingController> allTextFormCtrl, complexInputValues) {
+    allTextFormCtrl["categoryCtrl"]?.text ?? "";
+
+    String? categoryText = allTextFormCtrl["categoryCtrl"]?.text;
+    if (categoryText == null || categoryText.isEmpty) {
+      setState(() {
+        showCategoryError = true;
+      });
+    } else {
+      setState(() {
+        showCategoryError = false;
+      });
+    }
+
+    String? difficultyText = allTextFormCtrl["difficultyCtrl"]?.text;
+    if (difficultyText == null || difficultyText.isEmpty) {
+      setState(() {
+        showDifficultyError = true;
+      });
+    } else {
+      setState(() {
+        showDifficultyError = false;
+      });
+    }
+
+    String titleImg = complexInputValues["images"]["titleImg"];
+    if (titleImg.isEmpty) {
+      setState(() {
+        showImgPickerError = true;
+      });
+    } else {
+      setState(() {
+        showImgPickerError = false;
+      });
+    }
+
+    if (showCategoryError || showDifficultyError || showImgPickerError) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

@@ -19,6 +19,11 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
           hintStyle: TextStyle(color: AppColors.cardInfoGrey),
+          errorStyle: TextStyle(color: Colors.red),
+          // TODO: TextFormField error border
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+          ),
           focusedBorder: OutlineInputBorder(
             borderSide:
                 BorderSide(color: const Color.fromARGB(255, 56, 151, 24)),
