@@ -40,7 +40,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
   bool showImgPickerError = false;
   bool showCategoryError = false;
   bool showDifficultyError = false;
-  String? imgPickerPath;
+  String? imagePath;
 
   final Map<String, TextEditingController> allTextControllers = {
     "titleCtrl": TextEditingController(),
@@ -104,14 +104,15 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                 ),
                 CategoryDropdownMenu(
                   categoryCtrl: allTextControllers["categoryCtrl"]!,
-                  showError: showCategoryError,
+                  showErrorFunc: updateCategoryMenuError,
+                  getErrorStateFunc: getCategoryErrorState,
                 ),
                 SizedBox(height: 30),
                 ImagePickerField(
                   updateImagesFunc: updateImage,
                   emptyImgPickerFunc: emptyImagePicker,
                   showError: showImgPickerError,
-                  imagePath: imgPickerPath,
+                  imagePath: imagePath,
                 ),
                 SizedBox(height: 20),
                 DifficultyDropdownMenu(
@@ -187,6 +188,14 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     );
   }
 
+  void updateCategoryMenuError(bool showError) {
+    showCategoryError = showError;
+  }
+
+  bool getCategoryErrorState() {
+    return showCategoryError;
+  }
+
   void updateIngredientList() {
     setState(() {
       complexInputValues["ingredients"].add(
@@ -225,16 +234,16 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     });
   }
 
-  void updateImage(String imagesKey, String imgFilePath) {
+  void updateImage(String imagesKey, String imagePathFromPicker) {
     if (imagesKey == "titleImg") {
-      complexInputValues["images"][imagesKey] = imgFilePath;
+      complexInputValues["images"][imagesKey] = imagePathFromPicker;
+      imagePath = imagePathFromPicker;
     }
   }
 
   void emptyImagePicker() {
-    print("EmptyImagePicker called!");
     setState(() {
-      imgPickerPath = null;
+      imagePath = null;
       updateImage("titleImg", "");
       showImgPickerError = false;
     });

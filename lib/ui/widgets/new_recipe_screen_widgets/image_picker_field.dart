@@ -24,30 +24,13 @@ class ImagePickerField extends StatefulWidget {
 }
 
 class _ImagePickerFieldState extends State<ImagePickerField> {
-  Future<void> pickImage() async {
-    final ImagePicker imagePicker = ImagePicker();
-    final XFile? selectedImage =
-        await imagePicker.pickImage(source: ImageSource.gallery);
-    if (selectedImage != null) {
-      setState(() {
-        widget.imagePath = selectedImage.path;
-        if (widget.imagePath == null) {
-          widget.updateImagesFunc("titleImg", "");
-        } else {
-          widget.updateImagesFunc("titleImg", widget.imagePath);
-          widget.showError = false;
-        }
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: GestureDetector(
-        onTap: () {
-          pickImage();
+        onTap: () async {
+          await pickImage();
         },
         child: Center(
           child: Column(
@@ -99,6 +82,23 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
         ),
       ),
     );
+  }
+
+  Future<void> pickImage() async {
+    final ImagePicker imagePicker = ImagePicker();
+    final XFile? selectedImage =
+        await imagePicker.pickImage(source: ImageSource.gallery);
+    if (selectedImage != null) {
+      setState(() {
+        widget.imagePath = selectedImage.path;
+        if (widget.imagePath == null) {
+          widget.updateImagesFunc("titleImg", "");
+        } else {
+          widget.updateImagesFunc("titleImg", widget.imagePath);
+          widget.showError = false;
+        }
+      });
+    }
   }
 }
 

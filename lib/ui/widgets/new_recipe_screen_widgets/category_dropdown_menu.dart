@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 class CategoryDropdownMenu extends StatefulWidget {
-  CategoryDropdownMenu({
+  const CategoryDropdownMenu({
     super.key,
     required this.categoryCtrl,
-    required this.showError,
+    required this.showErrorFunc,
+    required this.getErrorStateFunc,
   });
 
   final TextEditingController categoryCtrl;
-  bool showError;
+  final Function showErrorFunc;
+  final Function getErrorStateFunc;
 
   @override
   State<CategoryDropdownMenu> createState() => _CategoryDropdownMenuState();
@@ -23,7 +25,7 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
         DropdownMenu(
           onSelected: (value) {
             setState(() {
-              widget.showError = false;
+              widget.showErrorFunc(false);
             });
           },
           controller: widget.categoryCtrl,
@@ -42,7 +44,7 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
           hintText: "Select category",
         ),
         SizedBox(height: 10),
-        if (widget.showError)
+        if (widget.getErrorStateFunc())
           Text(
             "Please select a category",
             style: TextStyle(color: Colors.red),

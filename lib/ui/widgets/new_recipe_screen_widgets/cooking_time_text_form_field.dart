@@ -15,6 +15,7 @@ class CookingTimeTextFormField extends StatelessWidget {
         if (value == '') return "Please enter a value";
         if (int.tryParse(value!) == null) return "Only numerics allowed";
         if (int.parse(value) < 1) return "Only positives allowed";
+        return null;
       },
       controller: cookingTimeCtrl,
       decoration: const InputDecoration(
