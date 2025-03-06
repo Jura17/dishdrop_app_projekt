@@ -36,6 +36,7 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
               Recipe newRecipe =
                   createNewRecipe(complexInputValues, allTextFormCtrl);
               await widget.recipeController.addRecipeFuture(newRecipe);
+              resetAllCtrl(allTextFormCtrl, null);
               showCustomAlertBanner(
                   context, Colors.green, "Recipe added to cookbook!");
             } else {
@@ -47,20 +48,26 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
         ),
         FilledButton(
           onPressed: () async {
-            Recipe newRecipe =
-                inputValuesValidFunc(allTextFormCtrl, complexInputValues);
-            resetAllCtrl(allTextFormCtrl);
-            await widget.recipeController.addRecipeFuture(newRecipe);
-            showCustomAlertBanner(
-                context, Colors.green, "Recipe added to cookbook!");
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) => RecipeDetailsScreen(
-                    recipe: newRecipe,
-                    recipeController: widget.recipeController,
-                    shoppingListController: widget.shoppingListController),
-              ),
-            );
+            if (formKey.currentState!.validate() &&
+                inputValuesValidFunc(allTextFormCtrl, complexInputValues)) {
+              Recipe newRecipe =
+                  createNewRecipe(complexInputValues, allTextFormCtrl);
+              await widget.recipeController.addRecipeFuture(newRecipe);
+              resetAllCtrl(allTextFormCtrl, null);
+              showCustomAlertBanner(
+                  context, Colors.green, "Recipe added to cookbook!");
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => RecipeDetailsScreen(
+                      recipe: newRecipe,
+                      recipeController: widget.recipeController,
+                      shoppingListController: widget.shoppingListController),
+                ),
+              );
+            } else {
+              showCustomAlertBanner(context, Colors.red,
+                  "Please make sure all fields are filled correctly.");
+            }
           },
           child: Text("Save and open recipe"),
         )
@@ -76,6 +83,7 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
     final String notes = allTextFormCtrl["notesCtrl"]?.text ?? "";
     final String difficulty = allTextFormCtrl["difficultyCtrl"]!.text;
     final Map<String, dynamic> imagesInput = complexInputValues["images"];
+
     final List<String> tags = complexInputValues["tags"];
     final int prepTime =
         int.tryParse(allTextFormCtrl["prepTimeCtrl"]!.text) ?? 0;
@@ -97,7 +105,7 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
       directions: directions,
       ingredients: ingredients,
     );
-    resetAllCtrl(allTextFormCtrl, null);
+
     return newRecipe;
   }
 }

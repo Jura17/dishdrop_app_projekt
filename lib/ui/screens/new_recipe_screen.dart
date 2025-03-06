@@ -244,6 +244,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
   void emptyImagePicker() {
     setState(() {
       imagePath = null;
+      complexInputValues["images"]["titleImg"] = "";
       updateImage("titleImg", "");
       showImgPickerError = false;
     });
@@ -261,7 +262,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     if (formKey != null) {
       formKey.currentState?.reset();
     }
-    emptyImagePicker();
+
     setState(() {
       complexInputValues = {
         "images": {
@@ -273,6 +274,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
         "directions": <String>[]
       };
     });
+    emptyImagePicker();
   }
 
   bool checkNoneTextfieldValues(
@@ -302,6 +304,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     }
 
     String titleImg = complexInputValues["images"]["titleImg"];
+
     if (titleImg.isEmpty) {
       setState(() {
         showImgPickerError = true;

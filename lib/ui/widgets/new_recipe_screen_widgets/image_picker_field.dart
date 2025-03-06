@@ -55,7 +55,8 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: AppColors.dishDropBlack),
                         ),
-                        child: widget.imagePath == null
+                        child: widget.imagePath == null ||
+                                widget.imagePath!.isEmpty
                             ? Icon(
                                 Icons.camera_alt_outlined,
                                 size: 50,
