@@ -122,9 +122,13 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                 TagsInputSection(
                   complexInputValues: complexInputValues,
                   tagsCtrl: allTextControllers["tagsCtrl"]!,
-                  updateTagsList: updateTagsList,
+                  updateTagsList: addToTagsList,
                 ),
-                TagsListView(complexInputValues: complexInputValues),
+                TagsListView(
+                  complexInputValues: complexInputValues,
+                  removeFromTagsList: removeFromTagsList,
+                ),
+                SizedBox(height: 20),
                 DescriptionTextFormField(
                     descCtrl: allTextControllers["descCtrl"]!),
                 Row(
@@ -224,13 +228,19 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
     );
   }
 
-  void updateTagsList() {
+  void addToTagsList() {
     final tagsTitle = allTextControllers["tagsCtrl"]!.text;
     setState(() {
       if (allTextControllers["tagsCtrl"]!.text != "") {
         complexInputValues["tags"].add(tagsTitle);
         allTextControllers["tagsCtrl"]!.clear();
       }
+    });
+  }
+
+  void removeFromTagsList(tagTitle) {
+    setState(() {
+      complexInputValues["tags"].remove(tagTitle);
     });
   }
 
