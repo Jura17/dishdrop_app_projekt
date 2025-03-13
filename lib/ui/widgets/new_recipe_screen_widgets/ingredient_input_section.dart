@@ -38,6 +38,16 @@ class _IngredientInputSectionState extends State<IngredientInputSection> {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      validator: (value) {
+                        if (value == '') return "Please enter a value";
+                        if (int.tryParse(value!) == null)
+                          return "Only numerics allowed";
+                        if (int.parse(value) < 1)
+                          return "Only positives allowed";
+                        return null;
+                      },
                       controller:
                           widget.allTextFormCtrl["ingredientAmountCtrl"],
                       decoration: const InputDecoration(

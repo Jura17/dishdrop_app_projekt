@@ -6,11 +6,12 @@ class AllPurposeListInputSection extends StatefulWidget {
     super.key,
     required this.allTextControllers,
     required this.updateListFunction,
+    required this.formKey,
   });
 
   final Map<String, TextEditingController> allTextControllers;
-
   final Function updateListFunction;
+  final GlobalKey<FormState> formKey;
 
   @override
   State<AllPurposeListInputSection> createState() =>
@@ -39,6 +40,16 @@ class _AllPurposeListInputSectionState
                 children: [
                   Expanded(
                     child: TextFormField(
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      validator: (value) {
+                        if (value == '') return "Please enter a value";
+                        if (int.tryParse(value!) == null)
+                          return "Only numerics allowed";
+                        if (int.parse(value) < 1)
+                          return "Only positives allowed";
+                        return null;
+                      },
                       controller: widget.allTextControllers["itemAmountCtrl"],
                       decoration: const InputDecoration(
                         filled: true,
@@ -69,7 +80,9 @@ class _AllPurposeListInputSectionState
         ),
         IconButton(
           onPressed: () {
-            widget.updateListFunction();
+            if (widget.formKey.currentState!.validate()) {
+              widget.updateListFunction();
+            }
           },
           icon: Icon(
             Icons.add_box_outlined,

@@ -21,6 +21,7 @@ class AllPurposeShoppingListView extends StatefulWidget {
 class _AllPurposeShoppingListViewState
     extends State<AllPurposeShoppingListView> {
   ShoppingList? allPurposeShoppingList;
+  final _formKey = GlobalKey<FormState>();
 
   final Map<String, TextEditingController> allTextControllers = {
     "itemAmountCtrl": TextEditingController(),
@@ -41,26 +42,31 @@ class _AllPurposeShoppingListViewState
           }
           allPurposeShoppingList = snapshot.data!.first;
           return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    allPurposeShoppingList!.title,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  AllPurposeListTitleImage(
-                      allPurposeShoppingList: allPurposeShoppingList!),
-                  const SizedBox(height: 20),
-                  AllPurposeListItems(
-                      allPurposeShoppingList: allPurposeShoppingList!),
-                  SizedBox(height: 20),
-                  AllPurposeListInputSection(
+            child: Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      allPurposeShoppingList!.title,
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    AllPurposeListTitleImage(
+                        allPurposeShoppingList: allPurposeShoppingList!),
+                    const SizedBox(height: 20),
+                    AllPurposeListItems(
+                        allPurposeShoppingList: allPurposeShoppingList!),
+                    SizedBox(height: 20),
+                    AllPurposeListInputSection(
                       allTextControllers: allTextControllers,
-                      updateListFunction: updateAllPurposeShoppingList),
-                  SizedBox(height: 100)
-                ],
+                      updateListFunction: updateAllPurposeShoppingList,
+                      formKey: _formKey,
+                    ),
+                    SizedBox(height: 100)
+                  ],
+                ),
               ),
             ),
           );
