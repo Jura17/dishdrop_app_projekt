@@ -12,6 +12,16 @@ class ListItem {
     this.isShoppingListItem = false,
     this.isDone = false,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'description': description,
+      'amount': amount,
+      'unit': unit,
+      'isShoppingListItem': isShoppingListItem,
+      'isDone': isDone,
+    };
+  }
 }
 
 /*

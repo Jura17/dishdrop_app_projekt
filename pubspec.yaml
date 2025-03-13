@@ -13,6 +13,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.3
   image_picker: ^1.1.2
   simple_tags: ^0.0.6
+  shared_preferences: ^2.5.2
 
 dev_dependencies:
   flutter_test:

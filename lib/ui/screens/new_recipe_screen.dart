@@ -1,6 +1,7 @@
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
+import 'package:dishdrop_app_projekt/data/repositories/shared_preferences_repository.dart';
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/category_dropdown_menu.dart';
@@ -20,6 +21,7 @@ import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/tags_l
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/tags_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/title_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
 
 class NewRecipeScreen extends StatefulWidget {
   const NewRecipeScreen({
@@ -34,18 +36,26 @@ class NewRecipeScreen extends StatefulWidget {
   State<NewRecipeScreen> createState() => _NewRecipeScreenState();
 }
 
-class _NewRecipeScreenState extends State<NewRecipeScreen> {
+class _NewRecipeScreenState extends State<NewRecipeScreen>
+    with WidgetsBindingObserver {
   final formKey = GlobalKey<FormState>();
+  SharedPreferencesRepository sharedPreferencesRepository =
+      SharedPreferencesRepository();
   late List<Recipe> allRecipes;
   bool showImgPickerError = false;
   bool showCategoryError = false;
   bool showDifficultyError = false;
   String? imagePath;
+  Map<String, dynamic> allInputFields = {
+    "images": {
+      "titleImg": "",
+      "cookingDirectionImg": [],
+    },
+  };
 
   final Map<String, TextEditingController> allTextControllers = {
     "titleCtrl": TextEditingController(),
     "categoryCtrl": TextEditingController(),
-    "imgUrlCtrl": TextEditingController(),
     "difficultyCtrl": TextEditingController(),
     "tagsCtrl": TextEditingController(),
     "descCtrl": TextEditingController(),
@@ -72,11 +82,66 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
   void initState() {
     super.initState();
     allRecipes = widget.recipeController.getAllRecipes();
+    WidgetsBinding.instance.addObserver(this);
+    loadCachedInput();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    switch (state) {
+      case AppLifecycleState.resumed:
+        // Load input string list from shared prefs
+        break;
+      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.detached:
+        saveAllInputToList();
+        break;
+      default:
+        break;
+    }
+  }
+
+  void saveAllInputToList() {
+    for (var key in allTextControllers.keys) {
+      allInputFields[key] = allTextControllers[key]!.text;
+    }
+
+    allInputFields["images"]["titleImg"] =
+        complexInputValues["images"]["titleImg"];
+    allInputFields["images"]["cookingDirectionImg"] =
+        complexInputValues["images"]["cookingDirectionImg"];
+    allInputFields["tags"] = complexInputValues["tags"];
+
+    List<String> ingredientStringList = [];
+    for (ListItem ingredient in complexInputValues["ingredients"]) {
+      final ingredientMap = ingredient.toJson();
+      ingredientStringList.add(jsonEncode(ingredientMap));
+    }
+    final String ingredientsEncoded = jsonEncode(ingredientStringList);
+    print(ingredientsEncoded);
+    // complexInputValues["ingredients"]; <--- needs to be handled differently because more than just a string
+    allInputFields["directions"] = complexInputValues["directions"];
+
+    final jsonString = jsonEncode(allInputFields);
+    sharedPreferencesRepository.overrideCachedInput(jsonString);
+  }
+
+  void loadCachedInput() async {
+    final jsonString = await sharedPreferencesRepository.cachedInput;
+    final cachedInput = jsonDecode(jsonString);
+    for (var key in allTextControllers.keys) {
+      allTextControllers[key]!.text = cachedInput[key];
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
+    saveAllInputToList();
+    WidgetsBinding.instance.removeObserver(this);
     for (var ctrlKey in allTextControllers.keys) {
       allTextControllers[ctrlKey]?.dispose();
     }
