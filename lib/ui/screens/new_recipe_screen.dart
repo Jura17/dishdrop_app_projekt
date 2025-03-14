@@ -36,15 +36,14 @@ class NewRecipeScreen extends StatefulWidget {
   State<NewRecipeScreen> createState() => _NewRecipeScreenState();
 }
 
-class _NewRecipeScreenState extends State<NewRecipeScreen>
-    with WidgetsBindingObserver {
+class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingObserver {
   final formKey = GlobalKey<FormState>();
-  SharedPreferencesRepository sharedPreferencesRepository =
-      SharedPreferencesRepository();
+  SharedPreferencesRepository sharedPreferencesRepository = SharedPreferencesRepository();
   late List<Recipe> allRecipes;
-  bool showImgPickerError = false;
-  bool showCategoryError = false;
-  bool showDifficultyError = false;
+  bool _showImgPickerError = false;
+  bool _showCategoryError = false;
+  bool _showDifficultyError = false;
+  bool _draftAvailable = false;
   String? imagePath;
   Map<String, dynamic> allInputFields = {
     "images": {
@@ -68,7 +67,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen>
     "directionDescCtrl": TextEditingController(),
   };
 
-  Map<String, dynamic> complexInputValues = {
+  Map<String, dynamic> _complexInputValues = {
     "images": {
       "titleImg": "",
       "cookingDirectionImg": [],
@@ -109,31 +108,74 @@ class _NewRecipeScreenState extends State<NewRecipeScreen>
       allInputFields[key] = allTextControllers[key]!.text;
     }
 
-    allInputFields["images"]["titleImg"] =
-        complexInputValues["images"]["titleImg"];
-    allInputFields["images"]["cookingDirectionImg"] =
-        complexInputValues["images"]["cookingDirectionImg"];
-    allInputFields["tags"] = complexInputValues["tags"];
+    allInputFields["images"]["titleImg"] = _complexInputValues["images"]["titleImg"];
+    allInputFields["images"]["cookingDirectionImg"] = _complexInputValues["images"]["cookingDirectionImg"];
+    allInputFields["tags"] = _complexInputValues["tags"];
 
     List<String> ingredientStringList = [];
-    for (ListItem ingredient in complexInputValues["ingredients"]) {
+    for (ListItem ingredient in _complexInputValues["ingredients"]) {
       final ingredientMap = ingredient.toJson();
       ingredientStringList.add(jsonEncode(ingredientMap));
     }
     final String ingredientsEncoded = jsonEncode(ingredientStringList);
-    print(ingredientsEncoded);
-    // complexInputValues["ingredients"]; <--- needs to be handled differently because more than just a string
-    allInputFields["directions"] = complexInputValues["directions"];
+
+    allInputFields["ingredients"] = ingredientsEncoded;
+    allInputFields["directions"] = _complexInputValues["directions"];
 
     final jsonString = jsonEncode(allInputFields);
     sharedPreferencesRepository.overrideCachedInput(jsonString);
   }
 
+  bool allValuesEmpty(dynamic value) {
+    if (value is String) return value.isEmpty;
+    if (value is List) return value.isEmpty;
+    if (value is Map) return value.values.every(allValuesEmpty);
+    return false;
+  }
+
   void loadCachedInput() async {
     final jsonString = await sharedPreferencesRepository.cachedInput;
-    final cachedInput = jsonDecode(jsonString);
-    for (var key in allTextControllers.keys) {
-      allTextControllers[key]!.text = cachedInput[key];
+
+    if (jsonString.isNotEmpty) {
+      final cachedInput = jsonDecode(jsonString);
+      bool jsonStringHasNoValues = allValuesEmpty(cachedInput);
+      if (!jsonStringHasNoValues) {
+        // decode all text input fields
+        for (var key in allTextControllers.keys) {
+          allTextControllers[key]!.text = cachedInput[key];
+        }
+        // decode title image
+        if (cachedInput["images"]["titleImg"].isNotEmpty) {
+          updateImage("titleImg", cachedInput["images"]["titleImg"]);
+          _complexInputValues["images"]["titleImg"] = cachedInput["images"]["titleImg"];
+        }
+
+        // decode ingredients
+        final List<dynamic> ingredientList = jsonDecode(cachedInput["ingredients"]);
+        final List<ListItem> decodedIngredientList = [];
+        for (var ingredientItem in ingredientList) {
+          Map ingredientDecoded = jsonDecode(ingredientItem);
+          ListItem newListItem = ListItem(
+              description: ingredientDecoded["description"],
+              amount: ingredientDecoded["amount"],
+              unit: ingredientDecoded["unit"]);
+          decodedIngredientList.add(newListItem);
+        }
+        _complexInputValues["ingredients"] = decodedIngredientList;
+
+        // decode cooking directions
+        if (cachedInput["directions"].isNotEmpty) {
+          _complexInputValues["directions"] = cachedInput["directions"];
+        }
+
+        // decode tags
+        if (cachedInput["tags"].isNotEmpty) {
+          List<String> tagList = cachedInput["tags"].cast<String>();
+          _complexInputValues["tags"] = tagList;
+        }
+        _draftAvailable = true;
+        setState(() {});
+      }
     }
   }
 
@@ -151,8 +193,15 @@ class _NewRecipeScreenState extends State<NewRecipeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("New recipe",
-            style: Theme.of(context).textTheme.headlineLarge),
+        title: Text("New recipe", style: Theme.of(context).textTheme.headlineLarge),
+        actions: [
+          if (_draftAvailable)
+            TextButton(
+                onPressed: () {
+                  resetAllCtrl(allTextControllers, formKey);
+                },
+                child: Text("Delete Draft"))
+        ],
       ),
       body: Form(
         key: formKey,
@@ -176,61 +225,52 @@ class _NewRecipeScreenState extends State<NewRecipeScreen>
                 ImagePickerField(
                   updateImagesFunc: updateImage,
                   emptyImgPickerFunc: emptyImagePicker,
-                  showError: showImgPickerError,
+                  showError: _showImgPickerError,
                   imagePath: imagePath,
                 ),
                 SizedBox(height: 20),
                 DifficultyDropdownMenu(
                   difficultyCtrl: allTextControllers["difficultyCtrl"]!,
-                  showError: showDifficultyError,
+                  showError: _showDifficultyError,
                 ),
                 TagsInputSection(
-                  complexInputValues: complexInputValues,
+                  complexInputValues: _complexInputValues,
                   tagsCtrl: allTextControllers["tagsCtrl"]!,
                   updateTagsList: addToTagsList,
                 ),
                 TagsListView(
-                  complexInputValues: complexInputValues,
+                  complexInputValues: _complexInputValues,
                   removeFromTagsList: removeFromTagsList,
                 ),
                 SizedBox(height: 20),
-                DescriptionTextFormField(
-                    descCtrl: allTextControllers["descCtrl"]!),
+                DescriptionTextFormField(descCtrl: allTextControllers["descCtrl"]!),
                 Row(
                   spacing: 10,
                   children: [
                     Expanded(
-                      child: PrepTimeTextFormField(
-                          prepTimeCtrl: allTextControllers["prepTimeCtrl"]!),
+                      child: PrepTimeTextFormField(prepTimeCtrl: allTextControllers["prepTimeCtrl"]!),
                     ),
                     Expanded(
-                      child: CookingTimeTextFormField(
-                          cookingTimeCtrl:
-                              allTextControllers["cookingTimeCtrl"]!),
+                      child: CookingTimeTextFormField(cookingTimeCtrl: allTextControllers["cookingTimeCtrl"]!),
                     ),
                   ],
                 ),
                 NotesTextFormField(notesCtrl: allTextControllers["notesCtrl"]!),
                 SizedBox(height: 30),
-                Text("Directions",
-                    style: Theme.of(context).textTheme.headlineMedium),
-                CookingDirectionsListView(
-                    complexInputValues: complexInputValues),
+                Text("Directions", style: Theme.of(context).textTheme.headlineMedium),
+                CookingDirectionsListView(complexInputValues: _complexInputValues),
                 CookingDirectionInputSection(
-                  complexInputValues: complexInputValues,
-                  cookingDirectionCtrl:
-                      allTextControllers["directionDescCtrl"]!,
+                  complexInputValues: _complexInputValues,
+                  cookingDirectionCtrl: allTextControllers["directionDescCtrl"]!,
                   updateDirectionList: updateDirectionList,
                 ),
                 SizedBox(height: 30),
-                Text("Ingredients",
-                    style: Theme.of(context).textTheme.headlineMedium),
-                RecipeFormIngredientListView(
-                    complexInputValues: complexInputValues),
+                Text("Ingredients", style: Theme.of(context).textTheme.headlineMedium),
+                RecipeFormIngredientListView(complexInputValues: _complexInputValues),
                 SizedBox(height: 20),
                 IngredientInputSection(
                   allTextFormCtrl: allTextControllers,
-                  complexInputValues: complexInputValues,
+                  complexInputValues: _complexInputValues,
                   updateIngredientList: updateIngredientList,
                 ),
                 SizedBox(height: 5),
@@ -241,7 +281,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen>
                 ),
                 SizedBox(height: 30),
                 RecipeFormFooterButtonSection(
-                  complexInputValues: complexInputValues,
+                  complexInputValues: _complexInputValues,
                   widget: widget,
                   allTextFormCtrl: allTextControllers,
                   formKey: formKey,
@@ -258,20 +298,19 @@ class _NewRecipeScreenState extends State<NewRecipeScreen>
   }
 
   void updateCategoryMenuError(bool showError) {
-    showCategoryError = showError;
+    _showCategoryError = showError;
   }
 
   bool getCategoryErrorState() {
-    return showCategoryError;
+    return _showCategoryError;
   }
 
   void updateIngredientList() {
     setState(() {
-      complexInputValues["ingredients"].add(
+      _complexInputValues["ingredients"].add(
         ListItem(
           description: allTextControllers["ingredientDescCtrl"]!.text,
-          amount:
-              double.tryParse(allTextControllers["ingredientAmountCtrl"]!.text),
+          amount: double.tryParse(allTextControllers["ingredientAmountCtrl"]!.text),
           unit: allTextControllers["ingredientUnitCtrl"]!.text,
         ),
       );
@@ -286,7 +325,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen>
     setState(
       () {
         if (allTextControllers["directionDescCtrl"]!.text != "") {
-          complexInputValues["directions"].add(directionDescription);
+          _complexInputValues["directions"].add(directionDescription);
           allTextControllers["directionDescCtrl"]!.clear();
         }
       },
@@ -297,7 +336,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen>
     final tagsTitle = allTextControllers["tagsCtrl"]!.text;
     setState(() {
       if (allTextControllers["tagsCtrl"]!.text != "") {
-        complexInputValues["tags"].add(tagsTitle);
+        _complexInputValues["tags"].add(tagsTitle);
         allTextControllers["tagsCtrl"]!.clear();
       }
     });
@@ -305,13 +344,13 @@ class _NewRecipeScreenState extends State<NewRecipeScreen>
 
   void removeFromTagsList(tagTitle) {
     setState(() {
-      complexInputValues["tags"].remove(tagTitle);
+      _complexInputValues["tags"].remove(tagTitle);
     });
   }
 
   void updateImage(String imagesKey, String imagePathFromPicker) {
     if (imagesKey == "titleImg") {
-      complexInputValues["images"][imagesKey] = imagePathFromPicker;
+      _complexInputValues["images"][imagesKey] = imagePathFromPicker;
       imagePath = imagePathFromPicker;
     }
   }
@@ -319,62 +358,60 @@ class _NewRecipeScreenState extends State<NewRecipeScreen>
   void emptyImagePicker() {
     setState(() {
       imagePath = null;
-      complexInputValues["images"]["titleImg"] = "";
+      _complexInputValues["images"]["titleImg"] = "";
       updateImage("titleImg", "");
-      showImgPickerError = false;
+      _showImgPickerError = false;
     });
   }
 
-  void resetAllCtrl(
-      Map<String, TextEditingController> allTextFormCtrl, formKey) {
-    for (var key in allTextFormCtrl.keys) {
-      allTextFormCtrl[key]!.clear();
-    }
-    showImgPickerError = false;
-    showCategoryError = false;
-    showDifficultyError = false;
-
+  void resetAllCtrl(Map<String, TextEditingController> allTextFormCtrl, formKey) {
     if (formKey != null) {
       formKey.currentState?.reset();
     }
+    for (var key in allTextFormCtrl.keys) {
+      allTextFormCtrl[key]!.clear();
+    }
+    _showImgPickerError = false;
+    _showCategoryError = false;
+    _showDifficultyError = false;
 
-    setState(() {
-      complexInputValues = {
-        "images": {
-          "titleImg": "",
-          "cookingDirectionImg": [],
-        },
-        "tags": <String>[],
-        "ingredients": <ListItem>[],
-        "directions": <String>[]
-      };
-    });
+    _complexInputValues = {
+      "images": {
+        "titleImg": "",
+        "cookingDirectionImg": [],
+      },
+      "tags": <String>[],
+      "ingredients": <ListItem>[],
+      "directions": <String>[]
+    };
     emptyImagePicker();
+    sharedPreferencesRepository.deleteCachedInput();
+    _draftAvailable = false;
+    setState(() {});
   }
 
-  bool checkNoneTextfieldValues(
-      Map<String, TextEditingController> allTextFormCtrl, complexInputValues) {
+  bool checkNoneTextfieldValues(Map<String, TextEditingController> allTextFormCtrl, complexInputValues) {
     allTextFormCtrl["categoryCtrl"]?.text ?? "";
 
     String? categoryText = allTextFormCtrl["categoryCtrl"]?.text;
     if (categoryText == null || categoryText.isEmpty) {
       setState(() {
-        showCategoryError = true;
+        _showCategoryError = true;
       });
     } else {
       setState(() {
-        showCategoryError = false;
+        _showCategoryError = false;
       });
     }
 
     String? difficultyText = allTextFormCtrl["difficultyCtrl"]?.text;
     if (difficultyText == null || difficultyText.isEmpty) {
       setState(() {
-        showDifficultyError = true;
+        _showDifficultyError = true;
       });
     } else {
       setState(() {
-        showDifficultyError = false;
+        _showDifficultyError = false;
       });
     }
 
@@ -382,15 +419,15 @@ class _NewRecipeScreenState extends State<NewRecipeScreen>
 
     if (titleImg.isEmpty) {
       setState(() {
-        showImgPickerError = true;
+        _showImgPickerError = true;
       });
     } else {
       setState(() {
-        showImgPickerError = false;
+        _showImgPickerError = false;
       });
     }
 
-    if (showCategoryError || showDifficultyError || showImgPickerError) {
+    if (_showCategoryError || _showDifficultyError || _showImgPickerError) {
       return false;
     } else {
       return true;

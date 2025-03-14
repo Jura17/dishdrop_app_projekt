@@ -12,12 +12,10 @@ class RecipeFormIngredientListView extends StatefulWidget {
   final Map<String, dynamic> complexInputValues;
 
   @override
-  State<RecipeFormIngredientListView> createState() =>
-      _RecipeFormIngredientListViewState();
+  State<RecipeFormIngredientListView> createState() => _RecipeFormIngredientListViewState();
 }
 
-class _RecipeFormIngredientListViewState
-    extends State<RecipeFormIngredientListView> {
+class _RecipeFormIngredientListViewState extends State<RecipeFormIngredientListView> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,16 +23,13 @@ class _RecipeFormIngredientListViewState
         widget.complexInputValues["ingredients"].length,
         (index) {
           return Container(
-            decoration: BoxDecoration(
-                color: index.isEven ? AppColors.lightGrey : Colors.white),
+            decoration: BoxDecoration(color: index.isEven ? AppColors.lightGrey : Colors.white),
             child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ListItemRow(
-                  amount:
-                      widget.complexInputValues["ingredients"][index].amount,
+                  amount: widget.complexInputValues["ingredients"][index].amount,
                   unit: widget.complexInputValues["ingredients"][index].unit,
-                  description: widget
-                      .complexInputValues["ingredients"][index].description,
+                  description: widget.complexInputValues["ingredients"][index].description,
                 )),
           );
         },

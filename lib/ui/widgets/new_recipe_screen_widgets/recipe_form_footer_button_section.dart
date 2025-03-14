@@ -31,31 +31,24 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
       children: [
         FilledButton(
           onPressed: () async {
-            if (formKey.currentState!.validate() &&
-                inputValuesValidFunc(allTextFormCtrl, complexInputValues)) {
-              Recipe newRecipe =
-                  createNewRecipe(complexInputValues, allTextFormCtrl);
+            if (formKey.currentState!.validate() && inputValuesValidFunc(allTextFormCtrl, complexInputValues)) {
+              Recipe newRecipe = createNewRecipe(complexInputValues, allTextFormCtrl);
               await widget.recipeController.addRecipeFuture(newRecipe);
               resetAllCtrl(allTextFormCtrl, null);
-              showCustomAlertBanner(
-                  context, Colors.green, "Recipe added to cookbook!");
+              showCustomAlertBanner(context, Colors.green, "Recipe added to cookbook!");
             } else {
-              showCustomAlertBanner(context, Colors.red,
-                  "Please make sure all fields are filled correctly.");
+              showCustomAlertBanner(context, Colors.red, "Please make sure all fields are filled correctly.");
             }
           },
           child: Text("Save recipe"),
         ),
         FilledButton(
           onPressed: () async {
-            if (formKey.currentState!.validate() &&
-                inputValuesValidFunc(allTextFormCtrl, complexInputValues)) {
-              Recipe newRecipe =
-                  createNewRecipe(complexInputValues, allTextFormCtrl);
+            if (formKey.currentState!.validate() && inputValuesValidFunc(allTextFormCtrl, complexInputValues)) {
+              Recipe newRecipe = createNewRecipe(complexInputValues, allTextFormCtrl);
               await widget.recipeController.addRecipeFuture(newRecipe);
               resetAllCtrl(allTextFormCtrl, null);
-              showCustomAlertBanner(
-                  context, Colors.green, "Recipe added to cookbook!");
+              showCustomAlertBanner(context, Colors.green, "Recipe added to cookbook!");
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (BuildContext context) => RecipeDetailsScreen(
@@ -65,8 +58,7 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
                 ),
               );
             } else {
-              showCustomAlertBanner(context, Colors.red,
-                  "Please make sure all fields are filled correctly.");
+              showCustomAlertBanner(context, Colors.red, "Please make sure all fields are filled correctly.");
             }
           },
           child: Text("Save and open recipe"),
@@ -75,8 +67,7 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
     );
   }
 
-  Recipe createNewRecipe(Map<String, dynamic> complexInputValues,
-      Map<String, TextEditingController> allTextFormCtrl) {
+  Recipe createNewRecipe(Map<String, dynamic> complexInputValues, Map<String, TextEditingController> allTextFormCtrl) {
     final String title = allTextFormCtrl["titleCtrl"]!.text;
     final String category = allTextFormCtrl["categoryCtrl"]!.text;
     final String description = allTextFormCtrl["descCtrl"]?.text ?? "";
@@ -85,10 +76,8 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
     final Map<String, dynamic> imagesInput = complexInputValues["images"];
 
     final List<String> tags = complexInputValues["tags"];
-    final int prepTime =
-        int.tryParse(allTextFormCtrl["prepTimeCtrl"]!.text) ?? 0;
-    final int cookingTime =
-        int.tryParse(allTextFormCtrl["cookingTimeCtrl"]!.text) ?? 0;
+    final int prepTime = int.tryParse(allTextFormCtrl["prepTimeCtrl"]!.text) ?? 0;
+    final int cookingTime = int.tryParse(allTextFormCtrl["cookingTimeCtrl"]!.text) ?? 0;
     final List<String> directions = complexInputValues["directions"];
     final List<ListItem> ingredients = complexInputValues["ingredients"];
 

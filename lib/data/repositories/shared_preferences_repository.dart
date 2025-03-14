@@ -18,4 +18,9 @@ class SharedPreferencesRepository {
     final prefs = await _prefsFuture;
     return prefs.getString(_recipeFormKey) ?? '';
   }
+
+  Future<void> deleteCachedInput() async {
+    final prefs = await _prefsFuture;
+    await prefs.remove(_recipeFormKey);
+  }
 }

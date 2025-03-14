@@ -55,21 +55,18 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: AppColors.dishDropBlack),
                         ),
-                        child: widget.imagePath == null ||
-                                widget.imagePath!.isEmpty
+                        child: widget.imagePath == null || widget.imagePath!.isEmpty
                             ? Icon(
                                 Icons.camera_alt_outlined,
                                 size: 50,
                                 color: AppColors.dishDropBlack,
                               )
-                            : Image.file(File(widget.imagePath!),
-                                fit: BoxFit.cover),
+                            : Image.file(File(widget.imagePath!), fit: BoxFit.cover),
                       ),
                     ),
                   ),
-                  if (widget.imagePath != null)
-                    EmptyImagePickerButton(
-                        emptyImagePickerFunction: widget.emptyImgPickerFunc)
+                  if (widget.imagePath != null && widget.imagePath!.isNotEmpty)
+                    EmptyImagePickerButton(emptyImagePickerFunction: widget.emptyImgPickerFunc)
                 ],
               ),
               SizedBox(height: 10),
@@ -87,8 +84,7 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
 
   Future<void> pickImage() async {
     final ImagePicker imagePicker = ImagePicker();
-    final XFile? selectedImage =
-        await imagePicker.pickImage(source: ImageSource.gallery);
+    final XFile? selectedImage = await imagePicker.pickImage(source: ImageSource.gallery);
     if (selectedImage != null) {
       setState(() {
         widget.imagePath = selectedImage.path;
