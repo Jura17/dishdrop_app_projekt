@@ -126,10 +126,11 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
     sharedPreferencesRepository.overrideCachedInput(jsonString);
   }
 
+  // check if json response contains actual values or nothing but empty strings, lists and maps or if an empty list is actually returned as a string: "[]"
   bool allValuesEmpty(dynamic value) {
-    if (value is String) return value.isEmpty;
+    if (value is String) return value.trim().isEmpty || value == "[]";
     if (value is List) return value.isEmpty;
-    if (value is Map) return value.values.every(allValuesEmpty);
+    if (value is Map) return value.isEmpty || value.values.every(allValuesEmpty);
     return false;
   }
 
@@ -257,7 +258,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
                 ),
                 NotesTextFormField(notesCtrl: allTextControllers["notesCtrl"]!),
                 SizedBox(height: 30),
-                Text("Directions", style: Theme.of(context).textTheme.headlineMedium),
+                Text("Cooking Directions", style: Theme.of(context).textTheme.headlineMedium),
                 CookingDirectionsListView(complexInputValues: _complexInputValues),
                 CookingDirectionInputSection(
                   complexInputValues: _complexInputValues,

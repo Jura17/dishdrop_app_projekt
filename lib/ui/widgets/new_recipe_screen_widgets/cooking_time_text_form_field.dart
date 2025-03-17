@@ -12,14 +12,16 @@ class CookingTimeTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       validator: (value) {
-        if (value == '') return "Please enter a value";
-        if (int.tryParse(value!) == null) return "Only numerics allowed";
-        if (int.parse(value) < 1) return "Only positives allowed";
+        int? time = int.tryParse(value ?? '');
+        if (time == null) return "Numeric values only";
+        if (time < 0) return "Positive values only";
         return null;
       },
+      maxLength: 4,
+      keyboardType: TextInputType.numberWithOptions(decimal: false),
+      autovalidateMode: AutovalidateMode.onUnfocus,
       controller: cookingTimeCtrl,
-      decoration: const InputDecoration(
-          border: OutlineInputBorder(), hintText: "Cooking Time"),
+      decoration: const InputDecoration(border: OutlineInputBorder(), hintText: "Cooking Time", counterText: ""),
     );
   }
 }

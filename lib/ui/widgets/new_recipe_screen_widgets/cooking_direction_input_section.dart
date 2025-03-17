@@ -13,22 +13,23 @@ class CookingDirectionInputSection extends StatefulWidget {
   final Function updateDirectionList;
 
   @override
-  State<CookingDirectionInputSection> createState() =>
-      _CookingDirectionInputSectionState();
+  State<CookingDirectionInputSection> createState() => _CookingDirectionInputSectionState();
 }
 
-class _CookingDirectionInputSectionState
-    extends State<CookingDirectionInputSection> {
+class _CookingDirectionInputSectionState extends State<CookingDirectionInputSection> {
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
           child: TextFormField(
+            maxLength: 200,
+            maxLines: null,
             controller: widget.cookingDirectionCtrl,
             decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: "Add cooking directions"),
+              border: OutlineInputBorder(),
+              hintText: "Add cooking directions",
+            ),
           ),
         ),
         IconButton(

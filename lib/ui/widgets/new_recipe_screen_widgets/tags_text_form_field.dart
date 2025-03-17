@@ -23,12 +23,10 @@ class _TagsInputSectionState extends State<TagsInputSection> {
       children: [
         Expanded(
           child: TextFormField(
+            maxLength: 30,
             onFieldSubmitted: (value) => widget.updateTagsList(),
             controller: widget.tagsCtrl,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: "Tags",
-            ),
+            decoration: const InputDecoration(border: OutlineInputBorder(), hintText: "Tags", counterText: ""),
           ),
         ),
         IconButton(

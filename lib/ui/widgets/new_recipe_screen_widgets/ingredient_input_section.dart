@@ -28,53 +28,56 @@ class _IngredientInputSectionState extends State<IngredientInputSection> {
             spacing: 10,
             children: [
               TextFormField(
+                maxLength: 40,
                 controller: widget.allTextFormCtrl["ingredientDescCtrl"],
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Ingredient description"),
+                  border: OutlineInputBorder(),
+                  hintText: "Ingredient description",
+                  counterText: "",
+                ),
               ),
               Row(
                 spacing: 10,
                 children: [
                   Expanded(
                     child: TextFormField(
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: TextInputType.numberWithOptions(decimal: true),
                       validator: (value) {
-                        if (value == '') return "Please enter a value";
-                        if (int.tryParse(value!) == null) {
-                          return "Only numerics allowed";
-                        }
-                        if (int.parse(value) < 1) {
-                          return "Only positives allowed";
-                        }
+                        if (value == '') return null;
+                        double? amount = double.tryParse(value ?? '');
+                        if (amount == null) return "Only numerics allowed";
+                        if (amount < 0) return "Only positives allowed";
                         return null;
                       },
-                      controller:
-                          widget.allTextFormCtrl["ingredientAmountCtrl"],
+                      maxLength: 6,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      controller: widget.allTextFormCtrl["ingredientAmountCtrl"],
                       decoration: const InputDecoration(
                         filled: true,
                         fillColor: AppColors.lightGrey,
                         border: OutlineInputBorder(),
                         hintText: "Amount",
+                        counterText: "",
                       ),
                     ),
                   ),
                   Expanded(
                     child: TextFormField(
+                      maxLength: 10,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: widget.allTextFormCtrl["ingredientUnitCtrl"],
                       decoration: const InputDecoration(
-                          border: OutlineInputBorder(), hintText: "Unit"),
+                        border: OutlineInputBorder(),
+                        hintText: "Unit",
+                        counterText: "",
+                      ),
                     ),
                   ),
                 ],
               ),
               Text(
                 "You can enter fractional amounts like 1½ as 1.5",
-                style: Theme.of(context)
-                    .textTheme
-                    .labelMedium
-                    ?.copyWith(fontStyle: FontStyle.italic),
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(fontStyle: FontStyle.italic),
               )
             ],
           ),

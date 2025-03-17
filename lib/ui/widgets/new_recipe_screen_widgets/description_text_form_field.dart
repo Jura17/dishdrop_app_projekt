@@ -19,6 +19,7 @@ class DescriptionTextFormField extends StatelessWidget {
         }
         return null;
       },
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: descCtrl,
       decoration: const InputDecoration(
         hintText: "Description",

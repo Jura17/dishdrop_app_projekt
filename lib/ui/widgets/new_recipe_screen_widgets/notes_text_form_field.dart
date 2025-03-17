@@ -19,6 +19,7 @@ class NotesTextFormField extends StatelessWidget {
         }
         return null;
       },
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: notesCtrl,
       decoration: const InputDecoration(
         border: OutlineInputBorder(),

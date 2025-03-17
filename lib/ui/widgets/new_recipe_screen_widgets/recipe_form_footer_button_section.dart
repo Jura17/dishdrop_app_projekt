@@ -78,8 +78,8 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
     final List<String> tags = complexInputValues["tags"];
     final int prepTime = int.tryParse(allTextFormCtrl["prepTimeCtrl"]!.text) ?? 0;
     final int cookingTime = int.tryParse(allTextFormCtrl["cookingTimeCtrl"]!.text) ?? 0;
-    final List<String> directions = complexInputValues["directions"];
-    final List<ListItem> ingredients = complexInputValues["ingredients"];
+    final List<String> directions = complexInputValues["directions"] as List<String>;
+    final List<ListItem> ingredients = complexInputValues["ingredients"] as List<ListItem>;
 
     Recipe newRecipe = Recipe(
       title: title,
