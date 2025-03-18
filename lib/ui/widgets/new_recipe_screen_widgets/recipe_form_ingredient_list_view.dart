@@ -25,15 +25,25 @@ class _RecipeFormIngredientListViewState extends State<RecipeFormIngredientListV
           return Container(
             decoration: BoxDecoration(color: index.isEven ? AppColors.lightGrey : Colors.white),
             child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListItemRow(
-                  amount: widget.complexInputValues["ingredients"][index].amount,
-                  unit: widget.complexInputValues["ingredients"][index].unit,
-                  description: widget.complexInputValues["ingredients"][index].description,
-                )),
+              padding: const EdgeInsets.all(8.0),
+              child: ListItemRow(
+                amount: widget.complexInputValues["ingredients"][index].amount,
+                unit: widget.complexInputValues["ingredients"][index].unit,
+                description: widget.complexInputValues["ingredients"][index].description,
+                index: index,
+                complexInputValues: widget.complexInputValues,
+                updateListFunc: updateIngredientList,
+              ),
+            ),
           );
         },
       ),
     );
+  }
+
+  void updateIngredientList(int index) {
+    setState(() {
+      widget.complexInputValues["ingredients"].removeAt(index);
+    });
   }
 }

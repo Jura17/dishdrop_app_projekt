@@ -16,16 +16,16 @@ class AllPurposeListItems extends StatelessWidget {
         allPurposeShoppingList.shoppingItems.length,
         (index) {
           return Container(
-            decoration: BoxDecoration(
-                color: index.isEven ? AppColors.lightGrey : Colors.white),
+            decoration: BoxDecoration(color: index.isEven ? AppColors.lightGrey : Colors.white),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ListItemRow(
-                amount: allPurposeShoppingList.shoppingItems[index].amount,
-                unit: allPurposeShoppingList.shoppingItems[index].unit,
-                description:
-                    allPurposeShoppingList.shoppingItems[index].description,
-              ),
+              // child: ListItemRow(
+              //   amount: allPurposeShoppingList.shoppingItems[index].amount,
+              //   unit: allPurposeShoppingList.shoppingItems[index].unit,
+              //   description:
+              //       allPurposeShoppingList.shoppingItems[index].description,
+
+              // ),
             ),
           );
         },

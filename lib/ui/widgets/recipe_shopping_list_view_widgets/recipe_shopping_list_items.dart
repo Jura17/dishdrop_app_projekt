@@ -12,8 +12,7 @@ class RecipeShoppingListItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children:
-          recipeShoppingList.shoppingItems.asMap().entries.map<Widget>((entry) {
+      children: recipeShoppingList.shoppingItems.asMap().entries.map<Widget>((entry) {
         int innerIndex = entry.key;
         var shoppingItem = entry.value;
 
@@ -21,11 +20,13 @@ class RecipeShoppingListItems extends StatelessWidget {
           color: innerIndex.isEven ? AppColors.lightGrey : Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ListItemRow(
-              amount: shoppingItem.amount,
-              unit: shoppingItem.unit,
-              description: shoppingItem.description,
-            ),
+            // child: ListItemRow(
+            //   amount: shoppingItem.amount,
+            //   unit: shoppingItem.unit,
+            //   description: shoppingItem.description,
+            //   index: innerIndex,
+            //   complexInputValues: ,
+            // ),
           ),
         );
       }).toList(),

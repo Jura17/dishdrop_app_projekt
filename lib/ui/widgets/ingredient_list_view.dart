@@ -23,15 +23,14 @@ class _IngredientListViewState extends State<IngredientListView> {
             widget.recipe.ingredients.length,
             (index) {
               return Container(
-                decoration: BoxDecoration(
-                    color: index.isEven ? AppColors.lightGrey : Colors.white),
+                decoration: BoxDecoration(color: index.isEven ? AppColors.lightGrey : Colors.white),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ListItemRow(
-                    amount: widget.recipe.ingredients[index].amount,
-                    unit: widget.recipe.ingredients[index].unit,
-                    description: widget.recipe.ingredients[index].description,
-                  ),
+                  // child: ListItemRow(
+                  //   amount: widget.recipe.ingredients[index].amount,
+                  //   unit: widget.recipe.ingredients[index].unit,
+                  //   description: widget.recipe.ingredients[index].description,
+                  // ),
                 ),
               );
             },

@@ -192,108 +192,111 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("New recipe", style: Theme.of(context).textTheme.headlineLarge),
-        actions: [
-          if (_draftAvailable)
-            TextButton(
-                onPressed: () {
-                  resetAllCtrl(allTextControllers, formKey);
-                },
-                child: Text(
-                  "Delete Draft",
-                  style: TextStyle(color: Colors.red),
-                ))
-        ],
-      ),
-      body: Form(
-        key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 10,
-              children: [
-                TitleTextFormField(
-                  titleCtrl: allTextControllers["titleCtrl"]!,
-                  allRecipes: allRecipes,
-                ),
-                CategoryDropdownMenu(
-                  categoryCtrl: allTextControllers["categoryCtrl"]!,
-                  showErrorFunc: updateCategoryMenuError,
-                  getErrorStateFunc: getCategoryErrorState,
-                ),
-                SizedBox(height: 30),
-                ImagePickerField(
-                  updateImagesFunc: updateImage,
-                  emptyImgPickerFunc: emptyImagePicker,
-                  showError: _showImgPickerError,
-                  imagePath: imagePath,
-                ),
-                SizedBox(height: 20),
-                DifficultyDropdownMenu(
-                  difficultyCtrl: allTextControllers["difficultyCtrl"]!,
-                  showError: _showDifficultyError,
-                ),
-                TagsInputSection(
-                  complexInputValues: _complexInputValues,
-                  tagsCtrl: allTextControllers["tagsCtrl"]!,
-                  updateTagsList: addToTagsList,
-                ),
-                TagsListView(
-                  complexInputValues: _complexInputValues,
-                  removeFromTagsList: removeFromTagsList,
-                ),
-                SizedBox(height: 20),
-                DescriptionTextFormField(descCtrl: allTextControllers["descCtrl"]!),
-                Row(
-                  spacing: 10,
-                  children: [
-                    Expanded(
-                      child: PrepTimeTextFormField(prepTimeCtrl: allTextControllers["prepTimeCtrl"]!),
-                    ),
-                    Expanded(
-                      child: CookingTimeTextFormField(cookingTimeCtrl: allTextControllers["cookingTimeCtrl"]!),
-                    ),
-                  ],
-                ),
-                NotesTextFormField(notesCtrl: allTextControllers["notesCtrl"]!),
-                SizedBox(height: 30),
-                Text("Cooking Directions", style: Theme.of(context).textTheme.headlineMedium),
-                CookingDirectionsListView(complexInputValues: _complexInputValues),
-                CookingDirectionInputSection(
-                  complexInputValues: _complexInputValues,
-                  cookingDirectionCtrl: allTextControllers["directionDescCtrl"]!,
-                  updateDirectionList: updateDirectionList,
-                ),
-                SizedBox(height: 30),
-                Text("Ingredients", style: Theme.of(context).textTheme.headlineMedium),
-                RecipeFormIngredientListView(complexInputValues: _complexInputValues),
-                if (_complexInputValues["ingredients"].isNotEmpty) SizedBox(height: 20),
-                IngredientInputSection(
-                  allTextFormCtrl: allTextControllers,
-                  complexInputValues: _complexInputValues,
-                  updateIngredientList: updateIngredientList,
-                ),
-                SizedBox(height: 30),
-                ElevatedButton(
-                  style: TextButton.styleFrom(foregroundColor: Colors.red),
-                  onPressed: () => resetAllCtrl(allTextControllers, formKey),
-                  child: Text("Reset all fields"),
-                ),
-                SizedBox(height: 10),
-                RecipeFormFooterButtonSection(
-                  complexInputValues: _complexInputValues,
-                  widget: widget,
-                  allTextFormCtrl: allTextControllers,
-                  formKey: formKey,
-                  inputValuesValidFunc: checkNoneTextfieldValues,
-                  resetAllCtrl: resetAllCtrl,
-                ),
-                SizedBox(height: 100),
-              ],
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("New recipe", style: Theme.of(context).textTheme.headlineLarge),
+          actions: [
+            if (_draftAvailable)
+              TextButton(
+                  onPressed: () {
+                    resetAllCtrl(allTextControllers, formKey);
+                  },
+                  child: Text(
+                    "Delete Draft",
+                    style: TextStyle(color: Colors.red),
+                  ))
+          ],
+        ),
+        body: Form(
+          key: formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 10,
+                children: [
+                  TitleTextFormField(
+                    titleCtrl: allTextControllers["titleCtrl"]!,
+                    allRecipes: allRecipes,
+                  ),
+                  CategoryDropdownMenu(
+                    categoryCtrl: allTextControllers["categoryCtrl"]!,
+                    showErrorFunc: updateCategoryMenuError,
+                    getErrorStateFunc: getCategoryErrorState,
+                  ),
+                  SizedBox(height: 30),
+                  ImagePickerField(
+                    updateImagesFunc: updateImage,
+                    emptyImgPickerFunc: emptyImagePicker,
+                    showError: _showImgPickerError,
+                    imagePath: imagePath,
+                  ),
+                  SizedBox(height: 20),
+                  DifficultyDropdownMenu(
+                    difficultyCtrl: allTextControllers["difficultyCtrl"]!,
+                    showError: _showDifficultyError,
+                  ),
+                  TagsInputSection(
+                    complexInputValues: _complexInputValues,
+                    tagsCtrl: allTextControllers["tagsCtrl"]!,
+                    updateTagsList: addToTagsList,
+                  ),
+                  TagsListView(
+                    complexInputValues: _complexInputValues,
+                    removeFromTagsList: removeFromTagsList,
+                  ),
+                  SizedBox(height: 20),
+                  DescriptionTextFormField(descCtrl: allTextControllers["descCtrl"]!),
+                  Row(
+                    spacing: 10,
+                    children: [
+                      Expanded(
+                        child: PrepTimeTextFormField(prepTimeCtrl: allTextControllers["prepTimeCtrl"]!),
+                      ),
+                      Expanded(
+                        child: CookingTimeTextFormField(cookingTimeCtrl: allTextControllers["cookingTimeCtrl"]!),
+                      ),
+                    ],
+                  ),
+                  NotesTextFormField(notesCtrl: allTextControllers["notesCtrl"]!),
+                  SizedBox(height: 30),
+                  Text("Cooking Directions", style: Theme.of(context).textTheme.headlineMedium),
+                  CookingDirectionsListView(complexInputValues: _complexInputValues),
+                  CookingDirectionInputSection(
+                    complexInputValues: _complexInputValues,
+                    cookingDirectionCtrl: allTextControllers["directionDescCtrl"]!,
+                    updateDirectionList: updateDirectionList,
+                  ),
+                  SizedBox(height: 30),
+                  Text("Ingredients", style: Theme.of(context).textTheme.headlineMedium),
+                  RecipeFormIngredientListView(complexInputValues: _complexInputValues),
+                  if (_complexInputValues["ingredients"].isNotEmpty) SizedBox(height: 20),
+                  IngredientInputSection(
+                    allTextFormCtrl: allTextControllers,
+                    complexInputValues: _complexInputValues,
+                    updateIngredientList: updateIngredientList,
+                  ),
+                  SizedBox(height: 30),
+                  ElevatedButton(
+                    style: TextButton.styleFrom(foregroundColor: Colors.red),
+                    onPressed: () => resetAllCtrl(allTextControllers, formKey),
+                    child: Text("Reset all fields"),
+                  ),
+                  SizedBox(height: 10),
+                  RecipeFormFooterButtonSection(
+                    complexInputValues: _complexInputValues,
+                    widget: widget,
+                    allTextFormCtrl: allTextControllers,
+                    formKey: formKey,
+                    inputValuesValidFunc: checkNoneTextfieldValues,
+                    resetAllCtrl: resetAllCtrl,
+                  ),
+                  SizedBox(height: 100),
+                ],
+              ),
             ),
           ),
         ),
