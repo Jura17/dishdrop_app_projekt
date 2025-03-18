@@ -13,12 +13,22 @@ class CookingDirectionsListView extends StatefulWidget {
 }
 
 class _CookingDirectionsListViewState extends State<CookingDirectionsListView> {
-  late TextEditingController textController;
+  final Map<int, TextEditingController> _controllers = {};
+
+  @override
+  void initState() {
+    for (var i = 0; i < widget.complexInputValues["directions"].length; i++) {
+      _controllers[i] = TextEditingController(text: widget.complexInputValues["directions"][i]);
+    }
+    super.initState();
+  }
 
   @override
   void dispose() {
     super.dispose();
-    textController.dispose();
+    for (var controller in _controllers.values) {
+      controller.dispose();
+    }
   }
 
   @override
@@ -28,10 +38,10 @@ class _CookingDirectionsListViewState extends State<CookingDirectionsListView> {
       children: List.generate(
         widget.complexInputValues["directions"].length,
         (index) {
-          textController = TextEditingController();
-          if (widget.complexInputValues["directions"].isNotEmpty) {
-            textController.text = widget.complexInputValues["directions"][index];
-          }
+          // if a controller with a certain index does not exist create it, otherwise ignore statement
+          _controllers.putIfAbsent(
+              index, () => TextEditingController(text: widget.complexInputValues["directions"][index]));
+
           return Dismissible(
             key: Key(widget.complexInputValues["directions"][index]),
             background: Container(
@@ -43,6 +53,8 @@ class _CookingDirectionsListViewState extends State<CookingDirectionsListView> {
             ),
             onDismissed: (direction) async {
               setState(() {
+                _controllers[index]?.dispose();
+                _controllers.remove(index);
                 widget.complexInputValues["directions"].removeAt(index);
               });
             },
@@ -60,7 +72,7 @@ class _CookingDirectionsListViewState extends State<CookingDirectionsListView> {
                       child: TextField(
                         maxLength: 200,
                         maxLines: null,
-                        controller: textController,
+                        controller: _controllers[index],
                         onChanged: (value) => widget.complexInputValues["directions"][index] = value,
                         enabled: true,
                         style: Theme.of(context).textTheme.bodyLarge,

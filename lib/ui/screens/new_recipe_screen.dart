@@ -85,23 +85,23 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
     loadCachedInput();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   super.didChangeAppLifecycleState(state);
 
-    switch (state) {
-      case AppLifecycleState.resumed:
-        // Load input string list from shared prefs
-        break;
-      case AppLifecycleState.paused:
-      case AppLifecycleState.inactive:
-      case AppLifecycleState.detached:
-        saveAllInputToList();
-        break;
-      default:
-        break;
-    }
-  }
+  //   switch (state) {
+  //     case AppLifecycleState.resumed:
+  //       // Load input string list from shared prefs
+  //       break;
+  //     case AppLifecycleState.paused:
+  //     case AppLifecycleState.inactive:
+  //     case AppLifecycleState.detached:
+  //       saveAllInputToList();
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 
   void saveAllInputToList() {
     for (var key in allTextControllers.keys) {
@@ -201,7 +201,10 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
                 onPressed: () {
                   resetAllCtrl(allTextControllers, formKey);
                 },
-                child: Text("Delete Draft"))
+                child: Text(
+                  "Delete Draft",
+                  style: TextStyle(color: Colors.red),
+                ))
         ],
       ),
       body: Form(
@@ -268,19 +271,19 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
                 SizedBox(height: 30),
                 Text("Ingredients", style: Theme.of(context).textTheme.headlineMedium),
                 RecipeFormIngredientListView(complexInputValues: _complexInputValues),
-                SizedBox(height: 20),
+                if (_complexInputValues["ingredients"].isNotEmpty) SizedBox(height: 20),
                 IngredientInputSection(
                   allTextFormCtrl: allTextControllers,
                   complexInputValues: _complexInputValues,
                   updateIngredientList: updateIngredientList,
                 ),
-                SizedBox(height: 5),
-                TextButton(
+                SizedBox(height: 30),
+                ElevatedButton(
                   style: TextButton.styleFrom(foregroundColor: Colors.red),
                   onPressed: () => resetAllCtrl(allTextControllers, formKey),
                   child: Text("Reset all fields"),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 10),
                 RecipeFormFooterButtonSection(
                   complexInputValues: _complexInputValues,
                   widget: widget,

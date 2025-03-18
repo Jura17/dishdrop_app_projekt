@@ -16,34 +16,44 @@ class ListItemRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> convertedAmount = checkAndconvertAmount(amount);
-    return Row(
-      spacing: 10,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RichText(
-          text: TextSpan(
-            text: convertedAmount[0],
-            style: Theme.of(context).textTheme.bodyLarge,
-            children: [
-              TextSpan(
-                text: convertedAmount[1],
-                style: TextStyle(
-                  fontFeatures: [FontFeature.fractions()],
-                ),
-              ),
-              TextSpan(text: " ${unit ?? ''}")
-            ],
-          ),
+    return Dismissible(
+      key: Key(description),
+      background: Container(
+        color: Colors.red,
+        child: Icon(
+          Icons.delete,
+          color: Colors.white,
         ),
-        Expanded(
-          child: Text(
-            description,
-            style: Theme.of(context).textTheme.bodyLarge,
-            textAlign: TextAlign.right,
+      ),
+      child: Row(
+        spacing: 10,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          RichText(
+            text: TextSpan(
+              text: convertedAmount[0],
+              style: Theme.of(context).textTheme.bodyLarge,
+              children: [
+                TextSpan(
+                  text: convertedAmount[1],
+                  style: TextStyle(
+                    fontFeatures: [FontFeature.fractions()],
+                  ),
+                ),
+                TextSpan(text: " ${unit ?? ''}")
+              ],
+            ),
           ),
-        )
-      ],
+          Expanded(
+            child: Text(
+              description,
+              style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: TextAlign.right,
+            ),
+          )
+        ],
+      ),
     );
   }
 }
