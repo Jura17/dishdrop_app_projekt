@@ -272,7 +272,10 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
                   ),
                   SizedBox(height: 30),
                   Text("Ingredients", style: Theme.of(context).textTheme.headlineMedium),
-                  RecipeFormIngredientListView(complexInputValues: _complexInputValues),
+                  RecipeFormIngredientListView(
+                    complexInputValues: _complexInputValues,
+                    removeFromListFunc: removeFromIngredientList,
+                  ),
                   if (_complexInputValues["ingredients"].isNotEmpty) SizedBox(height: 20),
                   IngredientInputSection(
                     allTextFormCtrl: allTextControllers,
@@ -368,6 +371,12 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
       _complexInputValues["images"]["titleImg"] = "";
       updateImage("titleImg", "");
       _showImgPickerError = false;
+    });
+  }
+
+  void removeFromIngredientList(int index) {
+    setState(() {
+      _complexInputValues["ingredients"].removeAt(index);
     });
   }
 

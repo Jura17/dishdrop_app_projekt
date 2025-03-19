@@ -1,7 +1,7 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/list_item_row.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/list_item_row_dynamic.dart';
 import 'package:flutter/material.dart';
 
 class AllPurposeListItems extends StatelessWidget {

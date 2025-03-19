@@ -8,8 +8,11 @@ import 'package:dishdrop_app_projekt/ui/widgets/servings_picker.dart';
 import 'package:flutter/material.dart';
 
 class IngredientsSection extends StatelessWidget {
-  const IngredientsSection(
-      {super.key, required this.recipe, required this.shoppingListController});
+  const IngredientsSection({
+    super.key,
+    required this.recipe,
+    required this.shoppingListController,
+  });
 
   final Recipe recipe;
   final ShoppingListController shoppingListController;
@@ -30,9 +33,7 @@ class IngredientsSection extends StatelessWidget {
               onPressed: () {
                 shoppingListController.addShoppingList(
                   ShoppingList(
-                      title: recipe.title,
-                      imgUrl: recipe.images["titleImg"],
-                      shoppingItems: recipe.ingredients),
+                      title: recipe.title, imgUrl: recipe.images["titleImg"], shoppingItems: recipe.ingredients),
                 );
                 showCustomAlertBanner(
                   context,
