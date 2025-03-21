@@ -6,20 +6,18 @@ import 'package:dishdrop_app_projekt/ui/widgets/all_purpose_shopping_list_view_w
 import 'package:dishdrop_app_projekt/ui/widgets/all_purpose_shopping_list_view_widgets/all_purpose_list_items.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/all_purpose_shopping_list_view_widgets/all_purpose_list_title_image.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class AllPurposeShoppingListView extends StatefulWidget {
-  const AllPurposeShoppingListView(
-      {super.key, required this.shoppingListController});
+  const AllPurposeShoppingListView({super.key, required this.shoppingListController});
 
   final ShoppingListController shoppingListController;
 
   @override
-  State<AllPurposeShoppingListView> createState() =>
-      _AllPurposeShoppingListViewState();
+  State<AllPurposeShoppingListView> createState() => _AllPurposeShoppingListViewState();
 }
 
-class _AllPurposeShoppingListViewState
-    extends State<AllPurposeShoppingListView> {
+class _AllPurposeShoppingListViewState extends State<AllPurposeShoppingListView> {
   ShoppingList? allPurposeShoppingList;
   final _formKey = GlobalKey<FormState>();
 
@@ -53,11 +51,9 @@ class _AllPurposeShoppingListViewState
                       allPurposeShoppingList!.title,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
-                    AllPurposeListTitleImage(
-                        allPurposeShoppingList: allPurposeShoppingList!),
+                    AllPurposeListTitleImage(allPurposeShoppingList: allPurposeShoppingList!),
                     const SizedBox(height: 20),
-                    AllPurposeListItems(
-                        allPurposeShoppingList: allPurposeShoppingList!),
+                    AllPurposeListItems(allPurposeShoppingList: allPurposeShoppingList!),
                     SizedBox(height: 20),
                     AllPurposeListInputSection(
                       allTextControllers: allTextControllers,
@@ -81,6 +77,7 @@ class _AllPurposeShoppingListViewState
       () {
         allPurposeShoppingList!.addShoppingItem(
           ListItem(
+            id: Uuid().v4(),
             description: allTextControllers["itemDescCtrl"]!.text,
             amount: double.tryParse(allTextControllers["itemAmountCtrl"]!.text),
             unit: allTextControllers["itemUnitCtrl"]!.text,

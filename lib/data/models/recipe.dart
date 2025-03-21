@@ -1,6 +1,8 @@
+import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 
 class Recipe {
+  String id;
   String title;
   String category;
   String description;
@@ -11,12 +13,13 @@ class Recipe {
   int prepTime;
   int cookingTime;
   int timesCooked = 0;
-  List<String> directions;
+  List<CookingDirection> directions;
   // TODO: ingredients probably needs to be a map so I can have ingredient group titles
   List<ListItem> ingredients;
   bool isFavorite = false;
 
   Recipe({
+    required this.id,
     required this.title,
     required this.category,
     required this.description,

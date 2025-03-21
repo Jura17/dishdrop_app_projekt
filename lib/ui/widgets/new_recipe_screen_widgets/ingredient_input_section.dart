@@ -6,12 +6,12 @@ class IngredientInputSection extends StatefulWidget {
     super.key,
     required this.allTextFormCtrl,
     required this.complexInputValues,
-    required this.updateIngredientList,
+    required this.addIngredientFunc,
   });
 
   final Map<String, TextEditingController> allTextFormCtrl;
   final Map<String, dynamic> complexInputValues;
-  final Function updateIngredientList;
+  final Function addIngredientFunc;
 
   @override
   State<IngredientInputSection> createState() => _IngredientInputSectionState();
@@ -84,7 +84,7 @@ class _IngredientInputSectionState extends State<IngredientInputSection> {
         ),
         IconButton(
           onPressed: () {
-            widget.updateIngredientList();
+            widget.addIngredientFunc();
           },
           icon: Icon(
             Icons.add_box_outlined,

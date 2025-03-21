@@ -5,12 +5,12 @@ class CookingDirectionInputSection extends StatefulWidget {
     super.key,
     required this.complexInputValues,
     required this.cookingDirectionCtrl,
-    required this.updateDirectionList,
+    required this.addCookingDirectionFunc,
   });
 
   final Map<String, dynamic> complexInputValues;
   final TextEditingController cookingDirectionCtrl;
-  final Function updateDirectionList;
+  final Function addCookingDirectionFunc;
 
   @override
   State<CookingDirectionInputSection> createState() => _CookingDirectionInputSectionState();
@@ -34,7 +34,7 @@ class _CookingDirectionInputSectionState extends State<CookingDirectionInputSect
         ),
         IconButton(
           onPressed: () {
-            widget.updateDirectionList();
+            widget.addCookingDirectionFunc();
           },
           icon: Icon(
             Icons.add_box_outlined,

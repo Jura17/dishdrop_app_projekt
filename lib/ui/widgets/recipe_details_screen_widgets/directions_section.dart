@@ -28,7 +28,7 @@ class DirectionsSection extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        recipe.directions[index],
+                        recipe.directions[index].description,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     )

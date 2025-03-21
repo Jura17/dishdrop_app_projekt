@@ -19,6 +19,7 @@ import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 // import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/tags_text_form_field.dart';
 // import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/title_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class EditRecipeScreen extends StatefulWidget {
   const EditRecipeScreen({
@@ -75,8 +76,7 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit recipe",
-            style: Theme.of(context).textTheme.headlineLarge),
+        title: Text("Edit recipe", style: Theme.of(context).textTheme.headlineLarge),
       ),
       // body: Form(
       //   child: Padding(
@@ -334,6 +334,7 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
 
   Recipe prepareRecipeForDb(Map<String, dynamic> userInputValues) {
     Recipe newRecipe = Recipe(
+      id: Uuid().v4(),
       title: userInputValues["title"],
       category: userInputValues["category"],
       description: userInputValues["description"],

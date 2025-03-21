@@ -1,4 +1,5 @@
 class ListItem {
+  String id;
   String description;
   double? amount;
   String? unit;
@@ -6,6 +7,7 @@ class ListItem {
   bool isDone;
 
   ListItem({
+    required this.id,
     required this.description,
     this.amount,
     this.unit,
@@ -15,6 +17,7 @@ class ListItem {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'description': description,
       'amount': amount,
       'unit': unit,

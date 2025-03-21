@@ -1,12 +1,14 @@
 import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
+import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
-class RecipeFormFooterButtonSection extends StatelessWidget {
-  const RecipeFormFooterButtonSection({
+class FooterButtonSection extends StatelessWidget {
+  const FooterButtonSection({
     super.key,
     required this.complexInputValues,
     required this.widget,
@@ -78,10 +80,11 @@ class RecipeFormFooterButtonSection extends StatelessWidget {
     final List<String> tags = complexInputValues["tags"];
     final int prepTime = int.tryParse(allTextFormCtrl["prepTimeCtrl"]!.text) ?? 0;
     final int cookingTime = int.tryParse(allTextFormCtrl["cookingTimeCtrl"]!.text) ?? 0;
-    final List<String> directions = complexInputValues["directions"] as List<String>;
+    final List<CookingDirection> directions = complexInputValues["directions"] as List<CookingDirection>;
     final List<ListItem> ingredients = complexInputValues["ingredients"] as List<ListItem>;
 
     Recipe newRecipe = Recipe(
+      id: Uuid().v4(),
       title: title,
       category: category,
       description: description,

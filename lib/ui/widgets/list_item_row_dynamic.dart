@@ -1,22 +1,15 @@
 import 'package:dishdrop_app_projekt/core/utils/check_and_convert_amount.dart';
+import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:flutter/material.dart';
 
 class ListItemRowDynamic extends StatefulWidget {
   const ListItemRowDynamic({
     super.key,
-    required this.amount,
-    required this.unit,
-    required this.description,
-    required this.index,
-    required this.complexInputValues,
+    required this.ingredient,
     required this.removeFromListFunc,
   });
 
-  final double? amount;
-  final String? unit;
-  final String description;
-  final int index;
-  final Map<String, dynamic> complexInputValues;
+  final ListItem ingredient;
   final Function removeFromListFunc;
 
   @override
@@ -27,30 +20,31 @@ class _ListItemRowDynamicState extends State<ListItemRowDynamic> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _unitController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  bool _isEditingAmount = false;
-  bool _isEditingUnit = false;
-  bool _isEditingDescription = false;
   final FocusNode _amountFocusNode = FocusNode();
   final FocusNode _unitFocusNode = FocusNode();
   final FocusNode _descriptionFocusNode = FocusNode();
+  bool _isEditingAmount = false;
+  bool _isEditingUnit = false;
+  bool _isEditingDescription = false;
 
   @override
   void initState() {
     super.initState();
-    _amountController.text = "${widget.amount}";
+    _amountController.text = widget.ingredient.amount.toString();
     _amountController.addListener(() {
       double? newAmount = double.tryParse(_amountController.text);
       if (newAmount != null) {
-        widget.complexInputValues["ingredients"][widget.index].amount = newAmount;
+        widget.ingredient.amount = newAmount;
       }
     });
-    _unitController.text = "${widget.unit}";
+    _unitController.text = widget.ingredient.unit ?? "";
     _unitController.addListener(() {
-      widget.complexInputValues["ingredients"][widget.index].unit = _unitController.text;
+      widget.ingredient.unit = _unitController.text;
     });
-    _descriptionController.text = widget.description;
+
+    _descriptionController.text = widget.ingredient.description;
     _descriptionController.addListener(() {
-      widget.complexInputValues["ingredients"][widget.index].description = _descriptionController.text;
+      widget.ingredient.description = _descriptionController.text;
     });
 
     _amountFocusNode.addListener(_handleFocusChange);
@@ -86,9 +80,11 @@ class _ListItemRowDynamicState extends State<ListItemRowDynamic> {
 
     return Dismissible(
       onDismissed: (direction) {
-        widget.removeFromListFunc(widget.index);
+        setState(() {
+          widget.removeFromListFunc(widget.ingredient.id);
+        });
       },
-      key: Key(widget.description),
+      key: Key(widget.ingredient.id),
       background: Container(
         color: Colors.red,
         child: Icon(
@@ -121,33 +117,8 @@ class _ListItemRowDynamicState extends State<ListItemRowDynamic> {
                 _amountFocusNode.requestFocus();
               },
               child: _isEditingAmount
-                  ? SizedBox(
-                      width: 60,
-                      child: TextField(
-                        maxLength: 6,
-                        keyboardType: TextInputType.numberWithOptions(decimal: true),
-                        controller: _amountController,
-                        focusNode: _amountFocusNode,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.only(left: 5, right: 5),
-                        ),
-                      ),
-                    )
-                  : RichText(
-                      text: TextSpan(
-                        text: convertedAmount[0],
-                        style: Theme.of(context).textTheme.bodyLarge,
-                        children: [
-                          TextSpan(
-                            text: convertedAmount[1],
-                            style: TextStyle(
-                              fontFeatures: [FontFeature.fractions()],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  ? AmountTextField(amountController: _amountController, amountFocusNode: _amountFocusNode)
+                  : AmountText(convertedAmount: convertedAmount),
             ),
             GestureDetector(
               onTap: () {
@@ -159,22 +130,8 @@ class _ListItemRowDynamicState extends State<ListItemRowDynamic> {
                 _unitFocusNode.requestFocus();
               },
               child: _isEditingUnit
-                  ? SizedBox(
-                      width: 50,
-                      child: TextField(
-                        maxLength: 10,
-                        controller: _unitController,
-                        focusNode: _unitFocusNode,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.only(left: 5, right: 5),
-                        ),
-                      ),
-                    )
-                  : Text(
-                      _unitController.text,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
+                  ? UnitTextField(unitController: _unitController, unitFocusNode: _unitFocusNode)
+                  : UnitText(unitController: _unitController),
             ),
             Expanded(
               child: GestureDetector(
@@ -187,26 +144,165 @@ class _ListItemRowDynamicState extends State<ListItemRowDynamic> {
                   _descriptionFocusNode.requestFocus();
                 },
                 child: _isEditingDescription
-                    ? TextField(
-                        maxLength: 40,
-                        controller: _descriptionController,
-                        textAlign: TextAlign.right,
-                        focusNode: _descriptionFocusNode,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.only(left: 5, right: 5),
-                        ),
-                      )
-                    : Text(
-                        _descriptionController.text,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                        textAlign: TextAlign.right,
-                      ),
+                    ? DescriptionTextField(
+                        descriptionController: _descriptionController, descriptionFocusNode: _descriptionFocusNode)
+                    : DescriptionText(descriptionController: _descriptionController),
               ),
             )
           ],
         ),
       ),
+    );
+  }
+}
+
+class AmountTextField extends StatelessWidget {
+  const AmountTextField({
+    super.key,
+    required TextEditingController amountController,
+    required FocusNode amountFocusNode,
+  })  : _amountController = amountController,
+        _amountFocusNode = amountFocusNode;
+
+  final TextEditingController _amountController;
+  final FocusNode _amountFocusNode;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 60,
+      child: TextField(
+        maxLength: 6,
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        controller: _amountController,
+        focusNode: _amountFocusNode,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          counterText: "",
+          contentPadding: EdgeInsets.only(left: 5, right: 5),
+          isDense: true,
+        ),
+      ),
+    );
+  }
+}
+
+class AmountText extends StatelessWidget {
+  const AmountText({
+    super.key,
+    required this.convertedAmount,
+  });
+
+  final List<String> convertedAmount;
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        text: convertedAmount[0],
+        style: Theme.of(context).textTheme.bodyLarge,
+        children: [
+          TextSpan(
+            text: convertedAmount[1],
+            style: TextStyle(
+              fontFeatures: [FontFeature.fractions()],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class UnitTextField extends StatelessWidget {
+  const UnitTextField({
+    super.key,
+    required TextEditingController unitController,
+    required FocusNode unitFocusNode,
+  })  : _unitController = unitController,
+        _unitFocusNode = unitFocusNode;
+
+  final TextEditingController _unitController;
+  final FocusNode _unitFocusNode;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 50,
+      child: TextField(
+        maxLength: 10,
+        controller: _unitController,
+        focusNode: _unitFocusNode,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          counterText: "",
+          contentPadding: EdgeInsets.only(left: 5, right: 5),
+          isDense: true,
+        ),
+      ),
+    );
+  }
+}
+
+class UnitText extends StatelessWidget {
+  const UnitText({
+    super.key,
+    required TextEditingController unitController,
+  }) : _unitController = unitController;
+
+  final TextEditingController _unitController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      _unitController.text,
+      style: Theme.of(context).textTheme.bodyLarge,
+    );
+  }
+}
+
+class DescriptionTextField extends StatelessWidget {
+  const DescriptionTextField({
+    super.key,
+    required TextEditingController descriptionController,
+    required FocusNode descriptionFocusNode,
+  })  : _descriptionController = descriptionController,
+        _descriptionFocusNode = descriptionFocusNode;
+
+  final TextEditingController _descriptionController;
+  final FocusNode _descriptionFocusNode;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      maxLength: 40,
+      controller: _descriptionController,
+      textAlign: TextAlign.right,
+      focusNode: _descriptionFocusNode,
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(),
+        counterText: "",
+        contentPadding: EdgeInsets.only(left: 5, right: 5),
+        isDense: true,
+      ),
+    );
+  }
+}
+
+class DescriptionText extends StatelessWidget {
+  const DescriptionText({
+    super.key,
+    required TextEditingController descriptionController,
+  }) : _descriptionController = descriptionController;
+
+  final TextEditingController _descriptionController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      _descriptionController.text,
+      style: Theme.of(context).textTheme.bodyLarge,
+      textAlign: TextAlign.right,
     );
   }
 }

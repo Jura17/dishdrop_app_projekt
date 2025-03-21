@@ -1,3 +1,4 @@
+import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
@@ -14,14 +15,16 @@ import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/image_
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/notes_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/prep_time_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/cooking_direction_input_section.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/recipe_form_footer_button_section.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/footer_button_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/ingredient_input_section.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/recipe_form_ingredient_list_view.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/ingredient_list_view.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/tags_list_view.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/tags_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/new_recipe_screen_widgets/title_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
+
+import 'package:uuid/uuid.dart';
 
 class NewRecipeScreen extends StatefulWidget {
   const NewRecipeScreen({
@@ -74,7 +77,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
     },
     "tags": <String>[],
     "ingredients": <ListItem>[],
-    "directions": <String>[]
+    "directions": <CookingDirection>[]
   };
 
   @override
@@ -104,10 +107,12 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
   // }
 
   void saveAllInputToList() {
+    // encode all simple types
     for (var key in allTextControllers.keys) {
       allInputFields[key] = allTextControllers[key]!.text;
     }
 
+    // encode all complex types
     allInputFields["images"]["titleImg"] = _complexInputValues["images"]["titleImg"];
     allInputFields["images"]["cookingDirectionImg"] = _complexInputValues["images"]["cookingDirectionImg"];
     allInputFields["tags"] = _complexInputValues["tags"];
@@ -118,9 +123,15 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
       ingredientStringList.add(jsonEncode(ingredientMap));
     }
     final String ingredientsEncoded = jsonEncode(ingredientStringList);
-
     allInputFields["ingredients"] = ingredientsEncoded;
-    allInputFields["directions"] = _complexInputValues["directions"];
+
+    List<String> cookingDirectionStringList = [];
+    for (CookingDirection direction in _complexInputValues["directions"]) {
+      final directionMap = direction.toJson();
+      cookingDirectionStringList.add(jsonEncode(directionMap));
+    }
+    final String directionsEncoded = jsonEncode(cookingDirectionStringList);
+    allInputFields["directions"] = directionsEncoded;
 
     final jsonString = jsonEncode(allInputFields);
     sharedPreferencesRepository.overrideCachedInput(jsonString);
@@ -153,21 +164,34 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
 
         // decode ingredients
         final List<dynamic> ingredientList = jsonDecode(cachedInput["ingredients"]);
+
         final List<ListItem> decodedIngredientList = [];
         for (var ingredientItem in ingredientList) {
           Map ingredientDecoded = jsonDecode(ingredientItem);
           ListItem newListItem = ListItem(
-              description: ingredientDecoded["description"],
-              amount: ingredientDecoded["amount"],
-              unit: ingredientDecoded["unit"]);
+            id: ingredientDecoded["id"],
+            description: ingredientDecoded["description"],
+            amount: ingredientDecoded["amount"],
+            unit: ingredientDecoded["unit"],
+          );
           decodedIngredientList.add(newListItem);
         }
         _complexInputValues["ingredients"] = decodedIngredientList;
 
         // decode cooking directions
-        if (cachedInput["directions"].isNotEmpty) {
-          _complexInputValues["directions"] = cachedInput["directions"];
+        final List<dynamic> cookingDirectionList = jsonDecode(cachedInput["directions"]);
+
+        final List<CookingDirection> decodedDirectionList = [];
+        for (var directionItem in cookingDirectionList) {
+          Map directionDecoded = jsonDecode(directionItem);
+          CookingDirection newDirection = CookingDirection(
+            id: directionDecoded["id"],
+            description: directionDecoded["description"],
+          );
+          decodedDirectionList.add(newDirection);
         }
+        _complexInputValues["directions"] = decodedDirectionList;
+        print(_complexInputValues);
 
         // decode tags
         if (cachedInput["tags"].isNotEmpty) {
@@ -264,15 +288,18 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
                   NotesTextFormField(notesCtrl: allTextControllers["notesCtrl"]!),
                   SizedBox(height: 30),
                   Text("Cooking Directions", style: Theme.of(context).textTheme.headlineMedium),
-                  CookingDirectionsListView(complexInputValues: _complexInputValues),
+                  CookingDirectionsListView(
+                    complexInputValues: _complexInputValues,
+                    removeFromCookingDirectionsListFunc: removeCookingDirection,
+                  ),
                   CookingDirectionInputSection(
                     complexInputValues: _complexInputValues,
                     cookingDirectionCtrl: allTextControllers["directionDescCtrl"]!,
-                    updateDirectionList: updateDirectionList,
+                    addCookingDirectionFunc: addCookingDirectionToList,
                   ),
                   SizedBox(height: 30),
                   Text("Ingredients", style: Theme.of(context).textTheme.headlineMedium),
-                  RecipeFormIngredientListView(
+                  IngredientListView(
                     complexInputValues: _complexInputValues,
                     removeFromListFunc: removeFromIngredientList,
                   ),
@@ -280,7 +307,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
                   IngredientInputSection(
                     allTextFormCtrl: allTextControllers,
                     complexInputValues: _complexInputValues,
-                    updateIngredientList: updateIngredientList,
+                    addIngredientFunc: addIngredientToList,
                   ),
                   SizedBox(height: 30),
                   ElevatedButton(
@@ -289,7 +316,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
                     child: Text("Reset all fields"),
                   ),
                   SizedBox(height: 10),
-                  RecipeFormFooterButtonSection(
+                  FooterButtonSection(
                     complexInputValues: _complexInputValues,
                     widget: widget,
                     allTextFormCtrl: allTextControllers,
@@ -315,10 +342,11 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
     return _showCategoryError;
   }
 
-  void updateIngredientList() {
+  void addIngredientToList() {
     setState(() {
       _complexInputValues["ingredients"].add(
         ListItem(
+          id: Uuid().v4(),
           description: allTextControllers["ingredientDescCtrl"]!.text,
           amount: double.tryParse(allTextControllers["ingredientAmountCtrl"]!.text),
           unit: allTextControllers["ingredientUnitCtrl"]!.text,
@@ -330,17 +358,34 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
     });
   }
 
-  void updateDirectionList() {
+  void removeFromIngredientList(String id) {
+    setState(() {
+      _complexInputValues["ingredients"].removeWhere((ingredient) => ingredient.id == id);
+    });
+  }
+
+  void addCookingDirectionToList() {
     final directionDescription = allTextControllers["directionDescCtrl"]!.text;
     setState(
       () {
-        if (allTextControllers["directionDescCtrl"]!.text != "") {
-          _complexInputValues["directions"].add(directionDescription);
+        if (directionDescription != "") {
+          CookingDirection newDirection = CookingDirection(id: Uuid().v4(), description: directionDescription);
+
+          _complexInputValues["directions"].add(newDirection);
           allTextControllers["directionDescCtrl"]!.clear();
         }
       },
     );
+    print(_complexInputValues["directions"]);
   }
+
+  void removeCookingDirection(String id) {
+    setState(() {
+      _complexInputValues["directions"].removeWhere((direction) => direction.id == id);
+    });
+  }
+
+  void updateDirectionList() {}
 
   void addToTagsList() {
     final tagsTitle = allTextControllers["tagsCtrl"]!.text;
@@ -371,12 +416,6 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
       _complexInputValues["images"]["titleImg"] = "";
       updateImage("titleImg", "");
       _showImgPickerError = false;
-    });
-  }
-
-  void removeFromIngredientList(int index) {
-    setState(() {
-      _complexInputValues["ingredients"].removeAt(index);
     });
   }
 
