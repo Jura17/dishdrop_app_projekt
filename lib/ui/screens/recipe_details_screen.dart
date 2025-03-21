@@ -4,7 +4,7 @@ import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 import 'package:dishdrop_app_projekt/ui/screens/edit_recipe_screen.dart';
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen.dart';
+import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/description_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/directions_section.dart';
@@ -41,21 +41,18 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: FittedBox(
-          child: Text(widget.recipe.title,
-              style: Theme.of(context).textTheme.headlineLarge),
+          child: Text(widget.recipe.title, style: Theme.of(context).textTheme.headlineLarge),
         ),
       ),
       body: Padding(
-        padding:
-            const EdgeInsets.only(top: 16, bottom: 80, left: 16, right: 16),
+        padding: const EdgeInsets.only(top: 16, bottom: 80, left: 16, right: 16),
         child: ListView(
           children: [
             RecipeDetailsTitleImage(widget: widget),
             SizedBox(height: defaultSpacing),
             QuickInfoSection(widget: widget),
             SizedBox(height: defaultSpacing),
-            if (widget.recipe.tags.isNotEmpty)
-              TagsSection(recipe: widget.recipe),
+            if (widget.recipe.tags.isNotEmpty) TagsSection(recipe: widget.recipe),
             SizedBox(height: defaultSpacing),
             Align(
               alignment: Alignment.centerRight,
@@ -66,11 +63,9 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               ),
             ),
             SizedBox(height: defaultSpacing),
-            if (widget.recipe.description != "")
-              DescriptionSection(recipe: widget.recipe),
+            if (widget.recipe.description != "") DescriptionSection(recipe: widget.recipe),
             SizedBox(height: defaultSpacing),
-            if (widget.recipe.directions.isNotEmpty)
-              DirectionsSection(recipe: widget.recipe),
+            if (widget.recipe.directions.isNotEmpty) DirectionsSection(recipe: widget.recipe),
             SizedBox(height: defaultSpacing),
             if (widget.recipe.ingredients.isNotEmpty)
               IngredientsSection(
@@ -85,14 +80,9 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                 children: [
                   TextSpan(
                     text: "${widget.recipe.timesCooked}",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
                   ),
-                  TextSpan(
-                      text:
-                          " times so far.\nTap the button below when you're done!")
+                  TextSpan(text: " times so far.\nTap the button below when you're done!")
                 ],
               ),
             ),
@@ -116,17 +106,15 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             recipeController: widget.recipeController,
             shoppingListController: widget.shoppingListController,
             newScreen: EditRecipeScreen(
-                recipeController: widget.recipeController,
-                shoppingListController: widget.shoppingListController),
+                recipeController: widget.recipeController, shoppingListController: widget.shoppingListController),
           ),
           CustomFilledIconButton(
             text: "Add Recipe",
             iconData: Icons.add_box_outlined,
             recipeController: widget.recipeController,
             shoppingListController: widget.shoppingListController,
-            newScreen: NewRecipeScreen(
-                recipeController: widget.recipeController,
-                shoppingListController: widget.shoppingListController),
+            newScreen: RecipeFormScreen(
+                recipeController: widget.recipeController, shoppingListController: widget.shoppingListController),
           ),
         ],
       ),
@@ -143,8 +131,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
   void showBanner() {
     setState(() {
       widget.recipeController.removeRecipe(widget.recipe);
-      showCustomAlertBanner(
-          context, Colors.red, "Recipe removed from cookbook.");
+      showCustomAlertBanner(context, Colors.red, "Recipe removed from cookbook.");
     });
     Navigator.of(context).pop();
   }

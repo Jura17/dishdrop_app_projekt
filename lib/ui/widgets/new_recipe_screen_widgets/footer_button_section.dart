@@ -2,7 +2,7 @@ import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen.dart';
+import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -20,7 +20,7 @@ class FooterButtonSection extends StatelessWidget {
 
   final Map<String, dynamic> complexInputValues;
 
-  final NewRecipeScreen widget;
+  final RecipeFormScreen widget;
   final Map<String, TextEditingController> allTextFormCtrl;
   final GlobalKey<FormState> formKey;
   final Function inputValuesValidFunc;

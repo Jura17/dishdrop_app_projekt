@@ -1,7 +1,7 @@
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen.dart';
+import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_card_widgets/recipe_card.dart';
@@ -29,13 +29,11 @@ class _RecipesGridViewState extends State<RecipesGridView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.category,
-            style: Theme.of(context).textTheme.headlineLarge),
+        title: Text(widget.category, style: Theme.of(context).textTheme.headlineLarge),
       ),
       body: SafeArea(
         child: Padding(
-          padding:
-              const EdgeInsets.only(top: 16, bottom: 64, left: 8, right: 8),
+          padding: const EdgeInsets.only(top: 16, bottom: 64, left: 8, right: 8),
           child: Center(
             child: FutureBuilder(
               future: widget.recipeController.getAllRecipesFuture(),
@@ -45,9 +43,8 @@ class _RecipesGridViewState extends State<RecipesGridView> {
                 } else if (snapshot.hasError) {
                   return Text("Error while collecting data: ${snapshot.error}");
                 }
-                List<Recipe> filteredRecipes = snapshot.data!
-                    .where((recipe) => recipe.category == widget.category)
-                    .toList();
+                List<Recipe> filteredRecipes =
+                    snapshot.data!.where((recipe) => recipe.category == widget.category).toList();
 
                 return GridView.count(
                     crossAxisCount: 2,
@@ -58,8 +55,7 @@ class _RecipesGridViewState extends State<RecipesGridView> {
                       ...filteredRecipes.map((recipe) => RecipeCard(
                             recipe: recipe,
                             recipeController: widget.recipeController,
-                            shoppingListController:
-                                widget.shoppingListController,
+                            shoppingListController: widget.shoppingListController,
                           ))
                     ]
                     // alternative 1: [for (final recipe in filteredRecipes) RecipeCard(recipe: recipe)]
@@ -75,9 +71,8 @@ class _RecipesGridViewState extends State<RecipesGridView> {
         iconData: Icons.add_box_outlined,
         recipeController: widget.recipeController,
         shoppingListController: widget.shoppingListController,
-        newScreen: NewRecipeScreen(
-            recipeController: widget.recipeController,
-            shoppingListController: widget.shoppingListController),
+        newScreen: RecipeFormScreen(
+            recipeController: widget.recipeController, shoppingListController: widget.shoppingListController),
       ),
     );
   }

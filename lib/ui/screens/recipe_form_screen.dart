@@ -26,8 +26,8 @@ import 'dart:convert';
 
 import 'package:uuid/uuid.dart';
 
-class NewRecipeScreen extends StatefulWidget {
-  const NewRecipeScreen({
+class RecipeFormScreen extends StatefulWidget {
+  const RecipeFormScreen({
     super.key,
     required this.recipeController,
     required this.shoppingListController,
@@ -36,10 +36,10 @@ class NewRecipeScreen extends StatefulWidget {
   final ShoppingListController shoppingListController;
 
   @override
-  State<NewRecipeScreen> createState() => _NewRecipeScreenState();
+  State<RecipeFormScreen> createState() => _RecipeFormScreenState();
 }
 
-class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingObserver {
+class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBindingObserver {
   final formKey = GlobalKey<FormState>();
   SharedPreferencesRepository sharedPreferencesRepository = SharedPreferencesRepository();
   late List<Recipe> allRecipes;
@@ -84,7 +84,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
   void initState() {
     super.initState();
     allRecipes = widget.recipeController.getAllRecipes();
-    WidgetsBinding.instance.addObserver(this);
+    // WidgetsBinding.instance.addObserver(this);
     loadCachedInput();
   }
 
@@ -105,6 +105,16 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
   //       break;
   //   }
   // }
+
+  @override
+  void dispose() {
+    super.dispose();
+    saveAllInputToList();
+    // WidgetsBinding.instance.removeObserver(this);
+    for (var ctrlKey in allTextControllers.keys) {
+      allTextControllers[ctrlKey]?.dispose();
+    }
+  }
 
   void saveAllInputToList() {
     // encode all simple types
@@ -191,7 +201,6 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
           decodedDirectionList.add(newDirection);
         }
         _complexInputValues["directions"] = decodedDirectionList;
-        print(_complexInputValues);
 
         // decode tags
         if (cachedInput["tags"].isNotEmpty) {
@@ -201,16 +210,6 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
         _draftAvailable = true;
         setState(() {});
       }
-    }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    saveAllInputToList();
-    WidgetsBinding.instance.removeObserver(this);
-    for (var ctrlKey in allTextControllers.keys) {
-      allTextControllers[ctrlKey]?.dispose();
     }
   }
 
@@ -376,7 +375,6 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> with WidgetsBindingOb
         }
       },
     );
-    print(_complexInputValues["directions"]);
   }
 
   void removeCookingDirection(String id) {

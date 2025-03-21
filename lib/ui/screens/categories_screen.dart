@@ -3,7 +3,7 @@ import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 import 'package:dishdrop_app_projekt/gen/assets.gen.dart';
 
-import 'package:dishdrop_app_projekt/ui/screens/new_recipe_screen.dart';
+import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/category_card.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';
@@ -25,8 +25,7 @@ class CategoriesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Categories",
-            style: Theme.of(context).textTheme.headlineLarge),
+        title: Text("Categories", style: Theme.of(context).textTheme.headlineLarge),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -82,9 +81,7 @@ class CategoriesScreen extends StatelessWidget {
         iconData: Icons.add_box_outlined,
         recipeController: recipeController,
         shoppingListController: shoppingListController,
-        newScreen: NewRecipeScreen(
-            recipeController: recipeController,
-            shoppingListController: shoppingListController),
+        newScreen: RecipeFormScreen(recipeController: recipeController, shoppingListController: shoppingListController),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
