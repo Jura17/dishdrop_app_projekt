@@ -20,8 +20,7 @@ class RecipeController {
         () => _databaseRepository.removeRecipe(recipe),
       );
 
-  Future<void> updateRecipeFuture(Recipe oldRecipe, Recipe newRecipe) =>
-      Future.delayed(
+  Future<void> updateRecipeFuture(Recipe oldRecipe, Recipe newRecipe) => Future.delayed(
         Duration(seconds: 2),
         () => _databaseRepository.updateRecipe(oldRecipe, newRecipe),
       );
@@ -30,6 +29,5 @@ class RecipeController {
   List<Recipe> getAllRecipes() => _databaseRepository.getAllRecipes();
   void addRecipe(Recipe newRecipe) => _databaseRepository.addRecipe(newRecipe);
   void removeRecipe(Recipe recipe) => _databaseRepository.removeRecipe(recipe);
-  void updateRecipe(Recipe oldRecipe, Recipe newRecipe) =>
-      _databaseRepository.updateRecipe(oldRecipe, newRecipe);
+  void updateRecipe(Recipe oldRecipe, Recipe newRecipe) => _databaseRepository.updateRecipe(oldRecipe, newRecipe);
 }

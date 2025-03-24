@@ -34,6 +34,37 @@ class RecipeDetailsScreen extends StatefulWidget {
 }
 
 class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _directionsKey = GlobalKey();
+  final GlobalKey _ingredientsKey = GlobalKey();
+  bool _directionsEmpty = false;
+  bool _ingredientsEmpty = false;
+
+  @override
+  void initState() {
+    _directionsEmpty = widget.recipe.directions.isEmpty;
+    _ingredientsEmpty = widget.recipe.ingredients.isEmpty;
+
+    super.initState();
+  }
+
+  void _jumpToCookingDirections() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // if there are no cooking directions for that recipe try to scroll to the ingredient's section instead if there are any
+      BuildContext? targetContext = _directionsEmpty ? _ingredientsKey.currentContext : _directionsKey.currentContext;
+
+      if (targetContext != null) {
+        final RenderBox renderbox = targetContext.findRenderObject() as RenderBox;
+        final Offset position = renderbox.localToGlobal(
+          Offset.zero,
+          ancestor: context.findRenderObject(),
+        );
+        _scrollController.animateTo(position.dy + _scrollController.offset - 150,
+            duration: Duration(seconds: 1), curve: Curves.easeInOut);
+      }
+    });
+  }
+
   double defaultSpacing = 20;
 
   @override
@@ -47,6 +78,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
       body: Padding(
         padding: const EdgeInsets.only(top: 16, bottom: 80, left: 16, right: 16),
         child: ListView(
+          controller: _scrollController,
           children: [
             RecipeDetailsTitleImage(widget: widget),
             SizedBox(height: defaultSpacing),
@@ -54,21 +86,26 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             SizedBox(height: defaultSpacing),
             if (widget.recipe.tags.isNotEmpty) TagsSection(recipe: widget.recipe),
             SizedBox(height: defaultSpacing),
-            Align(
-              alignment: Alignment.centerRight,
-              child: FilledButton(
-                onPressed: () {},
-                // TODO: find a way to get the index of the ingredient section and scroll to its position
-                child: Text("Jump to recipe"),
+            if (!_directionsEmpty || !_ingredientsEmpty)
+              Align(
+                alignment: Alignment.centerRight,
+                child: FilledButton(
+                  onPressed: () => _jumpToCookingDirections(),
+                  child: Text("Jump to recipe"),
+                ),
               ),
-            ),
             SizedBox(height: defaultSpacing),
             if (widget.recipe.description != "") DescriptionSection(recipe: widget.recipe),
             SizedBox(height: defaultSpacing),
-            if (widget.recipe.directions.isNotEmpty) DirectionsSection(recipe: widget.recipe),
+            if (!_directionsEmpty)
+              DirectionsSection(
+                key: _directionsKey,
+                recipe: widget.recipe,
+              ),
             SizedBox(height: defaultSpacing),
-            if (widget.recipe.ingredients.isNotEmpty)
+            if (!_ingredientsEmpty)
               IngredientsSection(
+                key: _ingredientsKey,
                 recipe: widget.recipe,
                 shoppingListController: widget.shoppingListController,
               ),
