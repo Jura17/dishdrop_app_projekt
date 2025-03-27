@@ -15,6 +15,16 @@ class RecipeDetailsTitleImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget imageWidget;
+
+    if (widget.recipe.images["titleImg"].contains("http")) {
+      imageWidget = NetworkTitleImg(imgPath: widget.recipe.images["titleImg"]);
+    } else if (widget.recipe.images["titleImg"].contains("assets/images/")) {
+      imageWidget = Image.asset(widget.recipe.images["titleImg"], fit: BoxFit.cover);
+    } else {
+      imageWidget = FileTitleImg(imgPath: widget.recipe.images["titleImg"]);
+    }
+
     return Stack(
       children: [
         Container(
@@ -24,12 +34,7 @@ class RecipeDetailsTitleImage extends StatelessWidget {
           ),
           height: 300,
           width: double.infinity,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: widget.recipe.images["titleImg"].contains("http")
-                ? NetworkTitleImg(imgPath: widget.recipe.images["titleImg"])
-                : FileTitleImg(imgPath: widget.recipe.images["titleImg"]),
-          ),
+          child: ClipRRect(borderRadius: BorderRadius.circular(20), child: imageWidget),
         ),
         LikeButton(
           top: 20,

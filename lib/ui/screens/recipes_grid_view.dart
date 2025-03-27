@@ -57,10 +57,7 @@ class _RecipesGridViewState extends State<RecipesGridView> {
                             recipeController: widget.recipeController,
                             shoppingListController: widget.shoppingListController,
                           ))
-                    ]
-                    // alternative 1: [for (final recipe in filteredRecipes) RecipeCard(recipe: recipe)]
-                    // alternative 2: filteredRecipes.map((recipe) => RecipeCard(recipe: recipe)).toList(),
-                    );
+                    ]);
               },
             ),
           ),

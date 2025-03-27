@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferencesRepository {
   final String _addRecipeFormKey = "addRecipeForm";
   final String _editRecipeFormKey = "editRecipeForm";
+  final String _recentIdKey = "recentlyEdited";
 
   late final Future<SharedPreferences> _prefsFuture;
 
@@ -38,5 +39,20 @@ class SharedPreferencesRepository {
   Future<void> deleteCachedEditInput() async {
     final prefs = await _prefsFuture;
     await prefs.remove(_editRecipeFormKey);
+  }
+
+  Future<void> overrideRecentID(String newID) async {
+    final prefs = await _prefsFuture;
+    await prefs.setString(_recentIdKey, newID);
+  }
+
+  Future<String> get recentID async {
+    final prefs = await _prefsFuture;
+    return prefs.getString(_recentIdKey) ?? '';
+  }
+
+  Future<void> deleteRecentId() async {
+    final prefs = await _prefsFuture;
+    await prefs.remove(_recentIdKey);
   }
 }

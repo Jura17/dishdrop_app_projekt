@@ -13,21 +13,25 @@ class ImagePickerField extends StatefulWidget {
     required this.updateImagesFunc,
     required this.emptyImgPickerFunc,
     required this.imagePath,
-    required this.showError,
+    // required this.showError,
   });
 
   final Function updateImagesFunc;
   final Function emptyImgPickerFunc;
   String? imagePath;
-  bool showError;
+  // bool showError;
 
   @override
   State<ImagePickerField> createState() => _ImagePickerFieldState();
 }
 
 class _ImagePickerFieldState extends State<ImagePickerField> {
+  late Widget imageWidget;
+
   @override
   Widget build(BuildContext context) {
+    chooseImageType();
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: GestureDetector(
@@ -46,9 +50,7 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
                       clipBehavior: Clip.antiAlias,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
-                        side: widget.showError
-                            ? BorderSide(color: Colors.red)
-                            : BorderSide(color: AppColors.dishDropBlack),
+                        side: BorderSide(color: AppColors.dishDropBlack),
                       ),
                       child: Container(
                         width: double.infinity,
@@ -57,16 +59,7 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: AppColors.dishDropBlack),
                         ),
-                        child: widget.imagePath == null || widget.imagePath!.isEmpty
-                            ? Icon(
-                                Icons.camera_alt_outlined,
-                                size: 50,
-                                color: AppColors.dishDropBlack,
-                              )
-                            : widget.imagePath!.contains("http")
-                                ? NetworkTitleImg(imgPath: widget.imagePath!)
-                                : FileTitleImg(imgPath: widget.imagePath!),
-                        // Image.file(File(widget.imagePath!), fit: BoxFit.cover),
+                        child: imageWidget,
                       ),
                     ),
                   ),
@@ -74,12 +67,6 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
                     EmptyImagePickerButton(emptyImagePickerFunction: widget.emptyImgPickerFunc)
                 ],
               ),
-              SizedBox(height: 10),
-              if (widget.showError)
-                Text(
-                  "Please select a photo for your recipe.",
-                  style: TextStyle(color: Colors.red),
-                ),
             ],
           ),
         ),
@@ -97,9 +84,27 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
           widget.updateImagesFunc("titleImg", "");
         } else {
           widget.updateImagesFunc("titleImg", widget.imagePath);
-          widget.showError = false;
+          // widget.showError = false;
         }
       });
+    }
+  }
+
+  void chooseImageType() {
+    if (widget.imagePath == null || widget.imagePath!.isEmpty) {
+      imageWidget = Icon(
+        Icons.camera_alt_outlined,
+        size: 50,
+        color: AppColors.dishDropBlack,
+      );
+    } else {
+      if (widget.imagePath!.contains("http")) {
+        imageWidget = NetworkTitleImg(imgPath: widget.imagePath!);
+      } else if (widget.imagePath!.contains("assets/images/")) {
+        imageWidget = Image.asset(widget.imagePath!, fit: BoxFit.cover);
+      } else {
+        imageWidget = FileTitleImg(imgPath: widget.imagePath!);
+      }
     }
   }
 }

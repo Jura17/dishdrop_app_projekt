@@ -36,10 +36,21 @@ class FooterButtonSection extends StatelessWidget {
         FilledButton(
           onPressed: () async {
             if (formKey.currentState!.validate() && checkNoneTextFieldValuesFunc(allTextFormCtrl, complexInputValues)) {
-              Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl);
-              await widget.recipeController.addRecipeFuture(newRecipe);
+              Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl, widget.recipe);
+
+              if (isEditingRecipe) {
+                if (widget.recipe != null) {
+                  await widget.recipeController.updateRecipeFuture(widget.recipe!, newRecipe);
+                } else {
+                  return;
+                }
+              } else {
+                await widget.recipeController.addRecipeFuture(newRecipe);
+              }
+
               resetAllCtrl(allTextFormCtrl, null);
-              showCustomAlertBanner(context, Colors.green, "Recipe added to cookbook!");
+              showCustomAlertBanner(
+                  context, Colors.green, isEditingRecipe ? "Recipe was edited!" : "Recipe added to cookbook!");
             } else {
               showCustomAlertBanner(context, Colors.red, "Please make sure all fields are filled in correctly.");
             }
@@ -49,7 +60,7 @@ class FooterButtonSection extends StatelessWidget {
         FilledButton(
           onPressed: () async {
             if (formKey.currentState!.validate() && checkNoneTextFieldValuesFunc(allTextFormCtrl, complexInputValues)) {
-              Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl);
+              Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl, widget.recipe);
               if (isEditingRecipe) {
                 if (widget.recipe != null) {
                   await widget.recipeController.updateRecipeFuture(widget.recipe!, newRecipe);
@@ -81,7 +92,8 @@ class FooterButtonSection extends StatelessWidget {
     );
   }
 
-  Recipe createRecipe(Map<String, dynamic> complexInputValues, Map<String, TextEditingController> allTextFormCtrl) {
+  Recipe createRecipe(
+      Map<String, dynamic> complexInputValues, Map<String, TextEditingController> allTextFormCtrl, isEditingRecipe) {
     final String title = allTextFormCtrl["titleCtrl"]!.text;
     final String category = allTextFormCtrl["categoryCtrl"]!.text;
     final String description = allTextFormCtrl["descCtrl"]?.text ?? "";
@@ -95,8 +107,10 @@ class FooterButtonSection extends StatelessWidget {
     final List<CookingDirection> directions = complexInputValues["directions"] as List<CookingDirection>;
     final List<ListItem> ingredients = complexInputValues["ingredients"] as List<ListItem>;
 
+    final recipeID = isEditingRecipe ? widget.recipe?.id : Uuid().v4();
+
     Recipe newRecipe = Recipe(
-      id: Uuid().v4(),
+      id: recipeID as String,
       title: title,
       category: category,
       description: description,

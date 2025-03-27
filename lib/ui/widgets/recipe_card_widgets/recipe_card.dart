@@ -29,6 +29,15 @@ class RecipeCard extends StatefulWidget {
 class _RecipeCardState extends State<RecipeCard> {
   @override
   Widget build(BuildContext context) {
+    Widget imageWidget;
+    if (widget.recipe.images["titleImg"].contains("http")) {
+      imageWidget = NetworkTitleImg(imgPath: widget.recipe.images["titleImg"]);
+    } else if (widget.recipe.images["titleImg"].contains("assets/images/")) {
+      imageWidget = Image.asset(widget.recipe.images["titleImg"]);
+    } else {
+      imageWidget = FileTitleImg(imgPath: widget.recipe.images["titleImg"]);
+    }
+
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
@@ -58,11 +67,7 @@ class _RecipeCardState extends State<RecipeCard> {
                       SizedBox(
                         width: double.infinity,
                         height: double.infinity,
-                        child: widget.recipe.images["titleImg"].contains("http")
-                            ? NetworkTitleImg(
-                                imgPath: widget.recipe.images["titleImg"])
-                            : FileTitleImg(
-                                imgPath: widget.recipe.images["titleImg"]),
+                        child: imageWidget,
                       ),
                       LikeButton(
                         top: 10,
