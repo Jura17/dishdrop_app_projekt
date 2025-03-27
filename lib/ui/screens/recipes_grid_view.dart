@@ -72,7 +72,9 @@ class _RecipesGridViewState extends State<RecipesGridView> {
         recipeController: widget.recipeController,
         shoppingListController: widget.shoppingListController,
         newScreen: RecipeFormScreen(
-            recipeController: widget.recipeController, shoppingListController: widget.shoppingListController),
+          recipeController: widget.recipeController,
+          shoppingListController: widget.shoppingListController,
+        ),
       ),
     );
   }

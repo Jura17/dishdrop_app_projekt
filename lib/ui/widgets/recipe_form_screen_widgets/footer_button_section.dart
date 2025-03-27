@@ -14,8 +14,9 @@ class FooterButtonSection extends StatelessWidget {
     required this.widget,
     required this.allTextFormCtrl,
     required this.formKey,
-    required this.inputValuesValidFunc,
+    required this.checkNoneTextFieldValuesFunc,
     required this.resetAllCtrl,
+    required this.isEditingRecipe,
   });
 
   final Map<String, dynamic> complexInputValues;
@@ -23,8 +24,9 @@ class FooterButtonSection extends StatelessWidget {
   final RecipeFormScreen widget;
   final Map<String, TextEditingController> allTextFormCtrl;
   final GlobalKey<FormState> formKey;
-  final Function inputValuesValidFunc;
+  final Function checkNoneTextFieldValuesFunc;
   final Function resetAllCtrl;
+  final bool isEditingRecipe;
 
   @override
   Widget build(BuildContext context) {
@@ -33,24 +35,34 @@ class FooterButtonSection extends StatelessWidget {
       children: [
         FilledButton(
           onPressed: () async {
-            if (formKey.currentState!.validate() && inputValuesValidFunc(allTextFormCtrl, complexInputValues)) {
-              Recipe newRecipe = createNewRecipe(complexInputValues, allTextFormCtrl);
+            if (formKey.currentState!.validate() && checkNoneTextFieldValuesFunc(allTextFormCtrl, complexInputValues)) {
+              Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl);
               await widget.recipeController.addRecipeFuture(newRecipe);
               resetAllCtrl(allTextFormCtrl, null);
               showCustomAlertBanner(context, Colors.green, "Recipe added to cookbook!");
             } else {
-              showCustomAlertBanner(context, Colors.red, "Please make sure all fields are filled correctly.");
+              showCustomAlertBanner(context, Colors.red, "Please make sure all fields are filled in correctly.");
             }
           },
-          child: Text("Save recipe"),
+          child: Text(isEditingRecipe ? "Update recipe" : "Save recipe"),
         ),
         FilledButton(
           onPressed: () async {
-            if (formKey.currentState!.validate() && inputValuesValidFunc(allTextFormCtrl, complexInputValues)) {
-              Recipe newRecipe = createNewRecipe(complexInputValues, allTextFormCtrl);
-              await widget.recipeController.addRecipeFuture(newRecipe);
+            if (formKey.currentState!.validate() && checkNoneTextFieldValuesFunc(allTextFormCtrl, complexInputValues)) {
+              Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl);
+              if (isEditingRecipe) {
+                if (widget.recipe != null) {
+                  await widget.recipeController.updateRecipeFuture(widget.recipe!, newRecipe);
+                } else {
+                  return;
+                }
+              } else {
+                await widget.recipeController.addRecipeFuture(newRecipe);
+              }
+
               resetAllCtrl(allTextFormCtrl, null);
-              showCustomAlertBanner(context, Colors.green, "Recipe added to cookbook!");
+              showCustomAlertBanner(
+                  context, Colors.green, isEditingRecipe ? "Recipe was edited!" : "Recipe added to cookbook!");
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (BuildContext context) => RecipeDetailsScreen(
@@ -60,16 +72,16 @@ class FooterButtonSection extends StatelessWidget {
                 ),
               );
             } else {
-              showCustomAlertBanner(context, Colors.red, "Please make sure all fields are filled correctly.");
+              showCustomAlertBanner(context, Colors.red, "Please make sure all fields are filled in correctly.");
             }
           },
-          child: Text("Save and open recipe"),
+          child: Text(isEditingRecipe ? "Update and open" : "Save and open"),
         )
       ],
     );
   }
 
-  Recipe createNewRecipe(Map<String, dynamic> complexInputValues, Map<String, TextEditingController> allTextFormCtrl) {
+  Recipe createRecipe(Map<String, dynamic> complexInputValues, Map<String, TextEditingController> allTextFormCtrl) {
     final String title = allTextFormCtrl["titleCtrl"]!.text;
     final String category = allTextFormCtrl["categoryCtrl"]!.text;
     final String description = allTextFormCtrl["descCtrl"]?.text ?? "";

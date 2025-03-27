@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -61,7 +63,10 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
                                 size: 50,
                                 color: AppColors.dishDropBlack,
                               )
-                            : Image.file(File(widget.imagePath!), fit: BoxFit.cover),
+                            : widget.imagePath!.contains("http")
+                                ? NetworkTitleImg(imgPath: widget.imagePath!)
+                                : FileTitleImg(imgPath: widget.imagePath!),
+                        // Image.file(File(widget.imagePath!), fit: BoxFit.cover),
                       ),
                     ),
                   ),

@@ -81,7 +81,10 @@ class CategoriesScreen extends StatelessWidget {
         iconData: Icons.add_box_outlined,
         recipeController: recipeController,
         shoppingListController: shoppingListController,
-        newScreen: RecipeFormScreen(recipeController: recipeController, shoppingListController: shoppingListController),
+        newScreen: RecipeFormScreen(
+          recipeController: recipeController,
+          shoppingListController: shoppingListController,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

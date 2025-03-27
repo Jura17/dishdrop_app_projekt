@@ -53,7 +53,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
   bool _showCategoryError = false;
   bool _showDifficultyError = false;
   bool _draftAvailable = false;
-  bool _isEditingRecipe = false;
+  bool isEditingRecipe = false;
   String? imagePath;
   Map<String, dynamic> allInputFields = {
     "images": {
@@ -77,7 +77,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     "directionDescCtrl": TextEditingController(),
   };
 
-  Map<String, dynamic> _complexInputValues = {
+  Map<String, dynamic> complexInputValues = {
     "images": {
       "titleImg": "",
       "cookingDirectionImg": [],
@@ -91,9 +91,13 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
   void initState() {
     super.initState();
     allRecipes = widget.recipeController.getAllRecipes();
-    if (widget.recipe != null) _isEditingRecipe = true;
+    if (widget.recipe != null) {
+      isEditingRecipe = true;
+    }
+
+    if (isEditingRecipe) loadRecipeDataForEditing();
     // WidgetsBinding.instance.addObserver(this);
-    loadCachedInput();
+    loadCachedInput(isEditingRecipe);
     setState(() {});
   }
 
@@ -113,8 +117,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title:
-              Text(_isEditingRecipe ? "Edit recipe" : "New recipe", style: Theme.of(context).textTheme.headlineLarge),
+          title: Text(isEditingRecipe ? "Edit recipe" : "New recipe", style: Theme.of(context).textTheme.headlineLarge),
           actions: [
             if (_draftAvailable)
               TextButton(
@@ -158,12 +161,12 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
                     showError: _showDifficultyError,
                   ),
                   TagsInputSection(
-                    complexInputValues: _complexInputValues,
+                    complexInputValues: complexInputValues,
                     tagsCtrl: allTextControllers["tagsCtrl"]!,
                     updateTagsList: addToTagsList,
                   ),
                   TagsListView(
-                    complexInputValues: _complexInputValues,
+                    complexInputValues: complexInputValues,
                     removeFromTagsList: removeFromTagsList,
                   ),
                   SizedBox(height: 20),
@@ -183,24 +186,24 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
                   SizedBox(height: 30),
                   Text("Cooking Directions", style: Theme.of(context).textTheme.headlineMedium),
                   CookingDirectionsListView(
-                    complexInputValues: _complexInputValues,
+                    complexInputValues: complexInputValues,
                     removeFromCookingDirectionsListFunc: removeCookingDirection,
                   ),
                   CookingDirectionInputSection(
-                    complexInputValues: _complexInputValues,
+                    complexInputValues: complexInputValues,
                     cookingDirectionCtrl: allTextControllers["directionDescCtrl"]!,
                     addCookingDirectionFunc: addCookingDirectionToList,
                   ),
                   SizedBox(height: 30),
                   Text("Ingredients", style: Theme.of(context).textTheme.headlineMedium),
                   IngredientListView(
-                    complexInputValues: _complexInputValues,
+                    complexInputValues: complexInputValues,
                     removeFromListFunc: removeFromIngredientList,
                   ),
-                  if (_complexInputValues["ingredients"].isNotEmpty) SizedBox(height: 20),
+                  if (complexInputValues["ingredients"].isNotEmpty) SizedBox(height: 20),
                   IngredientInputSection(
                     allTextFormCtrl: allTextControllers,
-                    complexInputValues: _complexInputValues,
+                    complexInputValues: complexInputValues,
                     addIngredientFunc: addIngredientToList,
                   ),
                   SizedBox(height: 30),
@@ -211,12 +214,13 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
                   ),
                   SizedBox(height: 10),
                   FooterButtonSection(
-                    complexInputValues: _complexInputValues,
+                    complexInputValues: complexInputValues,
                     widget: widget,
                     allTextFormCtrl: allTextControllers,
                     formKey: formKey,
-                    inputValuesValidFunc: checkNoneTextfieldValues,
+                    checkNoneTextFieldValuesFunc: checkNoneTextfieldValues,
                     resetAllCtrl: resetAllCtrl,
+                    isEditingRecipe: isEditingRecipe,
                   ),
                   SizedBox(height: 100),
                 ],
@@ -228,6 +232,24 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     );
   }
 
+  void loadRecipeDataForEditing() {
+    allTextControllers["titleCtrl"]?.text = widget.recipe!.title;
+
+    allTextControllers["categoryCtrl"]?.text = widget.recipe!.category;
+    // TODO: dropdown selection is not updated in UI yet
+    allTextControllers["categoryCtrl"]?.selection = TextSelection.collapsed(offset: widget.recipe!.category.length);
+    updateImage("titleImg", widget.recipe!.images["titleImg"]);
+    allTextControllers["difficultyCtrl"]?.text = widget.recipe!.difficulty;
+    allTextControllers["difficultyCtrl"]?.selection = TextSelection.collapsed(offset: widget.recipe!.difficulty.length);
+    complexInputValues["tags"] = widget.recipe!.tags;
+    allTextControllers["descCtrl"]?.text = widget.recipe!.description;
+    allTextControllers["prepTimeCtrl"]?.text = widget.recipe!.prepTime.toString();
+    allTextControllers["cookingTimeCtrl"]?.text = widget.recipe!.cookingTime.toString();
+    allTextControllers["notesCtrl"]?.text = widget.recipe!.notes;
+    complexInputValues["ingredients"] = widget.recipe!.ingredients;
+    complexInputValues["directions"] = widget.recipe!.directions;
+  }
+
   void saveAllInputToList() {
     // encode all simple types
     for (var key in allTextControllers.keys) {
@@ -235,12 +257,12 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     }
 
     // encode all complex types
-    allInputFields["images"]["titleImg"] = _complexInputValues["images"]["titleImg"];
-    allInputFields["images"]["cookingDirectionImg"] = _complexInputValues["images"]["cookingDirectionImg"];
-    allInputFields["tags"] = _complexInputValues["tags"];
+    allInputFields["images"]["titleImg"] = complexInputValues["images"]["titleImg"];
+    allInputFields["images"]["cookingDirectionImg"] = complexInputValues["images"]["cookingDirectionImg"];
+    allInputFields["tags"] = complexInputValues["tags"];
 
     List<String> ingredientStringList = [];
-    for (ListItem ingredient in _complexInputValues["ingredients"]) {
+    for (ListItem ingredient in complexInputValues["ingredients"]) {
       final ingredientMap = ingredient.toJson();
       ingredientStringList.add(jsonEncode(ingredientMap));
     }
@@ -248,7 +270,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     allInputFields["ingredients"] = ingredientsEncoded;
 
     List<String> cookingDirectionStringList = [];
-    for (CookingDirection direction in _complexInputValues["directions"]) {
+    for (CookingDirection direction in complexInputValues["directions"]) {
       final directionMap = direction.toJson();
       cookingDirectionStringList.add(jsonEncode(directionMap));
     }
@@ -256,7 +278,9 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     allInputFields["directions"] = directionsEncoded;
 
     final jsonString = jsonEncode(allInputFields);
-    sharedPreferencesRepository.overrideCachedInput(jsonString);
+    isEditingRecipe
+        ? sharedPreferencesRepository.overrideCachedEditInput(jsonString)
+        : sharedPreferencesRepository.overrideCachedInput(jsonString);
   }
 
   // check if json response contains actual values or nothing but empty strings, lists and maps or if an empty list is actually returned as a string: "[]"
@@ -267,8 +291,10 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     return false;
   }
 
-  void loadCachedInput() async {
-    final jsonString = await sharedPreferencesRepository.cachedInput;
+  void loadCachedInput(isEditingRecipe) async {
+    final jsonString = isEditingRecipe
+        ? await sharedPreferencesRepository.cachedEditInput
+        : await sharedPreferencesRepository.cachedInput;
 
     if (jsonString.isNotEmpty) {
       final cachedInput = jsonDecode(jsonString);
@@ -281,7 +307,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
         // decode title image
         if (cachedInput["images"]["titleImg"].isNotEmpty) {
           updateImage("titleImg", cachedInput["images"]["titleImg"]);
-          _complexInputValues["images"]["titleImg"] = cachedInput["images"]["titleImg"];
+          complexInputValues["images"]["titleImg"] = cachedInput["images"]["titleImg"];
         }
 
         // decode ingredients
@@ -298,7 +324,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
           );
           decodedIngredientList.add(newListItem);
         }
-        _complexInputValues["ingredients"] = decodedIngredientList;
+        complexInputValues["ingredients"] = decodedIngredientList;
 
         // decode cooking directions
         final List<dynamic> cookingDirectionList = jsonDecode(cachedInput["directions"]);
@@ -312,12 +338,12 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
           );
           decodedDirectionList.add(newDirection);
         }
-        _complexInputValues["directions"] = decodedDirectionList;
+        complexInputValues["directions"] = decodedDirectionList;
 
         // decode tags
         if (cachedInput["tags"].isNotEmpty) {
           List<String> tagList = cachedInput["tags"].cast<String>();
-          _complexInputValues["tags"] = tagList;
+          complexInputValues["tags"] = tagList;
         }
         _draftAvailable = true;
         setState(() {});
@@ -335,7 +361,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
 
   void addIngredientToList() {
     setState(() {
-      _complexInputValues["ingredients"].add(
+      complexInputValues["ingredients"].add(
         ListItem(
           id: Uuid().v4(),
           description: allTextControllers["ingredientDescCtrl"]!.text,
@@ -351,7 +377,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
 
   void removeFromIngredientList(String id) {
     setState(() {
-      _complexInputValues["ingredients"].removeWhere((ingredient) => ingredient.id == id);
+      complexInputValues["ingredients"].removeWhere((ingredient) => ingredient.id == id);
     });
   }
 
@@ -362,7 +388,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
         if (directionDescription != "") {
           CookingDirection newDirection = CookingDirection(id: Uuid().v4(), description: directionDescription);
 
-          _complexInputValues["directions"].add(newDirection);
+          complexInputValues["directions"].add(newDirection);
           allTextControllers["directionDescCtrl"]!.clear();
         }
       },
@@ -371,7 +397,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
 
   void removeCookingDirection(String id) {
     setState(() {
-      _complexInputValues["directions"].removeWhere((direction) => direction.id == id);
+      complexInputValues["directions"].removeWhere((direction) => direction.id == id);
     });
   }
 
@@ -379,7 +405,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     final tagsTitle = allTextControllers["tagsCtrl"]!.text;
     setState(() {
       if (allTextControllers["tagsCtrl"]!.text != "") {
-        _complexInputValues["tags"].add(tagsTitle);
+        complexInputValues["tags"].add(tagsTitle);
         allTextControllers["tagsCtrl"]!.clear();
       }
     });
@@ -387,13 +413,13 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
 
   void removeFromTagsList(tagTitle) {
     setState(() {
-      _complexInputValues["tags"].remove(tagTitle);
+      complexInputValues["tags"].remove(tagTitle);
     });
   }
 
   void updateImage(String imagesKey, String imagePathFromPicker) {
     if (imagesKey == "titleImg") {
-      _complexInputValues["images"][imagesKey] = imagePathFromPicker;
+      complexInputValues["images"][imagesKey] = imagePathFromPicker;
       imagePath = imagePathFromPicker;
     }
   }
@@ -401,7 +427,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
   void emptyImagePicker() {
     setState(() {
       imagePath = null;
-      _complexInputValues["images"]["titleImg"] = "";
+      complexInputValues["images"]["titleImg"] = "";
       updateImage("titleImg", "");
       _showImgPickerError = false;
     });
@@ -418,7 +444,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     _showCategoryError = false;
     _showDifficultyError = false;
 
-    _complexInputValues = {
+    complexInputValues = {
       "images": {
         "titleImg": "",
         "cookingDirectionImg": [],

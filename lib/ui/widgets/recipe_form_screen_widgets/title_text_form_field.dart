@@ -17,11 +17,11 @@ class TitleTextFormField extends StatelessWidget {
           return "Please enter a title for your recipe.";
         }
 
-        for (var recipe in allRecipes) {
-          if (recipe.title == title) {
-            return "You already have a recipe by that title.";
-          }
-        }
+        // for (var recipe in allRecipes) {
+        //   if (recipe.title == title) {
+        //     return "You already have a recipe by that title.";
+        //   }
+        // }
         return null;
       },
       autovalidateMode: AutovalidateMode.onUnfocus,

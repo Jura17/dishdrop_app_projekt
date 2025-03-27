@@ -3,7 +3,6 @@ import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
-import 'package:dishdrop_app_projekt/ui/screens/edit_recipe_screen.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/description_section.dart';
@@ -142,8 +141,10 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             iconData: Icons.edit,
             recipeController: widget.recipeController,
             shoppingListController: widget.shoppingListController,
-            newScreen: EditRecipeScreen(
-                recipeController: widget.recipeController, shoppingListController: widget.shoppingListController),
+            newScreen: RecipeFormScreen(
+                recipeController: widget.recipeController,
+                shoppingListController: widget.shoppingListController,
+                recipe: widget.recipe),
           ),
           CustomFilledIconButton(
             text: "Add Recipe",
@@ -151,7 +152,9 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             recipeController: widget.recipeController,
             shoppingListController: widget.shoppingListController,
             newScreen: RecipeFormScreen(
-                recipeController: widget.recipeController, shoppingListController: widget.shoppingListController),
+              recipeController: widget.recipeController,
+              shoppingListController: widget.shoppingListController,
+            ),
           ),
         ],
       ),
