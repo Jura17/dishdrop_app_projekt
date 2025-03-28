@@ -14,12 +14,10 @@ class AllPurposeListInputSection extends StatefulWidget {
   final GlobalKey<FormState> formKey;
 
   @override
-  State<AllPurposeListInputSection> createState() =>
-      _AllPurposeListInputSectionState();
+  State<AllPurposeListInputSection> createState() => _AllPurposeListInputSectionState();
 }
 
-class _AllPurposeListInputSectionState
-    extends State<AllPurposeListInputSection> {
+class _AllPurposeListInputSectionState extends State<AllPurposeListInputSection> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -31,23 +29,18 @@ class _AllPurposeListInputSectionState
             children: [
               TextFormField(
                 controller: widget.allTextControllers["itemDescCtrl"],
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Ingredient description"),
+                decoration: const InputDecoration(border: OutlineInputBorder(), hintText: "Ingredient description"),
               ),
               Row(
                 spacing: 10,
                 children: [
                   Expanded(
                     child: TextFormField(
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: TextInputType.numberWithOptions(decimal: true),
                       validator: (value) {
                         if (value == '') return "Please enter a value";
-                        if (int.tryParse(value!) == null)
-                          return "Only numerics allowed";
-                        if (int.parse(value) < 1)
-                          return "Only positives allowed";
+                        if (int.tryParse(value!) == null) return "Only numerics allowed";
+                        if (int.parse(value) < 1) return "Only positives allowed";
                         return null;
                       },
                       controller: widget.allTextControllers["itemAmountCtrl"],
@@ -62,18 +55,14 @@ class _AllPurposeListInputSectionState
                   Expanded(
                     child: TextFormField(
                       controller: widget.allTextControllers["itemUnitCtrl"],
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(), hintText: "Unit"),
+                      decoration: const InputDecoration(border: OutlineInputBorder(), hintText: "Unit"),
                     ),
                   ),
                 ],
               ),
               Text(
                 "You can enter fractional amounts like 1½ as 1.5",
-                style: Theme.of(context)
-                    .textTheme
-                    .labelMedium
-                    ?.copyWith(fontStyle: FontStyle.italic),
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(fontStyle: FontStyle.italic),
               )
             ],
           ),

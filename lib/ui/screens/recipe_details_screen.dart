@@ -1,5 +1,6 @@
 import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
+import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
@@ -8,7 +9,7 @@ import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/description_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/directions_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/footer_button_section.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/ingredients_section.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/recipe_details_ingredients_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/quick_info_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/recipe_details_title_image.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/tags_section.dart';
@@ -38,12 +39,14 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
   final GlobalKey _ingredientsKey = GlobalKey();
   bool _directionsEmpty = false;
   bool _ingredientsEmpty = false;
+  List<ShoppingList> allShoppingLists = [];
 
   @override
   void initState() {
     _directionsEmpty = widget.recipe.directions.isEmpty;
     _ingredientsEmpty = widget.recipe.ingredients.isEmpty;
 
+    getAllShoppingLists();
     super.initState();
   }
 
@@ -103,10 +106,12 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               ),
             SizedBox(height: defaultSpacing),
             if (!_ingredientsEmpty)
-              IngredientsSection(
+              RecipeDetailsIngredientsSection(
                 key: _ingredientsKey,
                 recipe: widget.recipe,
                 shoppingListController: widget.shoppingListController,
+                addShoppingListFunc: addShoppingList,
+                allShoppingLists: allShoppingLists,
               ),
             SizedBox(height: 40),
             RichText(
@@ -166,6 +171,15 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
     setState(() {
       widget.recipe.timesCooked++;
     });
+  }
+
+  Future<void> getAllShoppingLists() async {
+    allShoppingLists = await widget.shoppingListController.getAllShoppingListsFuture();
+  }
+
+  Future<void> addShoppingList(ShoppingList shoppingList) async {
+    await widget.shoppingListController.addShoppingListFuture(shoppingList);
+    setState(() {});
   }
 
   void showBanner() {

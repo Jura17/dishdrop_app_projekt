@@ -36,7 +36,7 @@ class FooterButtonSection extends StatelessWidget {
         FilledButton(
           onPressed: () async {
             if (formKey.currentState!.validate() && checkNoneTextFieldValuesFunc(allTextFormCtrl, complexInputValues)) {
-              Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl, widget.recipe);
+              Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl, isEditingRecipe);
 
               if (isEditingRecipe) {
                 if (widget.recipe != null) {
@@ -49,8 +49,10 @@ class FooterButtonSection extends StatelessWidget {
               }
 
               resetAllCtrl(allTextFormCtrl, null);
-              showCustomAlertBanner(
-                  context, Colors.green, isEditingRecipe ? "Recipe was edited!" : "Recipe added to cookbook!");
+              if (context.mounted) {
+                showCustomAlertBanner(
+                    context, Colors.green, isEditingRecipe ? "Recipe was edited!" : "Recipe added to cookbook!");
+              }
             } else {
               showCustomAlertBanner(context, Colors.red, "Please make sure all fields are filled in correctly.");
             }
@@ -60,7 +62,7 @@ class FooterButtonSection extends StatelessWidget {
         FilledButton(
           onPressed: () async {
             if (formKey.currentState!.validate() && checkNoneTextFieldValuesFunc(allTextFormCtrl, complexInputValues)) {
-              Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl, widget.recipe);
+              Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl, isEditingRecipe);
               if (isEditingRecipe) {
                 if (widget.recipe != null) {
                   await widget.recipeController.updateRecipeFuture(widget.recipe!, newRecipe);
@@ -72,16 +74,19 @@ class FooterButtonSection extends StatelessWidget {
               }
 
               resetAllCtrl(allTextFormCtrl, null);
-              showCustomAlertBanner(
-                  context, Colors.green, isEditingRecipe ? "Recipe was edited!" : "Recipe added to cookbook!");
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (BuildContext context) => RecipeDetailsScreen(
+              if (context.mounted) {
+                showCustomAlertBanner(
+                    context, Colors.green, isEditingRecipe ? "Recipe was edited!" : "Recipe added to cookbook!");
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => RecipeDetailsScreen(
                       recipe: newRecipe,
                       recipeController: widget.recipeController,
-                      shoppingListController: widget.shoppingListController),
-                ),
-              );
+                      shoppingListController: widget.shoppingListController,
+                    ),
+                  ),
+                );
+              }
             } else {
               showCustomAlertBanner(context, Colors.red, "Please make sure all fields are filled in correctly.");
             }

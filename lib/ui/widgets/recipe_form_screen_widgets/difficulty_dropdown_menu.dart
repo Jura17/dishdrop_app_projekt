@@ -21,6 +21,7 @@ class _DifficultyDropdownMenuState extends State<DifficultyDropdownMenu> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DropdownMenu(
+          initialSelection: widget.difficultyCtrl.text,
           onSelected: (value) {
             setState(() {
               widget.showError = false;

@@ -23,6 +23,7 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DropdownMenu(
+          initialSelection: widget.categoryCtrl.text,
           onSelected: (value) {
             setState(() {
               widget.showErrorFunc(false);

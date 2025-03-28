@@ -9,9 +9,11 @@ class IngredientListView extends StatefulWidget {
   const IngredientListView({
     super.key,
     required this.recipe,
+    required this.servings,
   });
 
   final Recipe recipe;
+  final int servings;
 
   @override
   State<IngredientListView> createState() => _IngredientListViewState();
@@ -31,7 +33,9 @@ class _IngredientListViewState extends State<IngredientListView> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListItemRowStatic(
-                    amount: widget.recipe.ingredients[index].amount,
+                    amount: widget.recipe.ingredients[index].amount != null
+                        ? widget.recipe.ingredients[index].amount! * widget.servings
+                        : null,
                     unit: widget.recipe.ingredients[index].unit,
                     description: widget.recipe.ingredients[index].description,
                   ),

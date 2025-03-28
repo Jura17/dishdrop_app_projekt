@@ -1,6 +1,7 @@
 import 'list_item.dart';
 
 class ShoppingList {
+  String id;
   bool isGeneralPurposeList;
   String title;
   String imgUrl;
@@ -8,10 +9,11 @@ class ShoppingList {
   List<ListItem> shoppingItems = [];
 
   ShoppingList({
+    required this.id,
     this.isGeneralPurposeList = false,
     required this.title,
     required this.imgUrl,
-    this.servings = 0,
+    this.servings = 1,
     required this.shoppingItems,
   });
 

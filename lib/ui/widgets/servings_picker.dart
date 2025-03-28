@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 
 class ServingsPicker extends StatefulWidget {
-  const ServingsPicker({super.key});
+  const ServingsPicker({super.key, required this.updateServingsFunc, required this.servings});
+
+  final Function updateServingsFunc;
+  final int servings;
 
   @override
   State<ServingsPicker> createState() => _ServingsPickerState();
 }
 
 class _ServingsPickerState extends State<ServingsPicker> {
-  int servings = 1;
+  late int servings;
+  @override
+  void initState() {
+    servings = widget.servings;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +26,19 @@ class _ServingsPickerState extends State<ServingsPicker> {
         Row(
           children: [
             IconButton(
-                onPressed: () {
-                  setState(() {
-                    if (servings > 1) {
-                      servings--;
-                    }
-                  });
-                },
-                icon: Icon(
-                  Icons.remove_circle_outline,
-                  size: 40,
-                )),
+              onPressed: () {
+                setState(() {
+                  if (servings > 1) {
+                    servings--;
+                    widget.updateServingsFunc(servings);
+                  }
+                });
+              },
+              icon: Icon(
+                Icons.remove_circle_outline,
+                size: 40,
+              ),
+            ),
             SizedBox(
               width: 40,
               child: Align(
@@ -40,12 +50,14 @@ class _ServingsPickerState extends State<ServingsPicker> {
               ),
             ),
             IconButton(
-                onPressed: () {
-                  setState(() {
-                    servings++;
-                  });
-                },
-                icon: Icon(Icons.add_circle_outline_outlined, size: 40))
+              onPressed: () {
+                setState(() {
+                  servings++;
+                  widget.updateServingsFunc(servings);
+                });
+              },
+              icon: Icon(Icons.add_circle_outline_outlined, size: 40),
+            )
           ],
         )
       ],

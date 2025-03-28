@@ -23,7 +23,7 @@ class RecipeFormController {
     "directionDescCtrl": TextEditingController(),
   };
 
-  Map<String, dynamic> _complexInputValues = {
+  final Map<String, dynamic> _complexInputValues = {
     "images": {
       "titleImg": "",
       "cookingDirectionImg": [],

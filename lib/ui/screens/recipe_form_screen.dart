@@ -253,7 +253,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     allTextControllers["titleCtrl"]?.text = widget.recipe!.title;
 
     allTextControllers["categoryCtrl"]?.text = widget.recipe!.category;
-    // TODO: dropdown selection is not updated in UI yet
+
     allTextControllers["categoryCtrl"]?.selection = TextSelection.collapsed(offset: widget.recipe!.category.length);
     updateImage("titleImg", widget.recipe!.images["titleImg"]);
     allTextControllers["difficultyCtrl"]?.text = widget.recipe!.difficulty;
