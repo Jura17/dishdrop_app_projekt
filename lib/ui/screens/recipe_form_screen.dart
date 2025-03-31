@@ -34,11 +34,13 @@ class RecipeFormScreen extends StatefulWidget {
     required this.shoppingListController,
     // required this.recipeFormController,
     this.recipe,
+    required this.allRecipes,
   });
   final RecipeController recipeController;
   final ShoppingListController shoppingListController;
   // final RecipeFormController recipeFormController;
   final Recipe? recipe;
+  final List<Recipe> allRecipes;
 
   @override
   State<RecipeFormScreen> createState() => _RecipeFormScreenState();
@@ -92,7 +94,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
   @override
   void initState() {
     super.initState();
-    allRecipes = widget.recipeController.getAllRecipes();
+    allRecipes = widget.allRecipes;
     if (widget.recipe != null) {
       isEditingRecipe = true;
     }
@@ -251,13 +253,9 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
 
   void loadRecipeDataForEditing() {
     allTextControllers["titleCtrl"]?.text = widget.recipe!.title;
-
     allTextControllers["categoryCtrl"]?.text = widget.recipe!.category;
-
-    allTextControllers["categoryCtrl"]?.selection = TextSelection.collapsed(offset: widget.recipe!.category.length);
     updateImage("titleImg", widget.recipe!.images["titleImg"]);
     allTextControllers["difficultyCtrl"]?.text = widget.recipe!.difficulty;
-    allTextControllers["difficultyCtrl"]?.selection = TextSelection.collapsed(offset: widget.recipe!.difficulty.length);
     complexInputValues["tags"] = widget.recipe!.tags;
     allTextControllers["descCtrl"]?.text = widget.recipe!.description;
     allTextControllers["prepTimeCtrl"]?.text = widget.recipe!.prepTime.toString();

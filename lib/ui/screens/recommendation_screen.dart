@@ -1,3 +1,4 @@
+import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 
@@ -19,6 +20,8 @@ class RecommendationScreen extends StatefulWidget {
 }
 
 class _RecommendationScreenState extends State<RecommendationScreen> {
+  List<Recipe> allRecipes = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +34,10 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
               return CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text("Error while collecting data: ${snapshot.error}");
+            } else if (!snapshot.hasData || snapshot.data == null) {
+              return Text("There was no data to fetch: ${snapshot.error}");
             }
+            allRecipes = snapshot.data!;
             return Column(
               children: [
                 RichText(
@@ -44,9 +50,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
                         style: Theme.of(context)
                             .textTheme
                             .headlineLarge
-                            ?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).primaryColor),
+                            ?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),
                       ),
                       TextSpan(text: " to find a recipe for today!")
                     ],
@@ -57,7 +61,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
                 RecommendationButton(
                   shoppingListController: widget.shoppingListController,
                   recipeController: widget.recipeController,
-                  allRecipes: widget.recipeController.getAllRecipes(),
+                  allRecipes: allRecipes,
                 ),
                 Spacer(),
               ],

@@ -26,8 +26,8 @@ class RecipeController {
       );
 
   // TODO: remove old methods later
-  List<Recipe> getAllRecipes() => _databaseRepository.getAllRecipes();
-  void addRecipe(Recipe newRecipe) => _databaseRepository.addRecipe(newRecipe);
-  void removeRecipe(Recipe recipe) => _databaseRepository.removeRecipe(recipe);
-  void updateRecipe(Recipe oldRecipe, Recipe newRecipe) => _databaseRepository.updateRecipe(oldRecipe, newRecipe);
+  // List<Recipe> getAllRecipes() => _databaseRepository.getAllRecipes();
+  // void addRecipe(Recipe newRecipe) => _databaseRepository.addRecipe(newRecipe);
+  // void removeRecipe(Recipe recipe) => _databaseRepository.removeRecipe(recipe);
+  // void updateRecipe(Recipe oldRecipe, Recipe newRecipe) => _databaseRepository.updateRecipe(oldRecipe, newRecipe);
 }

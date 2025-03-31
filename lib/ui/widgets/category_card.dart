@@ -1,4 +1,5 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
 
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
@@ -6,18 +7,19 @@ import 'package:dishdrop_app_projekt/ui/screens/recipes_grid_view.dart';
 import 'package:flutter/material.dart';
 
 class CategoryCard extends StatelessWidget {
-  const CategoryCard({
-    super.key,
-    required this.categoryImg,
-    required this.categoryTitle,
-    required this.recipeController,
-    required this.shoppingListController,
-  });
+  const CategoryCard(
+      {super.key,
+      required this.categoryImg,
+      required this.categoryTitle,
+      required this.recipeController,
+      required this.shoppingListController,
+      required this.allRecipes});
 
   final String categoryTitle;
   final String categoryImg;
   final RecipeController recipeController;
   final ShoppingListController shoppingListController;
+  final List<Recipe> allRecipes;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class CategoryCard extends StatelessWidget {
             category: categoryTitle,
             recipeController: recipeController,
             shoppingListController: shoppingListController,
+            allRecipes: allRecipes,
           ),
         ),
       ),
@@ -49,9 +52,7 @@ class CategoryCard extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 gradient: LinearGradient(
-                    begin: Alignment.center,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0x00000000), Colors.black]),
+                    begin: Alignment.center, end: Alignment.bottomCenter, colors: [Color(0x00000000), Colors.black]),
               ),
               width: double.infinity,
               height: double.infinity,
@@ -61,10 +62,7 @@ class CategoryCard extends StatelessWidget {
                 Spacer(),
                 Text(
                   categoryTitle,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium
-                      ?.copyWith(color: Colors.white),
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.white),
                 ),
                 SizedBox(height: 16)
               ],

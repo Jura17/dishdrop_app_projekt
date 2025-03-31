@@ -27,6 +27,7 @@ class RecipeDetailsIngredientsSection extends StatefulWidget {
 
 class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredientsSection> {
   late int servings;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -58,15 +59,21 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
                     "Recipe is already on the shopping list.",
                   );
                 } else {
-                  await widget.addShoppingListFunc(
-                    ShoppingList(
-                      id: widget.recipe.id,
-                      title: widget.recipe.title,
-                      imgUrl: widget.recipe.images["titleImg"],
-                      shoppingItems: widget.recipe.ingredients,
-                      servings: servings,
-                    ),
+                  final newShoppingList = ShoppingList(
+                    id: widget.recipe.id,
+                    title: widget.recipe.title,
+                    imgUrl: widget.recipe.images["titleImg"],
+                    shoppingItems: widget.recipe.ingredients,
+                    servings: servings,
                   );
+                  setState(() {
+                    isLoading = true;
+                  });
+                  await widget.addShoppingListFunc(newShoppingList);
+                  setState(() {
+                    isLoading = false;
+                  });
+
                   if (context.mounted) {
                     showCustomAlertBanner(
                       context,
@@ -82,10 +89,15 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
           ],
         ),
         SizedBox(height: 15),
-        IngredientListView(
-          recipe: widget.recipe,
-          servings: servings,
-        )
+        isLoading
+            ? Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Center(child: CircularProgressIndicator()),
+              )
+            : IngredientListView(
+                recipe: widget.recipe,
+                servings: servings,
+              )
       ],
     );
   }

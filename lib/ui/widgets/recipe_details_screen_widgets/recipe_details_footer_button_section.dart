@@ -2,25 +2,27 @@ import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
 import 'package:flutter/material.dart';
 
-class FooterButtonSection extends StatefulWidget {
-  const FooterButtonSection({
+class RecipeDetailsFooterButtonSection extends StatefulWidget {
+  const RecipeDetailsFooterButtonSection({
     super.key,
     required this.recipeController,
     required this.recipe,
     required this.updateCounterTimesCooked,
-    required this.showBanner,
+    required this.removeRecipeFunc,
+    required this.toggleLoadingFunc,
   });
 
   final RecipeController recipeController;
   final Recipe recipe;
   final Function updateCounterTimesCooked;
-  final Function showBanner;
+  final Function removeRecipeFunc;
+  final Function toggleLoadingFunc;
 
   @override
-  State<FooterButtonSection> createState() => _FooterButtonSectionState();
+  State<RecipeDetailsFooterButtonSection> createState() => _RecipeDetailsFooterButtonSectionState();
 }
 
-class _FooterButtonSectionState extends State<FooterButtonSection> {
+class _RecipeDetailsFooterButtonSectionState extends State<RecipeDetailsFooterButtonSection> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -35,10 +37,11 @@ class _FooterButtonSectionState extends State<FooterButtonSection> {
           label: Text("I'm done cooking!"),
         ),
         TextButton.icon(
-          style: TextButton.styleFrom(
-              foregroundColor: Colors.red, iconColor: Colors.red),
-          onPressed: () {
-            widget.showBanner();
+          style: TextButton.styleFrom(foregroundColor: Colors.red, iconColor: Colors.red),
+          onPressed: () async {
+            widget.toggleLoadingFunc(true);
+            await widget.removeRecipeFunc();
+            widget.toggleLoadingFunc(false);
           },
           label: Text("Remove recipe"),
           icon: Icon(
