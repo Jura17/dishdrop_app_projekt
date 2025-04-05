@@ -14,8 +14,14 @@ class Recipe {
   int cookingTime;
   int timesCooked = 0;
   List<CookingDirection> directions;
-  // TODO: ingredients probably needs to be a map so I can have ingredient group titles
   List<ListItem> ingredients;
+  // TODO: ingredients probably needs to be a map so I can have ingredient group titles
+  /*
+  ingredients = {
+  "chicken" : [a, b, c],
+  "sauce" : [d, e, f]
+  }
+   */
   bool isFavorite = false;
 
   Recipe({

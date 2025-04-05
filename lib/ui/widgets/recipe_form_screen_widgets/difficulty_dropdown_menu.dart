@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 class DifficultyDropdownMenu extends StatefulWidget {
-  DifficultyDropdownMenu({
+  const DifficultyDropdownMenu({
     super.key,
     required this.difficultyCtrl,
-    required this.showError,
+    required this.showErrorFunc,
+    required this.getErrorStateFunc,
   });
 
   final TextEditingController difficultyCtrl;
-  bool showError;
+  final Function showErrorFunc;
+  final Function getErrorStateFunc;
 
   @override
   State<DifficultyDropdownMenu> createState() => _DifficultyDropdownMenuState();
@@ -24,7 +26,7 @@ class _DifficultyDropdownMenuState extends State<DifficultyDropdownMenu> {
           initialSelection: widget.difficultyCtrl.text,
           onSelected: (value) {
             setState(() {
-              widget.showError = false;
+              widget.showErrorFunc(false);
             });
           },
           controller: widget.difficultyCtrl,
@@ -40,7 +42,7 @@ class _DifficultyDropdownMenuState extends State<DifficultyDropdownMenu> {
           hintText: "Select difficulty",
         ),
         SizedBox(height: 10),
-        if (widget.showError)
+        if (widget.getErrorStateFunc())
           Text(
             "Please select a difficulty",
             style: TextStyle(color: Colors.red),

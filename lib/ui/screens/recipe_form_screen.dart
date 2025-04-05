@@ -103,12 +103,14 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
       loadRecentRecipeID();
       if (widget.recipe?.id == recentRecipeID) {
         loadCachedInput(isEditingRecipe);
-        loadRecipeDataForEditing();
       } else {
         sharedPreferencesRepository.deleteCachedEditInput();
-        loadRecipeDataForEditing();
       }
+      loadRecipeDataForEditing();
+    } else {
+      loadCachedInput(isEditingRecipe);
     }
+
     // WidgetsBinding.instance.addObserver(this);
     setState(() {});
   }
@@ -136,13 +138,14 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
                 actions: [
                   if (_draftAvailable)
                     TextButton(
-                        onPressed: () {
-                          resetAllCtrl(allTextControllers, formKey);
-                        },
-                        child: Text(
-                          "Delete Draft",
-                          style: TextStyle(color: Colors.red),
-                        ))
+                      onPressed: () {
+                        resetAllCtrl(allTextControllers, formKey);
+                      },
+                      child: Text(
+                        "Delete Draft",
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    )
                 ],
               ),
               body: Form(
@@ -173,7 +176,8 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
                         SizedBox(height: 20),
                         DifficultyDropdownMenu(
                           difficultyCtrl: allTextControllers["difficultyCtrl"]!,
-                          showError: _showDifficultyError,
+                          showErrorFunc: updateDifficultyMenuError,
+                          getErrorStateFunc: getDifficultyErrorState,
                         ),
                         TagsInputSection(
                           complexInputValues: complexInputValues,
@@ -256,6 +260,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     allTextControllers["categoryCtrl"]?.text = widget.recipe!.category;
     updateImage("titleImg", widget.recipe!.images["titleImg"]);
     allTextControllers["difficultyCtrl"]?.text = widget.recipe!.difficulty;
+
     complexInputValues["tags"] = widget.recipe!.tags;
     allTextControllers["descCtrl"]?.text = widget.recipe!.description;
     allTextControllers["prepTimeCtrl"]?.text = widget.recipe!.prepTime.toString();
@@ -306,6 +311,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     return false;
   }
 
+  // load data from shared prefs into text controllers and complexInputValue map
   void loadCachedInput(isEditingRecipe) async {
     final jsonString = isEditingRecipe
         ? await sharedPreferencesRepository.cachedEditInput
@@ -372,6 +378,14 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
 
   bool getCategoryErrorState() {
     return _showCategoryError;
+  }
+
+  void updateDifficultyMenuError(bool showError) {
+    _showDifficultyError = showError;
+  }
+
+  bool getDifficultyErrorState() {
+    return _showDifficultyError;
   }
 
   void addIngredientToList() {
@@ -477,41 +491,16 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
   }
 
   bool checkNoneTextfieldValues(Map<String, TextEditingController> allTextFormCtrl, complexInputValues) {
-    allTextFormCtrl["categoryCtrl"]?.text ?? "";
-
-    String? categoryText = allTextFormCtrl["categoryCtrl"]?.text;
-    if (categoryText == null || categoryText.isEmpty) {
-      setState(() {
-        _showCategoryError = true;
-      });
-    } else {
-      setState(() {
-        _showCategoryError = false;
-      });
-    }
-
-    String? difficultyText = allTextFormCtrl["difficultyCtrl"]?.text;
-    if (difficultyText == null || difficultyText.isEmpty) {
-      setState(() {
-        _showDifficultyError = true;
-      });
-    } else {
-      setState(() {
-        _showDifficultyError = false;
-      });
-    }
+    setState(() {
+      _showCategoryError = allTextFormCtrl["categoryCtrl"]?.text.isEmpty ?? true;
+      _showDifficultyError = allTextFormCtrl["difficultyCtrl"]?.text.isEmpty ?? true;
+    });
 
     String titleImg = complexInputValues["images"]["titleImg"];
 
     if (titleImg.isEmpty) {
       setState(() {
-        // _showImgPickerError = true;
-
         complexInputValues["images"]["titleImg"] = "assets/images/placeholder_recipe_img.jpg";
-      });
-    } else {
-      setState(() {
-        // _showImgPickerError = false;
       });
     }
 
