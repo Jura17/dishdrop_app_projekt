@@ -1,9 +1,17 @@
+import 'package:dishdrop_app_projekt/data/models/recipe.dart';
+import 'package:objectbox/objectbox.dart';
+
+@Entity()
 class CookingDirection {
-  String id;
+  @Id()
+  int id = 0;
+
   String description;
 
+  final ToOne<Recipe> recipe = ToOne<Recipe>();
+
   CookingDirection({
-    required this.id,
+    this.id = 0,
     required this.description,
   });
 

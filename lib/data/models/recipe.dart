@@ -1,8 +1,12 @@
 import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
+import 'package:objectbox/objectbox.dart';
 
+@Entity
 class Recipe {
-  String id;
+  @Id()
+  int id = 0;
+
   String title;
   String category;
   String description;
@@ -13,8 +17,17 @@ class Recipe {
   int prepTime;
   int cookingTime;
   int timesCooked = 0;
-  List<CookingDirection> directions;
-  List<ListItem> ingredients;
+  bool isFavorite = false;
+
+  @Backlink()
+  final ToMany<CookingDirection> directions = ToMany<CookingDirection>();
+
+  @Backlink()
+  final ToMany<ListItem> ingredients = ToMany<ListItem>();
+
+  // ! before objectbox:
+  // List<CookingDirection> directions;
+  // List<ListItem> ingredients;
   // TODO: ingredients probably needs to be a map so I can have ingredient group titles
   /*
   ingredients = {
@@ -22,10 +35,9 @@ class Recipe {
   "sauce" : [d, e, f]
   }
    */
-  bool isFavorite = false;
 
   Recipe({
-    required this.id,
+    this.id = 0,
     required this.title,
     required this.category,
     required this.description,
@@ -35,7 +47,5 @@ class Recipe {
     required this.images,
     required this.prepTime,
     required this.cookingTime,
-    required this.directions,
-    required this.ingredients,
   });
 }
