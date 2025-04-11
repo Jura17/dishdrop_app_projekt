@@ -26,8 +26,8 @@ class _RecipeShoppingListViewState extends State<RecipeShoppingListView> {
     List<ShoppingList> allRecipeShoppingLists = [];
 
     return Center(
-      child: FutureBuilder(
-        future: widget.shoppingListController.getAllShoppingListsFuture(),
+      child: StreamBuilder(
+        stream: widget.shoppingListController.getAllShoppingLists(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
@@ -48,7 +48,7 @@ class _RecipeShoppingListViewState extends State<RecipeShoppingListView> {
   }
 
   Future<void> removeShoppingList(ShoppingList shoppingList) async {
-    await widget.shoppingListController.removeShoppingListFuture(shoppingList);
+    // await widget.shoppingListController.removeShoppingListFuture(shoppingList);
     setState(() {});
   }
 }

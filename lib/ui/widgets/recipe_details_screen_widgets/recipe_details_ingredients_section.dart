@@ -63,9 +63,10 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
                     id: widget.recipe.id,
                     title: widget.recipe.title,
                     imgUrl: widget.recipe.images["titleImg"],
-                    shoppingItems: widget.recipe.ingredients,
                     servings: servings,
                   );
+                  newShoppingList.shoppingItems.addAll(widget.recipe.ingredients);
+
                   setState(() {
                     isLoading = true;
                   });

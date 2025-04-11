@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:objectbox/objectbox.dart';
 
-@Entity
+@Entity()
 class Recipe {
   @Id()
   int id = 0;
@@ -13,7 +15,8 @@ class Recipe {
   String notes;
   String difficulty;
   List<String> tags;
-  Map<String, dynamic> images;
+  // Map<String, dynamic> images;
+  String imagesJson;
   int prepTime;
   int cookingTime;
   int timesCooked = 0;
@@ -43,9 +46,14 @@ class Recipe {
     required this.description,
     required this.notes,
     required this.difficulty,
+    required this.imagesJson,
     required this.tags,
-    required this.images,
     required this.prepTime,
     required this.cookingTime,
   });
+
+  Map<String, dynamic> get images => jsonDecode(imagesJson);
+  void setImages(Map<String, dynamic> newImages) {
+    imagesJson = jsonEncode(newImages);
+  }
 }

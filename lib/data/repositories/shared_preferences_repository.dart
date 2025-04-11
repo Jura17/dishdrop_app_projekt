@@ -46,9 +46,9 @@ class SharedPreferencesRepository {
     await prefs.setString(_recentIdKey, newID);
   }
 
-  Future<String> get recentID async {
+  Future<int> get recentID async {
     final prefs = await _prefsFuture;
-    return prefs.getString(_recentIdKey) ?? '';
+    return prefs.getInt(_recentIdKey) ?? 0;
   }
 
   Future<void> deleteRecentId() async {

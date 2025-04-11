@@ -25,8 +25,6 @@ import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/title
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
-import 'package:uuid/uuid.dart';
-
 class RecipeFormScreen extends StatefulWidget {
   const RecipeFormScreen({
     super.key,
@@ -57,7 +55,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
   bool _draftAvailable = false;
   bool isEditingRecipe = false;
   String? imagePath;
-  String? recentRecipeID;
+  int? recentRecipeID;
   bool isLoading = false;
   Map<String, dynamic> allInputFields = {
     "images": {
@@ -392,7 +390,6 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     setState(() {
       complexInputValues["ingredients"].add(
         ListItem(
-          id: Uuid().v4(),
           description: allTextControllers["ingredientDescCtrl"]!.text,
           amount: double.tryParse(allTextControllers["ingredientAmountCtrl"]!.text),
           unit: allTextControllers["ingredientUnitCtrl"]!.text,
@@ -404,7 +401,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     });
   }
 
-  void removeFromIngredientList(String id) {
+  void removeFromIngredientList(int id) {
     setState(() {
       complexInputValues["ingredients"].removeWhere((ingredient) => ingredient.id == id);
     });
@@ -415,7 +412,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     setState(
       () {
         if (directionDescription != "") {
-          CookingDirection newDirection = CookingDirection(id: Uuid().v4(), description: directionDescription);
+          CookingDirection newDirection = CookingDirection(description: directionDescription);
 
           complexInputValues["directions"].add(newDirection);
           allTextControllers["directionDescCtrl"]!.clear();
@@ -424,7 +421,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     );
   }
 
-  void removeCookingDirection(String id) {
+  void removeCookingDirection(int id) {
     setState(() {
       complexInputValues["directions"].removeWhere((direction) => direction.id == id);
     });

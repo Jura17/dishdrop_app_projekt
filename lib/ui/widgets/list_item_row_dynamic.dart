@@ -84,7 +84,7 @@ class _ListItemRowDynamicState extends State<ListItemRowDynamic> {
           widget.removeFromListFunc(widget.ingredient.id);
         });
       },
-      key: Key(widget.ingredient.id),
+      key: Key(widget.ingredient.id.toString()),
       background: Container(
         color: Colors.red,
         child: Icon(

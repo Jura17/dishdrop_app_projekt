@@ -1,3 +1,4 @@
+import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/cooking_direction_row_dynamic.dart';
 import 'package:flutter/material.dart';
 
@@ -27,11 +28,12 @@ class _CookingDirectionsListViewState extends State<CookingDirectionsListView> {
           counter++;
 
           return Container(
-            key: Key(cookingDirection.id),
+            key: Key(cookingDirection.tempID),
             child: CookingDirectionRowDynamic(
-                cookingDirection: cookingDirection,
-                removeFromCookingDirectionsListFunc: widget.removeFromCookingDirectionsListFunc,
-                rowIndex: counter),
+              cookingDirection: cookingDirection,
+              removeFromCookingDirectionsListFunc: widget.removeFromCookingDirectionsListFunc,
+              rowIndex: counter,
+            ),
           );
         },
       ).toList(),

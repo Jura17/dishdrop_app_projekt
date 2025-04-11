@@ -28,7 +28,7 @@ class _IngredientListViewState extends State<IngredientListView> {
           counter++;
 
           return Container(
-            key: Key(ingredient.id),
+            key: Key(ingredient.tempID),
             decoration: BoxDecoration(color: counter.isEven ? AppColors.lightGrey : Colors.white),
             child: Padding(
               padding: const EdgeInsets.all(8.0),

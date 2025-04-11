@@ -43,7 +43,7 @@ class _CookingDirectionRowDynamicState extends State<CookingDirectionRowDynamic>
           widget.removeFromCookingDirectionsListFunc(widget.cookingDirection.id);
         });
       },
-      key: Key(widget.cookingDirection.id),
+      key: Key(widget.cookingDirection.id.toString()),
       background: Container(
         color: Colors.red,
         child: Icon(

@@ -12,12 +12,17 @@ class FileTitleImg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('imgpath: $imgPath');
     return Image.file(
-      errorBuilder: (context, error, stackTrace) => Center(
+      errorBuilder: (context, error, stackTrace) {
+        print(error);
+        return Center(
           child: Text(
-        "404",
-        style: Theme.of(context).textTheme.headlineLarge,
-      )),
+            "404",
+            style: Theme.of(context).textTheme.headlineLarge,
+          ),
+        );
+      },
       File(imgPath),
       fit: BoxFit.cover,
     );

@@ -6,7 +6,6 @@ import 'package:dishdrop_app_projekt/ui/widgets/all_purpose_shopping_list_view_w
 import 'package:dishdrop_app_projekt/ui/widgets/all_purpose_shopping_list_view_widgets/all_purpose_list_items.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/all_purpose_shopping_list_view_widgets/all_purpose_list_title_image.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 
 class AllPurposeShoppingListView extends StatefulWidget {
   const AllPurposeShoppingListView({super.key, required this.shoppingListController});
@@ -30,8 +29,8 @@ class _AllPurposeShoppingListViewState extends State<AllPurposeShoppingListView>
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: FutureBuilder(
-        future: widget.shoppingListController.getAllShoppingListsFuture(),
+      child: StreamBuilder(
+        stream: widget.shoppingListController.getAllShoppingLists(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
@@ -77,7 +76,6 @@ class _AllPurposeShoppingListViewState extends State<AllPurposeShoppingListView>
       () {
         allPurposeShoppingList!.addShoppingItem(
           ListItem(
-            id: Uuid().v4(),
             description: allTextControllers["itemDescCtrl"]!.text,
             amount: double.tryParse(allTextControllers["itemAmountCtrl"]!.text),
             unit: allTextControllers["itemUnitCtrl"]!.text,

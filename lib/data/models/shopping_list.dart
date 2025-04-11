@@ -15,7 +15,6 @@ class ShoppingList {
 
   final ToMany<ListItem> shoppingItems = ToMany<ListItem>();
   final ToOne<Recipe> recipe = ToOne<Recipe>();
-  // List<ListItem> shoppingItems = [];
 
   ShoppingList({
     this.id = 0,

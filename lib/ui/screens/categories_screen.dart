@@ -37,8 +37,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Center(
-          child: FutureBuilder(
-            future: widget.recipeController.getAllRecipesFuture(),
+          child: StreamBuilder(
+            stream: widget.recipeController.getAllRecipes(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return CircularProgressIndicator();

@@ -1,154 +1,132 @@
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
-import 'package:uuid/uuid.dart';
 
 final List<ShoppingList> shoppingListData = [
   ShoppingList(
-    id: "allPurpose123",
+    isGeneralPurposeList: true,
     title: "All-Purpose List",
     imgUrl:
         "https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fill,g_center,w_730,h_913/k%2Farchive%2F0b899275c51c6251094201819ec32fbc1f4e33b7",
-    shoppingItems: [
+  )..shoppingItems.addAll([
       ListItem(
-        id: Uuid().v4(),
         description: "milk",
         amount: 1,
         unit: "gallon",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "bread",
         amount: 2,
         unit: "loaves",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "eggs",
         amount: 12,
         unit: "pieces",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "apples",
         amount: 6,
         unit: "",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "rice",
         amount: 5,
         unit: "lbs",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "chicken",
         amount: 2,
         unit: "lbs",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "toothpaste",
         amount: 1,
         unit: "tube",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "shampoo",
         amount: 1,
         unit: "bottle",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "potatoes",
         amount: 4,
         unit: "lbs",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "carrots",
         amount: 1,
         unit: "bag",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "cheese",
         amount: 1,
         unit: "block",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "butter",
         amount: 1,
         unit: "stick",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "onions",
         amount: 3,
         unit: "",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "coffee",
         amount: 1,
         unit: "bag",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "pasta",
         amount: 2,
         unit: "packs",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "cereal",
         amount: 1,
         unit: "box",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "dish soap",
         amount: 1,
         unit: "bottle",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "toilet paper",
         amount: 6,
         unit: "rolls",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "tomatoes",
         amount: 5,
         unit: "",
         isShoppingListItem: true,
       ),
       ListItem(
-        id: Uuid().v4(),
         description: "yogurt",
         amount: 4,
         unit: "cups",
         isShoppingListItem: true,
       ),
-    ],
-  ),
+    ])
 ];

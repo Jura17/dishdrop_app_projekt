@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
@@ -16,13 +18,15 @@ class RecipeDetailsTitleImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget imageWidget;
+    Map<String, dynamic> images = jsonDecode(widget.recipe.imagesJson);
 
-    if (widget.recipe.images["titleImg"].contains("http")) {
-      imageWidget = NetworkTitleImg(imgPath: widget.recipe.images["titleImg"]);
+    if (images["titleImg"].contains("http")) {
+      imageWidget = NetworkTitleImg(imgPath: images["titleImg"]);
     } else if (widget.recipe.images["titleImg"].contains("assets/images/")) {
-      imageWidget = Image.asset(widget.recipe.images["titleImg"], fit: BoxFit.cover);
+      imageWidget = Image.asset(images["titleImg"], fit: BoxFit.cover);
     } else {
-      imageWidget = FileTitleImg(imgPath: widget.recipe.images["titleImg"]);
+      imageWidget = FileTitleImg(imgPath: images["titleImg"]);
+      print(images["titleImg"]);
     }
 
     return Stack(

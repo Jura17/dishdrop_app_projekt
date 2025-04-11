@@ -186,17 +186,17 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
   }
 
   Future<void> getAllShoppingLists() async {
-    allShoppingLists = await widget.shoppingListController.getAllShoppingListsFuture();
+    // allShoppingLists = await widget.shoppingListController.getAllShoppingLists();
     if (mounted) setState(() {});
   }
 
   Future<void> addShoppingList(ShoppingList shoppingList) async {
-    await widget.shoppingListController.addShoppingListFuture(shoppingList);
+    // await widget.shoppingListController.addShoppingListFuture(shoppingList);
     setState(() {});
   }
 
-  Future<void> removeRecipe() async {
-    await widget.recipeController.removeRecipeFuture(widget.recipe);
+  void removeRecipe() {
+    widget.recipeController.removeRecipe(widget.recipe);
     setState(() {
       showCustomAlertBanner(context, Colors.red, "Recipe removed from cookbook.");
     });

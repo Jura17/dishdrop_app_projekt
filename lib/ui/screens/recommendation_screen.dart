@@ -27,8 +27,8 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: FutureBuilder(
-          future: widget.recipeController.getAllRecipesFuture(),
+        child: StreamBuilder<List<Recipe>>(
+          stream: widget.recipeController.getAllRecipes(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator();
