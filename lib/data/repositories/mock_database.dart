@@ -1,10 +1,10 @@
-import 'package:dishdrop_app_projekt/data/models/list_item.dart';
-import 'package:dishdrop_app_projekt/data/repositories/recipe_mock_data.dart';
-import 'package:dishdrop_app_projekt/data/repositories/shopping_list_mock_data.dart';
+// import 'package:dishdrop_app_projekt/data/models/list_item.dart';
+// import 'package:dishdrop_app_projekt/data/repositories/recipe_mock_data.dart';
+// import 'package:dishdrop_app_projekt/data/repositories/shopping_list_mock_data.dart';
 
-import '../models/recipe.dart';
-import '../models/shopping_list.dart';
-import 'database_repository.dart';
+// import '../models/recipe.dart';
+// import '../models/shopping_list.dart';
+// import 'database_repository.dart';
 
 // class MockDatabase implements DatabaseRepository {
 //   @override

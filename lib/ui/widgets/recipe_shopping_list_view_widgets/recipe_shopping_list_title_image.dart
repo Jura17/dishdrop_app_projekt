@@ -10,7 +10,7 @@ class RecipeShoppingListTitleImage extends StatelessWidget {
     required this.widget,
   });
 
-  final ShoppingListIngredientListView widget;
+  final RecipeShoppingListIngredientListView widget;
 
   @override
   Widget build(BuildContext context) {

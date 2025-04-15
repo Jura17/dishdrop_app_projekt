@@ -3,7 +3,6 @@ import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:dishdrop_app_projekt/data/repositories/database_repository.dart';
 import 'package:dishdrop_app_projekt/objectbox.g.dart';
-import 'package:objectbox/objectbox.dart';
 
 class ObjectboxDatabase implements DatabaseRepository {
   final Box<Recipe> recipeBox;

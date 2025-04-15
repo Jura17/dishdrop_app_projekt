@@ -40,7 +40,7 @@ class _RecipeShoppingListViewState extends State<RecipeShoppingListView> {
           allRecipeShoppingLists = snapshot.data!.toList();
           return allRecipeShoppingLists.isEmpty
               ? RecipeShoppingListIsEmptyText()
-              : IngredientsSection(
+              : RecipeShoppingListIngredientsSection(
                   allRecipeShoppingLists: allRecipeShoppingLists,
                   shoppingListController: widget.shoppingListController,
                   removeShoppingListFunc: removeShoppingList,
@@ -50,14 +50,18 @@ class _RecipeShoppingListViewState extends State<RecipeShoppingListView> {
     );
   }
 
-  Future<void> removeShoppingList(ShoppingList shoppingList) async {
-    // await widget.shoppingListController.removeShoppingListFuture(shoppingList);
-    setState(() {});
+  // Future<void> removeShoppingList(ShoppingList shoppingList) async {
+  //   // await widget.shoppingListController.removeShoppingListFuture(shoppingList);
+  //   setState(() {});
+  // }
+
+  void removeShoppingList(ShoppingList shoppingList) {
+    widget.shoppingListController.removeShoppingList(shoppingList);
   }
 }
 
-class IngredientsSection extends StatefulWidget {
-  const IngredientsSection({
+class RecipeShoppingListIngredientsSection extends StatefulWidget {
+  const RecipeShoppingListIngredientsSection({
     super.key,
     required this.allRecipeShoppingLists,
     required this.shoppingListController,
@@ -69,10 +73,10 @@ class IngredientsSection extends StatefulWidget {
   final Function removeShoppingListFunc;
 
   @override
-  State<IngredientsSection> createState() => _IngredientsSectionState();
+  State<RecipeShoppingListIngredientsSection> createState() => _RecipeShoppingListIngredientsSectionState();
 }
 
-class _IngredientsSectionState extends State<IngredientsSection> {
+class _RecipeShoppingListIngredientsSectionState extends State<RecipeShoppingListIngredientsSection> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -80,7 +84,7 @@ class _IngredientsSectionState extends State<IngredientsSection> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: widget.allRecipeShoppingLists.map((ShoppingList recipeShoppingList) {
-            return ShoppingListIngredientListView(
+            return RecipeShoppingListIngredientListView(
               recipeShoppingList: recipeShoppingList,
               shoppingListController: widget.shoppingListController,
               removeShoppingListFunc: widget.removeShoppingListFunc,
@@ -92,8 +96,8 @@ class _IngredientsSectionState extends State<IngredientsSection> {
   }
 }
 
-class ShoppingListIngredientListView extends StatefulWidget {
-  const ShoppingListIngredientListView({
+class RecipeShoppingListIngredientListView extends StatefulWidget {
+  const RecipeShoppingListIngredientListView({
     super.key,
     required this.recipeShoppingList,
     required this.shoppingListController,
@@ -105,10 +109,10 @@ class ShoppingListIngredientListView extends StatefulWidget {
   final Function removeShoppingListFunc;
 
   @override
-  State<ShoppingListIngredientListView> createState() => _ShoppingListIngredientListViewState();
+  State<RecipeShoppingListIngredientListView> createState() => _RecipeShoppingListIngredientListViewState();
 }
 
-class _ShoppingListIngredientListViewState extends State<ShoppingListIngredientListView> {
+class _RecipeShoppingListIngredientListViewState extends State<RecipeShoppingListIngredientListView> {
   @override
   Widget build(BuildContext context) {
     return Column(

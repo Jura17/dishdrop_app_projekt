@@ -82,7 +82,6 @@ class _AllPurposeShoppingListViewState extends State<AllPurposeShoppingListView>
     );
   }
 
-  // TODO: all-purpose shopping list also needs to be updated in the database
   void updateAllPurposeShoppingList() {
     setState(() {
       if (allPurposeShoppingList != null) {

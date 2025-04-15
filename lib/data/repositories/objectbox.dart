@@ -15,7 +15,7 @@ class ObjectBox {
   ObjectBox._create(this.store) {
     recipeBox = Box<Recipe>(store);
     shoppingListBox = Box<ShoppingList>(store);
-    //if (recipeBox.isEmpty()) recipeBox.putMany(recipeData);
+    // if (recipeBox.isEmpty()) recipeBox.putMany(recipeData);
     // if (shoppingList.isEmpty()) shoppingList.putMany(shoppingListData);
     if (shoppingListBox.isEmpty()) {
       shoppingListBox.put(
