@@ -5,14 +5,12 @@ import 'package:flutter/material.dart';
 class RecipeDetailsFooterButtonSection extends StatefulWidget {
   const RecipeDetailsFooterButtonSection({
     super.key,
-    required this.recipeController,
     required this.recipe,
     required this.updateCounterTimesCooked,
     required this.removeRecipeFunc,
     required this.toggleLoadingFunc,
   });
 
-  final RecipeController recipeController;
   final Recipe recipe;
   final Function updateCounterTimesCooked;
   final Function removeRecipeFunc;

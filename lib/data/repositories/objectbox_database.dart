@@ -18,8 +18,8 @@ class ObjectboxDatabase implements DatabaseRepository {
   }
 
   @override
-  Stream<List<Recipe>> getAllRecipes() {
-    return recipeBox.query().watch(triggerImmediately: true).map((query) => query.find());
+  List<Recipe> getAllRecipes() {
+    return recipeBox.getAll();
   }
 
   @override
@@ -53,16 +53,21 @@ class ObjectboxDatabase implements DatabaseRepository {
   // TODO: needs a remove from list method
 
   @override
-  Stream<ShoppingList?> getAllPurposeShoppingList() {
-    final query = shoppingListBox.query(ShoppingList_.isAllPurposeList.equals(true)).watch(triggerImmediately: true);
-    var allPurposeShoppingList = query.map((shoppinglist) => shoppinglist.findFirst());
+  ShoppingList? getAllPurposeShoppingList() {
+    // final query = shoppingListBox.query(ShoppingList_.isAllPurposeList.equals(true)).watch(triggerImmediately: true);
+    final allPurposeShoppingList =
+        shoppingListBox.getAll().where((shoppingList) => shoppingList.isAllPurposeList == true).first;
+    // var allPurposeShoppingList = query.map((shoppinglist) => shoppinglist.findFirst());
     return allPurposeShoppingList;
   }
 
   @override
-  Stream<List<ShoppingList>> getRecipeShoppingLists() {
-    final query = shoppingListBox.query(ShoppingList_.isAllPurposeList.equals(false)).watch(triggerImmediately: true);
-    return query.map((shoppinglist) => shoppinglist.find());
+  List<ShoppingList> getRecipeShoppingLists() {
+    // final query = shoppingListBox.query(ShoppingList_.isAllPurposeList.equals(false)).watch(triggerImmediately: true);
+    final recipeShoppingLists =
+        shoppingListBox.getAll().where((shoppingList) => shoppingList.isAllPurposeList == false).toList();
+    return recipeShoppingLists;
+    // return query.map((shoppinglist) => shoppinglist.find());
   }
 
   @override

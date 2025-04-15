@@ -10,12 +10,7 @@ import 'package:flutter/material.dart';
 class DishDropApp extends StatefulWidget {
   const DishDropApp({
     super.key,
-    required this.recipeController,
-    required this.shoppingListController,
   });
-
-  final RecipeController recipeController;
-  final ShoppingListController shoppingListController;
 
   @override
   State<DishDropApp> createState() => _DishDropAppState();
@@ -28,15 +23,9 @@ class _DishDropAppState extends State<DishDropApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: [
-        CategoriesScreen(
-            recipeController: widget.recipeController,
-            shoppingListController: widget.shoppingListController),
-        RecommendationScreen(
-          recipeController: widget.recipeController,
-          shoppingListController: widget.shoppingListController,
-        ),
-        ShoppingListScreen(
-            shoppingListController: widget.shoppingListController),
+        CategoriesScreen(),
+        RecommendationScreen(),
+        ShoppingListScreen(),
       ][activeIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: activeIndex,

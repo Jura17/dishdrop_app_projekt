@@ -9,7 +9,7 @@ abstract class DatabaseRepository {
   void addRecipe(Recipe newRecipe);
 
   // read
-  Stream<List<Recipe>> getAllRecipes();
+  List<Recipe> getAllRecipes();
 
   // delete
   void removeRecipe(Recipe recipe);
@@ -23,8 +23,8 @@ abstract class DatabaseRepository {
   void addToAllPurposeShoppingList(ListItem listItem);
 
   // read
-  Stream<List<ShoppingList>> getRecipeShoppingLists();
-  Stream<ShoppingList?> getAllPurposeShoppingList();
+  List<ShoppingList> getRecipeShoppingLists();
+  ShoppingList? getAllPurposeShoppingList();
 
   // delete
   void removeShoppingList(ShoppingList shoppingList);

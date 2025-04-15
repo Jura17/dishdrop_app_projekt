@@ -11,13 +11,12 @@ class RecipeDetailsIngredientsSection extends StatefulWidget {
   const RecipeDetailsIngredientsSection({
     super.key,
     required this.recipe,
-    required this.shoppingListController,
     required this.allShoppingLists,
     required this.addShoppingListFunc,
   });
 
   final Recipe recipe;
-  final ShoppingListController shoppingListController;
+
   final List<ShoppingList> allShoppingLists;
   final Function addShoppingListFunc;
 
@@ -60,7 +59,6 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
                   );
                 } else {
                   final newShoppingList = ShoppingList(
-                    // id: widget.recipe.id,
                     title: widget.recipe.title,
                     imgUrl: widget.recipe.images["titleImg"],
                     servings: servings,

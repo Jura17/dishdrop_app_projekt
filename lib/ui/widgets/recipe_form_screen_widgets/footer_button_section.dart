@@ -41,12 +41,12 @@ class FooterButtonSection extends StatelessWidget {
 
               if (isEditingRecipe) {
                 if (widget.recipe != null) {
-                  widget.recipeController.updateRecipe(widget.recipe!, newRecipe);
+                  // widget.recipeController.updateRecipe(widget.recipe!, newRecipe);
                 } else {
                   return;
                 }
               } else {
-                widget.recipeController.addRecipe(newRecipe);
+                // widget.recipeController.addRecipe(newRecipe);
               }
 
               resetAllCtrl(allTextFormCtrl, null);
@@ -66,12 +66,12 @@ class FooterButtonSection extends StatelessWidget {
               Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl, isEditingRecipe);
               if (isEditingRecipe) {
                 if (widget.recipe != null) {
-                  widget.recipeController.updateRecipe(widget.recipe!, newRecipe);
+                  // widget.recipeController.updateRecipe(widget.recipe!, newRecipe);
                 } else {
                   return;
                 }
               } else {
-                widget.recipeController.addRecipe(newRecipe);
+                // widget.recipeController.addRecipe(newRecipe);
               }
 
               resetAllCtrl(allTextFormCtrl, null);
@@ -82,8 +82,6 @@ class FooterButtonSection extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (BuildContext context) => RecipeDetailsScreen(
                       recipe: newRecipe,
-                      recipeController: widget.recipeController,
-                      shoppingListController: widget.shoppingListController,
                     ),
                   ),
                 );

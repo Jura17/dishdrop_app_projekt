@@ -1,9 +1,6 @@
-import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
-
 import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 
-import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_view_widgets/recipe_shopping_list_is_empty_text.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_view_widgets/recipe_shopping_list_items.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_view_widgets/recipe_shopping_list_title_image.dart';
@@ -11,9 +8,9 @@ import 'package:dishdrop_app_projekt/ui/widgets/servings_picker.dart';
 import 'package:flutter/material.dart';
 
 class RecipeShoppingListView extends StatefulWidget {
-  const RecipeShoppingListView({super.key, required this.shoppingListController});
-
-  final ShoppingListController shoppingListController;
+  const RecipeShoppingListView({
+    super.key,
+  });
 
   @override
   State<RecipeShoppingListView> createState() => _RecipeShoppingListViewState();
@@ -27,36 +24,17 @@ class _RecipeShoppingListViewState extends State<RecipeShoppingListView> {
     List<ShoppingList> allRecipeShoppingLists = [];
 
     return Center(
-      child: StreamBuilder(
-        stream: widget.shoppingListController.getRecipeShoppingLists(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text("Error while fetching data: ${snapshot.error}");
-          } else if (snapshot.data == null) {
-            return Text("No data");
-          }
-          allRecipeShoppingLists = snapshot.data!.toList();
-          return allRecipeShoppingLists.isEmpty
-              ? RecipeShoppingListIsEmptyText()
-              : RecipeShoppingListIngredientsSection(
-                  allRecipeShoppingLists: allRecipeShoppingLists,
-                  shoppingListController: widget.shoppingListController,
-                  removeShoppingListFunc: removeShoppingList,
-                );
-        },
-      ),
+      child: allRecipeShoppingLists.isEmpty
+          ? RecipeShoppingListIsEmptyText()
+          : RecipeShoppingListIngredientsSection(
+              allRecipeShoppingLists: allRecipeShoppingLists,
+              removeShoppingListFunc: removeShoppingList,
+            ),
     );
   }
 
-  // Future<void> removeShoppingList(ShoppingList shoppingList) async {
-  //   // await widget.shoppingListController.removeShoppingListFuture(shoppingList);
-  //   setState(() {});
-  // }
-
   void removeShoppingList(ShoppingList shoppingList) {
-    widget.shoppingListController.removeShoppingList(shoppingList);
+    // widget.shoppingListController.removeShoppingList(shoppingList);
   }
 }
 
@@ -64,12 +42,10 @@ class RecipeShoppingListIngredientsSection extends StatefulWidget {
   const RecipeShoppingListIngredientsSection({
     super.key,
     required this.allRecipeShoppingLists,
-    required this.shoppingListController,
     required this.removeShoppingListFunc,
   });
 
   final List<ShoppingList> allRecipeShoppingLists;
-  final ShoppingListController shoppingListController;
   final Function removeShoppingListFunc;
 
   @override
@@ -86,7 +62,6 @@ class _RecipeShoppingListIngredientsSectionState extends State<RecipeShoppingLis
           children: widget.allRecipeShoppingLists.map((ShoppingList recipeShoppingList) {
             return RecipeShoppingListIngredientListView(
               recipeShoppingList: recipeShoppingList,
-              shoppingListController: widget.shoppingListController,
               removeShoppingListFunc: widget.removeShoppingListFunc,
             );
           }).toList(),
@@ -100,12 +75,11 @@ class RecipeShoppingListIngredientListView extends StatefulWidget {
   const RecipeShoppingListIngredientListView({
     super.key,
     required this.recipeShoppingList,
-    required this.shoppingListController,
     required this.removeShoppingListFunc,
   });
 
   final ShoppingList recipeShoppingList;
-  final ShoppingListController shoppingListController;
+
   final Function removeShoppingListFunc;
 
   @override

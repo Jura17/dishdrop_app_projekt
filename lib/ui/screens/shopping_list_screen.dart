@@ -7,9 +7,9 @@ import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_view_widget
 import 'package:flutter/material.dart';
 
 class ShoppingListScreen extends StatefulWidget {
-  const ShoppingListScreen({super.key, required this.shoppingListController});
-
-  final ShoppingListController shoppingListController;
+  const ShoppingListScreen({
+    super.key,
+  });
 
   @override
   State<ShoppingListScreen> createState() => _ShoppingListScreenState();
@@ -28,13 +28,10 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
         ),
       ),
       body: [
-        RecipeShoppingListView(
-            shoppingListController: widget.shoppingListController),
-        AllPurposeShoppingListView(
-            shoppingListController: widget.shoppingListController),
+        RecipeShoppingListView(),
+        AllPurposeShoppingListView(),
       ][activeIndex],
-      floatingActionButton:
-          ShoppingListSegmentButton(onSelectionChangedFunc: onSelectionChanged),
+      floatingActionButton: ShoppingListSegmentButton(onSelectionChangedFunc: onSelectionChanged),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
@@ -55,8 +52,7 @@ class ShoppingListSegmentButton extends StatefulWidget {
   final Function onSelectionChangedFunc;
 
   @override
-  State<ShoppingListSegmentButton> createState() =>
-      _ShoppingListSegmentButtonState();
+  State<ShoppingListSegmentButton> createState() => _ShoppingListSegmentButtonState();
 }
 
 class _ShoppingListSegmentButtonState extends State<ShoppingListSegmentButton> {

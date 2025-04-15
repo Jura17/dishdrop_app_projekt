@@ -1,10 +1,9 @@
 import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
-import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
+
 import 'package:dishdrop_app_projekt/data/recipe_form_controller.dart';
 import 'package:dishdrop_app_projekt/data/repositories/shared_preferences_repository.dart';
-import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/category_dropdown_menu.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/cooking_time_text_form_field.dart';
@@ -28,17 +27,15 @@ import 'dart:convert';
 class RecipeFormScreen extends StatefulWidget {
   const RecipeFormScreen({
     super.key,
-    required this.recipeController,
-    required this.shoppingListController,
+
     // required this.recipeFormController,
     this.recipe,
-    required this.allRecipes,
+    // required this.allRecipes,
   });
-  final RecipeController recipeController;
-  final ShoppingListController shoppingListController;
+
   // final RecipeFormController recipeFormController;
   final Recipe? recipe;
-  final List<Recipe> allRecipes;
+  // final List<Recipe> allRecipes;
 
   @override
   State<RecipeFormScreen> createState() => _RecipeFormScreenState();
@@ -92,7 +89,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
   @override
   void initState() {
     super.initState();
-    allRecipes = widget.allRecipes;
+    // allRecipes = widget.allRecipes;
     if (widget.recipe != null) {
       isEditingRecipe = true;
     }

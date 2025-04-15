@@ -1,7 +1,6 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 
-import 'package:dishdrop_app_projekt/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 class AllPurposeListTitleImage extends StatelessWidget {

@@ -2,8 +2,6 @@ import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 
-import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
-import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/description_section.dart';
@@ -22,12 +20,8 @@ class RecipeDetailsScreen extends StatefulWidget {
   const RecipeDetailsScreen({
     super.key,
     required this.recipe,
-    required this.recipeController,
-    required this.shoppingListController,
   });
   final Recipe recipe;
-  final RecipeController recipeController;
-  final ShoppingListController shoppingListController;
 
   @override
   State<RecipeDetailsScreen> createState() => _RecipeDetailsScreenState();
@@ -116,7 +110,6 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                     RecipeDetailsIngredientsSection(
                       key: _ingredientsKey,
                       recipe: widget.recipe,
-                      shoppingListController: widget.shoppingListController,
                       addShoppingListFunc: addShoppingList,
                       allShoppingLists: allShoppingLists,
                     ),
@@ -136,7 +129,6 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                   ),
                   SizedBox(height: 20),
                   RecipeDetailsFooterButtonSection(
-                    recipeController: widget.recipeController,
                     recipe: widget.recipe,
                     updateCounterTimesCooked: updateCounterTimesCooked,
                     removeRecipeFunc: removeRecipe,
@@ -153,25 +145,14 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
           CustomFilledIconButton(
             text: "Edit Recipe",
             iconData: Icons.edit,
-            recipeController: widget.recipeController,
-            shoppingListController: widget.shoppingListController,
             newScreen: RecipeFormScreen(
-              recipeController: widget.recipeController,
-              shoppingListController: widget.shoppingListController,
               recipe: widget.recipe,
-              allRecipes: allRecipes,
             ),
           ),
           CustomFilledIconButton(
             text: "Add Recipe",
             iconData: Icons.add_box_outlined,
-            recipeController: widget.recipeController,
-            shoppingListController: widget.shoppingListController,
-            newScreen: RecipeFormScreen(
-              recipeController: widget.recipeController,
-              shoppingListController: widget.shoppingListController,
-              allRecipes: allRecipes,
-            ),
+            newScreen: RecipeFormScreen(),
           ),
         ],
       ),
@@ -191,12 +172,12 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
   }
 
   void addShoppingList(ShoppingList shoppingList) {
-    widget.shoppingListController.addShoppingList(shoppingList);
+    // widget.shoppingListController.addShoppingList(shoppingList);
     setState(() {});
   }
 
   void removeRecipe() {
-    widget.recipeController.removeRecipe(widget.recipe);
+    // widget.recipeController.removeRecipe(widget.recipe);
     setState(() {
       showCustomAlertBanner(context, Colors.red, "Recipe removed from cookbook.");
     });

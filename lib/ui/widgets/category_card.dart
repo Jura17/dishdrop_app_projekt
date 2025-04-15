@@ -1,5 +1,5 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
-import 'package:dishdrop_app_projekt/data/models/recipe.dart';
+
 import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
 
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
@@ -7,19 +7,14 @@ import 'package:dishdrop_app_projekt/ui/screens/recipes_grid_view.dart';
 import 'package:flutter/material.dart';
 
 class CategoryCard extends StatelessWidget {
-  const CategoryCard(
-      {super.key,
-      required this.categoryImg,
-      required this.categoryTitle,
-      required this.recipeController,
-      required this.shoppingListController,
-      required this.allRecipes});
+  const CategoryCard({
+    super.key,
+    required this.categoryImg,
+    required this.categoryTitle,
+  });
 
   final String categoryTitle;
   final String categoryImg;
-  final RecipeController recipeController;
-  final ShoppingListController shoppingListController;
-  final List<Recipe> allRecipes;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +23,6 @@ class CategoryCard extends StatelessWidget {
         MaterialPageRoute(
           builder: (context) => RecipesGridView(
             category: categoryTitle,
-            recipeController: recipeController,
-            shoppingListController: shoppingListController,
-            allRecipes: allRecipes,
           ),
         ),
       ),

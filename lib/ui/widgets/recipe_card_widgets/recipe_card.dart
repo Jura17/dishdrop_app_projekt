@@ -16,13 +16,9 @@ class RecipeCard extends StatefulWidget {
   const RecipeCard({
     super.key,
     required this.recipe,
-    required this.recipeController,
-    required this.shoppingListController,
   });
 
   final Recipe recipe;
-  final RecipeController recipeController;
-  final ShoppingListController shoppingListController;
 
   @override
   State<RecipeCard> createState() => _RecipeCardState();
@@ -47,8 +43,6 @@ class _RecipeCardState extends State<RecipeCard> {
           MaterialPageRoute(
             builder: (context) => RecipeDetailsScreen(
               recipe: widget.recipe,
-              recipeController: widget.recipeController,
-              shoppingListController: widget.shoppingListController,
             ),
           ),
         );
