@@ -38,10 +38,6 @@ class _RecipeCardState extends State<RecipeCard> {
     } else if (images["titleImg"].contains("assets/images/")) {
       imageWidget = Image.asset(images["titleImg"]);
     } else {
-      // vorher: /Users/julianrakow/Library/Developer/CoreSimulator/Devices/C31F3B0E-714B-48A8-AF90-9F6AAE590B16/data/Containers/Data/Application/ED25443E-779F-4180-89E8-152F749D7A86/Documents/image_picker_241A95FB-6504-4885-9C5F-69C6229D69B3-32302-00000AFC66C5EA95.jpg
-      //nachher: /Users/julianrakow/Library/Developer/CoreSimulator/Devices/C31F3B0E-714B-48A8-AF90-9F6AAE590B16/data/Containers/Data/Application/ED25443E-779F-4180-89E8-152F749D7A86/Documents/image_picker_241A95FB-6504-4885-9C5F-69C6229D69B3-32302-00000AFC66C5EA95.jpg
-      print("nachher: ${images["titleImg"]}");
-
       imageWidget = FileTitleImg(imgPath: images["titleImg"]);
     }
 

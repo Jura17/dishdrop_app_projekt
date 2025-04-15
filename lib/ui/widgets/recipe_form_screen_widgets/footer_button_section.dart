@@ -114,11 +114,6 @@ class FooterButtonSection extends StatelessWidget {
     final List<ListItem> ingredients = complexInputValues["ingredients"] as List<ListItem>;
 
     // final recipeID = isEditingRecipe ? widget.recipe?.id : Uuid().v4();
-    print(complexInputValues["images"]["titleImg"]);
-    /* 
-    /Users/julianrakow/Library/Developer/CoreSimulator/Devices/39D8B063-C840-43D8-96E2-309E5971E2E0/data/Containers/Data/Application/67F920E4-F597-49DC-977C-D91F217D5CC6/tmp/image_picker_677E66CD-2C36-4DC5-B64F-3B6AA21A2DDB-89804-00000AC7F389B02A.jpg
-  
-    */
 
     Recipe newRecipe = Recipe(
       // id: recipeID,

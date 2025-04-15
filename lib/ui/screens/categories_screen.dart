@@ -49,7 +49,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               }
               allRecipes = snapshot.data!;
               return GridView.count(
-                physics: NeverScrollableScrollPhysics(),
                 crossAxisCount: 2,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,

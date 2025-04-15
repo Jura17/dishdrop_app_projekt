@@ -30,14 +30,15 @@ class _AllPurposeShoppingListViewState extends State<AllPurposeShoppingListView>
   Widget build(BuildContext context) {
     return Center(
       child: StreamBuilder(
-        stream: widget.shoppingListController.getAllShoppingLists(),
+        stream: widget.shoppingListController.getAllPurposeShoppingList(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           } else if (snapshot.hasError) {
             return Text("Error while fetching data: ${snapshot.error}");
           }
-          allPurposeShoppingList = snapshot.data!.first;
+          allPurposeShoppingList = snapshot.data;
+
           return SingleChildScrollView(
             child: Form(
               key: _formKey,
@@ -46,13 +47,24 @@ class _AllPurposeShoppingListViewState extends State<AllPurposeShoppingListView>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 20),
                     Text(
                       allPurposeShoppingList!.title,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
+                    SizedBox(height: 10),
                     AllPurposeListTitleImage(allPurposeShoppingList: allPurposeShoppingList!),
                     const SizedBox(height: 20),
-                    AllPurposeListItems(allPurposeShoppingList: allPurposeShoppingList!),
+                    allPurposeShoppingList!.shoppingItems.isEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Center(
+                              child: Text(
+                                "No shopping items added yet",
+                              ),
+                            ),
+                          )
+                        : AllPurposeListItems(allPurposeShoppingList: allPurposeShoppingList!),
                     SizedBox(height: 20),
                     AllPurposeListInputSection(
                       allTextControllers: allTextControllers,
@@ -72,9 +84,9 @@ class _AllPurposeShoppingListViewState extends State<AllPurposeShoppingListView>
 
   // TODO: all-purpose shopping list also needs to be updated in the database
   void updateAllPurposeShoppingList() {
-    setState(
-      () {
-        allPurposeShoppingList!.addShoppingItem(
+    setState(() {
+      if (allPurposeShoppingList != null) {
+        widget.shoppingListController.addToAllPurposeShoppingList(
           ListItem(
             description: allTextControllers["itemDescCtrl"]!.text,
             amount: double.tryParse(allTextControllers["itemAmountCtrl"]!.text),
@@ -84,7 +96,7 @@ class _AllPurposeShoppingListViewState extends State<AllPurposeShoppingListView>
         allTextControllers["itemAmountCtrl"]!.clear();
         allTextControllers["itemUnitCtrl"]!.clear();
         allTextControllers["itemDescCtrl"]!.clear();
-      },
-    );
+      }
+    });
   }
 }

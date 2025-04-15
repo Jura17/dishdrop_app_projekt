@@ -26,7 +26,6 @@ class RecipeDetailsTitleImage extends StatelessWidget {
       imageWidget = Image.asset(images["titleImg"], fit: BoxFit.cover);
     } else {
       imageWidget = FileTitleImg(imgPath: images["titleImg"]);
-      print(images["titleImg"]);
     }
 
     return Stack(

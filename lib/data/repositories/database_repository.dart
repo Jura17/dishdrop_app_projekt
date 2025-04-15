@@ -23,7 +23,8 @@ abstract class DatabaseRepository {
   void addToAllPurposeShoppingList(ListItem listItem);
 
   // read
-  Stream<List<ShoppingList>> getAllShoppingLists();
+  Stream<List<ShoppingList>> getRecipeShoppingLists();
+  Stream<ShoppingList?> getAllPurposeShoppingList();
 
   // delete
   void removeShoppingList(ShoppingList shoppingList);

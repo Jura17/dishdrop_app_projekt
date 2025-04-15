@@ -8,7 +8,7 @@ class ShoppingList {
   @Id()
   int id = 0;
 
-  bool isGeneralPurposeList;
+  bool isAllPurposeList;
   String title;
   String imgUrl;
   int servings;
@@ -18,7 +18,7 @@ class ShoppingList {
 
   ShoppingList({
     this.id = 0,
-    this.isGeneralPurposeList = false,
+    this.isAllPurposeList = false,
     required this.title,
     required this.imgUrl,
     this.servings = 1,

@@ -51,7 +51,7 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
               servings: servings,
             ),
             FilledButton(
-              onPressed: () async {
+              onPressed: () {
                 if (widget.allShoppingLists.any((shoppingList) => shoppingList.id == widget.recipe.id)) {
                   showCustomAlertBanner(
                     context,
@@ -60,17 +60,18 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
                   );
                 } else {
                   final newShoppingList = ShoppingList(
-                    id: widget.recipe.id,
+                    // id: widget.recipe.id,
                     title: widget.recipe.title,
                     imgUrl: widget.recipe.images["titleImg"],
                     servings: servings,
                   );
+
                   newShoppingList.shoppingItems.addAll(widget.recipe.ingredients);
 
                   setState(() {
                     isLoading = true;
                   });
-                  await widget.addShoppingListFunc(newShoppingList);
+                  widget.addShoppingListFunc(newShoppingList);
                   setState(() {
                     isLoading = false;
                   });

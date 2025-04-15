@@ -12,6 +12,7 @@ import 'package:flat_buffers/flat_buffers.dart' as fb;
 import 'package:objectbox/internal.dart'
     as obx_int; // generated code can access "internal" functionality
 import 'package:objectbox/objectbox.dart' as obx;
+import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'data/models/cooking_direction.dart';
 import 'data/models/list_item.dart';
@@ -177,7 +178,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(4, 7533033837798158227),
       name: 'ShoppingList',
-      lastPropertyId: const obx_int.IdUid(6, 108732539867773916),
+      lastPropertyId: const obx_int.IdUid(7, 3087004328500961613),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -185,11 +186,6 @@ final _entities = <obx_int.ModelEntity>[
             name: 'id',
             type: 6,
             flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 7413146980146514660),
-            name: 'isGeneralPurposeList',
-            type: 1,
-            flags: 0),
         obx_int.ModelProperty(
             id: const obx_int.IdUid(3, 5661293699342870787),
             name: 'title',
@@ -211,7 +207,12 @@ final _entities = <obx_int.ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const obx_int.IdUid(4, 6094375734331033477),
-            relationTarget: 'Recipe')
+            relationTarget: 'Recipe'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 3087004328500961613),
+            name: 'isAllPurposeList',
+            type: 1,
+            flags: 0)
       ],
       relations: <obx_int.ModelRelation>[
         obx_int.ModelRelation(
@@ -233,16 +234,17 @@ final _entities = <obx_int.ModelEntity>[
 /// For Flutter apps, also calls `loadObjectBoxLibraryAndroidCompat()` from
 /// the ObjectBox Flutter library to fix loading the native ObjectBox library
 /// on Android 6 and older.
-obx.Store openStore(
+Future<obx.Store> openStore(
     {String? directory,
     int? maxDBSizeInKB,
     int? maxDataSizeInKB,
     int? fileMode,
     int? maxReaders,
     bool queriesCaseSensitiveDefault = true,
-    String? macosApplicationGroup}) {
+    String? macosApplicationGroup}) async {
+  await loadObjectBoxLibraryAndroidCompat();
   return obx.Store(getObjectBoxModel(),
-      directory: directory,
+      directory: directory ?? (await defaultStoreDirectory()).path,
       maxDBSizeInKB: maxDBSizeInKB,
       maxDataSizeInKB: maxDataSizeInKB,
       fileMode: fileMode,
@@ -262,7 +264,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredPropertyUids: const [7413146980146514660],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -464,13 +466,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
         objectToFB: (ShoppingList object, fb.Builder fbb) {
           final titleOffset = fbb.writeString(object.title);
           final imgUrlOffset = fbb.writeString(object.imgUrl);
-          fbb.startTable(7);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
-          fbb.addBool(1, object.isGeneralPurposeList);
           fbb.addOffset(2, titleOffset);
           fbb.addOffset(3, imgUrlOffset);
           fbb.addInt64(4, object.servings);
           fbb.addInt64(5, object.recipe.targetId);
+          fbb.addBool(6, object.isAllPurposeList);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -479,8 +481,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
           final idParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final isGeneralPurposeListParam =
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false);
+          final isAllPurposeListParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 16, false);
           final titleParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 8, '');
           final imgUrlParam = const fb.StringReader(asciiOptimization: true)
@@ -489,7 +491,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           final object = ShoppingList(
               id: idParam,
-              isGeneralPurposeList: isGeneralPurposeListParam,
+              isAllPurposeList: isAllPurposeListParam,
               title: titleParam,
               imgUrl: imgUrlParam,
               servings: servingsParam);
@@ -622,25 +624,25 @@ class ShoppingList_ {
   static final id =
       obx.QueryIntegerProperty<ShoppingList>(_entities[3].properties[0]);
 
-  /// See [ShoppingList.isGeneralPurposeList].
-  static final isGeneralPurposeList =
-      obx.QueryBooleanProperty<ShoppingList>(_entities[3].properties[1]);
-
   /// See [ShoppingList.title].
   static final title =
-      obx.QueryStringProperty<ShoppingList>(_entities[3].properties[2]);
+      obx.QueryStringProperty<ShoppingList>(_entities[3].properties[1]);
 
   /// See [ShoppingList.imgUrl].
   static final imgUrl =
-      obx.QueryStringProperty<ShoppingList>(_entities[3].properties[3]);
+      obx.QueryStringProperty<ShoppingList>(_entities[3].properties[2]);
 
   /// See [ShoppingList.servings].
   static final servings =
-      obx.QueryIntegerProperty<ShoppingList>(_entities[3].properties[4]);
+      obx.QueryIntegerProperty<ShoppingList>(_entities[3].properties[3]);
 
   /// See [ShoppingList.recipe].
   static final recipe =
-      obx.QueryRelationToOne<ShoppingList, Recipe>(_entities[3].properties[5]);
+      obx.QueryRelationToOne<ShoppingList, Recipe>(_entities[3].properties[4]);
+
+  /// See [ShoppingList.isAllPurposeList].
+  static final isAllPurposeList =
+      obx.QueryBooleanProperty<ShoppingList>(_entities[3].properties[5]);
 
   /// see [ShoppingList.shoppingItems]
   static final shoppingItems = obx.QueryRelationToMany<ShoppingList, ListItem>(

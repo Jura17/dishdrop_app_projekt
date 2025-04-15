@@ -12,10 +12,8 @@ class FileTitleImg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('imgpath: $imgPath');
     return Image.file(
       errorBuilder: (context, error, stackTrace) {
-        print(error);
         return Center(
           child: Text(
             "404",

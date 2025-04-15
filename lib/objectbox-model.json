@@ -156,7 +156,7 @@
     },
     {
       "id": "4:7533033837798158227",
-      "lastPropertyId": "6:108732539867773916",
+      "lastPropertyId": "7:3087004328500961613",
       "name": "ShoppingList",
       "properties": [
         {
@@ -164,11 +164,6 @@
           "name": "id",
           "type": 6,
           "flags": 1
-        },
-        {
-          "id": "2:7413146980146514660",
-          "name": "isGeneralPurposeList",
-          "type": 1
         },
         {
           "id": "3:5661293699342870787",
@@ -192,6 +187,11 @@
           "flags": 520,
           "indexId": "4:6094375734331033477",
           "relationTarget": "Recipe"
+        },
+        {
+          "id": "7:3087004328500961613",
+          "name": "isAllPurposeList",
+          "type": 1
         }
       ],
       "relations": [
@@ -211,7 +211,9 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    7413146980146514660
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

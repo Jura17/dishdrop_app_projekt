@@ -6,6 +6,7 @@ import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_view_widgets/recipe_shopping_list_is_empty_text.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_view_widgets/recipe_shopping_list_items.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_view_widgets/recipe_shopping_list_title_image.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/servings_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -27,14 +28,16 @@ class _RecipeShoppingListViewState extends State<RecipeShoppingListView> {
 
     return Center(
       child: StreamBuilder(
-        stream: widget.shoppingListController.getAllShoppingLists(),
+        stream: widget.shoppingListController.getRecipeShoppingLists(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           } else if (snapshot.hasError) {
             return Text("Error while fetching data: ${snapshot.error}");
+          } else if (snapshot.data == null) {
+            return Text("No data");
           }
-          allRecipeShoppingLists = snapshot.data!.skip(1).toList();
+          allRecipeShoppingLists = snapshot.data!.toList();
           return allRecipeShoppingLists.isEmpty
               ? RecipeShoppingListIsEmptyText()
               : IngredientsSection(
@@ -116,21 +119,7 @@ class _ShoppingListIngredientListViewState extends State<ShoppingListIngredientL
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         SizedBox(height: 10),
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.dishDropBlack),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              widget.recipeShoppingList.imgUrl,
-              height: 250,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
+        RecipeShoppingListTitleImage(widget: widget),
         const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

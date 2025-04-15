@@ -80,7 +80,7 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
     final XFile? selectedImage = await imagePicker.pickImage(source: ImageSource.gallery);
     if (selectedImage != null) {
       widget.imagePath = (await saveImagePermanently(selectedImage)).path;
-      print("vorher: ${widget.imagePath}");
+
       setState(() {
         if (widget.imagePath == null) {
           widget.updateImagesFunc("titleImg", "");

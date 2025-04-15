@@ -15,6 +15,8 @@ void main() async {
   final objectbox = await ObjectBox.create();
   final db = ObjectboxDatabase(objectbox.store);
 
+  // create provider here and use both recipe and shoppingList controller inside provider
+
   // DatabaseRepository mockDatabase = MockDatabase();
   final RecipeController recipeController = RecipeController(db);
   final ShoppingListController shoppingListController = ShoppingListController(db);

@@ -2,6 +2,7 @@ import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:dishdrop_app_projekt/data/repositories/database_repository.dart';
+import 'package:dishdrop_app_projekt/objectbox.g.dart';
 import 'package:objectbox/objectbox.dart';
 
 class ObjectboxDatabase implements DatabaseRepository {
@@ -40,12 +41,29 @@ class ObjectboxDatabase implements DatabaseRepository {
 
   @override
   void addToAllPurposeShoppingList(ListItem listItem) {
-    //  final allPurposeList = shoppingListBox.query(ShoppingList_.isGeneralPurposeList.equals(true)).build().findFirst();
+    final query = shoppingListBox.query(ShoppingList_.isAllPurposeList.equals(true)).build();
+    var allPurposeShoppingList = query.findFirst();
+    query.close();
+
+    if (allPurposeShoppingList != null) {
+      allPurposeShoppingList.shoppingItems.add(listItem);
+      shoppingListBox.put(allPurposeShoppingList);
+    }
+  }
+
+  // TODO: needs a remove from list method
+
+  @override
+  Stream<ShoppingList?> getAllPurposeShoppingList() {
+    final query = shoppingListBox.query(ShoppingList_.isAllPurposeList.equals(true)).watch(triggerImmediately: true);
+    var allPurposeShoppingList = query.map((shoppinglist) => shoppinglist.findFirst());
+    return allPurposeShoppingList;
   }
 
   @override
-  Stream<List<ShoppingList>> getAllShoppingLists() {
-    return shoppingListBox.query().watch(triggerImmediately: true).map((query) => query.find());
+  Stream<List<ShoppingList>> getRecipeShoppingLists() {
+    final query = shoppingListBox.query(ShoppingList_.isAllPurposeList.equals(false)).watch(triggerImmediately: true);
+    return query.map((shoppinglist) => shoppinglist.find());
   }
 
   @override

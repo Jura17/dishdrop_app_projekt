@@ -190,8 +190,8 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
     if (mounted) setState(() {});
   }
 
-  Future<void> addShoppingList(ShoppingList shoppingList) async {
-    // await widget.shoppingListController.addShoppingListFuture(shoppingList);
+  void addShoppingList(ShoppingList shoppingList) {
+    widget.shoppingListController.addShoppingList(shoppingList);
     setState(() {});
   }
 
