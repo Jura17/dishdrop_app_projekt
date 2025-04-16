@@ -17,7 +17,7 @@ class RecommendationCardInfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Recipe> allRecipes = context.watch<RecipeNotifier>().allRecipes;
+    final List<Recipe> allRecipes = context.read<RecipeNotifier>().allRecipes;
 
     return Expanded(
       child: Container(
@@ -103,7 +103,7 @@ class RecommendationCardInfoSection extends StatelessWidget {
                   ),
                   FilledButton(
                     onPressed: () {
-                      Navigator.of(context).push(
+                      Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (BuildContext context) => RecipeDetailsScreen(
                             recipe: recipe,

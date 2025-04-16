@@ -15,7 +15,7 @@ abstract class DatabaseRepository {
   void removeRecipe(Recipe recipe);
 
   // update
-  void updateRecipe(Recipe oldRecipe, Recipe newRecipe);
+  void updateRecipe(Recipe recipe);
 
   // SHOPPING LIST:
   // create

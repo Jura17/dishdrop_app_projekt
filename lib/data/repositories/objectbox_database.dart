@@ -23,9 +23,8 @@ class ObjectboxDatabase implements DatabaseRepository {
   }
 
   @override
-  void updateRecipe(Recipe oldRecipe, Recipe newRecipe) {
-    newRecipe.id = oldRecipe.id;
-    recipeBox.put(newRecipe);
+  void updateRecipe(Recipe recipe) {
+    recipeBox.put(recipe);
   }
 
   @override

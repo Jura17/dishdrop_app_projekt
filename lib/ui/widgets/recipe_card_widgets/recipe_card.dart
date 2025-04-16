@@ -2,9 +2,7 @@ import 'dart:convert';
 
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
-import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
 
-import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';

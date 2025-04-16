@@ -7,12 +7,6 @@ class RecipeNotifier extends ChangeNotifier {
 
   RecipeNotifier(this._databaseRepository);
 
-  // List<Recipe> _allRecipes = [];
-
-  // void initialize() {
-  //   _allRecipes = allRecipes;
-  // }
-
   List<Recipe> get allRecipes {
     return _databaseRepository.getAllRecipes();
   }
@@ -27,8 +21,8 @@ class RecipeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateRecipe(Recipe oldRecipe, Recipe newRecipe) {
-    _databaseRepository.updateRecipe(oldRecipe, newRecipe);
+  void updateRecipe(Recipe recipe) {
+    _databaseRepository.updateRecipe(recipe);
     notifyListeners();
   }
 }

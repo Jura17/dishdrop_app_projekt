@@ -1,6 +1,6 @@
-import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
 
@@ -15,6 +15,7 @@ import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/ta
 import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RecipeDetailsScreen extends StatefulWidget {
   const RecipeDetailsScreen({
@@ -34,8 +35,6 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
   bool _directionsEmpty = false;
   bool _ingredientsEmpty = false;
   List<ShoppingList> allShoppingLists = [];
-  List<Recipe> allRecipes = [];
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -73,71 +72,67 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
           child: Text(widget.recipe.title, style: Theme.of(context).textTheme.headlineLarge),
         ),
       ),
-      body: _isLoading
-          ? Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(child: CircularProgressIndicator()),
-            )
-          : Padding(
-              padding: const EdgeInsets.only(top: 16, bottom: 80, left: 16, right: 16),
-              child: ListView(
-                controller: _scrollController,
-                children: [
-                  RecipeDetailsTitleImage(widget: widget),
-                  SizedBox(height: defaultSpacing),
-                  QuickInfoSection(widget: widget),
-                  SizedBox(height: defaultSpacing),
-                  if (widget.recipe.tags.isNotEmpty) TagsSection(recipe: widget.recipe),
-                  SizedBox(height: defaultSpacing),
-                  if (!_directionsEmpty || !_ingredientsEmpty)
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: FilledButton(
-                        onPressed: () => _jumpToCookingDirections(),
-                        child: Text("Jump to recipe"),
-                      ),
-                    ),
-                  SizedBox(height: defaultSpacing),
-                  if (widget.recipe.description != "") DescriptionSection(recipe: widget.recipe),
-                  SizedBox(height: defaultSpacing),
-                  if (!_directionsEmpty)
-                    DirectionsSection(
-                      key: _directionsKey,
-                      recipe: widget.recipe,
-                    ),
-                  SizedBox(height: defaultSpacing),
-                  if (!_ingredientsEmpty)
-                    RecipeDetailsIngredientsSection(
-                      key: _ingredientsKey,
-                      recipe: widget.recipe,
-                      addShoppingListFunc: addShoppingList,
-                      allShoppingLists: allShoppingLists,
-                    ),
-                  SizedBox(height: 40),
-                  RichText(
-                    text: TextSpan(
-                      text: "You have cooked this dish ",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      children: [
-                        TextSpan(
-                          text: "${widget.recipe.timesCooked}",
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        TextSpan(text: " times so far.\nTap the button below when you're done!")
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  RecipeDetailsFooterButtonSection(
-                    recipe: widget.recipe,
-                    updateCounterTimesCooked: updateCounterTimesCooked,
-                    removeRecipeFunc: removeRecipe,
-                    toggleLoadingFunc: toggleLoading,
-                  ),
-                  SizedBox(height: 130),
-                ],
+      body: Padding(
+        padding: const EdgeInsets.only(top: 16, bottom: 80, left: 16, right: 16),
+        child: ListView(
+          controller: _scrollController,
+          children: [
+            RecipeDetailsTitleImage(widget: widget),
+            SizedBox(height: defaultSpacing),
+            QuickInfoSection(widget: widget),
+            SizedBox(height: defaultSpacing),
+            if (widget.recipe.tags.isNotEmpty) TagsSection(recipe: widget.recipe),
+            SizedBox(height: defaultSpacing),
+            if (!_directionsEmpty || !_ingredientsEmpty)
+              Align(
+                alignment: Alignment.centerRight,
+                child: FilledButton(
+                  onPressed: () => _jumpToCookingDirections(),
+                  child: Text("Jump to recipe"),
+                ),
               ),
+            SizedBox(height: defaultSpacing),
+            if (widget.recipe.description != "") DescriptionSection(recipe: widget.recipe),
+            SizedBox(height: defaultSpacing),
+            if (!_directionsEmpty)
+              DirectionsSection(
+                key: _directionsKey,
+                recipe: widget.recipe,
+              ),
+            SizedBox(height: defaultSpacing),
+            if (!_ingredientsEmpty)
+              RecipeDetailsIngredientsSection(
+                key: _ingredientsKey,
+                recipe: widget.recipe,
+                addShoppingListFunc: addShoppingList,
+                allShoppingLists: allShoppingLists,
+              ),
+            SizedBox(height: 40),
+            Consumer<RecipeNotifier>(
+              builder: (context, recipeNotifier, child) {
+                return RichText(
+                  text: TextSpan(
+                    text: "You have cooked this dish ",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    children: [
+                      TextSpan(
+                        text: "${widget.recipe.timesCooked}",
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(text: " times so far.\nTap the button below when you're done!")
+                    ],
+                  ),
+                );
+              },
             ),
+            SizedBox(height: 20),
+            RecipeDetailsFooterButtonSection(
+              recipe: widget.recipe,
+            ),
+            SizedBox(height: 130),
+          ],
+        ),
+      ),
       floatingActionButton: Row(
         mainAxisSize: MainAxisSize.min,
         spacing: 10,
@@ -160,12 +155,6 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
     );
   }
 
-  void updateCounterTimesCooked() {
-    setState(() {
-      widget.recipe.timesCooked++;
-    });
-  }
-
   Future<void> getAllShoppingLists() async {
     // allShoppingLists = await widget.shoppingListController.getAllShoppingLists();
     if (mounted) setState(() {});
@@ -173,19 +162,6 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
 
   void addShoppingList(ShoppingList shoppingList) {
     // widget.shoppingListController.addShoppingList(shoppingList);
-    setState(() {});
-  }
-
-  void removeRecipe() {
-    // widget.recipeController.removeRecipe(widget.recipe);
-    setState(() {
-      showCustomAlertBanner(context, Colors.red, "Recipe removed from cookbook.");
-    });
-    if (mounted) Navigator.of(context).pop();
-  }
-
-  void toggleLoading(bool isLoading) {
-    _isLoading = isLoading;
     setState(() {});
   }
 }

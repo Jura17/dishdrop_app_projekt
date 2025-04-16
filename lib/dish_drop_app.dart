@@ -1,7 +1,3 @@
-import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
-
-import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
-
 import 'package:dishdrop_app_projekt/ui/screens/categories_screen.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recommendation_screen.dart';
 import 'package:dishdrop_app_projekt/ui/screens/shopping_list_screen.dart';

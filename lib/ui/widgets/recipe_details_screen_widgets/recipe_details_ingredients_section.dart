@@ -2,7 +2,6 @@ import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 
-import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/ingredient_list_view.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/servings_picker.dart';
 import 'package:flutter/material.dart';

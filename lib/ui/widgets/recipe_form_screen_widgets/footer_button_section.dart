@@ -4,9 +4,11 @@ import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FooterButtonSection extends StatelessWidget {
   const FooterButtonSection({
@@ -40,13 +42,15 @@ class FooterButtonSection extends StatelessWidget {
               Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl, isEditingRecipe);
 
               if (isEditingRecipe) {
+                // UPDATE NEW RECIPE
                 if (widget.recipe != null) {
-                  // widget.recipeController.updateRecipe(widget.recipe!, newRecipe);
+                  context.read<RecipeNotifier>().updateRecipe(newRecipe);
                 } else {
                   return;
                 }
               } else {
-                // widget.recipeController.addRecipe(newRecipe);
+                // CREATE NEW RECIPE
+                context.read<RecipeNotifier>().addRecipe(newRecipe);
               }
 
               resetAllCtrl(allTextFormCtrl, null);
@@ -65,13 +69,15 @@ class FooterButtonSection extends StatelessWidget {
             if (formKey.currentState!.validate() && checkNoneTextFieldValuesFunc(allTextFormCtrl, complexInputValues)) {
               Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl, isEditingRecipe);
               if (isEditingRecipe) {
+                // UPDATE NEW RECIPE
                 if (widget.recipe != null) {
-                  // widget.recipeController.updateRecipe(widget.recipe!, newRecipe);
+                  context.read<RecipeNotifier>().updateRecipe(newRecipe);
                 } else {
                   return;
                 }
               } else {
-                // widget.recipeController.addRecipe(newRecipe);
+                // CREATE NEW RECIPE
+                context.read<RecipeNotifier>().addRecipe(newRecipe);
               }
 
               resetAllCtrl(allTextFormCtrl, null);
@@ -114,7 +120,6 @@ class FooterButtonSection extends StatelessWidget {
     // final recipeID = isEditingRecipe ? widget.recipe?.id : Uuid().v4();
 
     Recipe newRecipe = Recipe(
-      // id: recipeID,
       title: title,
       category: category,
       description: description,

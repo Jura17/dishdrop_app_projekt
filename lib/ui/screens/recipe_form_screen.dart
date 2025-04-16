@@ -30,12 +30,10 @@ class RecipeFormScreen extends StatefulWidget {
 
     // required this.recipeFormController,
     this.recipe,
-    // required this.allRecipes,
   });
 
   // final RecipeFormController recipeFormController;
   final Recipe? recipe;
-  // final List<Recipe> allRecipes;
 
   @override
   State<RecipeFormScreen> createState() => _RecipeFormScreenState();
@@ -45,7 +43,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
   final formKey = GlobalKey<FormState>();
   RecipeFormController recipeFormController = RecipeFormController();
   SharedPreferencesRepository sharedPreferencesRepository = SharedPreferencesRepository();
-  late List<Recipe> allRecipes;
+
   bool _showImgPickerError = false;
   bool _showCategoryError = false;
   bool _showDifficultyError = false;
@@ -154,7 +152,6 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
                       children: [
                         TitleTextFormField(
                           titleCtrl: allTextControllers["titleCtrl"]!,
-                          allRecipes: allRecipes,
                         ),
                         CategoryDropdownMenu(
                           categoryCtrl: allTextControllers["categoryCtrl"]!,

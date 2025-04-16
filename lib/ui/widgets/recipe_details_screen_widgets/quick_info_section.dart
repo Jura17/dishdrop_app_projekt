@@ -1,5 +1,7 @@
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class QuickInfoSection extends StatelessWidget {
   const QuickInfoSection({
@@ -47,21 +49,22 @@ class QuickInfoSection extends StatelessWidget {
               Icons.check_circle_outline_outlined,
               size: 30,
             ),
-            RichText(
-              text: TextSpan(
-                text: "Cooked ",
-                style: Theme.of(context).textTheme.bodyLarge,
-                children: [
-                  TextSpan(
-                    text: "${widget.recipe.timesCooked}",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(fontWeight: FontWeight.bold),
+            Consumer<RecipeNotifier>(
+              builder: (context, value, child) {
+                return RichText(
+                  text: TextSpan(
+                    text: "Cooked ",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    children: [
+                      TextSpan(
+                        text: "${widget.recipe.timesCooked}",
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(text: " times")
+                    ],
                   ),
-                  TextSpan(text: " times")
-                ],
-              ),
+                );
+              },
             )
           ],
         ),

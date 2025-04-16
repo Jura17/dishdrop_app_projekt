@@ -56,4 +56,36 @@ class Recipe {
   void setImages(Map<String, dynamic> newImages) {
     imagesJson = jsonEncode(newImages);
   }
+
+  // -------------------------------
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'category': category,
+      // ...
+    };
+  }
+
+  factory Recipe.fromMap(Map<String, dynamic> map) {
+    return Recipe(
+      title: map['title'],
+      category: map['category'],
+      description: map['description'],
+      notes: map['notes'],
+      difficulty: map['difficulty'],
+      imagesJson: map['imagesJson'],
+      tags: map['tags'],
+      prepTime: map['prepTime'],
+      cookingTime: map['cookingTime'],
+    );
+  }
+
+  void updateCounterTimesCooked() {
+    timesCooked++;
+  }
+
+  void toggleIsFavorite() {
+    isFavorite = !isFavorite;
+  }
 }
