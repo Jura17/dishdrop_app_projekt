@@ -23,8 +23,9 @@ class ObjectboxDatabase implements DatabaseRepository {
   }
 
   @override
-  void updateRecipe(Recipe recipe) {
-    recipeBox.put(recipe);
+  void updateRecipe(Recipe oldRecipe, Recipe newRecipe) {
+    newRecipe.id = oldRecipe.id;
+    recipeBox.put(newRecipe);
   }
 
   @override
@@ -48,25 +49,21 @@ class ObjectboxDatabase implements DatabaseRepository {
       shoppingListBox.put(allPurposeShoppingList);
     }
   }
-
-  // TODO: needs a remove from list method
+  // TODO: also needs a remove from list method
 
   @override
   ShoppingList? getAllPurposeShoppingList() {
-    // final query = shoppingListBox.query(ShoppingList_.isAllPurposeList.equals(true)).watch(triggerImmediately: true);
     final allPurposeShoppingList =
         shoppingListBox.getAll().where((shoppingList) => shoppingList.isAllPurposeList == true).first;
-    // var allPurposeShoppingList = query.map((shoppinglist) => shoppinglist.findFirst());
+
     return allPurposeShoppingList;
   }
 
   @override
   List<ShoppingList> getRecipeShoppingLists() {
-    // final query = shoppingListBox.query(ShoppingList_.isAllPurposeList.equals(false)).watch(triggerImmediately: true);
     final recipeShoppingLists =
         shoppingListBox.getAll().where((shoppingList) => shoppingList.isAllPurposeList == false).toList();
     return recipeShoppingLists;
-    // return query.map((shoppinglist) => shoppinglist.find());
   }
 
   @override

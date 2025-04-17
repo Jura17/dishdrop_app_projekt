@@ -14,6 +14,8 @@ class ShoppingList {
   int servings;
 
   final ToMany<ListItem> shoppingItems = ToMany<ListItem>();
+
+  @Backlink()
   final ToOne<Recipe> recipe = ToOne<Recipe>();
 
   ShoppingList({
@@ -34,5 +36,9 @@ class ShoppingList {
 
   void removeFromShoppingList(ListItem listItem) {
     shoppingItems.remove(listItem);
+  }
+
+  void updateServings(newAmount) {
+    servings = newAmount;
   }
 }

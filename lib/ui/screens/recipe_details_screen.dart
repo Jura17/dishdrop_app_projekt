@@ -41,7 +41,6 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
     _directionsEmpty = widget.recipe.directions.isEmpty;
     _ingredientsEmpty = widget.recipe.ingredients.isEmpty;
 
-    getAllShoppingLists();
     super.initState();
   }
 
@@ -104,8 +103,6 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               RecipeDetailsIngredientsSection(
                 key: _ingredientsKey,
                 recipe: widget.recipe,
-                addShoppingListFunc: addShoppingList,
-                allShoppingLists: allShoppingLists,
               ),
             SizedBox(height: 40),
             Consumer<RecipeNotifier>(
@@ -153,15 +150,5 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
-  }
-
-  Future<void> getAllShoppingLists() async {
-    // allShoppingLists = await widget.shoppingListController.getAllShoppingLists();
-    if (mounted) setState(() {});
-  }
-
-  void addShoppingList(ShoppingList shoppingList) {
-    // widget.shoppingListController.addShoppingList(shoppingList);
-    setState(() {});
   }
 }

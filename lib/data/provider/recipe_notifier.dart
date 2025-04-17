@@ -21,8 +21,8 @@ class RecipeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateRecipe(Recipe recipe) {
-    _databaseRepository.updateRecipe(recipe);
+  void updateRecipe(Recipe oldRecipe, Recipe newRecipe) {
+    _databaseRepository.updateRecipe(oldRecipe, newRecipe);
     notifyListeners();
   }
 }

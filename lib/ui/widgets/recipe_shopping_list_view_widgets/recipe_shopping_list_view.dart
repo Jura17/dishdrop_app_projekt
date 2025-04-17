@@ -1,11 +1,13 @@
 import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
+import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_view_widgets/recipe_shopping_list_is_empty_text.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_view_widgets/recipe_shopping_list_items.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_view_widgets/recipe_shopping_list_title_image.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/servings_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RecipeShoppingListView extends StatefulWidget {
   const RecipeShoppingListView({
@@ -21,32 +23,20 @@ class _RecipeShoppingListViewState extends State<RecipeShoppingListView> {
 
   @override
   Widget build(BuildContext context) {
-    List<ShoppingList> allRecipeShoppingLists = [];
+    final shoppingListNotifier = context.watch<ShoppingListNotifier>();
 
     return Center(
-      child: allRecipeShoppingLists.isEmpty
+      child: shoppingListNotifier.getRecipeShoppingLists().isEmpty
           ? RecipeShoppingListIsEmptyText()
-          : RecipeShoppingListIngredientsSection(
-              allRecipeShoppingLists: allRecipeShoppingLists,
-              removeShoppingListFunc: removeShoppingList,
-            ),
+          : RecipeShoppingListIngredientsSection(),
     );
-  }
-
-  void removeShoppingList(ShoppingList shoppingList) {
-    // widget.shoppingListController.removeShoppingList(shoppingList);
   }
 }
 
 class RecipeShoppingListIngredientsSection extends StatefulWidget {
   const RecipeShoppingListIngredientsSection({
     super.key,
-    required this.allRecipeShoppingLists,
-    required this.removeShoppingListFunc,
   });
-
-  final List<ShoppingList> allRecipeShoppingLists;
-  final Function removeShoppingListFunc;
 
   @override
   State<RecipeShoppingListIngredientsSection> createState() => _RecipeShoppingListIngredientsSectionState();
@@ -58,13 +48,17 @@ class _RecipeShoppingListIngredientsSectionState extends State<RecipeShoppingLis
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: widget.allRecipeShoppingLists.map((ShoppingList recipeShoppingList) {
-            return RecipeShoppingListIngredientListView(
-              recipeShoppingList: recipeShoppingList,
-              removeShoppingListFunc: widget.removeShoppingListFunc,
+        child: Consumer<ShoppingListNotifier>(
+          builder: (context, shoppingListNotifier, child) {
+            List<ShoppingList> allRecipeShoppingLists = shoppingListNotifier.getRecipeShoppingLists();
+            return Column(
+              children: allRecipeShoppingLists.map((ShoppingList recipeShoppingList) {
+                return RecipeShoppingListIngredientListView(
+                  recipeShoppingList: recipeShoppingList,
+                );
+              }).toList(),
             );
-          }).toList(),
+          },
         ),
       ),
     );
@@ -75,12 +69,9 @@ class RecipeShoppingListIngredientListView extends StatefulWidget {
   const RecipeShoppingListIngredientListView({
     super.key,
     required this.recipeShoppingList,
-    required this.removeShoppingListFunc,
   });
 
   final ShoppingList recipeShoppingList;
-
-  final Function removeShoppingListFunc;
 
   @override
   State<RecipeShoppingListIngredientListView> createState() => _RecipeShoppingListIngredientListViewState();
@@ -108,13 +99,9 @@ class _RecipeShoppingListIngredientListViewState extends State<RecipeShoppingLis
             ),
             TextButton.icon(
               style: TextButton.styleFrom(foregroundColor: Colors.red, iconColor: Colors.red),
-              onPressed: () async {
-                widget.removeShoppingListFunc(widget.recipeShoppingList);
-                setState(
-                  () {
-                    showCustomAlertBanner(context, Colors.red, "Ingredients removed from shopping list.");
-                  },
-                );
+              onPressed: () {
+                context.read<ShoppingListNotifier>().removeShoppingList(widget.recipeShoppingList);
+                showCustomAlertBanner(context, Colors.red, "Ingredients removed from shopping list.");
               },
               label: Text("Remove from list"),
               icon: Icon(

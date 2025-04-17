@@ -1,23 +1,21 @@
 import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
+import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/ingredient_list_view.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/servings_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RecipeDetailsIngredientsSection extends StatefulWidget {
   const RecipeDetailsIngredientsSection({
     super.key,
     required this.recipe,
-    required this.allShoppingLists,
-    required this.addShoppingListFunc,
   });
 
   final Recipe recipe;
-
-  final List<ShoppingList> allShoppingLists;
-  final Function addShoppingListFunc;
 
   @override
   State<RecipeDetailsIngredientsSection> createState() => _RecipeDetailsIngredientsSectionState();
@@ -25,7 +23,6 @@ class RecipeDetailsIngredientsSection extends StatefulWidget {
 
 class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredientsSection> {
   late int servings;
-  bool isLoading = false;
 
   @override
   void initState() {
@@ -35,6 +32,9 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
 
   @override
   Widget build(BuildContext context) {
+    final shoppingListNotifier = context.read<ShoppingListNotifier>();
+    final recipeNotifier = context.watch<RecipeNotifier>();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -50,36 +50,38 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
             ),
             FilledButton(
               onPressed: () {
-                if (widget.allShoppingLists.any((shoppingList) => shoppingList.id == widget.recipe.id)) {
+                if (widget.recipe.shoppingList.target != null) {
                   showCustomAlertBanner(
                     context,
                     Colors.red,
                     "Recipe is already on the shopping list.",
                   );
-                } else {
-                  final newShoppingList = ShoppingList(
-                    title: widget.recipe.title,
-                    imgUrl: widget.recipe.images["titleImg"],
-                    servings: servings,
+                  return;
+                }
+
+                final newShoppingList = ShoppingList(
+                  title: widget.recipe.title,
+                  imgUrl: widget.recipe.images["titleImg"],
+                  servings: servings,
+                );
+
+                newShoppingList.shoppingItems.addAll(widget.recipe.ingredients);
+
+                newShoppingList.recipe.target = widget.recipe;
+                shoppingListNotifier.addShoppingList(newShoppingList);
+
+                widget.recipe.shoppingList.target = newShoppingList;
+                recipeNotifier.updateRecipe(widget.recipe, widget.recipe);
+
+                print("Saved recipe.shoppingList.id: ${widget.recipe.shoppingList.target?.id}");
+                print("Saved shoppingList.recipe.id: ${newShoppingList.recipe.target?.id}");
+
+                if (context.mounted) {
+                  showCustomAlertBanner(
+                    context,
+                    Theme.of(context).primaryColor,
+                    "Ingredients added to shopping list!",
                   );
-
-                  newShoppingList.shoppingItems.addAll(widget.recipe.ingredients);
-
-                  setState(() {
-                    isLoading = true;
-                  });
-                  widget.addShoppingListFunc(newShoppingList);
-                  setState(() {
-                    isLoading = false;
-                  });
-
-                  if (context.mounted) {
-                    showCustomAlertBanner(
-                      context,
-                      Theme.of(context).primaryColor,
-                      "Ingredients added to shopping list!",
-                    );
-                  }
                 }
               },
               style: Theme.of(context).filledButtonTheme.style,
@@ -88,15 +90,10 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
           ],
         ),
         SizedBox(height: 15),
-        isLoading
-            ? Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Center(child: CircularProgressIndicator()),
-              )
-            : IngredientListView(
-                recipe: widget.recipe,
-                servings: servings,
-              )
+        IngredientListView(
+          recipe: widget.recipe,
+          servings: servings,
+        )
       ],
     );
   }

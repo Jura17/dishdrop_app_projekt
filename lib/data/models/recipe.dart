@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
+import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
+
+//
 class Recipe {
   @Id()
   int id = 0;
@@ -15,12 +18,13 @@ class Recipe {
   String notes;
   String difficulty;
   List<String> tags;
-  // Map<String, dynamic> images;
   String imagesJson;
   int prepTime;
   int cookingTime;
   int timesCooked = 0;
   bool isFavorite = false;
+
+  final ToOne<ShoppingList> shoppingList = ToOne<ShoppingList>();
 
   @Backlink()
   final ToMany<CookingDirection> directions = ToMany<CookingDirection>();

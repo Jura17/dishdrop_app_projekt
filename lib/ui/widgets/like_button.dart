@@ -41,7 +41,7 @@ class _LikeButtonState extends State<LikeButton> {
       child: GestureDetector(
         onTap: () {
           widget.recipe.toggleIsFavorite();
-          recipeNotifier.updateRecipe(widget.recipe);
+          recipeNotifier.updateRecipe(widget.recipe, widget.recipe);
         },
         child: Container(
           width: widget.width,

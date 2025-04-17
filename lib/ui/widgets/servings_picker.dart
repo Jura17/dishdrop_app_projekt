@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
+// TODO: remove callback, use notifier here as well
 class ServingsPicker extends StatefulWidget {
-  const ServingsPicker({super.key, required this.updateServingsFunc, required this.servings});
+  const ServingsPicker({
+    super.key,
+    required this.updateServingsFunc,
+    required this.servings,
+  });
 
   final Function updateServingsFunc;
   final int servings;

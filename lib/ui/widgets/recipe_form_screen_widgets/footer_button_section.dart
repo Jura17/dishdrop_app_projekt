@@ -44,7 +44,7 @@ class FooterButtonSection extends StatelessWidget {
               if (isEditingRecipe) {
                 // UPDATE NEW RECIPE
                 if (widget.recipe != null) {
-                  context.read<RecipeNotifier>().updateRecipe(newRecipe);
+                  context.read<RecipeNotifier>().updateRecipe(widget.recipe!, newRecipe);
                 } else {
                   return;
                 }
@@ -71,7 +71,7 @@ class FooterButtonSection extends StatelessWidget {
               if (isEditingRecipe) {
                 // UPDATE NEW RECIPE
                 if (widget.recipe != null) {
-                  context.read<RecipeNotifier>().updateRecipe(newRecipe);
+                  context.read<RecipeNotifier>().updateRecipe(widget.recipe!, newRecipe);
                 } else {
                   return;
                 }

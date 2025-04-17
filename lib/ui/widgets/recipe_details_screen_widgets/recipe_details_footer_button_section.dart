@@ -28,8 +28,7 @@ class _RecipeDetailsFooterButtonSectionState extends State<RecipeDetailsFooterBu
           icon: Icon(Icons.check),
           onPressed: () {
             widget.recipe.updateCounterTimesCooked();
-            context.read<RecipeNotifier>().updateRecipe(widget.recipe);
-            // widget.updateCounterTimesCooked();
+            context.read<RecipeNotifier>().updateRecipe(widget.recipe, widget.recipe);
           },
           label: Text("I'm done cooking!"),
         ),
