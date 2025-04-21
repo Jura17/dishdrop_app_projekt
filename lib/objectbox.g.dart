@@ -104,7 +104,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(3, 5045249167998957265),
       name: 'Recipe',
-      lastPropertyId: const obx_int.IdUid(12, 8725120823485462304),
+      lastPropertyId: const obx_int.IdUid(13, 1445850548061494535),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -166,7 +166,14 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(12, 8725120823485462304),
             name: 'imagesJson',
             type: 9,
-            flags: 0)
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 1445850548061494535),
+            name: 'shoppingListId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(5, 8590506496505158829),
+            relationTarget: 'ShoppingList')
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[
@@ -259,7 +266,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
       lastEntityId: const obx_int.IdUid(4, 7533033837798158227),
-      lastIndexId: const obx_int.IdUid(4, 6094375734331033477),
+      lastIndexId: const obx_int.IdUid(5, 8590506496505158829),
       lastRelationId: const obx_int.IdUid(1, 3538138928397360569),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [],
@@ -361,7 +368,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         }),
     Recipe: obx_int.EntityDefinition<Recipe>(
         model: _entities[2],
-        toOneRelations: (Recipe object) => [],
+        toOneRelations: (Recipe object) => [object.shoppingList],
         toManyRelations: (Recipe object) => {
               obx_int.RelInfo<CookingDirection>.toOneBacklink(3, object.id,
                       (CookingDirection srcObject) => srcObject.recipe):
@@ -383,7 +390,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final tagsOffset = fbb.writeList(
               object.tags.map(fbb.writeString).toList(growable: false));
           final imagesJsonOffset = fbb.writeString(object.imagesJson);
-          fbb.startTable(13);
+          fbb.startTable(14);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, titleOffset);
           fbb.addOffset(2, categoryOffset);
@@ -396,6 +403,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addInt64(9, object.timesCooked);
           fbb.addBool(10, object.isFavorite);
           fbb.addOffset(11, imagesJsonOffset);
+          fbb.addInt64(12, object.shoppingList.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -440,6 +448,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
                 const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0)
             ..isFavorite =
                 const fb.BoolReader().vTableGet(buffer, rootOffset, 24, false);
+          object.shoppingList.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
+          object.shoppingList.attach(store);
           obx_int.InternalToManyAccess.setRelInfo<Recipe>(
               object.directions,
               store,
@@ -608,6 +619,10 @@ class Recipe_ {
   /// See [Recipe.imagesJson].
   static final imagesJson =
       obx.QueryStringProperty<Recipe>(_entities[2].properties[11]);
+
+  /// See [Recipe.shoppingList].
+  static final shoppingList =
+      obx.QueryRelationToOne<Recipe, ShoppingList>(_entities[2].properties[12]);
 
   /// see [Recipe.directions]
   static final directions = obx.QueryBacklinkToMany<CookingDirection, Recipe>(

@@ -87,7 +87,7 @@
     },
     {
       "id": "3:5045249167998957265",
-      "lastPropertyId": "12:8725120823485462304",
+      "lastPropertyId": "13:1445850548061494535",
       "name": "Recipe",
       "properties": [
         {
@@ -150,6 +150,14 @@
           "id": "12:8725120823485462304",
           "name": "imagesJson",
           "type": 9
+        },
+        {
+          "id": "13:1445850548061494535",
+          "name": "shoppingListId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "5:8590506496505158829",
+          "relationTarget": "ShoppingList"
         }
       ],
       "relations": []
@@ -204,7 +212,7 @@
     }
   ],
   "lastEntityId": "4:7533033837798158227",
-  "lastIndexId": "4:6094375734331033477",
+  "lastIndexId": "5:8590506496505158829",
   "lastRelationId": "1:3538138928397360569",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

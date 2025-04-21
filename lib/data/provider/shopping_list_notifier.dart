@@ -1,4 +1,5 @@
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
+import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:dishdrop_app_projekt/data/repositories/database_repository.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +17,13 @@ class ShoppingListNotifier extends ChangeNotifier {
     return _databaseRepository.getRecipeShoppingLists();
   }
 
-  void addShoppingList(ShoppingList newShoppingList) {
-    _databaseRepository.addShoppingList(newShoppingList);
+  void addShoppingList(ShoppingList newShoppingList, Recipe recipe) {
+    _databaseRepository.addShoppingList(newShoppingList, recipe);
     notifyListeners();
+  }
+
+  void attachRelationShoppingList(ShoppingList shoppingList) {
+    _databaseRepository.attachRelationShoppingList(shoppingList);
   }
 
   void removeShoppingList(ShoppingList shoppingList) {

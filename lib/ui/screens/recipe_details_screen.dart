@@ -20,9 +20,9 @@ import 'package:provider/provider.dart';
 class RecipeDetailsScreen extends StatefulWidget {
   const RecipeDetailsScreen({
     super.key,
-    required this.recipe,
+    required this.recipeId,
   });
-  final Recipe recipe;
+  final int recipeId;
 
   @override
   State<RecipeDetailsScreen> createState() => _RecipeDetailsScreenState();
@@ -35,13 +35,100 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
   bool _directionsEmpty = false;
   bool _ingredientsEmpty = false;
   List<ShoppingList> allShoppingLists = [];
+  Recipe? recipe;
+  double defaultSpacing = 20;
 
   @override
-  void initState() {
-    _directionsEmpty = widget.recipe.directions.isEmpty;
-    _ingredientsEmpty = widget.recipe.ingredients.isEmpty;
+  Widget build(BuildContext context) {
+    recipe = context.read<RecipeNotifier>().getRecipeById(widget.recipeId);
 
-    super.initState();
+    _directionsEmpty = recipe!.directions.isEmpty;
+    _ingredientsEmpty = recipe!.ingredients.isEmpty;
+    return Scaffold(
+      appBar: AppBar(
+        title: FittedBox(
+          child: Text(recipe!.title, style: Theme.of(context).textTheme.headlineLarge),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 16, bottom: 80, left: 16, right: 16),
+        child: ListView(
+          controller: _scrollController,
+          children: [
+            RecipeDetailsTitleImage(recipe: recipe!),
+            SizedBox(height: defaultSpacing),
+            QuickInfoSection(recipe: recipe!),
+            SizedBox(height: defaultSpacing),
+            if (recipe!.tags.isNotEmpty) TagsSection(recipe: recipe!),
+            SizedBox(height: defaultSpacing),
+            if (!_directionsEmpty || !_ingredientsEmpty)
+              Align(
+                alignment: Alignment.centerRight,
+                child: FilledButton(
+                  onPressed: () => _jumpToCookingDirections(),
+                  child: Text("Jump to recipe"),
+                ),
+              ),
+            SizedBox(height: defaultSpacing),
+            if (recipe!.description != "") DescriptionSection(recipe: recipe!),
+            SizedBox(height: defaultSpacing),
+            if (!_directionsEmpty)
+              DirectionsSection(
+                key: _directionsKey,
+                recipe: recipe!,
+              ),
+            SizedBox(height: defaultSpacing),
+            if (!_ingredientsEmpty)
+              RecipeDetailsIngredientsSection(
+                key: _ingredientsKey,
+                recipeId: widget.recipeId,
+              ),
+            SizedBox(height: 40),
+            Consumer<RecipeNotifier>(
+              builder: (context, recipeNotifier, child) {
+                return RichText(
+                  text: TextSpan(
+                    text: "You have cooked this dish ",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    children: [
+                      TextSpan(
+                        text: "${recipe!.timesCooked}",
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(text: " times so far.\nTap the button below when you're done!")
+                    ],
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 20),
+            RecipeDetailsFooterButtonSection(
+              recipe: recipe!,
+            ),
+            SizedBox(height: 130),
+          ],
+        ),
+      ),
+      floatingActionButton: Row(
+        mainAxisSize: MainAxisSize.min,
+        spacing: 10,
+        children: [
+          CustomFilledIconButton(
+            text: "Edit Recipe",
+            iconData: Icons.edit,
+            newScreen: RecipeFormScreen(
+              recipe: recipe,
+            ),
+          ),
+          CustomFilledIconButton(
+            text: "Add Recipe",
+            iconData: Icons.add_box_outlined,
+            newScreen: RecipeFormScreen(),
+          ),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
   }
 
   void _jumpToCookingDirections() {
@@ -59,96 +146,5 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             duration: Duration(seconds: 1), curve: Curves.easeInOut);
       }
     });
-  }
-
-  double defaultSpacing = 20;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: FittedBox(
-          child: Text(widget.recipe.title, style: Theme.of(context).textTheme.headlineLarge),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 16, bottom: 80, left: 16, right: 16),
-        child: ListView(
-          controller: _scrollController,
-          children: [
-            RecipeDetailsTitleImage(widget: widget),
-            SizedBox(height: defaultSpacing),
-            QuickInfoSection(widget: widget),
-            SizedBox(height: defaultSpacing),
-            if (widget.recipe.tags.isNotEmpty) TagsSection(recipe: widget.recipe),
-            SizedBox(height: defaultSpacing),
-            if (!_directionsEmpty || !_ingredientsEmpty)
-              Align(
-                alignment: Alignment.centerRight,
-                child: FilledButton(
-                  onPressed: () => _jumpToCookingDirections(),
-                  child: Text("Jump to recipe"),
-                ),
-              ),
-            SizedBox(height: defaultSpacing),
-            if (widget.recipe.description != "") DescriptionSection(recipe: widget.recipe),
-            SizedBox(height: defaultSpacing),
-            if (!_directionsEmpty)
-              DirectionsSection(
-                key: _directionsKey,
-                recipe: widget.recipe,
-              ),
-            SizedBox(height: defaultSpacing),
-            if (!_ingredientsEmpty)
-              RecipeDetailsIngredientsSection(
-                key: _ingredientsKey,
-                recipe: widget.recipe,
-              ),
-            SizedBox(height: 40),
-            Consumer<RecipeNotifier>(
-              builder: (context, recipeNotifier, child) {
-                return RichText(
-                  text: TextSpan(
-                    text: "You have cooked this dish ",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    children: [
-                      TextSpan(
-                        text: "${widget.recipe.timesCooked}",
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      TextSpan(text: " times so far.\nTap the button below when you're done!")
-                    ],
-                  ),
-                );
-              },
-            ),
-            SizedBox(height: 20),
-            RecipeDetailsFooterButtonSection(
-              recipe: widget.recipe,
-            ),
-            SizedBox(height: 130),
-          ],
-        ),
-      ),
-      floatingActionButton: Row(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 10,
-        children: [
-          CustomFilledIconButton(
-            text: "Edit Recipe",
-            iconData: Icons.edit,
-            newScreen: RecipeFormScreen(
-              recipe: widget.recipe,
-            ),
-          ),
-          CustomFilledIconButton(
-            text: "Add Recipe",
-            iconData: Icons.add_box_outlined,
-            newScreen: RecipeFormScreen(),
-          ),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    );
   }
 }

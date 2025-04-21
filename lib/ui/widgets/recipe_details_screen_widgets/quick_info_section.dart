@@ -1,15 +1,16 @@
+import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
-import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class QuickInfoSection extends StatelessWidget {
   const QuickInfoSection({
     super.key,
-    required this.widget,
+    required this.recipe,
   });
 
-  final RecipeDetailsScreen widget;
+  final Recipe recipe;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class QuickInfoSection extends StatelessWidget {
               size: 30,
             ),
             Text(
-              "${widget.recipe.prepTime + widget.recipe.cookingTime} min (Prep: ${widget.recipe.prepTime} min, Cook: ${widget.recipe.cookingTime} min)",
+              "${recipe.prepTime + recipe.cookingTime} min (Prep: ${recipe.prepTime} min, Cook: ${recipe.cookingTime} min)",
               style: Theme.of(context).textTheme.bodyLarge,
             )
           ],
@@ -37,7 +38,7 @@ class QuickInfoSection extends StatelessWidget {
               size: 30,
             ),
             Text(
-              widget.recipe.difficulty,
+              recipe.difficulty,
               style: Theme.of(context).textTheme.bodyLarge,
             )
           ],
@@ -57,7 +58,7 @@ class QuickInfoSection extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyLarge,
                     children: [
                       TextSpan(
-                        text: "${widget.recipe.timesCooked}",
+                        text: "${recipe.timesCooked}",
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       TextSpan(text: " times")

@@ -13,10 +13,8 @@ class ShoppingList {
   String imgUrl;
   int servings;
 
-  final ToMany<ListItem> shoppingItems = ToMany<ListItem>();
-
-  @Backlink()
   final ToOne<Recipe> recipe = ToOne<Recipe>();
+  final ToMany<ListItem> shoppingItems = ToMany<ListItem>();
 
   ShoppingList({
     this.id = 0,

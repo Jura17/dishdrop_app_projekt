@@ -1,4 +1,5 @@
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
+import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:dishdrop_app_projekt/data/repositories/database_repository.dart';
 
@@ -8,7 +9,8 @@ class ShoppingListController {
 
   ShoppingList? getAllPurposeShoppingList() => _databaseRepository.getAllPurposeShoppingList();
   List<ShoppingList> getRecipeShoppingLists() => _databaseRepository.getRecipeShoppingLists();
-  void addShoppingList(ShoppingList newShoppingList) => _databaseRepository.addShoppingList(newShoppingList);
+  void addShoppingList(ShoppingList newShoppingList, Recipe recipe) =>
+      _databaseRepository.addShoppingList(newShoppingList, recipe);
   void removeShoppingList(ShoppingList shoppingList) => _databaseRepository.removeShoppingList(shoppingList);
   void addToAllPurposeShoppingList(ListItem listItem) => _databaseRepository.addToAllPurposeShoppingList(listItem);
   void updateShoppingList(ShoppingList oldShoppingList, ShoppingList newShoppingList) =>

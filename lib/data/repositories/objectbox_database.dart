@@ -7,14 +7,33 @@ import 'package:dishdrop_app_projekt/objectbox.g.dart';
 class ObjectboxDatabase implements DatabaseRepository {
   final Box<Recipe> recipeBox;
   final Box<ShoppingList> shoppingListBox;
+  final Store store;
 
-  ObjectboxDatabase(Store store)
+  ObjectboxDatabase(this.store)
       : recipeBox = store.box<Recipe>(),
         shoppingListBox = store.box<ShoppingList>();
 
   @override
   void addRecipe(Recipe newRecipe) {
     recipeBox.put(newRecipe);
+  }
+
+  @override
+  Recipe? getRecipeById(int id) {
+    final recipe = recipeBox.get(id);
+    return recipe;
+  }
+
+  @override
+  void assignShoppingListToRecipe(Recipe recipe, ShoppingList shoppingList) {
+    recipe.shoppingList.attach(store);
+    shoppingList.recipe.attach(store);
+
+    recipe.shoppingList.target = shoppingList;
+    shoppingList.recipe.target = recipe;
+
+    shoppingListBox.put(shoppingList);
+    recipeBox.put(recipe);
   }
 
   @override
@@ -34,8 +53,17 @@ class ObjectboxDatabase implements DatabaseRepository {
   }
 
   @override
-  void addShoppingList(ShoppingList newShoppingList) {
+  void addShoppingList(ShoppingList newShoppingList, Recipe recipe) {
+    newShoppingList.recipe.target = recipe;
     shoppingListBox.put(newShoppingList);
+
+    recipe.shoppingList.target = newShoppingList;
+    recipeBox.put(recipe);
+  }
+
+  @override
+  void attachRelationShoppingList(ShoppingList shoppingList) {
+    shoppingList.recipe.attach(store);
   }
 
   @override

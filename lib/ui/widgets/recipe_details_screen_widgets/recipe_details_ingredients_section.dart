@@ -2,7 +2,6 @@ import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
-import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/ingredient_list_view.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/servings_picker.dart';
@@ -12,10 +11,10 @@ import 'package:provider/provider.dart';
 class RecipeDetailsIngredientsSection extends StatefulWidget {
   const RecipeDetailsIngredientsSection({
     super.key,
-    required this.recipe,
+    required this.recipeId,
   });
 
-  final Recipe recipe;
+  final int recipeId;
 
   @override
   State<RecipeDetailsIngredientsSection> createState() => _RecipeDetailsIngredientsSectionState();
@@ -32,8 +31,8 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
 
   @override
   Widget build(BuildContext context) {
-    final shoppingListNotifier = context.read<ShoppingListNotifier>();
     final recipeNotifier = context.watch<RecipeNotifier>();
+    Recipe? recipe = recipeNotifier.getRecipeById(widget.recipeId);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +49,7 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
             ),
             FilledButton(
               onPressed: () {
-                if (widget.recipe.shoppingList.target != null) {
+                if (recipe!.shoppingList.targetId != 0) {
                   showCustomAlertBanner(
                     context,
                     Colors.red,
@@ -60,21 +59,13 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
                 }
 
                 final newShoppingList = ShoppingList(
-                  title: widget.recipe.title,
-                  imgUrl: widget.recipe.images["titleImg"],
+                  title: recipe.title,
+                  imgUrl: recipe.images["titleImg"],
                   servings: servings,
                 );
+                newShoppingList.shoppingItems.addAll(recipe.ingredients);
 
-                newShoppingList.shoppingItems.addAll(widget.recipe.ingredients);
-
-                newShoppingList.recipe.target = widget.recipe;
-                shoppingListNotifier.addShoppingList(newShoppingList);
-
-                widget.recipe.shoppingList.target = newShoppingList;
-                recipeNotifier.updateRecipe(widget.recipe, widget.recipe);
-
-                print("Saved recipe.shoppingList.id: ${widget.recipe.shoppingList.target?.id}");
-                print("Saved shoppingList.recipe.id: ${newShoppingList.recipe.target?.id}");
+                recipeNotifier.assignShoppingListToRecipe(recipe, newShoppingList);
 
                 if (context.mounted) {
                   showCustomAlertBanner(
@@ -85,13 +76,13 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
                 }
               },
               style: Theme.of(context).filledButtonTheme.style,
-              child: Text("Add to shoppings list"),
+              child: Text("Add to shopping list"),
             ),
           ],
         ),
         SizedBox(height: 15),
         IngredientListView(
-          recipe: widget.recipe,
+          recipe: recipe!,
           servings: servings,
         )
       ],

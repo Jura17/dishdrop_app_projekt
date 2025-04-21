@@ -106,7 +106,7 @@ class RecommendationCardInfoSection extends StatelessWidget {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (BuildContext context) => RecipeDetailsScreen(
-                            recipe: recipe,
+                            recipeId: recipe.id,
                           ),
                         ),
                       );

@@ -16,7 +16,7 @@ class ObjectBox {
     shoppingListBox = Box<ShoppingList>(store);
 
     // Use to fill database with mock data:
-    // if (recipeBox.isEmpty()) recipeBox.putMany(recipeData);
+    if (recipeBox.isEmpty()) recipeBox.putMany(recipeData);
 
     if (shoppingListBox.isEmpty()) {
       shoppingListBox.put(

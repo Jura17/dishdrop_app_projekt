@@ -42,7 +42,7 @@ class _RecipesGridViewState extends State<RecipesGridView> {
                 mainAxisSpacing: 16,
                 children: [
                   ...filteredRecipes.map(
-                    (recipe) => RecipeCard(recipe: recipe),
+                    (recipe) => RecipeCard(recipeId: recipe.id),
                   )
                 ]),
           ),

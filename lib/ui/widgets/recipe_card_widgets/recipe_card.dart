@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
-import 'package:dishdrop_app_projekt/data/models/recipe.dart';
+
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
@@ -9,14 +10,15 @@ import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_card_widgets/recipe_card_info_box.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RecipeCard extends StatefulWidget {
   const RecipeCard({
     super.key,
-    required this.recipe,
+    required this.recipeId,
   });
 
-  final Recipe recipe;
+  final int recipeId;
 
   @override
   State<RecipeCard> createState() => _RecipeCardState();
@@ -25,7 +27,10 @@ class RecipeCard extends StatefulWidget {
 class _RecipeCardState extends State<RecipeCard> {
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> images = jsonDecode(widget.recipe.imagesJson);
+    final recipeNotifier = context.read<RecipeNotifier>();
+    final recipe = recipeNotifier.getRecipeById(widget.recipeId);
+
+    Map<String, dynamic> images = jsonDecode(recipe!.imagesJson);
     Widget imageWidget;
     if (images["titleImg"].contains("http")) {
       imageWidget = NetworkTitleImg(imgPath: images["titleImg"]);
@@ -40,7 +45,7 @@ class _RecipeCardState extends State<RecipeCard> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => RecipeDetailsScreen(
-              recipe: widget.recipe,
+              recipeId: widget.recipeId,
             ),
           ),
         );
@@ -69,12 +74,12 @@ class _RecipeCardState extends State<RecipeCard> {
                         right: 10,
                         width: 40,
                         height: 40,
-                        recipe: widget.recipe,
+                        recipe: recipe,
                       ),
                     ],
                   ),
                 ),
-                RecipeCardInfoBox(recipe: widget.recipe)
+                RecipeCardInfoBox(recipe: recipe)
               ],
             ),
           ),
