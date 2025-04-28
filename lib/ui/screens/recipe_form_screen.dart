@@ -226,7 +226,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
                         SizedBox(height: 10),
                         FooterButtonSection(
                           complexInputValues: complexInputValues,
-                          recipeId: widget.recipe.id,
+                          widget: widget,
                           allTextFormCtrl: allTextControllers,
                           formKey: formKey,
                           checkNoneTextFieldValuesFunc: checkNoneTextfieldValues,

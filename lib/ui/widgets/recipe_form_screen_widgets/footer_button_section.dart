@@ -87,7 +87,7 @@ class FooterButtonSection extends StatelessWidget {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (BuildContext context) => RecipeDetailsScreen(
-                      recipe: newRecipe,
+                      recipeId: isEditingRecipe && widget.recipe != null ? widget.recipe!.id : newRecipe.id,
                     ),
                   ),
                 );
