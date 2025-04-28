@@ -23,6 +23,7 @@ class RecipeNotifier extends ChangeNotifier {
 
   void assignShoppingListToRecipe(Recipe recipe, ShoppingList shoppingList) {
     _databaseRepository.assignShoppingListToRecipe(recipe, shoppingList);
+    notifyListeners();
   }
 
   void removeRecipe(Recipe recipe) {
