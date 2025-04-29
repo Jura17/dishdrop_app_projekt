@@ -116,14 +116,14 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
           CustomFilledIconButton(
             text: "Edit Recipe",
             iconData: Icons.edit,
-            newScreen: RecipeFormScreen(
+            newScreen: RecipeFormWrapper(
               recipe: recipe,
             ),
           ),
           CustomFilledIconButton(
             text: "Add Recipe",
             iconData: Icons.add_box_outlined,
-            newScreen: RecipeFormScreen(),
+            newScreen: RecipeFormWrapper(),
           ),
         ],
       ),

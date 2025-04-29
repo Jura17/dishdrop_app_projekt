@@ -1,16 +1,9 @@
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CategoryDropdownMenu extends StatefulWidget {
-  const CategoryDropdownMenu({
-    super.key,
-    required this.categoryCtrl,
-    required this.showErrorFunc,
-    required this.getErrorStateFunc,
-  });
-
-  final TextEditingController categoryCtrl;
-  final Function showErrorFunc;
-  final Function getErrorStateFunc;
+  const CategoryDropdownMenu({super.key});
 
   @override
   State<CategoryDropdownMenu> createState() => _CategoryDropdownMenuState();
@@ -19,17 +12,19 @@ class CategoryDropdownMenu extends StatefulWidget {
 class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
   @override
   Widget build(BuildContext context) {
+    final recipeFormProvider = context.watch<RecipeFormProvider>();
+    TextEditingController? categoryCtrl = recipeFormProvider.allTextControllers['categoryCtrl'];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DropdownMenu(
-          initialSelection: widget.categoryCtrl.text,
+          initialSelection: categoryCtrl!.text,
           onSelected: (value) {
-            setState(() {
-              widget.showErrorFunc(false);
-            });
+            recipeFormProvider.updateCategoryMenuError(false);
+            // setState(() {});
           },
-          controller: widget.categoryCtrl,
+          controller: categoryCtrl,
           inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(),
           ),
@@ -45,7 +40,7 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
           hintText: "Select category",
         ),
         SizedBox(height: 10),
-        if (widget.getErrorStateFunc())
+        if (recipeFormProvider.getCategoryErrorState())
           Text(
             "Please select a category",
             style: TextStyle(color: Colors.red),

@@ -63,7 +63,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       floatingActionButton: CustomFilledIconButton(
         text: "Add Recipe",
         iconData: Icons.add_box_outlined,
-        newScreen: RecipeFormScreen(),
+        newScreen: RecipeFormWrapper(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

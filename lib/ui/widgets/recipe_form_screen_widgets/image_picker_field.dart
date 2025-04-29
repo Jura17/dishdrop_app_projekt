@@ -14,13 +14,11 @@ class ImagePickerField extends StatefulWidget {
     required this.updateImagesFunc,
     required this.emptyImgPickerFunc,
     required this.imagePath,
-    // required this.showError,
   });
 
   final Function updateImagesFunc;
   final Function emptyImgPickerFunc;
   String? imagePath;
-  // bool showError;
 
   @override
   State<ImagePickerField> createState() => _ImagePickerFieldState();
