@@ -27,11 +27,12 @@ class _CookingDirectionsListViewState extends State<CookingDirectionsListView> {
           counter++;
 
           return Container(
-            key: Key(cookingDirection.id),
+            key: Key(cookingDirection.tempID),
             child: CookingDirectionRowDynamic(
-                cookingDirection: cookingDirection,
-                removeFromCookingDirectionsListFunc: widget.removeFromCookingDirectionsListFunc,
-                rowIndex: counter),
+              cookingDirection: cookingDirection,
+              removeFromCookingDirectionsListFunc: widget.removeFromCookingDirectionsListFunc,
+              rowIndex: counter,
+            ),
           );
         },
       ).toList(),

@@ -1,13 +1,24 @@
+import 'package:dishdrop_app_projekt/data/models/recipe.dart';
+import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
+import 'package:flutter/widgets.dart';
+import 'package:objectbox/objectbox.dart';
+
+@Entity()
 class ListItem {
-  String id;
+  @Id()
+  int id = 0;
   String description;
   double? amount;
   String? unit;
+  final String tempID = UniqueKey().toString();
   bool isShoppingListItem;
   bool isDone;
 
+  final ToOne<Recipe> recipe = ToOne<Recipe>();
+  final ToOne<ShoppingList> shoppingList = ToOne<ShoppingList>();
+
   ListItem({
-    required this.id,
+    this.id = 0,
     required this.description,
     this.amount,
     this.unit,

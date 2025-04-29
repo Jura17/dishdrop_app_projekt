@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ImagePickerField extends StatefulWidget {
   ImagePickerField({
@@ -76,16 +79,23 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
     final ImagePicker imagePicker = ImagePicker();
     final XFile? selectedImage = await imagePicker.pickImage(source: ImageSource.gallery);
     if (selectedImage != null) {
+      widget.imagePath = (await saveImagePermanently(selectedImage)).path;
+
       setState(() {
-        widget.imagePath = selectedImage.path;
         if (widget.imagePath == null) {
           widget.updateImagesFunc("titleImg", "");
         } else {
           widget.updateImagesFunc("titleImg", widget.imagePath);
-          // widget.showError = false;
         }
       });
     }
+  }
+
+  Future<File> saveImagePermanently(XFile image) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final name = image.name; // Keep original name
+    final imagePath = File('${directory.path}/$name');
+    return File(image.path).copy(imagePath.path);
   }
 
   void chooseImageType() {

@@ -1,22 +1,17 @@
+import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
-import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RecipeDetailsFooterButtonSection extends StatefulWidget {
   const RecipeDetailsFooterButtonSection({
     super.key,
-    required this.recipeController,
     required this.recipe,
-    required this.updateCounterTimesCooked,
-    required this.removeRecipeFunc,
-    required this.toggleLoadingFunc,
   });
 
-  final RecipeController recipeController;
   final Recipe recipe;
-  final Function updateCounterTimesCooked;
-  final Function removeRecipeFunc;
-  final Function toggleLoadingFunc;
 
   @override
   State<RecipeDetailsFooterButtonSection> createState() => _RecipeDetailsFooterButtonSectionState();
@@ -32,16 +27,17 @@ class _RecipeDetailsFooterButtonSectionState extends State<RecipeDetailsFooterBu
         FilledButton.icon(
           icon: Icon(Icons.check),
           onPressed: () {
-            widget.updateCounterTimesCooked();
+            widget.recipe.updateCounterTimesCooked();
+            context.read<RecipeNotifier>().updateRecipe(widget.recipe, widget.recipe);
           },
           label: Text("I'm done cooking!"),
         ),
         TextButton.icon(
           style: TextButton.styleFrom(foregroundColor: Colors.red, iconColor: Colors.red),
-          onPressed: () async {
-            widget.toggleLoadingFunc(true);
-            await widget.removeRecipeFunc();
-            widget.toggleLoadingFunc(false);
+          onPressed: () {
+            context.read<RecipeNotifier>().removeRecipe(widget.recipe);
+            showCustomAlertBanner(context, Colors.red, "Recipe removed from cookbook.");
+            if (mounted) Navigator.of(context).pop();
           },
           label: Text("Remove recipe"),
           icon: Icon(

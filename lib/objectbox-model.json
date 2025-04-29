@@ -1,0 +1,227 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:2190205047480943700",
+      "lastPropertyId": "3:980492167492147601",
+      "name": "CookingDirection",
+      "properties": [
+        {
+          "id": "1:3719811621675901932",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3979202709868519616",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "3:980492167492147601",
+          "name": "recipeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:7035789148379343922",
+          "relationTarget": "Recipe"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:3002361432043426961",
+      "lastPropertyId": "8:9152038999943788851",
+      "name": "ListItem",
+      "properties": [
+        {
+          "id": "1:6739255297084603572",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7717212713025709536",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "3:4745959852002312378",
+          "name": "amount",
+          "type": 8
+        },
+        {
+          "id": "4:9163234026841476207",
+          "name": "unit",
+          "type": 9
+        },
+        {
+          "id": "5:3666353682194286152",
+          "name": "isShoppingListItem",
+          "type": 1
+        },
+        {
+          "id": "6:855689387494860640",
+          "name": "isDone",
+          "type": 1
+        },
+        {
+          "id": "7:2205038186499789442",
+          "name": "recipeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:875165265614975457",
+          "relationTarget": "Recipe"
+        },
+        {
+          "id": "8:9152038999943788851",
+          "name": "shoppingListId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "3:2686129353925817240",
+          "relationTarget": "ShoppingList"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:5045249167998957265",
+      "lastPropertyId": "13:1445850548061494535",
+      "name": "Recipe",
+      "properties": [
+        {
+          "id": "1:1703286941209945594",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8889925339368430031",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:8919117192241497382",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "4:7840465691262891744",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "5:5344171896337504129",
+          "name": "notes",
+          "type": 9
+        },
+        {
+          "id": "6:8630063741576306041",
+          "name": "difficulty",
+          "type": 9
+        },
+        {
+          "id": "7:1557316384655536750",
+          "name": "tags",
+          "type": 30
+        },
+        {
+          "id": "8:3131658225316666820",
+          "name": "prepTime",
+          "type": 6
+        },
+        {
+          "id": "9:1515690854452931695",
+          "name": "cookingTime",
+          "type": 6
+        },
+        {
+          "id": "10:3617753777298233744",
+          "name": "timesCooked",
+          "type": 6
+        },
+        {
+          "id": "11:5804423613136582290",
+          "name": "isFavorite",
+          "type": 1
+        },
+        {
+          "id": "12:8725120823485462304",
+          "name": "imagesJson",
+          "type": 9
+        },
+        {
+          "id": "13:1445850548061494535",
+          "name": "shoppingListId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "5:8590506496505158829",
+          "relationTarget": "ShoppingList"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:7533033837798158227",
+      "lastPropertyId": "7:3087004328500961613",
+      "name": "ShoppingList",
+      "properties": [
+        {
+          "id": "1:6587533261247469924",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "3:5661293699342870787",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "4:73313408001890316",
+          "name": "imgUrl",
+          "type": 9
+        },
+        {
+          "id": "5:3245446223916046484",
+          "name": "servings",
+          "type": 6
+        },
+        {
+          "id": "6:108732539867773916",
+          "name": "recipeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "4:6094375734331033477",
+          "relationTarget": "Recipe"
+        },
+        {
+          "id": "7:3087004328500961613",
+          "name": "isAllPurposeList",
+          "type": 1
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:3538138928397360569",
+          "name": "shoppingItems",
+          "targetId": "2:3002361432043426961"
+        }
+      ]
+    }
+  ],
+  "lastEntityId": "4:7533033837798158227",
+  "lastIndexId": "5:8590506496505158829",
+  "lastRelationId": "1:3538138928397360569",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    7413146980146514660
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}

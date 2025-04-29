@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
+import 'package:provider/provider.dart';
 
 class FooterButtonSection extends StatelessWidget {
   const FooterButtonSection({
@@ -39,13 +42,15 @@ class FooterButtonSection extends StatelessWidget {
               Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl, isEditingRecipe);
 
               if (isEditingRecipe) {
+                // UPDATE NEW RECIPE
                 if (widget.recipe != null) {
-                  await widget.recipeController.updateRecipeFuture(widget.recipe!, newRecipe);
+                  context.read<RecipeNotifier>().updateRecipe(widget.recipe!, newRecipe);
                 } else {
                   return;
                 }
               } else {
-                await widget.recipeController.addRecipeFuture(newRecipe);
+                // CREATE NEW RECIPE
+                context.read<RecipeNotifier>().addRecipe(newRecipe);
               }
 
               resetAllCtrl(allTextFormCtrl, null);
@@ -64,13 +69,15 @@ class FooterButtonSection extends StatelessWidget {
             if (formKey.currentState!.validate() && checkNoneTextFieldValuesFunc(allTextFormCtrl, complexInputValues)) {
               Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl, isEditingRecipe);
               if (isEditingRecipe) {
+                // UPDATE NEW RECIPE
                 if (widget.recipe != null) {
-                  await widget.recipeController.updateRecipeFuture(widget.recipe!, newRecipe);
+                  context.read<RecipeNotifier>().updateRecipe(widget.recipe!, newRecipe);
                 } else {
                   return;
                 }
               } else {
-                await widget.recipeController.addRecipeFuture(newRecipe);
+                // CREATE NEW RECIPE
+                context.read<RecipeNotifier>().addRecipe(newRecipe);
               }
 
               resetAllCtrl(allTextFormCtrl, null);
@@ -80,9 +87,7 @@ class FooterButtonSection extends StatelessWidget {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (BuildContext context) => RecipeDetailsScreen(
-                      recipe: newRecipe,
-                      recipeController: widget.recipeController,
-                      shoppingListController: widget.shoppingListController,
+                      recipeId: isEditingRecipe && widget.recipe != null ? widget.recipe!.id : newRecipe.id,
                     ),
                   ),
                 );
@@ -112,22 +117,22 @@ class FooterButtonSection extends StatelessWidget {
     final List<CookingDirection> directions = complexInputValues["directions"] as List<CookingDirection>;
     final List<ListItem> ingredients = complexInputValues["ingredients"] as List<ListItem>;
 
-    final recipeID = isEditingRecipe ? widget.recipe?.id : Uuid().v4();
+    // final recipeID = isEditingRecipe ? widget.recipe?.id : Uuid().v4();
 
     Recipe newRecipe = Recipe(
-      id: recipeID as String,
       title: title,
       category: category,
       description: description,
       notes: notes,
       difficulty: difficulty,
       tags: tags,
-      images: imagesInput,
+      imagesJson: jsonEncode(imagesInput),
       prepTime: prepTime,
       cookingTime: cookingTime,
-      directions: directions,
-      ingredients: ingredients,
     );
+
+    newRecipe.directions.addAll(directions);
+    newRecipe.ingredients.addAll(ingredients);
 
     return newRecipe;
   }

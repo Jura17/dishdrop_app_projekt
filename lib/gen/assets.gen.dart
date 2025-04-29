@@ -9,6 +9,16 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsIconGen {
+  const $AssetsIconGen();
+
+  /// File path: assets/icon/icon.png
+  AssetGenImage get icon => const AssetGenImage('assets/icon/icon.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [icon];
+}
+
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
@@ -34,6 +44,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/pizza.jpg
   AssetGenImage get pizza => const AssetGenImage('assets/images/pizza.jpg');
 
+  /// File path: assets/images/placeholder_recipe_img.jpg
+  AssetGenImage get placeholderRecipeImg =>
+      const AssetGenImage('assets/images/placeholder_recipe_img.jpg');
+
   /// File path: assets/images/salat_category_img.jpg
   AssetGenImage get salatCategoryImg =>
       const AssetGenImage('assets/images/salat_category_img.jpg');
@@ -44,6 +58,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/shiitake.jpg
   AssetGenImage get shiitake =>
       const AssetGenImage('assets/images/shiitake.jpg');
+
+  /// File path: assets/images/shopping_items.webp
+  AssetGenImage get shoppingItems =>
+      const AssetGenImage('assets/images/shopping_items.webp');
 
   /// File path: assets/images/side_dishes_category_img.jpg
   AssetGenImage get sideDishesCategoryImg =>
@@ -65,9 +83,11 @@ class $AssetsImagesGen {
         pasta,
         pistacciopastapesto,
         pizza,
+        placeholderRecipeImg,
         salatCategoryImg,
         salmon,
         shiitake,
+        shoppingItems,
         sideDishesCategoryImg,
         sweetStuffCategoryImg,
         tantanmenRamen
@@ -77,6 +97,7 @@ class $AssetsImagesGen {
 class Assets {
   Assets._();
 
+  static const $AssetsIconGen icon = $AssetsIconGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
 }
 

@@ -1,20 +1,27 @@
+import 'package:dishdrop_app_projekt/data/models/recipe.dart';
+import 'package:objectbox/objectbox.dart';
+
 import 'list_item.dart';
 
+@Entity()
 class ShoppingList {
-  String id;
-  bool isGeneralPurposeList;
+  @Id()
+  int id = 0;
+
+  bool isAllPurposeList;
   String title;
   String imgUrl;
   int servings;
-  List<ListItem> shoppingItems = [];
+
+  final ToOne<Recipe> recipe = ToOne<Recipe>();
+  final ToMany<ListItem> shoppingItems = ToMany<ListItem>();
 
   ShoppingList({
-    required this.id,
-    this.isGeneralPurposeList = false,
+    this.id = 0,
+    this.isAllPurposeList = false,
     required this.title,
     required this.imgUrl,
     this.servings = 1,
-    required this.shoppingItems,
   });
 
   void addShoppingItem(ListItem newShoppingItem) {
@@ -27,5 +34,9 @@ class ShoppingList {
 
   void removeFromShoppingList(ListItem listItem) {
     shoppingItems.remove(listItem);
+  }
+
+  void updateServings(newAmount) {
+    servings = newAmount;
   }
 }

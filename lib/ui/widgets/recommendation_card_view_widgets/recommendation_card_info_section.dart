@@ -1,26 +1,24 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/core/utils/get_random_recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
-import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
-import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
+
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RecommendationCardInfoSection extends StatelessWidget {
   const RecommendationCardInfoSection({
     super.key,
     required this.recipe,
-    required this.getRandomRecipeFunc,
-    required this.recipeController,
-    required this.shoppingListController,
   });
 
   final Recipe recipe;
-  final Function getRandomRecipeFunc;
-  final RecipeController recipeController;
-  final ShoppingListController shoppingListController;
 
   @override
   Widget build(BuildContext context) {
+    final List<Recipe> allRecipes = context.read<RecipeNotifier>().allRecipes;
+
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
@@ -33,10 +31,7 @@ class RecommendationCardInfoSection extends StatelessWidget {
             children: [
               Text(
                 recipe.title,
-                style: Theme.of(context)
-                    .textTheme
-                    .displaySmall
-                    ?.copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 5),
@@ -57,10 +52,7 @@ class RecommendationCardInfoSection extends StatelessWidget {
                   ),
                   Text(
                     "${recipe.prepTime + recipe.cookingTime} min",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(fontSize: 20),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 20),
                   )
                 ],
               ),
@@ -74,10 +66,7 @@ class RecommendationCardInfoSection extends StatelessWidget {
                   ),
                   Text(
                     recipe.difficulty,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(fontSize: 20),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 20),
                   )
                 ],
               ),
@@ -91,10 +80,7 @@ class RecommendationCardInfoSection extends StatelessWidget {
                   ),
                   Text(
                     "Cooked ${recipe.timesCooked} times",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(fontSize: 20),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 20),
                   )
                 ],
               ),
@@ -106,7 +92,7 @@ class RecommendationCardInfoSection extends StatelessWidget {
                   FilledButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-                      getRandomRecipeFunc(context);
+                      getRandomRecipe(context, allRecipes);
                     },
                     style: FilledButton.styleFrom(
                       side: BorderSide(color: AppColors.primary),
@@ -117,14 +103,11 @@ class RecommendationCardInfoSection extends StatelessWidget {
                   ),
                   FilledButton(
                     onPressed: () {
-                      Navigator.of(context).push(
+                      Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              RecipeDetailsScreen(
-                                  recipe: recipe,
-                                  recipeController: recipeController,
-                                  shoppingListController:
-                                      shoppingListController),
+                          builder: (BuildContext context) => RecipeDetailsScreen(
+                            recipeId: recipe.id,
+                          ),
                         ),
                       );
                     },

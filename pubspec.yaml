@@ -15,6 +15,13 @@ dependencies:
   simple_tags: ^0.0.6
   shared_preferences: ^2.5.2
   uuid: ^4.5.1
+  objectbox: ^4.1.0
+  objectbox_generator: ^4.1.0
+  build_runner: ^2.4.15
+  path_provider: ^2.1.5
+  path: ^1.9.1
+  objectbox_flutter_libs: any
+  provider: ^6.1.4
 
 dev_dependencies:
   flutter_test:
@@ -24,6 +31,7 @@ dev_dependencies:
 flutter_gen:
   output: lib/gen/ # Optional (default: lib/gen/)
   line_length: 80 # Optional (default: 80)
+  
 
 flutter:
   uses-material-design: true

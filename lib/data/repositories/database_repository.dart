@@ -8,27 +8,31 @@ abstract class DatabaseRepository {
   // create
   void addRecipe(Recipe newRecipe);
 
+  void assignShoppingListToRecipe(Recipe recipe, ShoppingList shoppingList);
+
   // read
   List<Recipe> getAllRecipes();
+  Recipe? getRecipeById(int id);
 
   // delete
   void removeRecipe(Recipe recipe);
 
   // update
-  void updateRecipe(Recipe oldRecipe, Recipe newRecipe);
+  void updateRecipe(Recipe oldRecipe, Recipe recipe);
 
   // SHOPPING LIST:
   // create
-  void addShoppingList(ShoppingList newShoppingList);
+  void addShoppingList(ShoppingList newShoppingList, Recipe recipe);
+  void attachRelationShoppingList(ShoppingList shoppingList);
   void addToAllPurposeShoppingList(ListItem listItem);
 
   // read
-  List<ShoppingList> getAllShoppingLists();
+  List<ShoppingList> getRecipeShoppingLists();
+  ShoppingList? getAllPurposeShoppingList();
 
   // delete
   void removeShoppingList(ShoppingList shoppingList);
 
   // update
-  void updateShoppingList(
-      ShoppingList oldShoppingList, ShoppingList newShoppingList);
+  void updateShoppingList(ShoppingList oldShoppingList, ShoppingList newShoppingList);
 }

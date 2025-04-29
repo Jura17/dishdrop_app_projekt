@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
-import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
+import 'package:dishdrop_app_projekt/data/models/recipe.dart';
+
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
@@ -8,21 +11,22 @@ import 'package:flutter/material.dart';
 class RecipeDetailsTitleImage extends StatelessWidget {
   const RecipeDetailsTitleImage({
     super.key,
-    required this.widget,
+    required this.recipe,
   });
 
-  final RecipeDetailsScreen widget;
+  final Recipe recipe;
 
   @override
   Widget build(BuildContext context) {
     Widget imageWidget;
+    Map<String, dynamic> images = jsonDecode(recipe.imagesJson);
 
-    if (widget.recipe.images["titleImg"].contains("http")) {
-      imageWidget = NetworkTitleImg(imgPath: widget.recipe.images["titleImg"]);
-    } else if (widget.recipe.images["titleImg"].contains("assets/images/")) {
-      imageWidget = Image.asset(widget.recipe.images["titleImg"], fit: BoxFit.cover);
+    if (images["titleImg"].contains("http")) {
+      imageWidget = NetworkTitleImg(imgPath: images["titleImg"]);
+    } else if (recipe.images["titleImg"].contains("assets/images/")) {
+      imageWidget = Image.asset(images["titleImg"], fit: BoxFit.cover);
     } else {
-      imageWidget = FileTitleImg(imgPath: widget.recipe.images["titleImg"]);
+      imageWidget = FileTitleImg(imgPath: images["titleImg"]);
     }
 
     return Stack(
@@ -41,7 +45,7 @@ class RecipeDetailsTitleImage extends StatelessWidget {
           right: 20,
           width: 60,
           height: 60,
-          recipe: widget.recipe,
+          recipe: recipe,
         )
       ],
     );

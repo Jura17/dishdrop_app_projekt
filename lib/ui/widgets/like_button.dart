@@ -1,6 +1,8 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LikeButton extends StatefulWidget {
   const LikeButton(
@@ -29,6 +31,8 @@ class LikeButton extends StatefulWidget {
 class _LikeButtonState extends State<LikeButton> {
   @override
   Widget build(BuildContext context) {
+    final recipeNotifier = context.watch<RecipeNotifier>();
+
     return Positioned(
       top: widget.top,
       right: widget.right,
@@ -36,9 +40,8 @@ class _LikeButtonState extends State<LikeButton> {
       bottom: widget.bottom,
       child: GestureDetector(
         onTap: () {
-          setState(() {
-            widget.recipe.isFavorite = !widget.recipe.isFavorite;
-          });
+          widget.recipe.toggleIsFavorite();
+          recipeNotifier.updateRecipe(widget.recipe, widget.recipe);
         },
         child: Container(
           width: widget.width,
@@ -49,9 +52,7 @@ class _LikeButtonState extends State<LikeButton> {
             border: Border.all(color: AppColors.lightGrey),
           ),
           child: Icon(
-            widget.recipe.isFavorite
-                ? Icons.favorite
-                : Icons.favorite_border_outlined,
+            widget.recipe.isFavorite ? Icons.favorite : Icons.favorite_border_outlined,
             color: Theme.of(context).primaryColor,
             size: widget.width * 0.625,
           ),
