@@ -4,47 +4,36 @@ import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
-import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
+
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FooterButtonSection extends StatelessWidget {
-  const FooterButtonSection({
-    super.key,
-    required this.complexInputValues,
-    required this.widget,
-    required this.allTextFormCtrl,
-    required this.formKey,
-    required this.checkNoneTextFieldValuesFunc,
-    required this.resetAllCtrl,
-    required this.isEditingRecipe,
-  });
-
-  final Map<String, dynamic> complexInputValues;
-
-  final RecipeFormScreen widget;
-  final Map<String, TextEditingController> allTextFormCtrl;
-  final GlobalKey<FormState> formKey;
-  final Function checkNoneTextFieldValuesFunc;
-  final Function resetAllCtrl;
-  final bool isEditingRecipe;
+  const FooterButtonSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final recipeFormProvider = context.watch<RecipeFormProvider>();
+
     return Row(
       spacing: 10,
       children: [
         FilledButton(
           onPressed: () async {
-            if (formKey.currentState!.validate() && checkNoneTextFieldValuesFunc(allTextFormCtrl, complexInputValues)) {
-              Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl, isEditingRecipe);
+            if (recipeFormProvider.formKey.currentState!.validate() && recipeFormProvider.checkNoneTextfieldValues()) {
+              Recipe newRecipe = createRecipe(
+                recipeFormProvider.complexInputValues,
+                recipeFormProvider.allTextControllers,
+                recipeFormProvider.isEditingRecipe,
+              );
 
-              if (isEditingRecipe) {
+              if (recipeFormProvider.isEditingRecipe) {
                 // UPDATE NEW RECIPE
-                if (widget.recipe != null) {
-                  context.read<RecipeNotifier>().updateRecipe(widget.recipe!, newRecipe);
+                if (recipeFormProvider.recipe != null) {
+                  context.read<RecipeNotifier>().updateRecipe(recipeFormProvider.recipe!, newRecipe);
                 } else {
                   return;
                 }
@@ -53,25 +42,29 @@ class FooterButtonSection extends StatelessWidget {
                 context.read<RecipeNotifier>().addRecipe(newRecipe);
               }
 
-              resetAllCtrl(allTextFormCtrl, null);
+              recipeFormProvider.resetAllCtrl();
               if (context.mounted) {
-                showCustomAlertBanner(
-                    context, Colors.green, isEditingRecipe ? "Recipe was edited!" : "Recipe added to cookbook!");
+                showCustomAlertBanner(context, Colors.green,
+                    recipeFormProvider.isEditingRecipe ? "Recipe was edited!" : "Recipe added to cookbook!");
               }
             } else {
               showCustomAlertBanner(context, Colors.red, "Please make sure all fields are filled in correctly.");
             }
           },
-          child: Text(isEditingRecipe ? "Update recipe" : "Save recipe"),
+          child: Text(recipeFormProvider.isEditingRecipe ? "Update recipe" : "Save recipe"),
         ),
         FilledButton(
           onPressed: () async {
-            if (formKey.currentState!.validate() && checkNoneTextFieldValuesFunc(allTextFormCtrl, complexInputValues)) {
-              Recipe newRecipe = createRecipe(complexInputValues, allTextFormCtrl, isEditingRecipe);
-              if (isEditingRecipe) {
+            if (recipeFormProvider.formKey.currentState!.validate() && recipeFormProvider.checkNoneTextfieldValues()) {
+              Recipe newRecipe = createRecipe(
+                recipeFormProvider.complexInputValues,
+                recipeFormProvider.allTextControllers,
+                recipeFormProvider.isEditingRecipe,
+              );
+              if (recipeFormProvider.isEditingRecipe) {
                 // UPDATE NEW RECIPE
-                if (widget.recipe != null) {
-                  context.read<RecipeNotifier>().updateRecipe(widget.recipe!, newRecipe);
+                if (recipeFormProvider.recipe != null) {
+                  context.read<RecipeNotifier>().updateRecipe(recipeFormProvider.recipe!, newRecipe);
                 } else {
                   return;
                 }
@@ -80,14 +73,16 @@ class FooterButtonSection extends StatelessWidget {
                 context.read<RecipeNotifier>().addRecipe(newRecipe);
               }
 
-              resetAllCtrl(allTextFormCtrl, null);
+              recipeFormProvider.resetAllCtrl();
               if (context.mounted) {
-                showCustomAlertBanner(
-                    context, Colors.green, isEditingRecipe ? "Recipe was edited!" : "Recipe added to cookbook!");
+                showCustomAlertBanner(context, Colors.green,
+                    recipeFormProvider.isEditingRecipe ? "Recipe was edited!" : "Recipe added to cookbook!");
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (BuildContext context) => RecipeDetailsScreen(
-                      recipeId: isEditingRecipe && widget.recipe != null ? widget.recipe!.id : newRecipe.id,
+                      recipeId: recipeFormProvider.isEditingRecipe && recipeFormProvider.recipe != null
+                          ? recipeFormProvider.recipe!.id
+                          : newRecipe.id,
                     ),
                   ),
                 );
@@ -96,7 +91,7 @@ class FooterButtonSection extends StatelessWidget {
               showCustomAlertBanner(context, Colors.red, "Please make sure all fields are filled in correctly.");
             }
           },
-          child: Text(isEditingRecipe ? "Update and open" : "Save and open"),
+          child: Text(recipeFormProvider.isEditingRecipe ? "Update and open" : "Save and open"),
         )
       ],
     );

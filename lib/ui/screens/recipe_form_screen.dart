@@ -1,10 +1,17 @@
+<<<<<<< Updated upstream
 import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 
 import 'package:dishdrop_app_projekt/data/recipe_form_controller.dart';
 import 'package:dishdrop_app_projekt/data/repositories/shared_preferences_repository.dart';
+=======
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+>>>>>>> Stashed changes
 
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
+import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/category_dropdown_menu.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/cooking_time_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/description_text_form_field.dart';
@@ -21,8 +28,11 @@ import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/ingre
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/tags_list_view.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/tags_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/title_text_form_field.dart';
+<<<<<<< Updated upstream
 import 'package:flutter/material.dart';
 import 'dart:convert';
+=======
+>>>>>>> Stashed changes
 
 class RecipeFormScreen extends StatefulWidget {
   const RecipeFormScreen({
@@ -40,6 +50,7 @@ class RecipeFormScreen extends StatefulWidget {
 }
 
 class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBindingObserver {
+<<<<<<< Updated upstream
   final formKey = GlobalKey<FormState>();
   RecipeFormController recipeFormController = RecipeFormController();
   SharedPreferencesRepository sharedPreferencesRepository = SharedPreferencesRepository();
@@ -83,10 +94,15 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
     "ingredients": <ListItem>[],
     "directions": <CookingDirection>[]
   };
+=======
+  late RecipeFormProvider _recipeFormProvider;
+  bool _didInit = false;
+>>>>>>> Stashed changes
 
   @override
   void initState() {
     super.initState();
+<<<<<<< Updated upstream
     // allRecipes = widget.allRecipes;
     if (widget.recipe != null) {
       isEditingRecipe = true;
@@ -106,20 +122,45 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
 
     // WidgetsBinding.instance.addObserver(this);
     setState(() {});
+=======
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!_didInit) {
+      _recipeFormProvider = context.read<RecipeFormProvider>();
+      _recipeFormProvider.init(widget.recipe);
+      _didInit = true;
+
+      if (!_recipeFormProvider.isEditingRecipe && !_recipeFormProvider.draftAvailable) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _recipeFormProvider.resetAllCtrl();
+        });
+      }
+    }
+>>>>>>> Stashed changes
   }
 
   @override
   void dispose() {
+<<<<<<< Updated upstream
     super.dispose();
     saveAllInputToList();
     // WidgetsBinding.instance.removeObserver(this);
     for (var ctrlKey in allTextControllers.keys) {
       allTextControllers[ctrlKey]?.dispose();
     }
+=======
+    _recipeFormProvider.cacheAllOnExit();
+    super.dispose();
+>>>>>>> Stashed changes
   }
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< Updated upstream
     return isLoading
         ? CircularProgressIndicator()
         : GestureDetector(
@@ -139,6 +180,74 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
                         style: TextStyle(color: Colors.red),
                       ),
                     )
+=======
+    final recipeFormProvider = context.watch<RecipeFormProvider>();
+    recipeFormProvider.draftAvailable ? print("draft available") : print("No draft");
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(recipeFormProvider.isEditingRecipe ? "Edit recipe" : "New recipe",
+              style: Theme.of(context).textTheme.headlineLarge),
+          actions: [
+            if (recipeFormProvider.draftAvailable)
+              TextButton(
+                onPressed: () {
+                  recipeFormProvider.resetAllCtrl();
+                },
+                child: Text(
+                  "Delete Draft",
+                  style: TextStyle(color: Colors.red),
+                ),
+              )
+          ],
+        ),
+        body: Form(
+          key: recipeFormProvider.formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 10,
+                children: [
+                  TitleTextFormField(),
+                  CategoryDropdownMenu(),
+                  SizedBox(height: 30),
+                  ImagePickerField(),
+                  SizedBox(height: 20),
+                  DifficultyDropdownMenu(),
+                  TagsInputSection(),
+                  TagsListView(),
+                  SizedBox(height: 20),
+                  DescriptionTextFormField(),
+                  Row(
+                    spacing: 10,
+                    children: [
+                      Expanded(child: PrepTimeTextFormField()),
+                      Expanded(child: CookingTimeTextFormField()),
+                    ],
+                  ),
+                  NotesTextFormField(),
+                  SizedBox(height: 30),
+                  Text("Cooking Directions", style: Theme.of(context).textTheme.headlineMedium),
+                  CookingDirectionsListView(),
+                  CookingDirectionInputSection(),
+                  SizedBox(height: 30),
+                  Text("Ingredients", style: Theme.of(context).textTheme.headlineMedium),
+                  IngredientListView(),
+                  if (recipeFormProvider.complexInputValues["ingredients"].isNotEmpty) SizedBox(height: 20),
+                  IngredientInputSection(),
+                  SizedBox(height: 30),
+                  ElevatedButton(
+                    style: TextButton.styleFrom(foregroundColor: Colors.red),
+                    onPressed: () => recipeFormProvider.resetAllCtrl(),
+                    child: Text("Reset all fields"),
+                  ),
+                  SizedBox(height: 10),
+                  FooterButtonSection(),
+                  SizedBox(height: 100),
+>>>>>>> Stashed changes
                 ],
               ),
               body: Form(

@@ -1,16 +1,19 @@
 import 'dart:io';
 
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
 class ImagePickerField extends StatefulWidget {
-  ImagePickerField({
+  const ImagePickerField({
     super.key,
+<<<<<<< Updated upstream
     required this.updateImagesFunc,
     required this.emptyImgPickerFunc,
     required this.imagePath,
@@ -22,15 +25,21 @@ class ImagePickerField extends StatefulWidget {
   String? imagePath;
   // bool showError;
 
+=======
+  });
+
+>>>>>>> Stashed changes
   @override
   State<ImagePickerField> createState() => _ImagePickerFieldState();
 }
 
 class _ImagePickerFieldState extends State<ImagePickerField> {
   late Widget imageWidget;
+  late RecipeFormProvider recipeFormProvider;
 
   @override
   Widget build(BuildContext context) {
+    recipeFormProvider = context.watch<RecipeFormProvider>();
     chooseImageType();
 
     return Padding(
@@ -64,8 +73,8 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
                       ),
                     ),
                   ),
-                  if (widget.imagePath != null && widget.imagePath!.isNotEmpty)
-                    EmptyImagePickerButton(emptyImagePickerFunction: widget.emptyImgPickerFunc)
+                  if (recipeFormProvider.imagePath != null && recipeFormProvider.imagePath!.isNotEmpty)
+                    EmptyImagePickerButton()
                 ],
               ),
             ],
@@ -79,13 +88,13 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
     final ImagePicker imagePicker = ImagePicker();
     final XFile? selectedImage = await imagePicker.pickImage(source: ImageSource.gallery);
     if (selectedImage != null) {
-      widget.imagePath = (await saveImagePermanently(selectedImage)).path;
+      recipeFormProvider.imagePath = (await saveImagePermanently(selectedImage)).path;
 
       setState(() {
-        if (widget.imagePath == null) {
-          widget.updateImagesFunc("titleImg", "");
+        if (recipeFormProvider.imagePath == null) {
+          recipeFormProvider.updateImage("titleImg", "");
         } else {
-          widget.updateImagesFunc("titleImg", widget.imagePath);
+          recipeFormProvider.updateImage("titleImg", recipeFormProvider.imagePath!);
         }
       });
     }
@@ -99,19 +108,19 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
   }
 
   void chooseImageType() {
-    if (widget.imagePath == null || widget.imagePath!.isEmpty) {
+    if (recipeFormProvider.imagePath == null || recipeFormProvider.imagePath!.isEmpty) {
       imageWidget = Icon(
         Icons.camera_alt_outlined,
         size: 50,
         color: AppColors.dishDropBlack,
       );
     } else {
-      if (widget.imagePath!.contains("http")) {
-        imageWidget = NetworkTitleImg(imgPath: widget.imagePath!);
-      } else if (widget.imagePath!.contains("assets/images/")) {
-        imageWidget = Image.asset(widget.imagePath!, fit: BoxFit.cover);
+      if (recipeFormProvider.imagePath!.contains("http")) {
+        imageWidget = NetworkTitleImg(imgPath: recipeFormProvider.imagePath!);
+      } else if (recipeFormProvider.imagePath!.contains("assets/images/")) {
+        imageWidget = Image.asset(recipeFormProvider.imagePath!, fit: BoxFit.cover);
       } else {
-        imageWidget = FileTitleImg(imgPath: widget.imagePath!);
+        imageWidget = FileTitleImg(imgPath: recipeFormProvider.imagePath!);
       }
     }
   }
@@ -120,10 +129,7 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
 class EmptyImagePickerButton extends StatefulWidget {
   const EmptyImagePickerButton({
     super.key,
-    required this.emptyImagePickerFunction,
   });
-
-  final Function emptyImagePickerFunction;
 
   @override
   State<EmptyImagePickerButton> createState() => _EmptyImagePickerButtonState();
@@ -132,12 +138,14 @@ class EmptyImagePickerButton extends StatefulWidget {
 class _EmptyImagePickerButtonState extends State<EmptyImagePickerButton> {
   @override
   Widget build(BuildContext context) {
+    final recipeFormProvider = context.read<RecipeFormProvider>();
+
     return Positioned(
       top: 10,
       right: 10,
       child: GestureDetector(
         onTap: () {
-          widget.emptyImagePickerFunction();
+          recipeFormProvider.emptyImagePicker();
         },
         child: Container(
           width: 55,

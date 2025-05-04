@@ -49,7 +49,6 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
               servings: servings,
             ),
             // Recipe already on the shopping lists? ==> go to Shopping list screen, otherwise create shopping list
-
             recipe!.shoppingList.targetId != 0
                 ? FilledButton(
                     onPressed: () {

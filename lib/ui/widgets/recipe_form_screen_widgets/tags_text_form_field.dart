@@ -1,16 +1,9 @@
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TagsInputSection extends StatefulWidget {
-  const TagsInputSection({
-    super.key,
-    required this.complexInputValues,
-    required this.tagsCtrl,
-    required this.updateTagsList,
-  });
-
-  final Map<String, dynamic> complexInputValues;
-  final TextEditingController tagsCtrl;
-  final Function updateTagsList;
+  const TagsInputSection({super.key});
 
   @override
   State<TagsInputSection> createState() => _TagsInputSectionState();
@@ -19,19 +12,21 @@ class TagsInputSection extends StatefulWidget {
 class _TagsInputSectionState extends State<TagsInputSection> {
   @override
   Widget build(BuildContext context) {
+    final recipeFormProvider = context.watch<RecipeFormProvider>();
+
     return Row(
       children: [
         Expanded(
           child: TextFormField(
             maxLength: 30,
-            onFieldSubmitted: (value) => widget.updateTagsList(),
-            controller: widget.tagsCtrl,
+            onFieldSubmitted: (value) => recipeFormProvider.addToTagsList(),
+            controller: recipeFormProvider.allTextControllers["tagsCtrl"],
             decoration: const InputDecoration(border: OutlineInputBorder(), hintText: "Tags", counterText: ""),
           ),
         ),
         IconButton(
           onPressed: () {
-            widget.updateTagsList();
+            recipeFormProvider.addToTagsList();
           },
           icon: Icon(
             Icons.add_box_outlined,

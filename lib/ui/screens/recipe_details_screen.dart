@@ -6,6 +6,7 @@ import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/description_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/directions_section.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/notes_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/recipe_details_footer_button_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/recipe_details_ingredients_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/quick_info_section.dart';
@@ -77,6 +78,8 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                 key: _directionsKey,
                 recipe: recipe!,
               ),
+            SizedBox(height: defaultSpacing),
+            if (recipe!.notes != "") NotesSection(recipe: recipe!),
             SizedBox(height: defaultSpacing),
             if (!_ingredientsEmpty)
               RecipeDetailsIngredientsSection(

@@ -16,7 +16,7 @@ class SharedPreferencesRepository {
     await prefs.setString(_addRecipeFormKey, formInputJsonString);
   }
 
-  Future<String> get cachedInput async {
+  Future<String> get cachedNewRecipeInput async {
     final prefs = await _prefsFuture;
     return prefs.getString(_addRecipeFormKey) ?? '';
   }
@@ -31,7 +31,7 @@ class SharedPreferencesRepository {
     await prefs.setString(_editRecipeFormKey, formInputJsonString);
   }
 
-  Future<String> get cachedEditInput async {
+  Future<String> get cachedEditRecipeInput async {
     final prefs = await _prefsFuture;
     return prefs.getString(_editRecipeFormKey) ?? '';
   }

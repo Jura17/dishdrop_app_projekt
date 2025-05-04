@@ -1,25 +1,23 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_tags/simple_tags.dart';
 
 class TagsListView extends StatelessWidget {
-  const TagsListView(
-      {super.key,
-      required this.complexInputValues,
-      required this.removeFromTagsList});
-
-  final Map<String, dynamic> complexInputValues;
-  final Function removeFromTagsList;
+  const TagsListView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final recipeFormProvider = context.watch<RecipeFormProvider>();
+
     return SimpleTags(
-      content: complexInputValues["tags"],
+      content: recipeFormProvider.complexInputValues["tags"],
       wrapSpacing: 4,
       wrapRunSpacing: 4,
       onTagPress: (tag) {
-        removeFromTagsList(tag);
+        recipeFormProvider.removeFromTagsList(tag);
       },
       tagContainerPadding: EdgeInsets.all(6),
       tagTextStyle: TextStyle(color: AppColors.primary),

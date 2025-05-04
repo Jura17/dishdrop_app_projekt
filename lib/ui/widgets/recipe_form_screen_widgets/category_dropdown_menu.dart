@@ -25,9 +25,13 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
         DropdownMenu(
           initialSelection: widget.categoryCtrl.text,
           onSelected: (value) {
+<<<<<<< Updated upstream
             setState(() {
               widget.showErrorFunc(false);
             });
+=======
+            recipeFormProvider.updateCategoryMenuError(false);
+>>>>>>> Stashed changes
           },
           controller: widget.categoryCtrl,
           inputDecorationTheme: InputDecorationTheme(

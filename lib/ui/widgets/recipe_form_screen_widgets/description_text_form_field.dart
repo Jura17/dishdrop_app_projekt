@@ -1,15 +1,14 @@
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DescriptionTextFormField extends StatelessWidget {
-  const DescriptionTextFormField({
-    super.key,
-    required this.descCtrl,
-  });
-
-  final TextEditingController descCtrl;
+  const DescriptionTextFormField({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final recipeFormProvider = context.watch<RecipeFormProvider>();
+
     return TextFormField(
       maxLines: null,
       maxLength: 1000,
@@ -20,7 +19,7 @@ class DescriptionTextFormField extends StatelessWidget {
         return null;
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      controller: descCtrl,
+      controller: recipeFormProvider.allTextControllers["descCtrl"],
       decoration: const InputDecoration(
         hintText: "Description",
         border: OutlineInputBorder(),

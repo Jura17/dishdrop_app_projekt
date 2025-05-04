@@ -34,7 +34,7 @@ class RecipeFormController {
   };
 
   void loadCachedInput() async {
-    final jsonString = await sharedPrefs.cachedInput;
+    final jsonString = await sharedPrefs.cachedNewRecipeInput;
 
     if (jsonString.isNotEmpty) {
       final cachedInput = jsonDecode(jsonString);

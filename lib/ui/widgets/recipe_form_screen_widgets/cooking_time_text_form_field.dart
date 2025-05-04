@@ -1,15 +1,14 @@
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CookingTimeTextFormField extends StatelessWidget {
-  const CookingTimeTextFormField({
-    super.key,
-    required this.cookingTimeCtrl,
-  });
-
-  final TextEditingController cookingTimeCtrl;
+  const CookingTimeTextFormField({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final recipeFormProvider = context.watch<RecipeFormProvider>();
+
     return TextFormField(
       validator: (value) {
         int? time = int.tryParse(value ?? '');
@@ -20,7 +19,7 @@ class CookingTimeTextFormField extends StatelessWidget {
       maxLength: 4,
       keyboardType: TextInputType.numberWithOptions(decimal: false),
       autovalidateMode: AutovalidateMode.onUnfocus,
-      controller: cookingTimeCtrl,
+      controller: recipeFormProvider.allTextControllers["cookingTimeCtrl"],
       decoration: const InputDecoration(border: OutlineInputBorder(), hintText: "Cooking Time", counterText: ""),
     );
   }
