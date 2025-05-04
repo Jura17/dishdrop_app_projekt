@@ -310,7 +310,7 @@ class RecipeFormProvider extends ChangeNotifier {
       },
       "tags": <String>[],
       "ingredients": <ListItem>[],
-      "directions": <String>[]
+      "directions": <CookingDirection>[]
     };
     emptyImagePicker();
     isEditingRecipe ? sharedPrefsRepo.deleteCachedEditInput() : sharedPrefsRepo.deleteCachedInput();

@@ -1,12 +1,13 @@
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TitleTextFormField extends StatelessWidget {
-  const TitleTextFormField({super.key, required this.titleCtrl});
-
-  final TextEditingController titleCtrl;
+  const TitleTextFormField({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final recipeFormProvider = context.read<RecipeFormProvider>();
     return TextFormField(
       validator: (value) {
         String? title = value ?? '';
@@ -17,7 +18,7 @@ class TitleTextFormField extends StatelessWidget {
         return null;
       },
       autovalidateMode: AutovalidateMode.onUnfocus,
-      controller: titleCtrl,
+      controller: recipeFormProvider.allTextControllers["titleCtrl"],
       decoration: const InputDecoration(
         hintText: "Title",
         border: OutlineInputBorder(),

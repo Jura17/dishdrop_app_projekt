@@ -13,22 +13,8 @@ import 'package:provider/provider.dart';
 class ImagePickerField extends StatefulWidget {
   const ImagePickerField({
     super.key,
-<<<<<<< Updated upstream
-    required this.updateImagesFunc,
-    required this.emptyImgPickerFunc,
-    required this.imagePath,
-    // required this.showError,
   });
 
-  final Function updateImagesFunc;
-  final Function emptyImgPickerFunc;
-  String? imagePath;
-  // bool showError;
-
-=======
-  });
-
->>>>>>> Stashed changes
   @override
   State<ImagePickerField> createState() => _ImagePickerFieldState();
 }
