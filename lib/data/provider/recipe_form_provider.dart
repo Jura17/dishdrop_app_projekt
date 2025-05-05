@@ -53,9 +53,7 @@ class RecipeFormProvider extends ChangeNotifier {
     "directionDescCtrl": TextEditingController(),
   };
 
-  void init(Recipe? recipeInput) async {
-    print("init was called");
-    recipe = recipeInput;
+  void init() async {
     isEditingRecipe = recipe != null;
 
     if (isEditingRecipe) {

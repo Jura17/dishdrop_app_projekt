@@ -1,5 +1,6 @@
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
@@ -119,14 +120,26 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
           CustomFilledIconButton(
             text: "Edit Recipe",
             iconData: Icons.edit,
-            newScreen: RecipeFormScreen(
-              recipe: recipe,
+            newScreen: ChangeNotifierProvider(
+              create: (_) {
+                final RecipeFormProvider recipeFormProvider = RecipeFormProvider(recipe: recipe);
+                recipeFormProvider.init();
+                return recipeFormProvider;
+              },
+              child: RecipeFormScreen(),
             ),
           ),
           CustomFilledIconButton(
             text: "Add Recipe",
             iconData: Icons.add_box_outlined,
-            newScreen: RecipeFormScreen(),
+            newScreen: ChangeNotifierProvider(
+              create: (_) {
+                final RecipeFormProvider recipeFormProvider = RecipeFormProvider();
+                recipeFormProvider.init();
+                return recipeFormProvider;
+              },
+              child: RecipeFormScreen(),
+            ),
           ),
         ],
       ),

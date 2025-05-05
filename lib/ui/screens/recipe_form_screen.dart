@@ -33,41 +33,10 @@ class RecipeFormScreen extends StatefulWidget {
 }
 
 class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBindingObserver {
-  late RecipeFormProvider _recipeFormProvider;
-  bool _didInit = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if (!_didInit) {
-      _recipeFormProvider = context.read<RecipeFormProvider>();
-      _recipeFormProvider.init(widget.recipe);
-      _didInit = true;
-
-      if (!_recipeFormProvider.isEditingRecipe && !_recipeFormProvider.draftAvailable) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          _recipeFormProvider.resetAllCtrl();
-        });
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    _recipeFormProvider.cacheAllOnExit();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final recipeFormProvider = context.watch<RecipeFormProvider>();
-    recipeFormProvider.draftAvailable ? print("draft available") : print("No draft");
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(

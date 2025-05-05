@@ -1,4 +1,5 @@
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
@@ -51,7 +52,14 @@ class _RecipesGridViewState extends State<RecipesGridView> {
       floatingActionButton: CustomFilledIconButton(
         text: "Add Recipe",
         iconData: Icons.add_box_outlined,
-        newScreen: RecipeFormScreen(),
+        newScreen: ChangeNotifierProvider(
+          create: (_) {
+            final RecipeFormProvider recipeFormProvider = RecipeFormProvider();
+            recipeFormProvider.init();
+            return recipeFormProvider;
+          },
+          child: RecipeFormScreen(),
+        ),
       ),
     );
   }
