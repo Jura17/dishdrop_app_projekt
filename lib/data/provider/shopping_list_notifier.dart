@@ -24,8 +24,8 @@ class ShoppingListNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<ShoppingList> get getRecipeShoppingLists => _recipeShoppingLists;
-  ShoppingList? get getAllPurposeShoppingList => _allPurposeShoppingList;
+  List<ShoppingList> get recipeShoppingLists => _recipeShoppingLists;
+  ShoppingList? get allPurposeShoppingList => _allPurposeShoppingList;
 
   void addShoppingList(ShoppingList newShoppingList, Recipe recipe) {
     _databaseRepository.addShoppingList(newShoppingList, recipe);

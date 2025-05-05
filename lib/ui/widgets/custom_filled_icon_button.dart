@@ -1,25 +1,20 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
-import 'package:dishdrop_app_projekt/data/recipe_controller.dart';
-import 'package:dishdrop_app_projekt/data/shopping_list_controller.dart';
 
 import 'package:flutter/material.dart';
 
 class CustomFilledIconButton extends StatelessWidget {
-  const CustomFilledIconButton(
-      {super.key,
-      required this.text,
-      required this.iconData,
-      this.backgroundColor,
-      this.recipeController,
-      this.shoppingListController,
-      required this.newScreen});
+  const CustomFilledIconButton({
+    super.key,
+    required this.text,
+    required this.iconData,
+    required this.newScreen,
+    this.backgroundColor,
+  });
 
   final String text;
   final IconData iconData;
-  final Color? backgroundColor;
-  final RecipeController? recipeController;
-  final ShoppingListController? shoppingListController;
   final Widget newScreen;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
