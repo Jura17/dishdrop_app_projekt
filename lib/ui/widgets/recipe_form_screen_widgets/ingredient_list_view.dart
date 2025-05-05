@@ -5,14 +5,9 @@ import 'package:dishdrop_app_projekt/ui/widgets/list_item_row_dynamic.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class IngredientListView extends StatefulWidget {
+class IngredientListView extends StatelessWidget {
   const IngredientListView({super.key});
 
-  @override
-  State<IngredientListView> createState() => _IngredientListViewState();
-}
-
-class _IngredientListViewState extends State<IngredientListView> {
   @override
   Widget build(BuildContext context) {
     final recipeFormProvider = context.watch<RecipeFormProvider>();

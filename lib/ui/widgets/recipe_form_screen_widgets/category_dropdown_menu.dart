@@ -2,16 +2,11 @@ import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CategoryDropdownMenu extends StatefulWidget {
+class CategoryDropdownMenu extends StatelessWidget {
   const CategoryDropdownMenu({
     super.key,
   });
 
-  @override
-  State<CategoryDropdownMenu> createState() => _CategoryDropdownMenuState();
-}
-
-class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
   @override
   Widget build(BuildContext context) {
     final recipeFormProvider = context.read<RecipeFormProvider>();

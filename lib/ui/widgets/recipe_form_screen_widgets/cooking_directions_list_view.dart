@@ -3,14 +3,9 @@ import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/cooki
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CookingDirectionsListView extends StatefulWidget {
+class CookingDirectionsListView extends StatelessWidget {
   const CookingDirectionsListView({super.key});
 
-  @override
-  State<CookingDirectionsListView> createState() => _CookingDirectionsListViewState();
-}
-
-class _CookingDirectionsListViewState extends State<CookingDirectionsListView> {
   @override
   Widget build(BuildContext context) {
     final recipeFormProvider = context.watch<RecipeFormProvider>();

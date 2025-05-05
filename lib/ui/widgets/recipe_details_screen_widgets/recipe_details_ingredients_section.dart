@@ -10,6 +10,7 @@ import 'package:dishdrop_app_projekt/ui/widgets/servings_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// TODO: maybe simplify and make stateless?
 class RecipeDetailsIngredientsSection extends StatefulWidget {
   const RecipeDetailsIngredientsSection({
     super.key,

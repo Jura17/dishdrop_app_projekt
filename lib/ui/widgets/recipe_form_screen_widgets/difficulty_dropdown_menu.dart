@@ -3,14 +3,9 @@ import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DifficultyDropdownMenu extends StatefulWidget {
+class DifficultyDropdownMenu extends StatelessWidget {
   const DifficultyDropdownMenu({super.key});
 
-  @override
-  State<DifficultyDropdownMenu> createState() => _DifficultyDropdownMenuState();
-}
-
-class _DifficultyDropdownMenuState extends State<DifficultyDropdownMenu> {
   @override
   Widget build(BuildContext context) {
     final recipeFormProvider = context.watch<RecipeFormProvider>();

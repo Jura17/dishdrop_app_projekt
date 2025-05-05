@@ -12,7 +12,7 @@ import 'package:dishdrop_app_projekt/ui/widgets/recipe_card_widgets/recipe_card_
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class RecipeCard extends StatefulWidget {
+class RecipeCard extends StatelessWidget {
   const RecipeCard({
     super.key,
     required this.recipeId,
@@ -21,14 +21,9 @@ class RecipeCard extends StatefulWidget {
   final int recipeId;
 
   @override
-  State<RecipeCard> createState() => _RecipeCardState();
-}
-
-class _RecipeCardState extends State<RecipeCard> {
-  @override
   Widget build(BuildContext context) {
     final recipeNotifier = context.read<RecipeNotifier>();
-    final recipe = recipeNotifier.getRecipeById(widget.recipeId);
+    final recipe = recipeNotifier.getRecipeById(recipeId);
 
     Map<String, dynamic> images = jsonDecode(recipe!.imagesJson);
     Widget imageWidget;
@@ -45,7 +40,7 @@ class _RecipeCardState extends State<RecipeCard> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => RecipeDetailsScreen(
-              recipeId: widget.recipeId,
+              recipeId: recipeId,
             ),
           ),
         );

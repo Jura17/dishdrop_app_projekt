@@ -1,6 +1,7 @@
 import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:flutter/material.dart';
 
+// TODO: maybe simplify and make stateless?
 class CookingDirectionRowDynamic extends StatefulWidget {
   const CookingDirectionRowDynamic({
     super.key,

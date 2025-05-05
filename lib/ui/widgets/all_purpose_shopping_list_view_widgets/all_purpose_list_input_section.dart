@@ -1,5 +1,7 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AllPurposeListInputSection extends StatefulWidget {
   const AllPurposeListInputSection({
@@ -71,6 +73,7 @@ class _AllPurposeListInputSectionState extends State<AllPurposeListInputSection>
           onPressed: () {
             if (widget.formKey.currentState!.validate()) {
               widget.updateListFunction();
+              context.read<ShoppingListNotifier>().loadAllPurposeShoppingList();
             }
           },
           icon: Icon(

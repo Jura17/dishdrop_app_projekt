@@ -5,6 +5,7 @@ import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/empty_image_picker_button.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
@@ -146,45 +147,5 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
         imageWidget = FileTitleImg(imgPath: recipeFormProvider.imagePath!);
       }
     }
-  }
-}
-
-class EmptyImagePickerButton extends StatefulWidget {
-  const EmptyImagePickerButton({
-    super.key,
-  });
-
-  @override
-  State<EmptyImagePickerButton> createState() => _EmptyImagePickerButtonState();
-}
-
-class _EmptyImagePickerButtonState extends State<EmptyImagePickerButton> {
-  @override
-  Widget build(BuildContext context) {
-    final recipeFormProvider = context.read<RecipeFormProvider>();
-
-    return Positioned(
-      top: 10,
-      right: 10,
-      child: GestureDetector(
-        onTap: () {
-          recipeFormProvider.emptyImagePicker();
-        },
-        child: Container(
-          width: 55,
-          height: 55,
-          decoration: BoxDecoration(
-            color: Colors.white.withAlpha((0.8 * 255).toInt()),
-            shape: BoxShape.circle,
-            border: Border.all(color: AppColors.lightGrey),
-          ),
-          child: Icon(
-            Icons.delete,
-            color: Colors.red,
-            size: 30,
-          ),
-        ),
-      ),
-    );
   }
 }

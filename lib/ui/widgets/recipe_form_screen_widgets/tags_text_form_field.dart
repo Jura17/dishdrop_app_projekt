@@ -2,14 +2,9 @@ import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TagsInputSection extends StatefulWidget {
+class TagsInputSection extends StatelessWidget {
   const TagsInputSection({super.key});
 
-  @override
-  State<TagsInputSection> createState() => _TagsInputSectionState();
-}
-
-class _TagsInputSectionState extends State<TagsInputSection> {
   @override
   Widget build(BuildContext context) {
     final recipeFormProvider = context.watch<RecipeFormProvider>();
