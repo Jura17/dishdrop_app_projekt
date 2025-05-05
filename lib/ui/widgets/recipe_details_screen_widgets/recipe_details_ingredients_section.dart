@@ -49,7 +49,7 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
               servings: servings,
             ),
             // Recipe already on the shopping lists? ==> go to Shopping list screen, otherwise create shopping list
-            recipe!.shoppingList.targetId != 0
+            recipe != null && recipe.shoppingList.targetId != 0
                 ? FilledButton(
                     onPressed: () {
                       Navigator.of(context).push(
@@ -61,21 +61,23 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
                   )
                 : FilledButton(
                     onPressed: () {
-                      final newShoppingList = ShoppingList(
-                        title: recipe.title,
-                        imgUrl: recipe.images["titleImg"],
-                        servings: servings,
-                      );
-                      newShoppingList.shoppingItems.addAll(recipe.ingredients);
-
-                      recipeNotifier.assignShoppingListToRecipe(recipe, newShoppingList);
-
-                      if (context.mounted) {
-                        showCustomAlertBanner(
-                          context,
-                          Theme.of(context).primaryColor,
-                          "Ingredients added to shopping list!",
+                      if (recipe != null) {
+                        final newShoppingList = ShoppingList(
+                          title: recipe.title,
+                          imgUrl: recipe.images["titleImg"],
+                          servings: servings,
                         );
+                        newShoppingList.shoppingItems.addAll(recipe.ingredients);
+
+                        recipeNotifier.assignShoppingListToRecipe(recipe, newShoppingList);
+
+                        if (context.mounted) {
+                          showCustomAlertBanner(
+                            context,
+                            Theme.of(context).primaryColor,
+                            "Ingredients added to shopping list!",
+                          );
+                        }
                       }
                     },
                     style: Theme.of(context).filledButtonTheme.style,
@@ -84,10 +86,11 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
           ],
         ),
         SizedBox(height: 15),
-        IngredientListView(
-          recipe: recipe,
-          servings: servings,
-        )
+        if (recipe != null)
+          IngredientListView(
+            recipe: recipe,
+            servings: servings,
+          )
       ],
     );
   }
