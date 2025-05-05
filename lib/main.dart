@@ -21,7 +21,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => RecipeNotifier(db)),
-        ChangeNotifierProvider(create: (_) => RecipeFormProvider()),
+        // ChangeNotifierProvider(create: (_) => RecipeFormProvider()),
         ChangeNotifierProvider(create: (_) => ShoppingListNotifier(db)),
       ],
       child: MainApp(),

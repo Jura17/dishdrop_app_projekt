@@ -1,11 +1,14 @@
 import 'dart:io';
+import 'package:app_settings/app_settings.dart';
 
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -71,19 +74,53 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
   }
 
   Future<void> pickImage() async {
-    final ImagePicker imagePicker = ImagePicker();
-    final XFile? selectedImage = await imagePicker.pickImage(source: ImageSource.gallery);
-    if (selectedImage != null) {
-      recipeFormProvider.imagePath = (await saveImagePermanently(selectedImage)).path;
+    try {
+      final ImagePicker imagePicker = ImagePicker();
+      final XFile? selectedImage = await imagePicker.pickImage(source: ImageSource.gallery);
+      if (selectedImage != null) {
+        recipeFormProvider.imagePath = (await saveImagePermanently(selectedImage)).path;
 
-      setState(() {
-        if (recipeFormProvider.imagePath == null) {
-          recipeFormProvider.updateImage("titleImg", "");
-        } else {
-          recipeFormProvider.updateImage("titleImg", recipeFormProvider.imagePath!);
-        }
-      });
+        setState(() {
+          if (recipeFormProvider.imagePath == null) {
+            recipeFormProvider.updateImage("titleImg", "");
+          } else {
+            recipeFormProvider.updateImage("titleImg", recipeFormProvider.imagePath!);
+          }
+        });
+      }
+    } catch (e) {
+      if (e is PlatformException) {
+        showCustomDialog(Platform.isIOS);
+      }
     }
+  }
+
+  void showCustomDialog(bool isIos) {
+    if (isIos) {
+      showCupertinoDialog(context: context, builder: (context) => alertDialog());
+    } else {
+      showDialog(context: context, builder: (context) => alertDialog());
+    }
+  }
+
+  Widget alertDialog() {
+    return AlertDialog(
+      title: Text('Fehlende Berechtigungen'),
+      content: Text('Aktuell hast du nicht alle Berechtigungen gegeben, die diese App braucht.'),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text('Abbrechen'),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+            AppSettings.openAppSettings(type: AppSettingsType.location);
+          },
+          child: Text('Einstellungen öffnen'),
+        ),
+      ],
+    );
   }
 
   Future<File> saveImagePermanently(XFile image) async {
