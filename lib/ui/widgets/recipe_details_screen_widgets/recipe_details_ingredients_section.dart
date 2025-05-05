@@ -2,6 +2,7 @@ import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
+import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';
 import 'package:dishdrop_app_projekt/ui/screens/shopping_list_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/ingredient_list_view.dart';
@@ -33,6 +34,7 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
   @override
   Widget build(BuildContext context) {
     final recipeNotifier = context.watch<RecipeNotifier>();
+    final shoppingListNotifier = context.read<ShoppingListNotifier>();
     Recipe? recipe = recipeNotifier.getRecipeById(widget.recipeId);
 
     return Column(
@@ -70,6 +72,7 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
                         newShoppingList.shoppingItems.addAll(recipe.ingredients);
 
                         recipeNotifier.assignShoppingListToRecipe(recipe, newShoppingList);
+                        shoppingListNotifier.loadRecipeShoppingLists();
 
                         if (context.mounted) {
                           showCustomAlertBanner(

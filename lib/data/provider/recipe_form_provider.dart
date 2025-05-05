@@ -291,7 +291,6 @@ class RecipeFormProvider extends ChangeNotifier {
   }
 
   void resetAllCtrl() {
-    print("resetAllCtrl");
     formKey.currentState?.reset();
 
     for (var key in allTextControllers.keys) {

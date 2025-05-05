@@ -27,8 +27,8 @@ abstract class DatabaseRepository {
   void addToAllPurposeShoppingList(ListItem listItem);
 
   // read
-  List<ShoppingList> getRecipeShoppingLists();
-  ShoppingList? getAllPurposeShoppingList();
+  List<ShoppingList> recipeShoppingLists();
+  ShoppingList? allPurposeShoppingList();
 
   // delete
   void removeShoppingList(ShoppingList shoppingList);

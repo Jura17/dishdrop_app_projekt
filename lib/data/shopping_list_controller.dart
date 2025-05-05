@@ -7,8 +7,8 @@ class ShoppingListController {
   final DatabaseRepository _databaseRepository;
   ShoppingListController(this._databaseRepository);
 
-  ShoppingList? getAllPurposeShoppingList() => _databaseRepository.getAllPurposeShoppingList();
-  List<ShoppingList> getRecipeShoppingLists() => _databaseRepository.getRecipeShoppingLists();
+  ShoppingList? getAllPurposeShoppingList() => _databaseRepository.allPurposeShoppingList();
+  List<ShoppingList> getRecipeShoppingLists() => _databaseRepository.recipeShoppingLists();
   void addShoppingList(ShoppingList newShoppingList, Recipe recipe) =>
       _databaseRepository.addShoppingList(newShoppingList, recipe);
   void removeShoppingList(ShoppingList shoppingList) => _databaseRepository.removeShoppingList(shoppingList);

@@ -26,7 +26,7 @@ class _RecipeShoppingListViewState extends State<RecipeShoppingListView> {
     final shoppingListNotifier = context.watch<ShoppingListNotifier>();
 
     return Center(
-      child: shoppingListNotifier.getRecipeShoppingLists().isEmpty
+      child: shoppingListNotifier.getRecipeShoppingLists.isEmpty
           ? RecipeShoppingListIsEmptyText()
           : RecipeShoppingListIngredientsSection(),
     );
@@ -50,7 +50,7 @@ class _RecipeShoppingListIngredientsSectionState extends State<RecipeShoppingLis
         padding: const EdgeInsets.all(16.0),
         child: Consumer<ShoppingListNotifier>(
           builder: (context, shoppingListNotifier, child) {
-            List<ShoppingList> allRecipeShoppingLists = shoppingListNotifier.getRecipeShoppingLists();
+            List<ShoppingList> allRecipeShoppingLists = shoppingListNotifier.getRecipeShoppingLists;
             return Column(
               children: allRecipeShoppingLists.map((ShoppingList recipeShoppingList) {
                 return RecipeShoppingListIngredientListView(
@@ -101,6 +101,7 @@ class _RecipeShoppingListIngredientListViewState extends State<RecipeShoppingLis
               style: TextButton.styleFrom(foregroundColor: Colors.red, iconColor: Colors.red),
               onPressed: () {
                 context.read<ShoppingListNotifier>().removeShoppingList(widget.recipeShoppingList);
+                context.read<ShoppingListNotifier>().loadRecipeShoppingLists();
                 showCustomAlertBanner(context, Colors.red, "Ingredients removed from shopping list.");
               },
               label: Text("Remove from list"),

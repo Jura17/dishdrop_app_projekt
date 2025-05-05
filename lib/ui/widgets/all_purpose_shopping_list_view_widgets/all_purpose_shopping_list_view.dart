@@ -27,7 +27,7 @@ class _AllPurposeShoppingListViewState extends State<AllPurposeShoppingListView>
 
   @override
   Widget build(BuildContext context) {
-    allPurposeShoppingList = context.watch<ShoppingListNotifier>().getAllPurposeShoppingList();
+    allPurposeShoppingList = context.watch<ShoppingListNotifier>().getAllPurposeShoppingList;
 
     return Center(
       child: SingleChildScrollView(

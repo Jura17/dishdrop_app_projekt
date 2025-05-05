@@ -25,7 +25,7 @@ class _DishDropAppState extends State<DishDropApp> {
 
   void _onTap(int index) {
     if (index == activeIndex) {
-      // If you tap again on the same tab, maybe pop to first route
+      // If you tap again on the same tab, pop to first route
       _navigatorKeys[index].currentState?.popUntil((route) => route.isFirst);
     } else {
       setState(() {
