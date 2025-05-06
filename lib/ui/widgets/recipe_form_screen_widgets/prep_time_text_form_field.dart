@@ -1,16 +1,15 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PrepTimeTextFormField extends StatelessWidget {
-  const PrepTimeTextFormField({
-    super.key,
-    required this.prepTimeCtrl,
-  });
-
-  final TextEditingController prepTimeCtrl;
+  const PrepTimeTextFormField({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final recipeFormProvider = context.watch<RecipeFormProvider>();
+
     return TextFormField(
       validator: (value) {
         int? time = int.tryParse(value ?? '');
@@ -21,7 +20,7 @@ class PrepTimeTextFormField extends StatelessWidget {
       maxLength: 4,
       autovalidateMode: AutovalidateMode.onUnfocus,
       keyboardType: TextInputType.numberWithOptions(decimal: false),
-      controller: prepTimeCtrl,
+      controller: recipeFormProvider.allTextControllers["prepTimeCtrl"],
       decoration: const InputDecoration(
           filled: true,
           fillColor: AppColors.lightGrey,

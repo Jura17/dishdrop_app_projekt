@@ -2,29 +2,24 @@ import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CategoryDropdownMenu extends StatefulWidget {
-  const CategoryDropdownMenu({super.key});
+class CategoryDropdownMenu extends StatelessWidget {
+  const CategoryDropdownMenu({
+    super.key,
+  });
 
-  @override
-  State<CategoryDropdownMenu> createState() => _CategoryDropdownMenuState();
-}
-
-class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
   @override
   Widget build(BuildContext context) {
-    final recipeFormProvider = context.watch<RecipeFormProvider>();
-    TextEditingController? categoryCtrl = recipeFormProvider.allTextControllers['categoryCtrl'];
+    final recipeFormProvider = context.read<RecipeFormProvider>();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DropdownMenu(
-          initialSelection: categoryCtrl!.text,
+          initialSelection: recipeFormProvider.allTextControllers["categoryCtrl"]!.text,
           onSelected: (value) {
             recipeFormProvider.updateCategoryMenuError(false);
-            // setState(() {});
           },
-          controller: categoryCtrl,
+          controller: recipeFormProvider.allTextControllers["categoryCtrl"],
           inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(),
           ),

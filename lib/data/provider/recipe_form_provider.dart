@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class RecipeFormProvider extends ChangeNotifier {
   RecipeFormProvider({this.recipe});
 
-  final Recipe? recipe;
+  Recipe? recipe;
   bool _showImgPickerError = false;
   bool _showCategoryError = false;
   bool _showDifficultyError = false;
@@ -58,13 +58,13 @@ class RecipeFormProvider extends ChangeNotifier {
     if (isEditingRecipe) {
       await loadRecentRecipeID();
       if (recipe?.id == recentRecipeID) {
-        loadCachedInput(isEditingRecipe);
+        await loadCachedInput(isEditingRecipe);
       } else {
         await sharedPrefsRepo.deleteCachedEditInput();
       }
       loadRecipeDataForEditing();
     } else {
-      loadCachedInput(isEditingRecipe);
+      await loadCachedInput(isEditingRecipe);
     }
 
     // WidgetsBinding.instance.addObserver(this);
@@ -74,11 +74,15 @@ class RecipeFormProvider extends ChangeNotifier {
   @override
   void dispose() {
     saveAllInputToList();
-    // WidgetsBinding.instance.removeObserver(this);
     for (var ctrlKey in allTextControllers.keys) {
       allTextControllers[ctrlKey]?.dispose();
     }
     super.dispose();
+  }
+
+  void cacheAllOnExit() {
+    saveAllInputToList();
+    // WidgetsBinding.instance.removeObserver(this);
   }
 
   Future<void> loadRecentRecipeID() async {
@@ -142,25 +146,26 @@ class RecipeFormProvider extends ChangeNotifier {
   }
 
   // load data from shared prefs into text controllers and complexInputValue map
-  void loadCachedInput(isEditingRecipe) async {
-    final jsonString = isEditingRecipe ? await sharedPrefsRepo.cachedEditInput : await sharedPrefsRepo.cachedInput;
+  Future<void> loadCachedInput(isEditingRecipe) async {
+    final jsonString =
+        isEditingRecipe ? await sharedPrefsRepo.cachedEditRecipeInput : await sharedPrefsRepo.cachedNewRecipeInput;
 
     if (jsonString.isNotEmpty) {
-      final cachedInput = jsonDecode(jsonString);
-      bool jsonStringHasNoValues = allValuesEmpty(cachedInput);
+      final decodedInput = jsonDecode(jsonString);
+      bool jsonStringHasNoValues = allValuesEmpty(decodedInput);
       if (!jsonStringHasNoValues) {
         // decode all text input fields
         for (var key in allTextControllers.keys) {
-          allTextControllers[key]!.text = cachedInput[key];
+          allTextControllers[key]!.text = decodedInput[key];
         }
         // decode title image
-        if (cachedInput["images"]["titleImg"].isNotEmpty) {
-          updateImage("titleImg", cachedInput["images"]["titleImg"]);
-          complexInputValues["images"]["titleImg"] = cachedInput["images"]["titleImg"];
+        if (decodedInput["images"]["titleImg"].isNotEmpty) {
+          updateImage("titleImg", decodedInput["images"]["titleImg"]);
+          complexInputValues["images"]["titleImg"] = decodedInput["images"]["titleImg"];
         }
 
         // decode ingredients
-        final List<dynamic> ingredientList = jsonDecode(cachedInput["ingredients"]);
+        final List<dynamic> ingredientList = jsonDecode(decodedInput["ingredients"]);
 
         final List<ListItem> decodedIngredientList = [];
         for (var ingredientItem in ingredientList) {
@@ -176,7 +181,7 @@ class RecipeFormProvider extends ChangeNotifier {
         complexInputValues["ingredients"] = decodedIngredientList;
 
         // decode cooking directions
-        final List<dynamic> cookingDirectionList = jsonDecode(cachedInput["directions"]);
+        final List<dynamic> cookingDirectionList = jsonDecode(decodedInput["directions"]);
 
         final List<CookingDirection> decodedDirectionList = [];
         for (var directionItem in cookingDirectionList) {
@@ -190,8 +195,8 @@ class RecipeFormProvider extends ChangeNotifier {
         complexInputValues["directions"] = decodedDirectionList;
 
         // decode tags
-        if (cachedInput["tags"].isNotEmpty) {
-          List<String> tagList = cachedInput["tags"].cast<String>();
+        if (decodedInput["tags"].isNotEmpty) {
+          List<String> tagList = decodedInput["tags"].cast<String>();
           complexInputValues["tags"] = tagList;
         }
         draftAvailable = true;
@@ -211,6 +216,7 @@ class RecipeFormProvider extends ChangeNotifier {
 
   void updateDifficultyMenuError(bool showError) {
     _showDifficultyError = showError;
+    notifyListeners();
   }
 
   bool getDifficultyErrorState() {
@@ -282,12 +288,11 @@ class RecipeFormProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void resetAllCtrl(Map<String, TextEditingController> allTextFormCtrl, formKey) {
-    if (formKey != null) {
-      formKey.currentState?.reset();
-    }
-    for (var key in allTextFormCtrl.keys) {
-      allTextFormCtrl[key]!.clear();
+  void resetAllCtrl() {
+    formKey.currentState?.reset();
+
+    for (var key in allTextControllers.keys) {
+      allTextControllers[key]!.clear();
     }
     _showImgPickerError = false;
     _showCategoryError = false;
@@ -300,7 +305,7 @@ class RecipeFormProvider extends ChangeNotifier {
       },
       "tags": <String>[],
       "ingredients": <ListItem>[],
-      "directions": <String>[]
+      "directions": <CookingDirection>[]
     };
     emptyImagePicker();
     isEditingRecipe ? sharedPrefsRepo.deleteCachedEditInput() : sharedPrefsRepo.deleteCachedInput();
@@ -308,9 +313,9 @@ class RecipeFormProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool checkNoneTextfieldValues(Map<String, TextEditingController> allTextFormCtrl, complexInputValues) {
-    _showCategoryError = allTextFormCtrl["categoryCtrl"]?.text.isEmpty ?? true;
-    _showDifficultyError = allTextFormCtrl["difficultyCtrl"]?.text.isEmpty ?? true;
+  bool checkNoneTextfieldValues() {
+    _showCategoryError = allTextControllers["categoryCtrl"]?.text.isEmpty ?? true;
+    _showDifficultyError = allTextControllers["difficultyCtrl"]?.text.isEmpty ?? true;
     notifyListeners();
 
     String titleImg = complexInputValues["images"]["titleImg"];

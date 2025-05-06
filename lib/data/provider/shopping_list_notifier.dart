@@ -5,17 +5,27 @@ import 'package:dishdrop_app_projekt/data/repositories/database_repository.dart'
 import 'package:flutter/material.dart';
 
 class ShoppingListNotifier extends ChangeNotifier {
+  List<ShoppingList> _recipeShoppingLists = [];
+  ShoppingList? _allPurposeShoppingList;
   final DatabaseRepository _databaseRepository;
 
-  ShoppingListNotifier(this._databaseRepository);
-
-  ShoppingList? getAllPurposeShoppingList() {
-    return _databaseRepository.getAllPurposeShoppingList();
+  ShoppingListNotifier(this._databaseRepository) {
+    loadRecipeShoppingLists();
+    loadAllPurposeShoppingList();
   }
 
-  List<ShoppingList> getRecipeShoppingLists() {
-    return _databaseRepository.getRecipeShoppingLists();
+  void loadRecipeShoppingLists() {
+    _recipeShoppingLists = _databaseRepository.recipeShoppingLists();
+    notifyListeners();
   }
+
+  void loadAllPurposeShoppingList() {
+    _allPurposeShoppingList = _databaseRepository.allPurposeShoppingList();
+    notifyListeners();
+  }
+
+  List<ShoppingList> get recipeShoppingLists => _recipeShoppingLists;
+  ShoppingList? get allPurposeShoppingList => _allPurposeShoppingList;
 
   void addShoppingList(ShoppingList newShoppingList, Recipe recipe) {
     _databaseRepository.addShoppingList(newShoppingList, recipe);

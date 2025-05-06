@@ -7,8 +7,7 @@ class TitleTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final recipeFormProvider = context.watch<RecipeFormProvider>();
-
+    final recipeFormProvider = context.read<RecipeFormProvider>();
     return TextFormField(
       validator: (value) {
         String? title = value ?? '';
@@ -19,7 +18,7 @@ class TitleTextFormField extends StatelessWidget {
         return null;
       },
       autovalidateMode: AutovalidateMode.onUnfocus,
-      controller: recipeFormProvider.allTextControllers['titleCtrl'],
+      controller: recipeFormProvider.allTextControllers["titleCtrl"],
       decoration: const InputDecoration(
         hintText: "Title",
         border: OutlineInputBorder(),

@@ -1,16 +1,11 @@
 import 'package:dishdrop_app_projekt/ui/widgets/recommendation_button.dart';
 import 'package:flutter/material.dart';
 
-class RecommendationScreen extends StatefulWidget {
+class RecommendationScreen extends StatelessWidget {
   const RecommendationScreen({
     super.key,
   });
 
-  @override
-  State<RecommendationScreen> createState() => _RecommendationScreenState();
-}
-
-class _RecommendationScreenState extends State<RecommendationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

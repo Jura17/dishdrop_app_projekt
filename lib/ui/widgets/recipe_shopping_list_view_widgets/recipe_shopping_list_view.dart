@@ -9,24 +9,15 @@ import 'package:dishdrop_app_projekt/ui/widgets/servings_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class RecipeShoppingListView extends StatefulWidget {
-  const RecipeShoppingListView({
-    super.key,
-  });
-
-  @override
-  State<RecipeShoppingListView> createState() => _RecipeShoppingListViewState();
-}
-
-class _RecipeShoppingListViewState extends State<RecipeShoppingListView> {
-  int servings = 1;
+class RecipeShoppingListView extends StatelessWidget {
+  const RecipeShoppingListView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final shoppingListNotifier = context.watch<ShoppingListNotifier>();
 
     return Center(
-      child: shoppingListNotifier.getRecipeShoppingLists().isEmpty
+      child: shoppingListNotifier.recipeShoppingLists.isEmpty
           ? RecipeShoppingListIsEmptyText()
           : RecipeShoppingListIngredientsSection(),
     );
@@ -50,7 +41,7 @@ class _RecipeShoppingListIngredientsSectionState extends State<RecipeShoppingLis
         padding: const EdgeInsets.all(16.0),
         child: Consumer<ShoppingListNotifier>(
           builder: (context, shoppingListNotifier, child) {
-            List<ShoppingList> allRecipeShoppingLists = shoppingListNotifier.getRecipeShoppingLists();
+            List<ShoppingList> allRecipeShoppingLists = shoppingListNotifier.recipeShoppingLists;
             return Column(
               children: allRecipeShoppingLists.map((ShoppingList recipeShoppingList) {
                 return RecipeShoppingListIngredientListView(
@@ -93,6 +84,7 @@ class _RecipeShoppingListIngredientListViewState extends State<RecipeShoppingLis
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            // TODO: bug that causes servings picker to show incorrect amount after deleting a shopping list above another
             ServingsPicker(
               updateServingsFunc: updateServings,
               servings: widget.recipeShoppingList.servings,
@@ -101,6 +93,7 @@ class _RecipeShoppingListIngredientListViewState extends State<RecipeShoppingLis
               style: TextButton.styleFrom(foregroundColor: Colors.red, iconColor: Colors.red),
               onPressed: () {
                 context.read<ShoppingListNotifier>().removeShoppingList(widget.recipeShoppingList);
+                context.read<ShoppingListNotifier>().loadRecipeShoppingLists();
                 showCustomAlertBanner(context, Colors.red, "Ingredients removed from shopping list.");
               },
               label: Text("Remove from list"),
@@ -126,6 +119,7 @@ class _RecipeShoppingListIngredientListViewState extends State<RecipeShoppingLis
   void updateServings(newAmount) {
     setState(() {
       widget.recipeShoppingList.servings = newAmount;
+      context.read<ShoppingListNotifier>().updateShoppingList(widget.recipeShoppingList, widget.recipeShoppingList);
     });
   }
 }

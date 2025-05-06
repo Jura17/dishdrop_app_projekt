@@ -1,35 +1,24 @@
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class DifficultyDropdownMenu extends StatefulWidget {
-  const DifficultyDropdownMenu({
-    super.key,
-    required this.difficultyCtrl,
-    required this.showErrorFunc,
-    required this.getErrorStateFunc,
-  });
+class DifficultyDropdownMenu extends StatelessWidget {
+  const DifficultyDropdownMenu({super.key});
 
-  final TextEditingController difficultyCtrl;
-  final Function showErrorFunc;
-  final Function getErrorStateFunc;
-
-  @override
-  State<DifficultyDropdownMenu> createState() => _DifficultyDropdownMenuState();
-}
-
-class _DifficultyDropdownMenuState extends State<DifficultyDropdownMenu> {
   @override
   Widget build(BuildContext context) {
+    final recipeFormProvider = context.watch<RecipeFormProvider>();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DropdownMenu(
-          initialSelection: widget.difficultyCtrl.text,
+          initialSelection: recipeFormProvider.allTextControllers["difficultyCtrl"]!.text,
           onSelected: (value) {
-            setState(() {
-              widget.showErrorFunc(false);
-            });
+            recipeFormProvider.updateDifficultyMenuError(false);
           },
-          controller: widget.difficultyCtrl,
+          controller: recipeFormProvider.allTextControllers["difficultyCtrl"],
           inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(),
           ),
@@ -42,7 +31,7 @@ class _DifficultyDropdownMenuState extends State<DifficultyDropdownMenu> {
           hintText: "Select difficulty",
         ),
         SizedBox(height: 10),
-        if (widget.getErrorStateFunc())
+        if (recipeFormProvider.getDifficultyErrorState())
           Text(
             "Please select a difficulty",
             style: TextStyle(color: Colors.red),

@@ -1,6 +1,8 @@
-import 'package:dishdrop_app_projekt/data/models/recipe.dart';
-import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
+import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/category_dropdown_menu.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/cooking_time_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/description_text_form_field.dart';
@@ -17,22 +19,6 @@ import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/ingre
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/tags_list_view.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/tags_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/title_text_form_field.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-class RecipeFormWrapper extends StatelessWidget {
-  const RecipeFormWrapper({super.key, this.recipe});
-
-  final Recipe? recipe;
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider<RecipeFormProvider>(
-      create: (_) => RecipeFormProvider(recipe: recipe),
-      child: RecipeFormScreen(),
-    );
-  }
-}
 
 class RecipeFormScreen extends StatefulWidget {
   const RecipeFormScreen({
@@ -48,17 +34,9 @@ class RecipeFormScreen extends StatefulWidget {
 
 class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBindingObserver {
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final recipeFormProvider = Provider.of<RecipeFormProvider>(context, listen: false);
-      recipeFormProvider.init();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final recipeFormProvider = Provider.of<RecipeFormProvider>(context, listen: false);
+    final recipeFormProvider = context.watch<RecipeFormProvider>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -69,7 +47,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
             if (recipeFormProvider.draftAvailable)
               TextButton(
                 onPressed: () {
-                  recipeFormProvider.resetAllCtrl(recipeFormProvider.allTextControllers, recipeFormProvider.formKey);
+                  recipeFormProvider.resetAllCtrl();
                 },
                 child: Text(
                   "Delete Draft",
@@ -90,82 +68,38 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
                   TitleTextFormField(),
                   CategoryDropdownMenu(),
                   SizedBox(height: 30),
-                  ImagePickerField(
-                    updateImagesFunc: recipeFormProvider.updateImage,
-                    emptyImgPickerFunc: recipeFormProvider.emptyImagePicker,
-                    imagePath: recipeFormProvider.imagePath,
-                  ),
+                  ImagePickerField(),
                   SizedBox(height: 20),
-                  DifficultyDropdownMenu(
-                    difficultyCtrl: recipeFormProvider.allTextControllers["difficultyCtrl"]!,
-                    showErrorFunc: recipeFormProvider.updateDifficultyMenuError,
-                    getErrorStateFunc: recipeFormProvider.getDifficultyErrorState,
-                  ),
-                  TagsInputSection(
-                    complexInputValues: recipeFormProvider.complexInputValues,
-                    tagsCtrl: recipeFormProvider.allTextControllers["tagsCtrl"]!,
-                    updateTagsList: recipeFormProvider.addToTagsList,
-                  ),
-                  TagsListView(
-                    complexInputValues: recipeFormProvider.complexInputValues,
-                    removeFromTagsList: recipeFormProvider.removeFromTagsList,
-                  ),
+                  DifficultyDropdownMenu(),
+                  TagsInputSection(),
+                  TagsListView(),
                   SizedBox(height: 20),
-                  DescriptionTextFormField(descCtrl: recipeFormProvider.allTextControllers["descCtrl"]!),
+                  DescriptionTextFormField(),
                   Row(
                     spacing: 10,
                     children: [
-                      Expanded(
-                        child:
-                            PrepTimeTextFormField(prepTimeCtrl: recipeFormProvider.allTextControllers["prepTimeCtrl"]!),
-                      ),
-                      Expanded(
-                        child: CookingTimeTextFormField(
-                            cookingTimeCtrl: recipeFormProvider.allTextControllers["cookingTimeCtrl"]!),
-                      ),
+                      Expanded(child: PrepTimeTextFormField()),
+                      Expanded(child: CookingTimeTextFormField()),
                     ],
                   ),
-                  NotesTextFormField(notesCtrl: recipeFormProvider.allTextControllers["notesCtrl"]!),
+                  NotesTextFormField(),
                   SizedBox(height: 30),
                   Text("Cooking Directions", style: Theme.of(context).textTheme.headlineMedium),
-                  CookingDirectionsListView(
-                    complexInputValues: recipeFormProvider.complexInputValues,
-                    removeFromCookingDirectionsListFunc: recipeFormProvider.removeCookingDirection,
-                  ),
-                  CookingDirectionInputSection(
-                    complexInputValues: recipeFormProvider.complexInputValues,
-                    cookingDirectionCtrl: recipeFormProvider.allTextControllers["directionDescCtrl"]!,
-                    addCookingDirectionFunc: recipeFormProvider.addCookingDirectionToList,
-                  ),
+                  CookingDirectionsListView(),
+                  CookingDirectionInputSection(),
                   SizedBox(height: 30),
                   Text("Ingredients", style: Theme.of(context).textTheme.headlineMedium),
-                  IngredientListView(
-                    complexInputValues: recipeFormProvider.complexInputValues,
-                    removeFromListFunc: recipeFormProvider.removeFromIngredientList,
-                  ),
+                  IngredientListView(),
                   if (recipeFormProvider.complexInputValues["ingredients"].isNotEmpty) SizedBox(height: 20),
-                  IngredientInputSection(
-                    allTextFormCtrl: recipeFormProvider.allTextControllers,
-                    complexInputValues: recipeFormProvider.complexInputValues,
-                    addIngredientFunc: recipeFormProvider.addIngredientToList,
-                  ),
+                  IngredientInputSection(),
                   SizedBox(height: 30),
                   ElevatedButton(
                     style: TextButton.styleFrom(foregroundColor: Colors.red),
-                    onPressed: () => recipeFormProvider.resetAllCtrl(
-                        recipeFormProvider.allTextControllers, recipeFormProvider.formKey),
+                    onPressed: () => recipeFormProvider.resetAllCtrl(),
                     child: Text("Reset all fields"),
                   ),
                   SizedBox(height: 10),
-                  FooterButtonSection(
-                    complexInputValues: recipeFormProvider.complexInputValues,
-                    widget: widget,
-                    allTextFormCtrl: recipeFormProvider.allTextControllers,
-                    formKey: recipeFormProvider.formKey,
-                    checkNoneTextFieldValuesFunc: recipeFormProvider.checkNoneTextfieldValues,
-                    resetAllCtrl: recipeFormProvider.resetAllCtrl,
-                    isEditingRecipe: recipeFormProvider.isEditingRecipe,
-                  ),
+                  FooterButtonSection(),
                   SizedBox(height: 100),
                 ],
               ),

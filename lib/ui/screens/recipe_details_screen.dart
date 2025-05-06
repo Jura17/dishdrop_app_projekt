@@ -1,11 +1,13 @@
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/description_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/directions_section.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/notes_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/recipe_details_footer_button_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/recipe_details_ingredients_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/quick_info_section.dart';
@@ -78,6 +80,8 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                 recipe: recipe!,
               ),
             SizedBox(height: defaultSpacing),
+            if (recipe!.notes != "") NotesSection(recipe: recipe!),
+            SizedBox(height: defaultSpacing),
             if (!_ingredientsEmpty)
               RecipeDetailsIngredientsSection(
                 key: _ingredientsKey,
@@ -116,14 +120,26 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
           CustomFilledIconButton(
             text: "Edit Recipe",
             iconData: Icons.edit,
-            newScreen: RecipeFormWrapper(
-              recipe: recipe,
+            newScreen: ChangeNotifierProvider(
+              create: (_) {
+                final RecipeFormProvider recipeFormProvider = RecipeFormProvider(recipe: recipe);
+                recipeFormProvider.init();
+                return recipeFormProvider;
+              },
+              child: RecipeFormScreen(),
             ),
           ),
           CustomFilledIconButton(
             text: "Add Recipe",
             iconData: Icons.add_box_outlined,
-            newScreen: RecipeFormWrapper(),
+            newScreen: ChangeNotifierProvider(
+              create: (_) {
+                final RecipeFormProvider recipeFormProvider = RecipeFormProvider();
+                recipeFormProvider.init();
+                return recipeFormProvider;
+              },
+              child: RecipeFormScreen(),
+            ),
           ),
         ],
       ),

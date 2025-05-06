@@ -80,7 +80,7 @@ class ObjectboxDatabase implements DatabaseRepository {
   // TODO: also needs a remove from list method
 
   @override
-  ShoppingList? getAllPurposeShoppingList() {
+  ShoppingList? allPurposeShoppingList() {
     final allPurposeShoppingList =
         shoppingListBox.getAll().where((shoppingList) => shoppingList.isAllPurposeList == true).first;
 
@@ -88,7 +88,7 @@ class ObjectboxDatabase implements DatabaseRepository {
   }
 
   @override
-  List<ShoppingList> getRecipeShoppingLists() {
+  List<ShoppingList> recipeShoppingLists() {
     final recipeShoppingLists =
         shoppingListBox.getAll().where((shoppingList) => shoppingList.isAllPurposeList == false).toList();
     return recipeShoppingLists;

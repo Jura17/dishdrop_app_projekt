@@ -1,31 +1,21 @@
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class CookingDirectionInputSection extends StatefulWidget {
-  const CookingDirectionInputSection({
-    super.key,
-    required this.complexInputValues,
-    required this.cookingDirectionCtrl,
-    required this.addCookingDirectionFunc,
-  });
+class CookingDirectionInputSection extends StatelessWidget {
+  const CookingDirectionInputSection({super.key});
 
-  final Map<String, dynamic> complexInputValues;
-  final TextEditingController cookingDirectionCtrl;
-  final Function addCookingDirectionFunc;
-
-  @override
-  State<CookingDirectionInputSection> createState() => _CookingDirectionInputSectionState();
-}
-
-class _CookingDirectionInputSectionState extends State<CookingDirectionInputSection> {
   @override
   Widget build(BuildContext context) {
+    final recipeFormProvider = context.watch<RecipeFormProvider>();
+
     return Row(
       children: [
         Expanded(
           child: TextFormField(
             maxLength: 200,
             maxLines: null,
-            controller: widget.cookingDirectionCtrl,
+            controller: recipeFormProvider.allTextControllers["directionDescCtrl"],
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: "Add cooking directions",
@@ -34,7 +24,7 @@ class _CookingDirectionInputSectionState extends State<CookingDirectionInputSect
         ),
         IconButton(
           onPressed: () {
-            widget.addCookingDirectionFunc();
+            recipeFormProvider.addCookingDirectionToList();
           },
           icon: Icon(
             Icons.add_box_outlined,

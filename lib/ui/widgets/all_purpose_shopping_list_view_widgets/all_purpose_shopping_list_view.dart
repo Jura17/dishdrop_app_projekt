@@ -19,7 +19,7 @@ class _AllPurposeShoppingListViewState extends State<AllPurposeShoppingListView>
   ShoppingList? allPurposeShoppingList;
   final _formKey = GlobalKey<FormState>();
 
-  final Map<String, TextEditingController> allTextControllers = {
+  final Map<String, TextEditingController> textEditingControllers = {
     "itemAmountCtrl": TextEditingController(),
     "itemUnitCtrl": TextEditingController(),
     "itemDescCtrl": TextEditingController(),
@@ -27,7 +27,7 @@ class _AllPurposeShoppingListViewState extends State<AllPurposeShoppingListView>
 
   @override
   Widget build(BuildContext context) {
-    allPurposeShoppingList = context.watch<ShoppingListNotifier>().getAllPurposeShoppingList();
+    allPurposeShoppingList = context.watch<ShoppingListNotifier>().allPurposeShoppingList;
 
     return Center(
       child: SingleChildScrollView(
@@ -58,7 +58,7 @@ class _AllPurposeShoppingListViewState extends State<AllPurposeShoppingListView>
                     : AllPurposeListItems(allPurposeShoppingList: allPurposeShoppingList!),
                 SizedBox(height: 20),
                 AllPurposeListInputSection(
-                  allTextControllers: allTextControllers,
+                  allTextControllers: textEditingControllers,
                   updateListFunction: updateAllPurposeShoppingList,
                   formKey: _formKey,
                 ),
@@ -72,19 +72,17 @@ class _AllPurposeShoppingListViewState extends State<AllPurposeShoppingListView>
   }
 
   void updateAllPurposeShoppingList() {
-    setState(() {
-      if (allPurposeShoppingList != null) {
-        context.read<ShoppingListNotifier>().addToAllPurposeShoppingList(
-              ListItem(
-                description: allTextControllers["itemDescCtrl"]!.text,
-                amount: double.tryParse(allTextControllers["itemAmountCtrl"]!.text),
-                unit: allTextControllers["itemUnitCtrl"]!.text,
-              ),
-            );
-        allTextControllers["itemAmountCtrl"]!.clear();
-        allTextControllers["itemUnitCtrl"]!.clear();
-        allTextControllers["itemDescCtrl"]!.clear();
-      }
-    });
+    if (allPurposeShoppingList != null) {
+      context.read<ShoppingListNotifier>().addToAllPurposeShoppingList(
+            ListItem(
+              description: textEditingControllers["itemDescCtrl"]!.text,
+              amount: double.tryParse(textEditingControllers["itemAmountCtrl"]!.text),
+              unit: textEditingControllers["itemUnitCtrl"]!.text,
+            ),
+          );
+      textEditingControllers["itemAmountCtrl"]!.clear();
+      textEditingControllers["itemUnitCtrl"]!.clear();
+      textEditingControllers["itemDescCtrl"]!.clear();
+    }
   }
 }

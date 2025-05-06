@@ -21,7 +21,6 @@ class _DishDropAppState extends State<DishDropApp> {
 
   void _onTap(int index) {
     if (index == activeIndex) {
-      // If you tap again on the same tab, maybe pop to first route
       _navigatorKeys[index].currentState?.popUntil((route) => route.isFirst);
     } else {
       setState(() {
@@ -64,47 +63,3 @@ class _DishDropAppState extends State<DishDropApp> {
     );
   }
 }
-
-// class DishDropApp extends StatefulWidget {
-//   const DishDropApp({
-//     super.key,
-//   });
-
-//   @override
-//   State<DishDropApp> createState() => _DishDropAppState();
-// }
-
-// class _DishDropAppState extends State<DishDropApp> {
-//   int activeIndex = 0;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: [
-//         CategoriesScreen(),
-//         RecommendationScreen(),
-//         ShoppingListScreen(),
-//       ][activeIndex],
-//       bottomNavigationBar: BottomNavigationBar(
-//         currentIndex: activeIndex,
-//         onTap: (index) => setState(() {
-//           activeIndex = index;
-//         }),
-//         items: const <BottomNavigationBarItem>[
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.menu_book_rounded, size: 40),
-//             label: "",
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.lightbulb_outline, size: 40),
-//             label: "",
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.local_grocery_store_outlined, size: 40),
-//             label: "",
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

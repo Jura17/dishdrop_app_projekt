@@ -74,7 +74,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "3-Ingredient-Pizza",
     category: "Appetizers",
-    difficulty: "Easy",
+    difficulty: "Simple",
     description:
         "Who knew homemade pizza could be this easy? With just three simple ingredients, you’ll have a crispy, cheesy, and absolutely delicious pizza ready in minutes. Perfect for busy days or last-minute cravings!",
     notes: "",
@@ -90,7 +90,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Bruschetta",
     category: "Appetizers",
-    difficulty: "Easy",
+    difficulty: "Simple",
     description:
         "Crispy toasted baguette slices topped with juicy, marinated tomatoes, fresh basil, and a drizzle of olive oil—this classic Italian appetizer is light, refreshing, and bursting with flavor. A must-try for any gathering!",
     notes: "",
@@ -129,7 +129,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Caesar Salad",
     category: "Salads",
-    difficulty: "Easy",
+    difficulty: "Simple",
     description:
         "A crisp and refreshing salad made with crunchy romaine lettuce, crunchy croutons, and a creamy, garlicky Caesar dressing. Topped with Parmesan cheese, this classic dish is simple yet incredibly satisfying.",
     notes: "",
@@ -188,7 +188,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Margarita Cocktail",
     category: "Drinks",
-    difficulty: "Easy",
+    difficulty: "Simple",
     description:
         "The ultimate refreshing cocktail! A perfect blend of tangy lime juice, smooth tequila, and a hint of orange liqueur, served over ice with a salted rim. One sip, and you’ll feel like you’re on a beach vacation!",
     notes: "",
@@ -312,7 +312,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Lemonade",
     category: "Drinks",
-    difficulty: "Easy",
+    difficulty: "Simple",
     description:
         "A timeless thirst-quencher made with freshly squeezed lemons, a touch of sugar, and ice-cold water. Sweet, tart, and incredibly refreshing—perfect for a hot summer day!",
     notes: "",
@@ -405,7 +405,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Mint Mojito",
     category: "Drinks",
-    difficulty: "Easy",
+    difficulty: "Simple",
     description:
         "A refreshingly cool cocktail with muddled fresh mint, tangy lime juice, and a splash of white rum, topped with sparkling soda water. Crisp, zesty, and incredibly thirst-quenching!",
     notes: "",
@@ -434,7 +434,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Caramelized Carrots",
     category: "Side Dishes",
-    difficulty: "Easy",
+    difficulty: "Simple",
     description:
         "Sweet and buttery, these caramelized carrots are cooked to perfection, bringing out their natural sugars and deep flavors. A simple yet elegant side dish that pairs beautifully with any meal!",
     notes: "",
@@ -572,7 +572,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Iced Matcha Latte",
     category: "Drinks",
-    difficulty: "Easy",
+    difficulty: "Simple",
     description:
         "A creamy and energizing drink made with high-quality matcha green tea, lightly sweetened, and served over ice with milk. Smooth, refreshing, and packed with antioxidants!",
     notes: "",

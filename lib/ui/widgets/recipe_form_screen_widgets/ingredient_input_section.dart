@@ -1,25 +1,15 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class IngredientInputSection extends StatefulWidget {
-  const IngredientInputSection({
-    super.key,
-    required this.allTextFormCtrl,
-    required this.complexInputValues,
-    required this.addIngredientFunc,
-  });
+class IngredientInputSection extends StatelessWidget {
+  const IngredientInputSection({super.key});
 
-  final Map<String, TextEditingController> allTextFormCtrl;
-  final Map<String, dynamic> complexInputValues;
-  final Function addIngredientFunc;
-
-  @override
-  State<IngredientInputSection> createState() => _IngredientInputSectionState();
-}
-
-class _IngredientInputSectionState extends State<IngredientInputSection> {
   @override
   Widget build(BuildContext context) {
+    final recipeFormProvider = context.watch<RecipeFormProvider>();
+
     return Row(
       children: [
         Expanded(
@@ -29,7 +19,7 @@ class _IngredientInputSectionState extends State<IngredientInputSection> {
             children: [
               TextFormField(
                 maxLength: 40,
-                controller: widget.allTextFormCtrl["ingredientDescCtrl"],
+                controller: recipeFormProvider.allTextControllers["ingredientDescCtrl"],
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Ingredient description",
@@ -51,7 +41,7 @@ class _IngredientInputSectionState extends State<IngredientInputSection> {
                       },
                       maxLength: 6,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: widget.allTextFormCtrl["ingredientAmountCtrl"],
+                      controller: recipeFormProvider.allTextControllers["ingredientAmountCtrl"],
                       decoration: const InputDecoration(
                         filled: true,
                         fillColor: AppColors.lightGrey,
@@ -65,7 +55,7 @@ class _IngredientInputSectionState extends State<IngredientInputSection> {
                     child: TextFormField(
                       maxLength: 10,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: widget.allTextFormCtrl["ingredientUnitCtrl"],
+                      controller: recipeFormProvider.allTextControllers["ingredientUnitCtrl"],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Unit",
@@ -84,7 +74,7 @@ class _IngredientInputSectionState extends State<IngredientInputSection> {
         ),
         IconButton(
           onPressed: () {
-            widget.addIngredientFunc();
+            recipeFormProvider.addIngredientToList();
           },
           icon: Icon(
             Icons.add_box_outlined,
