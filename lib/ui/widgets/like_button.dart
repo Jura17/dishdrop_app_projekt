@@ -31,6 +31,7 @@ class LikeButton extends StatefulWidget {
 class _LikeButtonState extends State<LikeButton> {
   @override
   Widget build(BuildContext context) {
+    print("test");
     final recipeNotifier = context.watch<RecipeNotifier>();
 
     return Positioned(
