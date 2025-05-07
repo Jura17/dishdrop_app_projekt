@@ -1,4 +1,4 @@
-import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_notifier.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +8,7 @@ class DifficultyDropdownMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final recipeFormProvider = context.watch<RecipeFormProvider>();
+    final recipeFormProvider = context.watch<RecipeFormNotifier>();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

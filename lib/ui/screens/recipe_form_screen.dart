@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_notifier.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/category_dropdown_menu.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/cooking_time_text_form_field.dart';
@@ -35,7 +35,7 @@ class RecipeFormScreen extends StatefulWidget {
 class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
-    final recipeFormProvider = context.watch<RecipeFormProvider>();
+    final recipeFormProvider = context.watch<RecipeFormNotifier>();
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),

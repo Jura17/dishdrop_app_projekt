@@ -4,7 +4,7 @@ import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
-import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_notifier.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
@@ -16,7 +16,7 @@ class FooterButtonSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final recipeFormProvider = context.watch<RecipeFormProvider>();
+    final recipeFormProvider = context.watch<RecipeFormNotifier>();
 
     return Row(
       spacing: 10,
@@ -33,7 +33,7 @@ class FooterButtonSection extends StatelessWidget {
               if (recipeFormProvider.isEditingRecipe) {
                 // UPDATE NEW RECIPE
                 if (recipeFormProvider.recipe != null) {
-                  context.read<RecipeNotifier>().updateRecipe(recipeFormProvider.recipe!, newRecipe);
+                  context.read<RecipeNotifier>().updateRecipe(recipeFormProvider.recipe!.id, newRecipe);
                 } else {
                   return;
                 }
@@ -64,7 +64,7 @@ class FooterButtonSection extends StatelessWidget {
               if (recipeFormProvider.isEditingRecipe) {
                 // UPDATE NEW RECIPE
                 if (recipeFormProvider.recipe != null) {
-                  context.read<RecipeNotifier>().updateRecipe(recipeFormProvider.recipe!, newRecipe);
+                  context.read<RecipeNotifier>().updateRecipe(recipeFormProvider.recipe!.id, newRecipe);
                 } else {
                   return;
                 }

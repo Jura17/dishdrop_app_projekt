@@ -1,5 +1,5 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
-import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +10,7 @@ class EmptyImagePickerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final recipeFormProvider = context.read<RecipeFormProvider>();
+    final recipeFormProvider = context.read<RecipeFormNotifier>();
 
     return Positioned(
       top: 10,

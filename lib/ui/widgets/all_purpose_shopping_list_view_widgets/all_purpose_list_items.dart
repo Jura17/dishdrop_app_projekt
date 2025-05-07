@@ -1,8 +1,9 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 
-import 'package:dishdrop_app_projekt/ui/widgets/list_item_row_static.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/all_purpose_shopping_list_view_widgets/shopping_item_row_dynamic.dart';
 import 'package:flutter/material.dart';
 
 class AllPurposeListItems extends StatelessWidget {
@@ -16,19 +17,25 @@ class AllPurposeListItems extends StatelessWidget {
       children: List.generate(
         allPurposeShoppingList.shoppingItems.length,
         (index) {
+          ListItem ingredient = allPurposeShoppingList.shoppingItems[index];
           return Container(
+            key: Key(ingredient.tempID),
             decoration: BoxDecoration(color: index.isEven ? AppColors.lightGrey : Colors.white),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ListItemRowStatic(
-                amount: allPurposeShoppingList.shoppingItems[index].amount,
-                unit: allPurposeShoppingList.shoppingItems[index].unit,
-                description: allPurposeShoppingList.shoppingItems[index].description,
+              child: ShoppingItemRowDynamic(
+                index: index,
+                ingredient: allPurposeShoppingList.shoppingItems[index],
+                dismissFromList: dismissFromList,
               ),
             ),
           );
         },
       ),
     );
+  }
+
+  void dismissFromList(id) {
+    allPurposeShoppingList.shoppingItems.removeAt(id);
   }
 }

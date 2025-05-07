@@ -27,7 +27,7 @@ class RecipeDetailsFooterButtonSection extends StatelessWidget {
           icon: Icon(Icons.check),
           onPressed: () {
             recipe.updateCounterTimesCooked();
-            recipeNotifier.updateRecipe(recipe, recipe);
+            recipeNotifier.updateRecipe(recipe.id, recipe);
           },
           label: Text("I'm done cooking!"),
         ),

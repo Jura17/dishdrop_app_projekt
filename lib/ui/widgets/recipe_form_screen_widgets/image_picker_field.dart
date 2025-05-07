@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:app_settings/app_settings.dart';
 
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
-import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_notifier.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/empty_image_picker_button.dart';
@@ -25,11 +25,11 @@ class ImagePickerField extends StatefulWidget {
 
 class _ImagePickerFieldState extends State<ImagePickerField> {
   late Widget imageWidget;
-  late RecipeFormProvider recipeFormProvider;
+  late RecipeFormNotifier recipeFormProvider;
 
   @override
   Widget build(BuildContext context) {
-    recipeFormProvider = context.watch<RecipeFormProvider>();
+    recipeFormProvider = context.watch<RecipeFormNotifier>();
     chooseImageType();
 
     return Padding(

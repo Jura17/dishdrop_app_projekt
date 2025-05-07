@@ -28,8 +28,8 @@ class ShoppingList {
     shoppingItems.add(newShoppingItem);
   }
 
-  void setShoppingItem(int index, ListItem newShoppingItem) {
-    shoppingItems[index] = newShoppingItem;
+  void updateShoppingItem(int id, ListItem newShoppingItem) {
+    shoppingItems[id] = newShoppingItem;
   }
 
   void removeFromShoppingList(ListItem listItem) {

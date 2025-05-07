@@ -1,6 +1,6 @@
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
-import 'package:dishdrop_app_projekt/data/provider/recipe_form_provider.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_notifier.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
@@ -122,7 +122,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             iconData: Icons.edit,
             newScreen: ChangeNotifierProvider(
               create: (_) {
-                final RecipeFormProvider recipeFormProvider = RecipeFormProvider(recipe: recipe);
+                final RecipeFormNotifier recipeFormProvider = RecipeFormNotifier(recipe: recipe);
                 recipeFormProvider.init();
                 return recipeFormProvider;
               },
@@ -134,7 +134,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             iconData: Icons.add_box_outlined,
             newScreen: ChangeNotifierProvider(
               create: (_) {
-                final RecipeFormProvider recipeFormProvider = RecipeFormProvider();
+                final RecipeFormNotifier recipeFormProvider = RecipeFormNotifier();
                 recipeFormProvider.init();
                 return recipeFormProvider;
               },

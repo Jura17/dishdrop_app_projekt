@@ -1,22 +1,26 @@
 import 'package:dishdrop_app_projekt/core/utils/check_and_convert_amount.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
-import 'package:dishdrop_app_projekt/data/provider/recipe_form_notifier.dart';
+import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ListItemRowDynamic extends StatefulWidget {
-  const ListItemRowDynamic({
+class ShoppingItemRowDynamic extends StatefulWidget {
+  const ShoppingItemRowDynamic({
     super.key,
+    required this.index,
+    required this.dismissFromList,
     required this.ingredient,
   });
 
+  final int index;
+  final Function dismissFromList;
   final ListItem ingredient;
 
   @override
-  State<ListItemRowDynamic> createState() => _ListItemRowDynamicState();
+  State<ShoppingItemRowDynamic> createState() => _ListItemRowDynamicState();
 }
 
-class _ListItemRowDynamicState extends State<ListItemRowDynamic> {
+class _ListItemRowDynamicState extends State<ShoppingItemRowDynamic> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _unitController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -75,14 +79,15 @@ class _ListItemRowDynamicState extends State<ListItemRowDynamic> {
 
   @override
   Widget build(BuildContext context) {
-    final recipeFormNotifier = context.read<RecipeFormNotifier>();
+    final shoppingListProvider = context.watch<ShoppingListNotifier>();
 
     double? amountValue = double.tryParse(_amountController.text);
     List<String> convertedAmount = checkAndconvertAmount(amountValue);
 
     return Dismissible(
       onDismissed: (direction) {
-        recipeFormNotifier.removeFromIngredientList(widget.ingredient.id);
+        shoppingListProvider.removeFromAllPurposeShoppingList(widget.ingredient.id);
+        widget.dismissFromList(widget.index);
       },
       key: Key(widget.ingredient.id.toString()),
       background: Container(
@@ -107,6 +112,12 @@ class _ListItemRowDynamicState extends State<ListItemRowDynamic> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Checkbox(
+                value: widget.ingredient.isDone,
+                onChanged: (bool? value) {
+                  widget.ingredient.isDone = value ?? false;
+                  context.read<ShoppingListNotifier>().updateAllPurposeShoppingList(widget.ingredient);
+                }),
             GestureDetector(
               onTap: () {
                 setState(() {

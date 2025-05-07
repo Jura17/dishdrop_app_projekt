@@ -7,8 +7,8 @@ import 'package:dishdrop_app_projekt/data/repositories/shared_preferences_reposi
 
 import 'package:flutter/material.dart';
 
-class RecipeFormProvider extends ChangeNotifier {
-  RecipeFormProvider({this.recipe});
+class RecipeFormNotifier extends ChangeNotifier {
+  RecipeFormNotifier({this.recipe});
 
   Recipe? recipe;
   bool _showImgPickerError = false;

@@ -20,7 +20,7 @@ class ShoppingListNotifier extends ChangeNotifier {
   }
 
   void loadAllPurposeShoppingList() {
-    _allPurposeShoppingList = _databaseRepository.allPurposeShoppingList();
+    _allPurposeShoppingList = _databaseRepository.getAllPurposeShoppingList();
     notifyListeners();
   }
 
@@ -43,6 +43,16 @@ class ShoppingListNotifier extends ChangeNotifier {
 
   void addToAllPurposeShoppingList(ListItem listItem) {
     _databaseRepository.addToAllPurposeShoppingList(listItem);
+    notifyListeners();
+  }
+
+  void updateAllPurposeShoppingList(ListItem updatedItem) {
+    _databaseRepository.updateAllPurposeShoppingList(updatedItem);
+    notifyListeners();
+  }
+
+  void removeFromAllPurposeShoppingList(int id) {
+    _databaseRepository.removeFromAllPurposeShoppingList(id);
     notifyListeners();
   }
 

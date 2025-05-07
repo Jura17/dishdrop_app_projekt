@@ -31,7 +31,6 @@ class LikeButton extends StatefulWidget {
 class _LikeButtonState extends State<LikeButton> {
   @override
   Widget build(BuildContext context) {
-    print("test");
     final recipeNotifier = context.watch<RecipeNotifier>();
 
     return Positioned(
@@ -42,7 +41,7 @@ class _LikeButtonState extends State<LikeButton> {
       child: GestureDetector(
         onTap: () {
           widget.recipe.toggleIsFavorite();
-          recipeNotifier.updateRecipe(widget.recipe, widget.recipe);
+          recipeNotifier.updateRecipe(widget.recipe.id, widget.recipe);
         },
         child: Container(
           width: widget.width,

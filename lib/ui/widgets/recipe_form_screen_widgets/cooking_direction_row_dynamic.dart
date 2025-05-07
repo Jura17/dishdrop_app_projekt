@@ -1,17 +1,18 @@
 import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_form_notifier.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // TODO: maybe simplify and make stateless?
 class CookingDirectionRowDynamic extends StatefulWidget {
   const CookingDirectionRowDynamic({
     super.key,
     required this.cookingDirection,
-    required this.removeFromCookingDirectionsListFunc,
     required this.rowIndex,
   });
 
   final CookingDirection cookingDirection;
-  final Function removeFromCookingDirectionsListFunc;
   final int rowIndex;
 
   @override
@@ -38,11 +39,11 @@ class _CookingDirectionRowDynamicState extends State<CookingDirectionRowDynamic>
 
   @override
   Widget build(BuildContext context) {
+    final recipeFormProvider = context.watch<RecipeFormNotifier>();
+
     return Dismissible(
       onDismissed: (direction) {
-        setState(() {
-          widget.removeFromCookingDirectionsListFunc(widget.cookingDirection.id);
-        });
+        recipeFormProvider.removeCookingDirection(widget.cookingDirection.id);
       },
       key: Key(widget.cookingDirection.id.toString()),
       background: Container(
