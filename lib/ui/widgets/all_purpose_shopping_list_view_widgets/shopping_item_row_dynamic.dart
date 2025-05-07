@@ -17,10 +17,10 @@ class ShoppingItemRowDynamic extends StatefulWidget {
   final ListItem ingredient;
 
   @override
-  State<ShoppingItemRowDynamic> createState() => _ListItemRowDynamicState();
+  State<ShoppingItemRowDynamic> createState() => _ShoppingItemRowDynamicState();
 }
 
-class _ListItemRowDynamicState extends State<ShoppingItemRowDynamic> {
+class _ShoppingItemRowDynamicState extends State<ShoppingItemRowDynamic> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _unitController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();

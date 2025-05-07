@@ -2,7 +2,7 @@ import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 
-import 'package:dishdrop_app_projekt/ui/widgets/list_item_row_static.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_view_widgets/shopping_item_row_dismissable.dart';
 import 'package:flutter/material.dart';
 
 class RecipeShoppingListItems extends StatefulWidget {
@@ -31,14 +31,22 @@ class _RecipeShoppingListItemsState extends State<RecipeShoppingListItems> {
           color: innerIndex.isEven ? AppColors.lightGrey : Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ListItemRowStatic(
+            child: ShoppingItemRowDismissable(
               amount: shoppingItem.amount != null ? shoppingItem.amount! * widget.servings : null,
               unit: shoppingItem.unit,
               description: shoppingItem.description,
+              dismissItem: dismissItem,
+              index: innerIndex,
+              shoppingItem: shoppingItem,
+              shoppingListId: widget.recipeShoppingList.id,
             ),
           ),
         );
       }).toList(),
     );
+  }
+
+  void dismissItem(int index) {
+    widget.recipeShoppingList.shoppingItems.removeAt(index);
   }
 }

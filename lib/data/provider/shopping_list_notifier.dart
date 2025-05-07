@@ -15,7 +15,7 @@ class ShoppingListNotifier extends ChangeNotifier {
   }
 
   void loadRecipeShoppingLists() {
-    _recipeShoppingLists = _databaseRepository.recipeShoppingLists();
+    _recipeShoppingLists = _databaseRepository.getRecipeShoppingLists();
     notifyListeners();
   }
 
@@ -53,6 +53,11 @@ class ShoppingListNotifier extends ChangeNotifier {
 
   void removeFromAllPurposeShoppingList(int id) {
     _databaseRepository.removeFromAllPurposeShoppingList(id);
+    notifyListeners();
+  }
+
+  void removeFromRecipeShoppingList(int shoppingListId, int id) {
+    _databaseRepository.removeFromRecipeShoppingList(shoppingListId, id);
     notifyListeners();
   }
 

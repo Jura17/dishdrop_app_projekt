@@ -135,15 +135,23 @@ class ObjectboxDatabase implements DatabaseRepository {
   }
 
   @override
+  void removeFromRecipeShoppingList(int shoppingListId, int id) {
+    final ShoppingList? recipeShoppingList = shoppingListBox.get(shoppingListId);
+    if (recipeShoppingList != null) {
+      recipeShoppingList.shoppingItems.removeWhere((ingredient) => ingredient.id == id);
+      shoppingListBox.put(recipeShoppingList);
+    }
+  }
+
+  @override
   ShoppingList? getAllPurposeShoppingList() {
     final allPurposeShoppingList =
         shoppingListBox.getAll().where((shoppingList) => shoppingList.isAllPurposeList == true).first;
-
     return allPurposeShoppingList;
   }
 
   @override
-  List<ShoppingList> recipeShoppingLists() {
+  List<ShoppingList> getRecipeShoppingLists() {
     final recipeShoppingLists =
         shoppingListBox.getAll().where((shoppingList) => shoppingList.isAllPurposeList == false).toList();
     return recipeShoppingLists;

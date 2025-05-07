@@ -27,12 +27,13 @@ abstract class DatabaseRepository {
   void addToAllPurposeShoppingList(ListItem listItem);
 
   // read
-  List<ShoppingList> recipeShoppingLists();
+  List<ShoppingList> getRecipeShoppingLists();
   ShoppingList? getAllPurposeShoppingList();
 
   // delete
   void removeShoppingList(ShoppingList shoppingList);
   void removeFromAllPurposeShoppingList(int id);
+  void removeFromRecipeShoppingList(int shoppingListId, int id);
 
   // update
   void updateShoppingList(ShoppingList oldShoppingList, ShoppingList newShoppingList);

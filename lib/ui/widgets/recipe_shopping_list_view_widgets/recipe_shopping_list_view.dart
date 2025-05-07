@@ -117,9 +117,7 @@ class _RecipeShoppingListIngredientListViewState extends State<RecipeShoppingLis
   }
 
   void updateServings(newAmount) {
-    setState(() {
-      widget.recipeShoppingList.servings = newAmount;
-      context.read<ShoppingListNotifier>().updateShoppingList(widget.recipeShoppingList, widget.recipeShoppingList);
-    });
+    widget.recipeShoppingList.servings = newAmount;
+    context.read<ShoppingListNotifier>().updateShoppingList(widget.recipeShoppingList, widget.recipeShoppingList);
   }
 }
