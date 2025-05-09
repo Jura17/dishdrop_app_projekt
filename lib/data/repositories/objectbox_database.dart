@@ -111,9 +111,7 @@ class ObjectboxDatabase implements DatabaseRepository {
 
   @override
   void updateAllPurposeShoppingList(ListItem updatedItem) {
-    final query = shoppingListBox.query(ShoppingList_.isAllPurposeList.equals(true)).build();
-    var allPurposeShoppingList = query.findFirst();
-    query.close();
+    final ShoppingList? allPurposeShoppingList = getAllPurposeShoppingList();
 
     if (allPurposeShoppingList != null) {
       final index = allPurposeShoppingList.shoppingItems.indexWhere((item) => item.id == updatedItem.id);
@@ -135,11 +133,12 @@ class ObjectboxDatabase implements DatabaseRepository {
   }
 
   @override
-  void removeFromRecipeShoppingList(int shoppingListId, int id) {
+  void removeFromRecipeShoppingList(int shoppingListId, int itemId) {
     final ShoppingList? recipeShoppingList = shoppingListBox.get(shoppingListId);
     if (recipeShoppingList != null) {
-      recipeShoppingList.shoppingItems.removeWhere((ingredient) => ingredient.id == id);
+      recipeShoppingList.shoppingItems.removeWhere((ingredient) => ingredient.id == itemId);
       shoppingListBox.put(recipeShoppingList);
+      // listItemBox.remove(itemId);
     }
   }
 
@@ -158,13 +157,34 @@ class ObjectboxDatabase implements DatabaseRepository {
   }
 
   @override
-  void removeShoppingList(ShoppingList shoppingList) {
+  ShoppingList? getRecipeShoppingListById(int id) {
+    final shoppingList = shoppingListBox.get(id);
+    shoppingList?.recipe.attach(store);
+
+    return shoppingList;
+  }
+
+  @override
+  void removeRecipeShoppingList(ShoppingList shoppingList) {
     shoppingListBox.remove(shoppingList.id);
   }
 
   @override
-  void updateShoppingList(ShoppingList oldShoppingList, ShoppingList newShoppingList) {
-    newShoppingList.id = oldShoppingList.id;
+  void updateRecipeShoppingList(int id, ShoppingList newShoppingList) {
+    newShoppingList.id = id;
     shoppingListBox.put(newShoppingList);
+  }
+
+  @override
+  void updateRecipeShoppingListItem(int shoppingListId, ListItem updatedItem) {
+    final ShoppingList? recipeShoppingList = shoppingListBox.get(shoppingListId);
+    if (recipeShoppingList != null) {
+      final index = recipeShoppingList.shoppingItems.indexWhere((item) => item.id == updatedItem.id);
+      if (index != -1) {
+        recipeShoppingList.shoppingItems[index] = updatedItem;
+        listItemBox.put(updatedItem);
+        shoppingListBox.put(recipeShoppingList);
+      }
+    }
   }
 }

@@ -45,6 +45,7 @@ class _RecipeShoppingListIngredientsSectionState extends State<RecipeShoppingLis
             return Column(
               children: allRecipeShoppingLists.map((ShoppingList recipeShoppingList) {
                 return RecipeShoppingListIngredientListView(
+                  key: Key(recipeShoppingList.id.toString()),
                   recipeShoppingList: recipeShoppingList,
                 );
               }).toList(),
@@ -84,7 +85,6 @@ class _RecipeShoppingListIngredientListViewState extends State<RecipeShoppingLis
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // TODO: bug that causes servings picker to show incorrect amount after deleting a shopping list above another
             ServingsPicker(
               updateServingsFunc: updateServings,
               servings: widget.recipeShoppingList.servings,
@@ -92,7 +92,7 @@ class _RecipeShoppingListIngredientListViewState extends State<RecipeShoppingLis
             TextButton.icon(
               style: TextButton.styleFrom(foregroundColor: Colors.red, iconColor: Colors.red),
               onPressed: () {
-                context.read<ShoppingListNotifier>().removeShoppingList(widget.recipeShoppingList);
+                context.read<ShoppingListNotifier>().removeRecipeShoppingList(widget.recipeShoppingList);
                 context.read<ShoppingListNotifier>().loadRecipeShoppingLists();
                 showCustomAlertBanner(context, Colors.red, "Ingredients removed from shopping list.");
               },
@@ -117,7 +117,15 @@ class _RecipeShoppingListIngredientListViewState extends State<RecipeShoppingLis
   }
 
   void updateServings(newAmount) {
-    widget.recipeShoppingList.servings = newAmount;
-    context.read<ShoppingListNotifier>().updateShoppingList(widget.recipeShoppingList, widget.recipeShoppingList);
+    final updatedShoppingList =
+        context.read<ShoppingListNotifier>().getRecipeShoppingListById(widget.recipeShoppingList.id);
+
+    if (updatedShoppingList != null) {
+      updatedShoppingList.servings = newAmount;
+      context.read<ShoppingListNotifier>().updateRecipeShoppingList(
+            updatedShoppingList.id,
+            updatedShoppingList,
+          );
+    }
   }
 }

@@ -36,7 +36,7 @@ class RecipeDetailsFooterButtonSection extends StatelessWidget {
           onPressed: () {
             final shoppingList = recipe.shoppingList.target;
             if (shoppingList != null) {
-              shoppingListNotifier.removeShoppingList(shoppingList);
+              shoppingListNotifier.removeRecipeShoppingList(shoppingList);
               shoppingListNotifier.loadRecipeShoppingLists();
             }
             recipeNotifier.removeRecipe(recipe);

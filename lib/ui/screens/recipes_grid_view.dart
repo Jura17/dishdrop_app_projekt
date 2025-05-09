@@ -79,9 +79,9 @@ class _RecipesGridViewState extends State<RecipesGridView> {
         iconData: Icons.add_box_outlined,
         newScreen: ChangeNotifierProvider(
           create: (_) {
-            final RecipeFormNotifier recipeFormProvider = RecipeFormNotifier();
-            recipeFormProvider.init();
-            return recipeFormProvider;
+            final RecipeFormNotifier recipeFormNotifier = RecipeFormNotifier();
+            recipeFormNotifier.init();
+            return recipeFormNotifier;
           },
           child: RecipeFormScreen(),
         ),

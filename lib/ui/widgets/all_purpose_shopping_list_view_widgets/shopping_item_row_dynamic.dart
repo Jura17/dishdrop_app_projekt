@@ -110,7 +110,7 @@ class _ShoppingItemRowDynamicState extends State<ShoppingItemRowDynamic> {
         child: Row(
           spacing: 10,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Checkbox(
                 value: widget.ingredient.isDone,

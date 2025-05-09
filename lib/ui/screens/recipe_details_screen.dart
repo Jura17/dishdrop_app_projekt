@@ -122,9 +122,9 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             iconData: Icons.edit,
             newScreen: ChangeNotifierProvider(
               create: (_) {
-                final RecipeFormNotifier recipeFormProvider = RecipeFormNotifier(recipe: recipe);
-                recipeFormProvider.init();
-                return recipeFormProvider;
+                final RecipeFormNotifier recipeFormNotifier = RecipeFormNotifier(recipe: recipe);
+                recipeFormNotifier.init();
+                return recipeFormNotifier;
               },
               child: RecipeFormScreen(),
             ),
@@ -134,9 +134,9 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
             iconData: Icons.add_box_outlined,
             newScreen: ChangeNotifierProvider(
               create: (_) {
-                final RecipeFormNotifier recipeFormProvider = RecipeFormNotifier();
-                recipeFormProvider.init();
-                return recipeFormProvider;
+                final RecipeFormNotifier recipeFormNotifier = RecipeFormNotifier();
+                recipeFormNotifier.init();
+                return recipeFormNotifier;
               },
               child: RecipeFormScreen(),
             ),

@@ -30,6 +30,7 @@ class _AllPurposeListInputSectionState extends State<AllPurposeListInputSection>
             spacing: 10,
             children: [
               TextFormField(
+                maxLength: 60,
                 controller: widget.allTextControllers["itemDescCtrl"],
                 decoration: const InputDecoration(border: OutlineInputBorder(), hintText: "Ingredient description"),
               ),

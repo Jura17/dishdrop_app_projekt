@@ -27,6 +27,10 @@ class ShoppingListNotifier extends ChangeNotifier {
   List<ShoppingList> get recipeShoppingLists => _recipeShoppingLists;
   ShoppingList? get allPurposeShoppingList => _allPurposeShoppingList;
 
+  ShoppingList? getRecipeShoppingListById(int id) {
+    return _databaseRepository.getRecipeShoppingListById(id);
+  }
+
   void addShoppingList(ShoppingList newShoppingList, Recipe recipe) {
     _databaseRepository.addShoppingList(newShoppingList, recipe);
     notifyListeners();
@@ -36,8 +40,9 @@ class ShoppingListNotifier extends ChangeNotifier {
     _databaseRepository.attachRelationShoppingList(shoppingList);
   }
 
-  void removeShoppingList(ShoppingList shoppingList) {
-    _databaseRepository.removeShoppingList(shoppingList);
+  void removeRecipeShoppingList(ShoppingList shoppingList) {
+    _databaseRepository.removeRecipeShoppingList(shoppingList);
+    _recipeShoppingLists.remove(shoppingList);
     notifyListeners();
   }
 
@@ -61,8 +66,15 @@ class ShoppingListNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateShoppingList(ShoppingList oldShoppingList, ShoppingList newShoppingList) {
-    _databaseRepository.updateShoppingList(oldShoppingList, newShoppingList);
+  void updateRecipeShoppingList(int id, ShoppingList updatedShoppingList) {
+    _databaseRepository.updateRecipeShoppingList(id, updatedShoppingList);
+    final index = _recipeShoppingLists.indexWhere((shoppingList) => shoppingList.id == id);
+    _recipeShoppingLists[index] = updatedShoppingList;
+    notifyListeners();
+  }
+
+  void updateRecipeShoppingListItem(int shoppingListId, ListItem updatedItem) {
+    _databaseRepository.updateRecipeShoppingListItem(shoppingListId, updatedItem);
     notifyListeners();
   }
 }

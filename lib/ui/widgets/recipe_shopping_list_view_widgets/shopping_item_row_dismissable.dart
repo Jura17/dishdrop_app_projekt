@@ -31,8 +31,8 @@ class ShoppingItemRowDismissable extends StatelessWidget {
 
     return Dismissible(
       onDismissed: (direction) {
-        shoppingListProvider.removeFromRecipeShoppingList(shoppingListId, shoppingItem.id);
         dismissItem(index);
+        shoppingListProvider.removeFromRecipeShoppingList(shoppingListId, shoppingItem.id);
       },
       key: Key(shoppingItem.tempID),
       background: Container(
@@ -45,14 +45,14 @@ class ShoppingItemRowDismissable extends StatelessWidget {
       child: Row(
         spacing: 10,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Checkbox(
-          // value: shoppingItem.isDone,
-          // onChanged: (bool? value) {
-          //   shoppingItem.isDone = value ?? false;
-          //   context.read<ShoppingListNotifier>().updateRecipeShoppingList(shoppingItem);
-          // }),
+          Checkbox(
+              value: shoppingItem.isDone,
+              onChanged: (bool? value) {
+                shoppingItem.isDone = value ?? false;
+                context.read<ShoppingListNotifier>().updateRecipeShoppingListItem(shoppingListId, shoppingItem);
+              }),
           RichText(
             text: TextSpan(
               text: convertedAmount[0],

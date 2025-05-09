@@ -1,9 +1,11 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
+import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_view_widgets/shopping_item_row_dismissable.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RecipeShoppingListItems extends StatefulWidget {
   const RecipeShoppingListItems({
@@ -48,5 +50,8 @@ class _RecipeShoppingListItemsState extends State<RecipeShoppingListItems> {
 
   void dismissItem(int index) {
     widget.recipeShoppingList.shoppingItems.removeAt(index);
+    if (widget.recipeShoppingList.shoppingItems.isEmpty) {
+      context.read<ShoppingListNotifier>().removeRecipeShoppingList(widget.recipeShoppingList);
+    }
   }
 }
