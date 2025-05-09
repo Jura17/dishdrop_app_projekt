@@ -46,7 +46,6 @@ class ObjectboxDatabase implements DatabaseRepository {
     return recipeBox.getAll();
   }
 
-// test
   @override
   void updateRecipe(int oldRecipeId, Recipe newRecipe) {
     final Recipe? oldRecipe = recipeBox.get(oldRecipeId);
