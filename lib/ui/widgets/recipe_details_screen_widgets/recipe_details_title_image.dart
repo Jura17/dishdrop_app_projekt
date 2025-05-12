@@ -5,7 +5,7 @@ import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
+
 import 'package:flutter/material.dart';
 
 class RecipeDetailsTitleImage extends StatelessWidget {
@@ -21,9 +21,7 @@ class RecipeDetailsTitleImage extends StatelessWidget {
     Widget imageWidget;
     Map<String, dynamic> images = jsonDecode(recipe.imagesJson);
 
-    if (images["titleImg"].contains("http")) {
-      imageWidget = NetworkTitleImg(imgPath: images["titleImg"]);
-    } else if (recipe.images["titleImg"].contains("assets/images/")) {
+    if (recipe.images["titleImg"].contains("assets/images/")) {
       imageWidget = Image.asset(images["titleImg"], fit: BoxFit.cover);
     } else {
       imageWidget = FileTitleImg(imgPath: images["titleImg"]);

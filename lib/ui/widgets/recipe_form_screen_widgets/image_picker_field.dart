@@ -4,7 +4,7 @@ import 'package:app_settings/app_settings.dart';
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_form_notifier.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
+
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/empty_image_picker_button.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -139,9 +139,7 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
         color: AppColors.dishDropBlack,
       );
     } else {
-      if (recipeFormProvider.imagePath!.contains("http")) {
-        imageWidget = NetworkTitleImg(imgPath: recipeFormProvider.imagePath!);
-      } else if (recipeFormProvider.imagePath!.contains("assets/images/")) {
+      if (recipeFormProvider.imagePath!.contains("assets/images/")) {
         imageWidget = Image.asset(recipeFormProvider.imagePath!, fit: BoxFit.cover);
       } else {
         imageWidget = FileTitleImg(imgPath: recipeFormProvider.imagePath!);

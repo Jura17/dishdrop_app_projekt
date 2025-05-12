@@ -1,7 +1,6 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
 
 import 'package:flutter/material.dart';
 
@@ -18,9 +17,7 @@ class RecipeShoppingListTitleImage extends StatelessWidget {
     Widget imageWidget;
     String imgPath = recipeShoppingList.imgUrl;
 
-    if (imgPath.contains("http")) {
-      imageWidget = NetworkTitleImg(imgPath: imgPath);
-    } else if (imgPath.contains("assets/images/")) {
+    if (imgPath.contains("assets/images/")) {
       imageWidget = Image.asset(imgPath, fit: BoxFit.cover);
     } else {
       imageWidget = FileTitleImg(imgPath: imgPath);

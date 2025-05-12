@@ -7,7 +7,7 @@ import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
+
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_card_widgets/recipe_card_info_box.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,10 +27,8 @@ class RecipeCard extends StatelessWidget {
 
     Map<String, dynamic> images = jsonDecode(recipe!.imagesJson);
     Widget imageWidget;
-    if (images["titleImg"].contains("http")) {
-      imageWidget = NetworkTitleImg(imgPath: images["titleImg"]);
-    } else if (images["titleImg"].contains("assets/images/")) {
-      imageWidget = Image.asset(images["titleImg"]);
+    if (images["titleImg"].contains("assets/images/")) {
+      imageWidget = Image.asset(images["titleImg"], fit: BoxFit.cover);
     } else {
       imageWidget = FileTitleImg(imgPath: images["titleImg"]);
     }

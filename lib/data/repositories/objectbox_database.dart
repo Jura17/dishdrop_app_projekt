@@ -3,6 +3,8 @@ import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:dishdrop_app_projekt/data/repositories/database_repository.dart';
+import 'package:dishdrop_app_projekt/data/repositories/recipe_mock_data.dart';
+import 'package:dishdrop_app_projekt/gen/assets.gen.dart';
 import 'package:dishdrop_app_projekt/objectbox.g.dart';
 
 class ObjectboxDatabase implements DatabaseRepository {
@@ -16,7 +18,20 @@ class ObjectboxDatabase implements DatabaseRepository {
       : recipeBox = store.box<Recipe>(),
         shoppingListBox = store.box<ShoppingList>(),
         listItemBox = store.box<ListItem>(),
-        cookingDirectionBox = store.box<CookingDirection>();
+        cookingDirectionBox = store.box<CookingDirection>() {
+    // Use to fill database with mock data:
+    if (recipeBox.isEmpty()) recipeBox.putMany(recipeData);
+
+    if (shoppingListBox.isEmpty()) {
+      shoppingListBox.put(
+        ShoppingList(
+          title: "All-Purpose list",
+          imgUrl: Assets.images.shoppingItems.path,
+          isAllPurposeList: true,
+        ),
+      );
+    }
+  }
 
   @override
   void addRecipe(Recipe newRecipe) {

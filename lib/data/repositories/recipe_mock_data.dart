@@ -14,7 +14,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: ["comfort food", "chicken", "Friday night", "high protein"],
     imagesJson: jsonEncode({
-      "titleImg": "https://www.dinneratthezoo.com/wp-content/uploads/2015/04/sesame-chicken-2.jpg",
+      "titleImg": "assets/images/sesame_chicken.webp",
       "cookingDirectionImg": [],
     }),
     prepTime: 20,
@@ -64,8 +64,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg":
-          "https://www.allrecipes.com/thmb/V1qC6HgDjow3A_ZzGwjTCLdaTnw=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/8722745_Shiitake-Mushroom-Stir-Fry_Maura-Rawlette_4x3-cd3973ee9d5140168f34d1d4910dc1e6.jpg",
+      "titleImg": "assets/images/shiitake.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 15,
@@ -80,8 +79,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg":
-          "https://www.allrecipes.com/thmb/kMqfMSgj0TcccOtpfJFWA5DXmiM=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/ALR-8660871-3-ingredient-pizza-appetizer-VAT-4x3-2-239e0af95224490695d435f58d2cb71e.jpg",
+      "titleImg": "assets/images/pizza.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 15,
@@ -96,8 +94,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg":
-          "https://www.allrecipes.com/thmb/68eDhLkdA8VEDy6iWkq6EDsG5V0=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/54165-balsamic-bruschetta-DDMFS-4x3-e2b55b5ca39b4c1783e524a2461634ea.jpg",
+      "titleImg": "assets/images/balsamic_bruschetta.webp",
       "cookingDirectionImg": [],
     }),
     prepTime: 15,
@@ -135,7 +132,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg": "https://www.sonachgefuehl.de/wp-content/uploads/2019/05/Caesar_Salad_01.jpg",
+      "titleImg": "assets/images/caesar_salad.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 10,
@@ -162,7 +159,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg": "https://www.inspiredtaste.net/wp-content/uploads/2016/06/Brownies-Recipe-1-1200.jpg",
+      "titleImg": "assets/images/brownies.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 15,
@@ -194,7 +191,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg": "https://kitchenswagger.com/wp-content/uploads/2019/06/classic-margarita-1.jpg",
+      "titleImg": "assets/images/classic_margarita.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 5,
@@ -225,7 +222,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg": "https://www.eatingbirdfood.com/wp-content/uploads/2023/06/grilled-chicken-salad-hero.jpg",
+      "titleImg": "assets/images/grilled_chicken_salad.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 15,
@@ -254,8 +251,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg":
-          "https://www.marthastewart.com/thmb/dlKxe9kD9I9_Yfrqi7c4nMyT3yM=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/MSL-338686-spaghetti-carbonara-hero-3x2-69999-560b45d1dd9f4741b717176eff024839.jpeg",
+      "titleImg": "assets/images/carbonara.webp",
       "cookingDirectionImg": [],
     }),
     prepTime: 10,
@@ -285,7 +281,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg": "https://www.billyparisi.com/wp-content/uploads/2022/02/lava-cake-1.jpg",
+      "titleImg": "assets/images/lava_cake.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 15,
@@ -318,7 +314,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg": "https://brownthumbmama.com/wp-content/uploads/2016/02/lemonadecupcropOPT.jpg",
+      "titleImg": "assets/images/lemonade.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 5,
@@ -346,7 +342,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg": "https://cdn.loveandlemons.com/wp-content/uploads/2022/06/pasta-primavera-1.jpg",
+      "titleImg": "assets/images/pasta_primavera.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 10,
@@ -380,7 +376,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg": "https://lifemadesweeter.com/wp-content/uploads/Crispy-Tofu-recipe-vegan-gluten-free-low-carb.jpg",
+      "titleImg": "assets/images/crispy_tofu.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 15,
@@ -411,7 +407,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg": "https://cdn.loveandlemons.com/wp-content/uploads/2020/07/mojito-recipe.jpg",
+      "titleImg": "assets/images/mojito.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 5,
@@ -440,8 +436,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg":
-          "https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fit,w_730,h_913/k%2FPhoto%2FRecipes%2F2023-11-honey-glazed-carrots%2F33086-Honey-Glazed-Carrots",
+      "titleImg": "assets/images/honey_glazed_carrots.webp",
       "cookingDirectionImg": [],
     }),
     prepTime: 10,
@@ -473,7 +468,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg": "https://veryveganish.com/wp-content/uploads/2024/07/Vegetable-Fried-Rice-no-egg-oil-free-21.jpg",
+      "titleImg": "assets/images/fried_rice.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 10,
@@ -506,8 +501,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg":
-          "https://cdn77-s3.lazycatkitchen.com/wp-content/uploads/2019/11/vegan-mushroom-risotto-close-800x1200.jpg",
+      "titleImg": "assets/images/mushroom_risotto.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 10,
@@ -542,7 +536,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg": "https://preppykitchen.com/wp-content/uploads/2020/02/Lemon-Bars-feature-new.jpg",
+      "titleImg": "assets/images/lemon_bars.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 15,
@@ -578,7 +572,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: [],
     imagesJson: jsonEncode({
-      "titleImg": "https://coffeecopycat.com/wp-content/uploads/2023/04/IcedMatchaLatte1-1200x1600-1.jpg",
+      "titleImg": "assets/images/iced_matcha_latte.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 5,

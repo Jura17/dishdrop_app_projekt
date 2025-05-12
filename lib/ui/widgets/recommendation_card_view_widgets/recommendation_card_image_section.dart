@@ -2,7 +2,7 @@ import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/dismiss_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
+
 import 'package:flutter/material.dart';
 
 class RecommendationCardImageSection extends StatelessWidget {
@@ -16,9 +16,7 @@ class RecommendationCardImageSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget imageWidget;
-    if (recipe.images["titleImg"].contains("http")) {
-      imageWidget = NetworkTitleImg(imgPath: recipe.images["titleImg"]);
-    } else if (recipe.images["titleImg"].contains("assets/images/")) {
+    if (recipe.images["titleImg"].contains("assets/images/")) {
       imageWidget = Image.asset(recipe.images["titleImg"]);
     } else {
       imageWidget = FileTitleImg(imgPath: recipe.images["titleImg"]);
