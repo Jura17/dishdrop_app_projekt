@@ -42,7 +42,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    recipe = context.read<RecipeNotifier>().getRecipeById(widget.recipeId);
+    recipe = context.watch<RecipeNotifier>().getRecipeById(widget.recipeId);
 
     _directionsEmpty = recipe!.directions.isEmpty;
     _ingredientsEmpty = recipe!.ingredients.isEmpty;

@@ -32,13 +32,6 @@ class RecipeShoppingListTitleImage extends StatelessWidget {
       width: double.infinity,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        // TODO: app crashes in offline-mode because loading images fails
-        // child: Image.asset(
-        //   widget.recipeShoppingList.imgUrl,
-        //   height: 250,
-        //   width: double.infinity,
-        //   fit: BoxFit.cover,
-        // ),
         child: imageWidget,
       ),
     );

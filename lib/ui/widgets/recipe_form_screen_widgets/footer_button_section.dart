@@ -40,9 +40,9 @@ class FooterButtonSection extends StatelessWidget {
               } else {
                 // CREATE NEW RECIPE
                 context.read<RecipeNotifier>().addRecipe(newRecipe);
+                recipeFormProvider.resetAllCtrl();
               }
 
-              recipeFormProvider.resetAllCtrl();
               if (context.mounted) {
                 showCustomAlertBanner(context, Colors.green,
                     recipeFormProvider.isEditingRecipe ? "Recipe was edited!" : "Recipe added to cookbook!");

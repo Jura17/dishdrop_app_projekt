@@ -4,7 +4,6 @@ import 'package:dishdrop_app_projekt/data/provider/recipe_form_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// TODO: maybe simplify and make stateless?
 class CookingDirectionRowDynamic extends StatefulWidget {
   const CookingDirectionRowDynamic({
     super.key,
