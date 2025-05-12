@@ -6,8 +6,6 @@ import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-
-//
 class Recipe {
   @Id()
   int id = 0;

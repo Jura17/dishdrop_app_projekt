@@ -4,7 +4,6 @@ import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/repositories/shared_preferences_repository.dart';
-
 import 'package:flutter/material.dart';
 
 class RecipeFormNotifier extends ChangeNotifier {
@@ -133,7 +132,6 @@ class RecipeFormNotifier extends ChangeNotifier {
     allInputFields["directions"] = directionsEncoded;
 
     final jsonString = jsonEncode(allInputFields);
-
     isEditingRecipe
         ? sharedPrefsRepo.overrideCachedEditInput(jsonString)
         : sharedPrefsRepo.overrideCachedInput(jsonString);
