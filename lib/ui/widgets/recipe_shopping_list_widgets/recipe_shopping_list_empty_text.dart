@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class RecipeShoppingListIsEmptyText extends StatelessWidget {
-  const RecipeShoppingListIsEmptyText({
+class RecipeShoppingListEmptyText extends StatelessWidget {
+  const RecipeShoppingListEmptyText({
     super.key,
   });
 
@@ -15,13 +15,12 @@ class RecipeShoppingListIsEmptyText extends StatelessWidget {
           children: [
             TextSpan(
               text: "recipes ",
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor),
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineMedium
+                  ?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),
             ),
-            TextSpan(
-                text: "to add some ",
-                style: Theme.of(context).textTheme.headlineMedium),
+            TextSpan(text: "to add some ", style: Theme.of(context).textTheme.headlineMedium),
             TextSpan(
               text: "shopping items!",
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(

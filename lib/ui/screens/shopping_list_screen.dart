@@ -3,7 +3,7 @@ import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/all_purpose_shopping_list_view_widgets/all_purpose_shopping_list_view.dart';
 
-import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_view_widgets/recipe_shopping_list_view.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_widgets/recipe_shopping_lists_outer_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +35,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
         ),
       ),
       body: [
-        RecipeShoppingListView(),
+        RecipeShoppingListsOuterContainer(),
         AllPurposeShoppingListView(),
       ][activeIndex],
       floatingActionButton: ShoppingListSegmentButton(onSelectionChangedFunc: onSelectionChanged),

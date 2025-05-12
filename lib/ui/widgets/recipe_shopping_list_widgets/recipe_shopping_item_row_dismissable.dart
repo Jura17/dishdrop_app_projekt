@@ -4,35 +4,33 @@ import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ShoppingItemRowDismissable extends StatelessWidget {
-  const ShoppingItemRowDismissable({
+class RecipeShoppingItemRowDismissable extends StatelessWidget {
+  const RecipeShoppingItemRowDismissable({
     super.key,
     required this.shoppingListId,
-    required this.amount,
-    required this.unit,
-    required this.description,
-    required this.dismissItem,
+    required this.servings,
+    required this.dismissFunc,
     required this.index,
     required this.shoppingItem,
   });
 
   final int shoppingListId;
-  final double? amount;
-  final String? unit;
-  final String description;
-  final Function dismissItem;
+  final int servings;
+  final Function dismissFunc;
   final int index;
   final ListItem shoppingItem;
 
   @override
   Widget build(BuildContext context) {
     final shoppingListProvider = context.watch<ShoppingListNotifier>();
+
+    final double? amount = shoppingItem.amount != null ? shoppingItem.amount! * servings : null;
     List<String> convertedAmount = checkAndconvertAmount(amount);
 
     return Dismissible(
       direction: DismissDirection.endToStart,
       onDismissed: (direction) {
-        dismissItem(index);
+        dismissFunc(index);
         shoppingListProvider.removeFromRecipeShoppingList(shoppingListId, shoppingItem.id);
       },
       key: Key(shoppingItem.tempID),
@@ -71,7 +69,7 @@ class ShoppingItemRowDismissable extends StatelessWidget {
                   ),
                 ),
                 TextSpan(
-                  text: " ${unit ?? ''}",
+                  text: " ${shoppingItem.unit ?? ''}",
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         decoration: shoppingItem.isDone ? TextDecoration.lineThrough : null,
                       ),
@@ -81,7 +79,7 @@ class ShoppingItemRowDismissable extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              description,
+              shoppingItem.description,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     decoration: shoppingItem.isDone ? TextDecoration.lineThrough : null,
                   ),

@@ -7,7 +7,7 @@ class ServingsPicker extends StatefulWidget {
     required this.servings,
   });
 
-  final Function updateServingsFunc;
+  final void Function(int newAmount) updateServingsFunc;
   final int servings;
 
   @override

@@ -1,21 +1,22 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/network_title_img.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_view_widgets/recipe_shopping_list_view.dart';
+
 import 'package:flutter/material.dart';
 
 class RecipeShoppingListTitleImage extends StatelessWidget {
   const RecipeShoppingListTitleImage({
     super.key,
-    required this.widget,
+    required this.recipeShoppingList,
   });
 
-  final RecipeShoppingListIngredientListView widget;
+  final ShoppingList recipeShoppingList;
 
   @override
   Widget build(BuildContext context) {
     Widget imageWidget;
-    String imgPath = widget.recipeShoppingList.imgUrl;
+    String imgPath = recipeShoppingList.imgUrl;
 
     if (imgPath.contains("http")) {
       imageWidget = NetworkTitleImg(imgPath: imgPath);
