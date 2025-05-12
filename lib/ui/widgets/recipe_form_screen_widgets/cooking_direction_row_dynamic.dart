@@ -42,12 +42,15 @@ class _CookingDirectionRowDynamicState extends State<CookingDirectionRowDynamic>
     final recipeFormProvider = context.watch<RecipeFormNotifier>();
 
     return Dismissible(
+      direction: DismissDirection.endToStart,
       onDismissed: (direction) {
         recipeFormProvider.removeCookingDirection(widget.cookingDirection.id);
       },
       key: Key(widget.cookingDirection.id.toString()),
       background: Container(
+        alignment: Alignment.centerRight,
         color: Colors.red,
+        padding: EdgeInsets.only(right: 20),
         child: Icon(
           Icons.delete,
           color: Colors.white,

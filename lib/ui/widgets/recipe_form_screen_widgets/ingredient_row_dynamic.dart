@@ -4,8 +4,8 @@ import 'package:dishdrop_app_projekt/data/provider/recipe_form_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ListItemRowDynamic extends StatefulWidget {
-  const ListItemRowDynamic({
+class IngredientRowDynamic extends StatefulWidget {
+  const IngredientRowDynamic({
     super.key,
     required this.ingredient,
   });
@@ -13,10 +13,10 @@ class ListItemRowDynamic extends StatefulWidget {
   final ListItem ingredient;
 
   @override
-  State<ListItemRowDynamic> createState() => _ListItemRowDynamicState();
+  State<IngredientRowDynamic> createState() => _IngredientRowDynamicState();
 }
 
-class _ListItemRowDynamicState extends State<ListItemRowDynamic> {
+class _IngredientRowDynamicState extends State<IngredientRowDynamic> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _unitController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -81,12 +81,15 @@ class _ListItemRowDynamicState extends State<ListItemRowDynamic> {
     List<String> convertedAmount = checkAndconvertAmount(amountValue);
 
     return Dismissible(
+      direction: DismissDirection.endToStart,
       onDismissed: (direction) {
         recipeFormNotifier.removeFromIngredientList(widget.ingredient.id);
       },
       key: Key(widget.ingredient.id.toString()),
       background: Container(
+        alignment: Alignment.centerRight,
         color: Colors.red,
+        padding: EdgeInsets.only(right: 20),
         child: Icon(
           Icons.delete,
           color: Colors.white,

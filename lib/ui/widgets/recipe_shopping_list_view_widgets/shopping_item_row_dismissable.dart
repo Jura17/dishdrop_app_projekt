@@ -30,13 +30,16 @@ class ShoppingItemRowDismissable extends StatelessWidget {
     List<String> convertedAmount = checkAndconvertAmount(amount);
 
     return Dismissible(
+      direction: DismissDirection.endToStart,
       onDismissed: (direction) {
         dismissItem(index);
         shoppingListProvider.removeFromRecipeShoppingList(shoppingListId, shoppingItem.id);
       },
       key: Key(shoppingItem.tempID),
       background: Container(
+        alignment: Alignment.centerRight,
         color: Colors.red,
+        padding: EdgeInsets.only(right: 20),
         child: Icon(
           Icons.delete,
           color: Colors.white,
@@ -56,17 +59,22 @@ class ShoppingItemRowDismissable extends StatelessWidget {
           RichText(
             text: TextSpan(
               text: convertedAmount[0],
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    decoration: shoppingItem.isDone ? TextDecoration.lineThrough : null,
+                  ),
               children: [
                 TextSpan(
                   text: convertedAmount[1],
                   style: TextStyle(
+                    decoration: shoppingItem.isDone ? TextDecoration.lineThrough : null,
                     fontFeatures: [FontFeature.fractions()],
                   ),
                 ),
                 TextSpan(
                   text: " ${unit ?? ''}",
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        decoration: shoppingItem.isDone ? TextDecoration.lineThrough : null,
+                      ),
                 )
               ],
             ),
@@ -74,10 +82,12 @@ class ShoppingItemRowDismissable extends StatelessWidget {
           Expanded(
             child: Text(
               description,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    decoration: shoppingItem.isDone ? TextDecoration.lineThrough : null,
+                  ),
               textAlign: TextAlign.right,
             ),
-          ),
+          )
         ],
       ),
     );

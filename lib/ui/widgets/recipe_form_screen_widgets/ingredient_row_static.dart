@@ -1,8 +1,8 @@
 import 'package:dishdrop_app_projekt/core/utils/check_and_convert_amount.dart';
 import 'package:flutter/material.dart';
 
-class ListItemRowStatic extends StatelessWidget {
-  const ListItemRowStatic({
+class IngredientRowStatic extends StatelessWidget {
+  const IngredientRowStatic({
     super.key,
     required this.amount,
     required this.unit,

@@ -85,13 +85,16 @@ class _ShoppingItemRowDynamicState extends State<ShoppingItemRowDynamic> {
     List<String> convertedAmount = checkAndconvertAmount(amountValue);
 
     return Dismissible(
+      direction: DismissDirection.endToStart,
       onDismissed: (direction) {
         shoppingListProvider.removeFromAllPurposeShoppingList(widget.ingredient.id);
         widget.dismissFromList(widget.index);
       },
       key: Key(widget.ingredient.id.toString()),
       background: Container(
+        alignment: Alignment.centerRight,
         color: Colors.red,
+        padding: EdgeInsets.only(right: 20),
         child: Icon(
           Icons.delete,
           color: Colors.white,
@@ -129,7 +132,10 @@ class _ShoppingItemRowDynamicState extends State<ShoppingItemRowDynamic> {
               },
               child: _isEditingAmount
                   ? AmountTextField(amountController: _amountController, amountFocusNode: _amountFocusNode)
-                  : AmountText(convertedAmount: convertedAmount),
+                  : AmountText(
+                      convertedAmount: convertedAmount,
+                      isDone: widget.ingredient.isDone,
+                    ),
             ),
             GestureDetector(
               onTap: () {
@@ -142,7 +148,7 @@ class _ShoppingItemRowDynamicState extends State<ShoppingItemRowDynamic> {
               },
               child: _isEditingUnit
                   ? UnitTextField(unitController: _unitController, unitFocusNode: _unitFocusNode)
-                  : UnitText(unitController: _unitController),
+                  : UnitText(unitController: _unitController, isDone: widget.ingredient.isDone),
             ),
             Expanded(
               child: GestureDetector(
@@ -156,8 +162,13 @@ class _ShoppingItemRowDynamicState extends State<ShoppingItemRowDynamic> {
                 },
                 child: _isEditingDescription
                     ? DescriptionTextField(
-                        descriptionController: _descriptionController, descriptionFocusNode: _descriptionFocusNode)
-                    : DescriptionText(descriptionController: _descriptionController),
+                        descriptionController: _descriptionController,
+                        descriptionFocusNode: _descriptionFocusNode,
+                      )
+                    : DescriptionText(
+                        descriptionController: _descriptionController,
+                        isDone: widget.ingredient.isDone,
+                      ),
               ),
             )
           ],
@@ -199,24 +210,25 @@ class AmountTextField extends StatelessWidget {
 }
 
 class AmountText extends StatelessWidget {
-  const AmountText({
-    super.key,
-    required this.convertedAmount,
-  });
+  const AmountText({super.key, required this.convertedAmount, required this.isDone});
 
   final List<String> convertedAmount;
+  final bool isDone;
 
   @override
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
         text: convertedAmount[0],
-        style: Theme.of(context).textTheme.bodyLarge,
+        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              decoration: isDone ? TextDecoration.lineThrough : null,
+            ),
         children: [
           TextSpan(
             text: convertedAmount[1],
             style: TextStyle(
               fontFeatures: [FontFeature.fractions()],
+              decoration: isDone ? TextDecoration.lineThrough : null,
             ),
           ),
         ],
@@ -259,15 +271,19 @@ class UnitText extends StatelessWidget {
   const UnitText({
     super.key,
     required TextEditingController unitController,
+    required this.isDone,
   }) : _unitController = unitController;
 
   final TextEditingController _unitController;
+  final bool isDone;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       _unitController.text,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            decoration: isDone ? TextDecoration.lineThrough : null,
+          ),
     );
   }
 }
@@ -303,16 +319,20 @@ class DescriptionTextField extends StatelessWidget {
 class DescriptionText extends StatelessWidget {
   const DescriptionText({
     super.key,
+    required this.isDone,
     required TextEditingController descriptionController,
   }) : _descriptionController = descriptionController;
 
   final TextEditingController _descriptionController;
+  final bool isDone;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       _descriptionController.text,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            decoration: isDone ? TextDecoration.lineThrough : null,
+          ),
       textAlign: TextAlign.right,
     );
   }

@@ -20,7 +20,6 @@ class AppTheme {
         inputDecorationTheme: InputDecorationTheme(
             hintStyle: TextStyle(color: AppColors.cardInfoGrey),
             errorStyle: TextStyle(color: Colors.red),
-            // TODO: TextFormField error border
             errorBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.red),
             ),
@@ -31,10 +30,10 @@ class AppTheme {
             fillColor: AppColors.lightGrey),
         dropdownMenuTheme: DropdownMenuThemeData(
           inputDecorationTheme: InputDecorationTheme(
-              // TODO: fillColor is supposed to be light grey but current color is not changing
-              // filled: true,
-              // fillColor: AppColors.lightGrey,
-              ),
+            // TODO: fillColor is supposed to be light grey but current color is not changing
+            filled: true,
+            fillColor: AppColors.lightGrey,
+          ),
           menuStyle: MenuStyle(
             backgroundColor: WidgetStateColor.resolveWith(
               (states) => AppColors.lightGreen,
@@ -48,6 +47,7 @@ class AppTheme {
         ),
         progressIndicatorTheme: ProgressIndicatorThemeData(color: AppColors.primary),
         checkboxTheme: CheckboxThemeData(
+          side: BorderSide(color: Colors.transparent),
           fillColor: WidgetStatePropertyAll(AppColors.primary),
         ),
       );

@@ -41,9 +41,9 @@ class _AllPurposeListInputSectionState extends State<AllPurposeListInputSection>
                     child: TextFormField(
                       keyboardType: TextInputType.numberWithOptions(decimal: true),
                       validator: (value) {
-                        if (value == '') return "Please enter a value";
-                        if (int.tryParse(value!) == null) return "Only numerics allowed";
-                        if (int.parse(value) < 1) return "Only positives allowed";
+                        if (value == '') return null;
+                        if (double.tryParse(value!) == null) return "Only numerics allowed";
+                        if (double.parse(value) < 1) return "Only positives allowed";
                         return null;
                       },
                       controller: widget.allTextControllers["itemAmountCtrl"],

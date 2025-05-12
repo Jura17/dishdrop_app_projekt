@@ -2,7 +2,7 @@ import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 
-import 'package:dishdrop_app_projekt/ui/widgets/list_item_row_static.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/ingredient_row_static.dart';
 import 'package:flutter/material.dart';
 
 class IngredientListView extends StatefulWidget {
@@ -32,7 +32,7 @@ class _IngredientListViewState extends State<IngredientListView> {
                 decoration: BoxDecoration(color: index.isEven ? AppColors.lightGrey : Colors.white),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ListItemRowStatic(
+                  child: IngredientRowStatic(
                     amount: widget.recipe.ingredients[index].amount != null
                         ? widget.recipe.ingredients[index].amount! * widget.servings
                         : null,
