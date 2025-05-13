@@ -17,7 +17,10 @@ class RecommendationCardImageSection extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget imageWidget;
     if (recipe.images["titleImg"].contains("assets/images/")) {
-      imageWidget = Image.asset(recipe.images["titleImg"]);
+      imageWidget = Image.asset(
+        recipe.images["titleImg"],
+        fit: BoxFit.cover,
+      );
     } else {
       imageWidget = FileTitleImg(imgPath: recipe.images["titleImg"]);
     }

@@ -6,6 +6,7 @@ import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_card_widgets/recipe_card.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_search/custom_search_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,6 +32,17 @@ class _RecipesGridViewState extends State<RecipesGridView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.category, style: Theme.of(context).textTheme.headlineLarge),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: CustomSearchDelegate(recipeNotifier: context.read<RecipeNotifier>()),
+              );
+            },
+            icon: const Icon(Icons.search),
+          )
+        ],
       ),
       body: SafeArea(
         child: Padding(

@@ -16,7 +16,7 @@ class FileTitleImg extends StatelessWidget {
       errorBuilder: (context, error, stackTrace) {
         return Center(
           child: Text(
-            "404",
+            "Error loading image",
             style: Theme.of(context).textTheme.headlineLarge,
           ),
         );

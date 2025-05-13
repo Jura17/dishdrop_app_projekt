@@ -1,9 +1,13 @@
 import 'package:dishdrop_app_projekt/data/provider/recipe_form_notifier.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:dishdrop_app_projekt/gen/assets.gen.dart';
+
 import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/category_card.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';
+
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_search/custom_search_delegate.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +28,17 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("Categories", style: Theme.of(context).textTheme.headlineLarge),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: CustomSearchDelegate(recipeNotifier: context.read<RecipeNotifier>()),
+              );
+            },
+            icon: const Icon(Icons.search),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

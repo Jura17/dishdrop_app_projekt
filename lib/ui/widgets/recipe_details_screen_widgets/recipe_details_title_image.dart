@@ -36,7 +36,10 @@ class RecipeDetailsTitleImage extends StatelessWidget {
           ),
           height: 300,
           width: double.infinity,
-          child: ClipRRect(borderRadius: BorderRadius.circular(20), child: imageWidget),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: imageWidget,
+          ),
         ),
         LikeButton(
           top: 20,
