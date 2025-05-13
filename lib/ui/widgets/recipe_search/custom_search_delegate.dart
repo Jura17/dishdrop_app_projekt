@@ -2,6 +2,9 @@ import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_search/search_result_image.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_search/search_result_row.dart';
 import 'package:flutter/material.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
@@ -77,27 +80,28 @@ class CustomSearchDelegate extends SearchDelegate {
     return ListView.builder(
       itemCount: filteredRecipes.length,
       itemBuilder: (context, index) {
-        Recipe result = filteredRecipes[index];
-        // Widget imageWidget;
+        Recipe recipe = filteredRecipes[index];
+        Widget imageWidget;
 
-        // if (result.images["titleImg"].contains("assets/images/")) {
-        //   imageWidget = Image.asset(result.images["titleImg"], fit: BoxFit.cover);
-        // } else {
-        //   imageWidget = FileTitleImg(imgPath: result.images["titleImg"]);
-        // }
-        // return Padding(
-        //   padding: const EdgeInsets.all(16),
-        //   child: SearchResultRow(
-        //     recipeTitle: result.title,
-        //     imageWidget: SearchResultImage(imageWidget: imageWidget),
-        //   ),
-        // );
-
-        return ListTile(
-          title: Text(result.title),
+        if (recipe.images["titleImg"].contains("assets/images/")) {
+          imageWidget = Image.asset(recipe.images["titleImg"], fit: BoxFit.cover);
+        } else {
+          imageWidget = FileTitleImg(imgPath: recipe.images["titleImg"]);
+        }
+        return GestureDetector(
           onTap: () => Navigator.of(context).push((MaterialPageRoute(
-            builder: (context) => RecipeDetailsScreen(recipeId: result.id),
+            builder: (context) => RecipeDetailsScreen(recipeId: recipe.id),
           ))),
+          child: Container(
+            color: index.isEven ? AppColors.lightGrey : Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20.0, left: 8.0, right: 8.0, bottom: 20.0),
+              child: SearchResultRow(
+                recipe: recipe,
+                imageWidget: SearchResultImage(imageWidget: imageWidget),
+              ),
+            ),
+          ),
         );
       },
     );
