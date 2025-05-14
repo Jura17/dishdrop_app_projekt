@@ -6,7 +6,7 @@ import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/repositories/shared_preferences_repository.dart';
 import 'package:flutter/material.dart';
 
-class RecipeFormNotifier extends ChangeNotifier {
+class RecipeFormNotifier extends ChangeNotifier with WidgetsBindingObserver {
   RecipeFormNotifier({this.recipe});
 
   Recipe? recipe;
@@ -67,7 +67,7 @@ class RecipeFormNotifier extends ChangeNotifier {
       await loadCachedInput(isEditingRecipe);
     }
 
-    // WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     notifyListeners();
   }
 
@@ -82,7 +82,14 @@ class RecipeFormNotifier extends ChangeNotifier {
 
   void cacheAllOnExit() {
     saveAllInputToList();
-    // WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      saveAllInputToList();
+    }
   }
 
   Future<void> loadRecentRecipeID() async {
