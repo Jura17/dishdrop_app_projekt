@@ -1,5 +1,4 @@
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
-import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:dishdrop_app_projekt/data/repositories/database_repository.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +13,13 @@ class ShoppingListNotifier extends ChangeNotifier {
     loadAllPurposeShoppingList();
   }
 
+  // CREATE
+  void addToAllPurposeShoppingList(ListItem listItem) {
+    _databaseRepository.addToAllPurposeShoppingList(listItem);
+    notifyListeners();
+  }
+
+  // READ
   void loadRecipeShoppingLists() {
     _recipeShoppingLists = _databaseRepository.getRecipeShoppingLists();
     notifyListeners();
@@ -31,38 +37,9 @@ class ShoppingListNotifier extends ChangeNotifier {
     return _databaseRepository.getRecipeShoppingListById(id);
   }
 
-  void addShoppingList(ShoppingList newShoppingList, Recipe recipe) {
-    _databaseRepository.addShoppingList(newShoppingList, recipe);
-    notifyListeners();
-  }
-
-  void attachRelationShoppingList(ShoppingList shoppingList) {
-    _databaseRepository.attachRelationShoppingList(shoppingList);
-  }
-
-  void removeRecipeShoppingList(ShoppingList shoppingList) {
-    _databaseRepository.removeRecipeShoppingList(shoppingList);
-    _recipeShoppingLists.remove(shoppingList);
-    notifyListeners();
-  }
-
-  void addToAllPurposeShoppingList(ListItem listItem) {
-    _databaseRepository.addToAllPurposeShoppingList(listItem);
-    notifyListeners();
-  }
-
+  // UPDATE
   void updateAllPurposeShoppingList(ListItem updatedItem) {
-    _databaseRepository.updateAllPurposeShoppingList(updatedItem);
-    notifyListeners();
-  }
-
-  void removeFromAllPurposeShoppingList(int id) {
-    _databaseRepository.removeFromAllPurposeShoppingList(id);
-    notifyListeners();
-  }
-
-  void removeFromRecipeShoppingList(int shoppingListId, int id) {
-    _databaseRepository.removeFromRecipeShoppingList(shoppingListId, id);
+    _databaseRepository.updateAllPurposeShoppingListItem(updatedItem);
     notifyListeners();
   }
 
@@ -75,6 +52,23 @@ class ShoppingListNotifier extends ChangeNotifier {
 
   void updateRecipeShoppingListItem(int shoppingListId, ListItem updatedItem) {
     _databaseRepository.updateRecipeShoppingListItem(shoppingListId, updatedItem);
+    notifyListeners();
+  }
+
+  // DELETE
+  void removeRecipeShoppingList(ShoppingList shoppingList) {
+    _databaseRepository.removeRecipeShoppingList(shoppingList);
+    _recipeShoppingLists.remove(shoppingList);
+    notifyListeners();
+  }
+
+  void removeFromAllPurposeShoppingList(int id) {
+    _databaseRepository.removeFromAllPurposeShoppingList(id);
+    notifyListeners();
+  }
+
+  void removeFromRecipeShoppingList(int shoppingListId, int id) {
+    _databaseRepository.removeFromRecipeShoppingList(shoppingListId, id);
     notifyListeners();
   }
 }

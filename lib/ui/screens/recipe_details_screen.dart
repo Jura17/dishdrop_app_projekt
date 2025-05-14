@@ -44,6 +44,13 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
   Widget build(BuildContext context) {
     recipe = context.watch<RecipeNotifier>().getRecipeById(widget.recipeId);
 
+    // null check to prevent app from crashing when deleting the recipe
+    if (recipe == null) {
+      return Scaffold(
+        appBar: AppBar(title: Text("Recipe not found")),
+        body: Center(child: Text("This recipe has been deleted.")),
+      );
+    }
     _directionsEmpty = recipe!.directions.isEmpty;
     _ingredientsEmpty = recipe!.ingredients.isEmpty;
     return Scaffold(

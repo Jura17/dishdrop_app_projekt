@@ -12,8 +12,8 @@ class CookingTimeTextFormField extends StatelessWidget {
     return TextFormField(
       validator: (value) {
         int? time = int.tryParse(value ?? '');
-        if (time == null) return "Numeric values only";
-        if (time < 0) return "Positive values only";
+        // if (time == null) return "Numeric values only";
+        if (time != null && time < 0) return "Positive values only";
         return null;
       },
       maxLength: 4,

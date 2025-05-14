@@ -8,22 +8,22 @@ import 'package:dishdrop_app_projekt/gen/assets.gen.dart';
 import 'package:dishdrop_app_projekt/objectbox.g.dart';
 
 class ObjectboxDatabase implements DatabaseRepository {
-  final Box<Recipe> recipeBox;
-  final Box<ShoppingList> shoppingListBox;
-  final Box<ListItem> listItemBox;
-  final Box<CookingDirection> cookingDirectionBox;
+  final Box<Recipe> _recipeBox;
+  final Box<ShoppingList> _shoppingListBox;
+  final Box<ListItem> _listItemBox;
+  final Box<CookingDirection> _cookingDirectionBox;
   final Store store;
 
   ObjectboxDatabase(this.store)
-      : recipeBox = store.box<Recipe>(),
-        shoppingListBox = store.box<ShoppingList>(),
-        listItemBox = store.box<ListItem>(),
-        cookingDirectionBox = store.box<CookingDirection>() {
+      : _recipeBox = store.box<Recipe>(),
+        _shoppingListBox = store.box<ShoppingList>(),
+        _listItemBox = store.box<ListItem>(),
+        _cookingDirectionBox = store.box<CookingDirection>() {
     // Use to fill database with mock data:
-    if (recipeBox.isEmpty()) recipeBox.putMany(recipeData);
+    if (_recipeBox.isEmpty()) _recipeBox.putMany(recipeData);
 
-    if (shoppingListBox.isEmpty()) {
-      shoppingListBox.put(
+    if (_shoppingListBox.isEmpty()) {
+      _shoppingListBox.put(
         ShoppingList(
           title: "All-Purpose list",
           imgUrl: Assets.images.shoppingItems.path,
@@ -33,17 +33,13 @@ class ObjectboxDatabase implements DatabaseRepository {
     }
   }
 
+  // CREATE
   @override
   void addRecipe(Recipe newRecipe) {
-    recipeBox.put(newRecipe);
+    _recipeBox.put(newRecipe);
   }
 
-  @override
-  Recipe? getRecipeById(int id) {
-    final recipe = recipeBox.get(id);
-    return recipe;
-  }
-
+  // connect shopping list to a recipe
   @override
   void assignShoppingListToRecipe(Recipe recipe, ShoppingList shoppingList) {
     recipe.shoppingList.attach(store);
@@ -52,90 +48,137 @@ class ObjectboxDatabase implements DatabaseRepository {
     recipe.shoppingList.target = shoppingList;
     shoppingList.recipe.target = recipe;
 
-    shoppingListBox.put(shoppingList);
-    recipeBox.put(recipe);
+    _shoppingListBox.put(shoppingList);
+    _recipeBox.put(recipe);
   }
 
-  @override
-  List<Recipe> getAllRecipes() {
-    return recipeBox.getAll();
-  }
-
-  @override
-  void updateRecipe(int oldRecipeId, Recipe newRecipe) {
-    final Recipe? oldRecipe = recipeBox.get(oldRecipeId);
-    if (oldRecipe == null) return;
-
-    // Delete removed ListItems
-    final oldItemIds = oldRecipe.ingredients.map((e) => e.id).toSet();
-    final newItemIds = newRecipe.ingredients.map((e) => e.id).toSet();
-    final removedItemIds = oldItemIds.difference(newItemIds);
-    for (final id in removedItemIds) {
-      listItemBox.remove(id);
-    }
-
-    // Delete removed CookingDirections
-    final oldDirIds = oldRecipe.directions.map((e) => e.id).toSet();
-    final newDirIds = newRecipe.directions.map((e) => e.id).toSet();
-    final removedDirIds = oldDirIds.difference(newDirIds);
-    for (final id in removedDirIds) {
-      cookingDirectionBox.remove(id);
-    }
-
-    newRecipe.id = oldRecipeId;
-    recipeBox.put(newRecipe);
-  }
-
-  @override
-  void removeRecipe(Recipe recipe) {
-    // ToMany relationships need to be removed manually in ObjectBox...
-    for (var listItem in recipe.ingredients) {
-      listItemBox.remove(listItem.id);
-    }
-    for (var cookingDirection in recipe.directions) {
-      cookingDirectionBox.remove(cookingDirection.id);
-    }
-    recipeBox.remove(recipe.id);
-  }
-
-  @override
-  void addShoppingList(ShoppingList newShoppingList, Recipe recipe) {
-    newShoppingList.recipe.target = recipe;
-    shoppingListBox.put(newShoppingList);
-
-    recipe.shoppingList.target = newShoppingList;
-    recipeBox.put(recipe);
-  }
-
-  @override
-  void attachRelationShoppingList(ShoppingList shoppingList) {
-    shoppingList.recipe.attach(store);
-  }
-
+  // add new item to all-purpose shopping list
   @override
   void addToAllPurposeShoppingList(ListItem listItem) {
-    final query = shoppingListBox.query(ShoppingList_.isAllPurposeList.equals(true)).build();
+    final query = _shoppingListBox.query(ShoppingList_.isAllPurposeList.equals(true)).build();
     var allPurposeShoppingList = query.findFirst();
     query.close();
 
     if (allPurposeShoppingList != null) {
       allPurposeShoppingList.shoppingItems.add(listItem);
-      shoppingListBox.put(allPurposeShoppingList);
+      _shoppingListBox.put(allPurposeShoppingList);
     }
   }
 
+  // READ
   @override
-  void updateAllPurposeShoppingList(ListItem updatedItem) {
+  Recipe? getRecipeById(int id) {
+    final recipe = _recipeBox.get(id);
+    return recipe;
+  }
+
+  @override
+  List<Recipe> getAllRecipes() {
+    return _recipeBox.getAll();
+  }
+
+  @override
+  ShoppingList? getAllPurposeShoppingList() {
+    final allPurposeShoppingList =
+        _shoppingListBox.getAll().where((shoppingList) => shoppingList.isAllPurposeList == true).first;
+    return allPurposeShoppingList;
+  }
+
+  @override
+  List<ShoppingList> getRecipeShoppingLists() {
+    final recipeShoppingLists =
+        _shoppingListBox.getAll().where((shoppingList) => shoppingList.isAllPurposeList == false).toList();
+    return recipeShoppingLists;
+  }
+
+  @override
+  ShoppingList? getRecipeShoppingListById(int id) {
+    final shoppingList = _shoppingListBox.get(id);
+    shoppingList?.recipe.attach(store);
+
+    return shoppingList;
+  }
+
+  // UPDATE
+  @override
+  void updateRecipe(int oldRecipeId, Recipe newRecipe) {
+    final Recipe? oldRecipe = _recipeBox.get(oldRecipeId);
+    if (oldRecipe == null) return;
+
+    // Delete removed ListItems
+    final oldItemIds = oldRecipe.ingredients.map((ingredient) => ingredient.id).toSet();
+    final newItemIds = newRecipe.ingredients.map((ingredient) => ingredient.id).toSet();
+    final removedItemIds = oldItemIds.difference(newItemIds);
+    for (final id in removedItemIds) {
+      _listItemBox.remove(id);
+    }
+
+    // Delete removed CookingDirections
+    final oldDirIds = oldRecipe.directions.map((ingredient) => ingredient.id).toSet();
+    final newDirIds = newRecipe.directions.map((ingredient) => ingredient.id).toSet();
+    final removedDirIds = oldDirIds.difference(newDirIds);
+    for (final id in removedDirIds) {
+      _cookingDirectionBox.remove(id);
+    }
+
+    newRecipe.id = oldRecipeId;
+    _recipeBox.put(newRecipe);
+  }
+
+  @override
+  void updateAllPurposeShoppingListItem(ListItem updatedItem) {
     final ShoppingList? allPurposeShoppingList = getAllPurposeShoppingList();
 
     if (allPurposeShoppingList != null) {
       final index = allPurposeShoppingList.shoppingItems.indexWhere((item) => item.id == updatedItem.id);
       if (index != -1) {
         allPurposeShoppingList.shoppingItems[index] = updatedItem;
-        listItemBox.put(updatedItem);
-        shoppingListBox.put(allPurposeShoppingList);
+        _listItemBox.put(updatedItem);
+        _shoppingListBox.put(allPurposeShoppingList);
       }
     }
+  }
+
+  @override
+  void updateRecipeShoppingList(int id, ShoppingList newShoppingList) {
+    newShoppingList.id = id;
+    _shoppingListBox.put(newShoppingList);
+  }
+
+  @override
+  void updateRecipeShoppingListItem(int shoppingListId, ListItem updatedItem) {
+    final ShoppingList? recipeShoppingList = _shoppingListBox.get(shoppingListId);
+    if (recipeShoppingList != null) {
+      final index = recipeShoppingList.shoppingItems.indexWhere((item) => item.id == updatedItem.id);
+      if (index != -1) {
+        recipeShoppingList.shoppingItems[index] = updatedItem;
+        _listItemBox.put(updatedItem);
+        _shoppingListBox.put(recipeShoppingList);
+      }
+    }
+  }
+
+  // DELETE
+  @override
+  void removeRecipe(Recipe recipe) {
+    // ToMany-relationships need to be removed manually in ObjectBox
+    for (var listItem in recipe.ingredients) {
+      _listItemBox.remove(listItem.id);
+    }
+    for (var cookingDirection in recipe.directions) {
+      _cookingDirectionBox.remove(cookingDirection.id);
+    }
+    _recipeBox.remove(recipe.id);
+  }
+
+  @override
+  void removeRecipeShoppingList(ShoppingList shoppingList) {
+    // reset all shopping items for that shopping list
+    for (var item in shoppingList.shoppingItems) {
+      item.isDone = false;
+      _listItemBox.put(item);
+    }
+    _shoppingListBox.remove(shoppingList.id);
   }
 
   @override
@@ -143,63 +186,23 @@ class ObjectboxDatabase implements DatabaseRepository {
     final ShoppingList? allPurposeShoppingList = getAllPurposeShoppingList();
     if (allPurposeShoppingList != null) {
       allPurposeShoppingList.shoppingItems.removeWhere((ingredient) => ingredient.id == id);
-      shoppingListBox.put(allPurposeShoppingList);
+      _shoppingListBox.put(allPurposeShoppingList);
     }
   }
 
   @override
   void removeFromRecipeShoppingList(int shoppingListId, int itemId) {
-    final ShoppingList? recipeShoppingList = shoppingListBox.get(shoppingListId);
+    final ShoppingList? recipeShoppingList = _shoppingListBox.get(shoppingListId);
     if (recipeShoppingList != null) {
-      recipeShoppingList.shoppingItems.removeWhere((ingredient) => ingredient.id == itemId);
-      shoppingListBox.put(recipeShoppingList);
-      // listItemBox.remove(itemId);
-    }
-  }
-
-  @override
-  ShoppingList? getAllPurposeShoppingList() {
-    final allPurposeShoppingList =
-        shoppingListBox.getAll().where((shoppingList) => shoppingList.isAllPurposeList == true).first;
-    return allPurposeShoppingList;
-  }
-
-  @override
-  List<ShoppingList> getRecipeShoppingLists() {
-    final recipeShoppingLists =
-        shoppingListBox.getAll().where((shoppingList) => shoppingList.isAllPurposeList == false).toList();
-    return recipeShoppingLists;
-  }
-
-  @override
-  ShoppingList? getRecipeShoppingListById(int id) {
-    final shoppingList = shoppingListBox.get(id);
-    shoppingList?.recipe.attach(store);
-
-    return shoppingList;
-  }
-
-  @override
-  void removeRecipeShoppingList(ShoppingList shoppingList) {
-    shoppingListBox.remove(shoppingList.id);
-  }
-
-  @override
-  void updateRecipeShoppingList(int id, ShoppingList newShoppingList) {
-    newShoppingList.id = id;
-    shoppingListBox.put(newShoppingList);
-  }
-
-  @override
-  void updateRecipeShoppingListItem(int shoppingListId, ListItem updatedItem) {
-    final ShoppingList? recipeShoppingList = shoppingListBox.get(shoppingListId);
-    if (recipeShoppingList != null) {
-      final index = recipeShoppingList.shoppingItems.indexWhere((item) => item.id == updatedItem.id);
+      final index = recipeShoppingList.shoppingItems.indexWhere((item) => item.id == itemId);
       if (index != -1) {
-        recipeShoppingList.shoppingItems[index] = updatedItem;
-        listItemBox.put(updatedItem);
-        shoppingListBox.put(recipeShoppingList);
+        final item = recipeShoppingList.shoppingItems[index];
+        item.isDone = false;
+        _listItemBox.put(item);
       }
+
+      recipeShoppingList.shoppingItems.removeAt(index);
+      _shoppingListBox.put(recipeShoppingList);
     }
   }
 }

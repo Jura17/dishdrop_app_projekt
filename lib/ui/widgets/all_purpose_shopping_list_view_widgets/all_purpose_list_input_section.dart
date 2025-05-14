@@ -30,9 +30,13 @@ class _AllPurposeListInputSectionState extends State<AllPurposeListInputSection>
             spacing: 10,
             children: [
               TextFormField(
+                validator: (value) {
+                  if (value == '') return "The item needs a description";
+                  return null;
+                },
                 maxLength: 60,
                 controller: widget.allTextControllers["itemDescCtrl"],
-                decoration: const InputDecoration(border: OutlineInputBorder(), hintText: "Ingredient description"),
+                decoration: const InputDecoration(border: OutlineInputBorder(), hintText: "Item description"),
               ),
               Row(
                 spacing: 10,

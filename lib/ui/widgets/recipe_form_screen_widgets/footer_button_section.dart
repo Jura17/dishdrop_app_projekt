@@ -88,7 +88,7 @@ class FooterButtonSection extends StatelessWidget {
                 );
               }
             } else {
-              showCustomAlertBanner(context, Colors.red, "Please make sure all fields are filled in correctly.");
+              showCustomAlertBanner(context, Colors.red, "Please fill out all required fields");
             }
           },
           child: Text(recipeFormProvider.isEditingRecipe ? "Update and open" : "Save and open"),

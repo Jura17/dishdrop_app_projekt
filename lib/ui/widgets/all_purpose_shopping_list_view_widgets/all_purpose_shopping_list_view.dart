@@ -51,7 +51,8 @@ class _AllPurposeShoppingListViewState extends State<AllPurposeShoppingListView>
                         padding: const EdgeInsets.all(16.0),
                         child: Center(
                           child: Text(
-                            "No shopping items added yet",
+                            "Your shopping list is empty",
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
                       )

@@ -28,7 +28,6 @@ class SearchResultRow extends StatelessWidget {
               FittedBox(
                 child: Text(
                   recipe.title,
-                  overflow: TextOverflow.fade,
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
@@ -78,7 +77,10 @@ class SearchResultRow extends StatelessWidget {
             ],
           ),
         ),
-        imageWidget,
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: imageWidget,
+        ),
       ],
     );
   }
