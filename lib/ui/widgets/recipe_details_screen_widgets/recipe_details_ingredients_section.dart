@@ -11,12 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class RecipeDetailsIngredientsSection extends StatefulWidget {
-  const RecipeDetailsIngredientsSection({
-    super.key,
-    required this.recipeId,
-  });
+  const RecipeDetailsIngredientsSection(
+      {super.key, required this.recipeId, required this.servingsInput, required this.updateServingsFunc});
 
   final int recipeId;
+  final int servingsInput;
+  final void Function(int) updateServingsFunc;
 
   @override
   State<RecipeDetailsIngredientsSection> createState() => _RecipeDetailsIngredientsSectionState();
@@ -26,13 +26,9 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
   late int servings;
 
   @override
-  void initState() {
-    super.initState();
-    servings = 1;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    servings = widget.servingsInput;
+
     final recipeNotifier = context.watch<RecipeNotifier>();
     final shoppingListNotifier = context.read<ShoppingListNotifier>();
     Recipe? recipe = recipeNotifier.getRecipeById(widget.recipeId);
@@ -47,7 +43,7 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ServingsPicker(
-              updateServingsFunc: updateServings,
+              updateServingsFunc: widget.updateServingsFunc,
               servings: servings,
             ),
             // Recipe already on the shopping lists? ==> go to Shopping list screen, otherwise create shopping list
@@ -96,11 +92,5 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
           )
       ],
     );
-  }
-
-  void updateServings(newAmount) {
-    setState(() {
-      servings = newAmount;
-    });
   }
 }

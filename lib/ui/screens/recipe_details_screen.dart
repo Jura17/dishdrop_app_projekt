@@ -39,6 +39,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
   List<ShoppingList> allShoppingLists = [];
   Recipe? recipe;
   double defaultSpacing = 20;
+  int servings = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -93,24 +94,22 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
               RecipeDetailsIngredientsSection(
                 key: _ingredientsKey,
                 recipeId: widget.recipeId,
+                servingsInput: servings,
+                updateServingsFunc: updateServings,
               ),
             SizedBox(height: 40),
-            Consumer<RecipeNotifier>(
-              builder: (context, recipeNotifier, child) {
-                return RichText(
-                  text: TextSpan(
-                    text: "You have cooked this dish ",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    children: [
-                      TextSpan(
-                        text: "${recipe!.timesCooked}",
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      TextSpan(text: " times so far.\nTap the button below when you're done!")
-                    ],
+            RichText(
+              text: TextSpan(
+                text: "You have cooked this dish ",
+                style: Theme.of(context).textTheme.bodyLarge,
+                children: [
+                  TextSpan(
+                    text: "${recipe!.timesCooked}",
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
                   ),
-                );
-              },
+                  TextSpan(text: " times so far.\nTap the button below when you're done!")
+                ],
+              ),
             ),
             SizedBox(height: 20),
             RecipeDetailsFooterButtonSection(
@@ -168,6 +167,12 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
         _scrollController.animateTo(position.dy + _scrollController.offset - 150,
             duration: Duration(seconds: 1), curve: Curves.easeInOut);
       }
+    });
+  }
+
+  void updateServings(newAmount) {
+    setState(() {
+      servings = newAmount;
     });
   }
 }
