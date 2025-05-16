@@ -19,9 +19,6 @@ class DifficultyDropdownMenu extends StatelessWidget {
             recipeFormProvider.updateDifficultyMenuError(false);
           },
           controller: recipeFormProvider.allTextControllers["difficultyCtrl"],
-          inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(),
-          ),
           width: double.infinity,
           dropdownMenuEntries: [
             DropdownMenuEntry(value: "Simple", label: "Simple"),

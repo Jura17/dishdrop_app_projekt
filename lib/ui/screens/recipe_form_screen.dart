@@ -1,3 +1,4 @@
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,10 +24,7 @@ import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/title
 class RecipeFormScreen extends StatefulWidget {
   const RecipeFormScreen({
     super.key,
-    this.recipe,
   });
-
-  final Recipe? recipe;
 
   @override
   State<RecipeFormScreen> createState() => _RecipeFormScreenState();
@@ -35,19 +33,21 @@ class RecipeFormScreen extends StatefulWidget {
 class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
-    final recipeFormProvider = context.watch<RecipeFormNotifier>();
+    final recipeFormNotifier = context.watch<RecipeFormNotifier>();
+    final recipeNotifier = context.watch<RecipeNotifier>();
+    Recipe? recipe = recipeFormNotifier.recipe;
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(recipeFormProvider.isEditingRecipe ? "Edit recipe" : "New recipe",
+          title: Text(recipeFormNotifier.isEditingRecipe ? "Edit recipe" : "New recipe",
               style: Theme.of(context).textTheme.headlineLarge),
           actions: [
-            if (recipeFormProvider.draftAvailable)
+            if (recipeFormNotifier.draftAvailable)
               TextButton(
                 onPressed: () {
-                  recipeFormProvider.resetAllCtrl();
+                  recipeFormNotifier.resetAllCtrl();
                 },
                 child: Text(
                   "Delete Draft",
@@ -57,7 +57,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
           ],
         ),
         body: Form(
-          key: recipeFormProvider.formKey,
+          key: recipeFormNotifier.formKey,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: SingleChildScrollView(
@@ -90,15 +90,44 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
                   SizedBox(height: 30),
                   Text("Ingredients", style: Theme.of(context).textTheme.headlineMedium),
                   IngredientListView(),
-                  if (recipeFormProvider.complexInputValues["ingredients"].isNotEmpty) SizedBox(height: 20),
+                  if (recipeFormNotifier.complexInputValues["ingredients"].isNotEmpty) SizedBox(height: 20),
                   IngredientInputSection(),
+                  SizedBox(height: 30),
+                  if (recipeFormNotifier.isEditingRecipe)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            style: Theme.of(context).textTheme.bodyLarge,
+                            'You have cooked this recipe ${recipeFormNotifier.recipe?.timesCooked} ${recipeFormNotifier.recipe?.timesCooked == 1 ? 'time' : 'times.'}'),
+                        SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: recipe?.timesCooked == 0
+                              ? null
+                              : () {
+                                  recipe?.timesCooked = 0;
+                                  recipeNotifier.updateRecipe(recipe!.id, recipe);
+                                },
+                          child: Text(
+                            "Reset counter",
+                            style:
+                                recipe?.timesCooked == 0 ? TextStyle(color: Colors.grey) : TextStyle(color: Colors.red),
+                            // style: TextStyle(color: Colors.red),
+                          ),
+                        )
+                      ],
+                    ),
                   SizedBox(height: 30),
                   ElevatedButton(
                     style: TextButton.styleFrom(foregroundColor: Colors.red),
-                    onPressed: () => recipeFormProvider.resetAllCtrl(),
+                    onPressed: () => recipeFormNotifier.resetAllCtrl(),
                     child: Text("Reset all fields"),
                   ),
-                  SizedBox(height: 10),
+                  Text(
+                    "Warning: This cannot be undone!",
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(fontStyle: FontStyle.italic),
+                  ),
+                  SizedBox(height: 30),
                   FooterButtonSection(),
                   SizedBox(height: 100),
                 ],

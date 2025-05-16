@@ -10,18 +10,18 @@ import 'package:dishdrop_app_projekt/ui/widgets/recipe_search/custom_search_dele
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class RecipesGridView extends StatefulWidget {
-  const RecipesGridView({
+class RecipeGridView extends StatefulWidget {
+  const RecipeGridView({
     super.key,
     required this.category,
   });
   final String category;
 
   @override
-  State<RecipesGridView> createState() => _RecipesGridViewState();
+  State<RecipeGridView> createState() => _RecipeGridViewState();
 }
 
-class _RecipesGridViewState extends State<RecipesGridView> {
+class _RecipeGridViewState extends State<RecipeGridView> {
   List<Recipe> filteredRecipes = [];
 
   @override

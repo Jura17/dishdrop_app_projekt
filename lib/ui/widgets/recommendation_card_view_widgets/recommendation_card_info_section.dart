@@ -99,7 +99,7 @@ class RecommendationCardInfoSection extends StatelessWidget {
                       backgroundColor: AppColors.lightGreen,
                       foregroundColor: AppColors.primary,
                     ),
-                    child: Text("Try again"),
+                    child: Text("Look again"),
                   ),
                   FilledButton(
                     onPressed: () {

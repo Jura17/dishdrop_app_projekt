@@ -1,3 +1,4 @@
+import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/core/utils/get_random_recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
@@ -14,14 +15,27 @@ class RecommendationButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Recipe> allRecipes = context.watch<RecipeNotifier>().allRecipes;
 
-    return IconButton.filled(
-      padding: EdgeInsets.all(25),
-      onPressed: () => getRandomRecipe(context, allRecipes),
-      icon: Icon(
+    // return IconButton.filled(
+    //   padding: EdgeInsets.all(25),
+    //   onPressed: () => getRandomRecipe(context, allRecipes),
+    //   icon: Icon(
+    //     Icons.lightbulb_outline_rounded,
+    //     size: 125,
+    //   ),
+    //   style: IconButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
+    // );
+    return ElevatedButton.icon(
+      style: ElevatedButton.styleFrom(
+        shape: CircleBorder(),
+        padding: EdgeInsets.all(20),
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+      ),
+      label: Icon(
         Icons.lightbulb_outline_rounded,
         size: 125,
       ),
-      style: IconButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
+      onPressed: () => getRandomRecipe(context, allRecipes),
     );
   }
 }

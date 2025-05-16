@@ -20,9 +20,6 @@ class CategoryDropdownMenu extends StatelessWidget {
             recipeFormProvider.updateCategoryMenuError(false);
           },
           controller: recipeFormProvider.allTextControllers["categoryCtrl"],
-          inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(),
-          ),
           width: double.infinity,
           dropdownMenuEntries: [
             DropdownMenuEntry(value: "Appetizers", label: "Appetizers"),

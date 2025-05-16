@@ -1,3 +1,4 @@
+import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
@@ -34,14 +35,47 @@ class RecipeDetailsFooterButtonSection extends StatelessWidget {
         TextButton.icon(
           style: TextButton.styleFrom(foregroundColor: Colors.red, iconColor: Colors.red),
           onPressed: () {
-            final shoppingList = recipe.shoppingList.target;
-            if (shoppingList != null) {
-              shoppingListNotifier.removeRecipeShoppingList(shoppingList);
-              shoppingListNotifier.loadRecipeShoppingLists();
-            }
-            recipeNotifier.removeRecipe(recipe);
-            showCustomAlertBanner(context, Colors.red, "Recipe removed from cookbook.");
-            Navigator.of(context).pop();
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text("Remove recipe?"),
+                  content: RichText(
+                    text: TextSpan(
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        text: "Are you sure you want to remove ",
+                        children: [
+                          TextSpan(text: recipe.title, style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(text: " from your cookbook?"),
+                        ]),
+                  ),
+                  actions: [
+                    TextButton(
+                      style: ButtonStyle(
+                        foregroundColor: WidgetStateColor.resolveWith(
+                          (states) => AppColors.dishDropBlack,
+                        ),
+                      ),
+                      onPressed: () {
+                        removeRecipe(shoppingListNotifier, recipeNotifier, context);
+                      },
+                      child: Text("Yes"),
+                    ),
+                    TextButton(
+                      style: ButtonStyle(
+                        foregroundColor: WidgetStateColor.resolveWith(
+                          (states) => AppColors.dishDropBlack,
+                        ),
+                      ),
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text("Cancel"),
+                    ),
+                  ],
+                );
+              },
+            ).then((result) {
+              if (result == true) Navigator.of(context).pop();
+            });
           },
           label: Text("Remove recipe"),
           icon: Icon(
@@ -51,5 +85,16 @@ class RecipeDetailsFooterButtonSection extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void removeRecipe(ShoppingListNotifier shoppingListNotifier, RecipeNotifier recipeNotifier, BuildContext context) {
+    final shoppingList = recipe.shoppingList.target;
+    if (shoppingList != null) {
+      shoppingListNotifier.removeRecipeShoppingList(shoppingList);
+      shoppingListNotifier.loadRecipeShoppingLists();
+    }
+    recipeNotifier.removeRecipe(recipe);
+    showCustomAlertBanner(context, Colors.red, "Recipe removed from cookbook.");
+    Navigator.pop(context, true);
   }
 }

@@ -15,6 +15,7 @@ import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/re
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/tags_section.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_search/custom_search_delegate.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -59,6 +60,17 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
         title: FittedBox(
           child: Text(recipe!.title, style: Theme.of(context).textTheme.headlineLarge),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: CustomSearchDelegate(recipeNotifier: context.read<RecipeNotifier>()),
+              );
+            },
+            icon: const Icon(Icons.search),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 16, bottom: 80, left: 16, right: 16),

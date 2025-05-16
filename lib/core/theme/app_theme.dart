@@ -30,15 +30,13 @@ class AppTheme {
             fillColor: AppColors.lightGrey),
         dropdownMenuTheme: DropdownMenuThemeData(
           inputDecorationTheme: InputDecorationTheme(
-            // TODO: fillColor is supposed to be light grey but current color is not changing
             filled: true,
             fillColor: AppColors.lightGrey,
+            border: OutlineInputBorder(),
           ),
           menuStyle: MenuStyle(
-            backgroundColor: WidgetStateColor.resolveWith(
-              (states) => AppColors.lightGreen,
-            ),
-          ),
+              backgroundColor: WidgetStateProperty.all(Colors.white),
+              side: WidgetStateProperty.all(BorderSide(color: AppColors.primary))),
         ),
         segmentedButtonTheme: SegmentedButtonThemeData(
           style: SegmentedButton.styleFrom(
@@ -47,8 +45,17 @@ class AppTheme {
         ),
         progressIndicatorTheme: ProgressIndicatorThemeData(color: AppColors.primary),
         checkboxTheme: CheckboxThemeData(
-          side: BorderSide(color: Colors.transparent),
-          fillColor: WidgetStatePropertyAll(AppColors.primary),
+          side: WidgetStateBorderSide.resolveWith((Set<WidgetState> states) {
+            if (states.contains(WidgetState.selected)) {
+              return BorderSide(color: AppColors.primary);
+            }
+            return BorderSide(color: AppColors.dishDropBlack);
+          }),
+          fillColor: WidgetStatePropertyAll(Colors.white),
+          checkColor: WidgetStateProperty.all(AppColors.primary),
+        ),
+        dialogTheme: DialogTheme(
+          backgroundColor: Colors.white,
         ),
       );
 }

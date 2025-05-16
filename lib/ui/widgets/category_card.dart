@@ -1,6 +1,6 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 
-import 'package:dishdrop_app_projekt/ui/screens/recipes_grid_view.dart';
+import 'package:dishdrop_app_projekt/ui/screens/recipe_grid_view.dart';
 import 'package:flutter/material.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -18,9 +18,7 @@ class CategoryCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => RecipesGridView(
-            category: categoryTitle,
-          ),
+          builder: (context) => RecipeGridView(category: categoryTitle),
         ),
       ),
       child: Container(

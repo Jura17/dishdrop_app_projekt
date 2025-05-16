@@ -1,7 +1,9 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/all_purpose_shopping_list_view_widgets/all_purpose_shopping_list_view.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_search/custom_search_delegate.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_widgets/recipe_shopping_lists_outer_container.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +35,17 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
           "Shopping Lists",
           style: Theme.of(context).textTheme.headlineLarge,
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: CustomSearchDelegate(recipeNotifier: context.read<RecipeNotifier>()),
+              );
+            },
+            icon: const Icon(Icons.search),
+          )
+        ],
       ),
       body: [
         RecipeShoppingListsOuterContainer(),
