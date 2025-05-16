@@ -1,4 +1,7 @@
+import 'package:dishdrop_app_projekt/data/repositories/recommendation_data.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recommendation_button.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recommendation_card_view_widgets/entry_prompt_view.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recommendation_card_view_widgets/prompt_view.dart';
 import 'package:flutter/material.dart';
 
 class RecommendationScreen extends StatefulWidget {
@@ -11,71 +14,47 @@ class RecommendationScreen extends StatefulWidget {
 }
 
 class _RecommendationScreenState extends State<RecommendationScreen> {
-  final List<RecipeQuestions> recipeQuestions = [
-    RecipeQuestions(
-      question: "What category are you looking for?",
-      options: ["Appetizers", "Main Courses", "Side Dishes", "Salads", "Sweet Stuff", "Drinks"],
-    ),
-    RecipeQuestions(
-      question: "What difficulty shall it be?",
-      options: ["Something simple please", "Not too tricky", "Let's go big", "Anything works"],
-    ),
-    RecipeQuestions(
-      question: "How much time do you have?",
-      options: ["30 minutes max", "Not more than one hour", "Time doesn't matter"],
-    ),
-    RecipeQuestions(
-      question: "Something you have tried before? A new recipe maybe?",
-      options: ["Give me something fresh", "Something I've cooked before", "I don't care"],
-    ),
-    RecipeQuestions(
-      question: "Do you want one of your favorites?",
-      options: ["Yeah, favorites only", "None-favorites, please", "Doesn't matter"],
-    )
-  ];
-
   int _currentQuestionIndex = -1;
-  Map<int, String> answers = {};
+  Map<int, Enum> answers = {};
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-          child: Column(
-        children: [
-          RichText(
-            text: TextSpan(
-              text: "Tap the ",
-              style: Theme.of(context).textTheme.headlineLarge,
-              children: [
-                TextSpan(
-                  text: "button",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineLarge
-                      ?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),
-                ),
-                TextSpan(text: " to find a recipe for today!")
-              ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _currentQuestionIndex < 0
+                ? EntryPromptView()
+                : PromptView(
+                    currentQuestionIndex: _currentQuestionIndex,
+                    incrementQuestionIndexFunc: incrementQuestionIndex,
+                    updateAnswersFunc: updateAnswers,
+                    recommendationPrompt: recommendationPrompts[_currentQuestionIndex],
+                  ),
+            Spacer(),
+            RecommendationButton(
+              incrementQuestionIndexFunc: incrementQuestionIndex,
+              currentQuestionIndex: _currentQuestionIndex,
+              answers: answers,
             ),
-            textAlign: TextAlign.center,
-          ),
-          Spacer(),
-          RecommendationButton(),
-          Spacer(),
-        ],
-      )),
+            Spacer(),
+          ],
+        ),
+      ),
     );
   }
-}
 
-class RecipeQuestions {
-  final String question;
-  final List<String> options;
+  void incrementQuestionIndex() {
+    if (_currentQuestionIndex < recommendationPrompts.length - 1) {
+      _currentQuestionIndex++;
+      setState(() {});
+    }
+  }
 
-  RecipeQuestions({
-    required this.question,
-    required this.options,
-  });
+  void updateAnswers(currentQuestionIndex, answer) {
+    answers[currentQuestionIndex] = answer;
+    setState(() {});
+  }
 }

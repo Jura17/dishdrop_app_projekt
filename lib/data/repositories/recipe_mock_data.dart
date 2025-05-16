@@ -20,6 +20,7 @@ final List<Recipe> recipeData = [
     prepTime: 20,
     cookingTime: 20,
   )
+    ..timesCooked = 12
     ..directions.addAll([
       CookingDirection(description: "Place the eggs, salt and pepper in a bowl. Stir to combine"),
       CookingDirection(
@@ -69,7 +70,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 15,
     cookingTime: 20,
-  ),
+  )..timesCooked = 9,
   Recipe(
     title: "3-Ingredient-Pizza",
     category: "Appetizers",
@@ -84,7 +85,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 15,
     cookingTime: 22,
-  ),
+  )..timesCooked = 19,
   Recipe(
     title: "Bruschetta",
     category: "Appetizers",
@@ -100,6 +101,7 @@ final List<Recipe> recipeData = [
     prepTime: 15,
     cookingTime: 5,
   )
+    ..timesCooked = 1
     ..directions.addAll([
       CookingDirection(description: "Preheat oven to 400°F (200°C)."),
       CookingDirection(
@@ -197,6 +199,7 @@ final List<Recipe> recipeData = [
     prepTime: 5,
     cookingTime: 0,
   )
+    ..timesCooked = 2
     ..directions.addAll(
       [
         CookingDirection(description: "Rub the rim of a glass with lime and dip in salt."),
@@ -228,6 +231,7 @@ final List<Recipe> recipeData = [
     prepTime: 15,
     cookingTime: 15,
   )
+    ..timesCooked = 6
     ..directions.addAll([
       CookingDirection(description: "Grill chicken breasts until fully cooked, about 7-8 minutes per side."),
       CookingDirection(description: "Toss mixed greens, cherry tomatoes, cucumbers, and red onion in a large bowl."),
@@ -257,6 +261,7 @@ final List<Recipe> recipeData = [
     prepTime: 10,
     cookingTime: 15,
   )
+    ..timesCooked = 45
     ..directions.addAll([
       CookingDirection(description: "Cook spaghetti according to package instructions until al dente."),
       CookingDirection(description: "In a separate pan, cook the pancetta or bacon until crispy."),
@@ -287,6 +292,7 @@ final List<Recipe> recipeData = [
     prepTime: 15,
     cookingTime: 15,
   )
+    ..timesCooked = 11
     ..directions.addAll([
       CookingDirection(description: "Preheat the oven to 425°F (220°C)."),
       CookingDirection(description: "Butter and flour four ramekins."),
@@ -320,6 +326,7 @@ final List<Recipe> recipeData = [
     prepTime: 5,
     cookingTime: 0,
   )
+    ..timesCooked = 9
     ..directions.addAll([
       CookingDirection(description: "Juice the lemons into a pitcher."),
       CookingDirection(description: "Add the sugar and stir until dissolved."),
@@ -382,6 +389,7 @@ final List<Recipe> recipeData = [
     prepTime: 15,
     cookingTime: 20,
   )
+    ..timesCooked = 22
     ..directions.addAll([
       CookingDirection(description: "Press tofu to remove excess moisture and cut into cubes."),
       CookingDirection(description: "Heat oil in a pan and fry tofu until golden and crispy."),
@@ -413,6 +421,7 @@ final List<Recipe> recipeData = [
     prepTime: 5,
     cookingTime: 0,
   )
+    ..timesCooked = 7
     ..directions.addAll([
       CookingDirection(description: "In a glass, muddle fresh mint leaves with sugar and lime juice."),
       CookingDirection(description: "Add ice and rum, then top with soda water."),
@@ -442,6 +451,7 @@ final List<Recipe> recipeData = [
     prepTime: 10,
     cookingTime: 20,
   )
+    ..timesCooked = 14
     ..directions.addAll([
       CookingDirection(description: "Peel and slice the carrots into uniform pieces."),
       CookingDirection(description: "Heat butter and olive oil in a pan over medium heat."),
@@ -474,6 +484,7 @@ final List<Recipe> recipeData = [
     prepTime: 10,
     cookingTime: 15,
   )
+    ..timesCooked = 31
     ..directions.addAll([
       CookingDirection(description: "Cook rice ahead of time and let it cool."),
       CookingDirection(description: "Heat oil in a large pan or wok. Add chopped vegetables and cook until tender."),
@@ -507,6 +518,7 @@ final List<Recipe> recipeData = [
     prepTime: 10,
     cookingTime: 25,
   )
+    ..timesCooked = 2
     ..directions.addAll([
       CookingDirection(description: "Heat oil and butter in a pan, then sauté onions and garlic until soft."),
       CookingDirection(description: "Add sliced mushrooms and cook until golden brown."),
@@ -542,6 +554,7 @@ final List<Recipe> recipeData = [
     prepTime: 15,
     cookingTime: 30,
   )
+    ..timesCooked = 1
     ..directions.addAll([
       CookingDirection(description: "Preheat the oven to 350°F (175°C)."),
       CookingDirection(
@@ -578,6 +591,7 @@ final List<Recipe> recipeData = [
     prepTime: 5,
     cookingTime: 0,
   )
+    ..timesCooked = 30
     ..directions.addAll([
       CookingDirection(description: "Whisk the matcha powder with a little hot water to create a smooth paste."),
       CookingDirection(description: "Fill a glass with ice cubes and pour the matcha mixture over."),
