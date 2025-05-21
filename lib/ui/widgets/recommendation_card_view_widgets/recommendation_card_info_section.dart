@@ -92,6 +92,7 @@ class RecommendationCardInfoSection extends StatelessWidget {
                   FilledButton(
                     onPressed: () {
                       Navigator.of(context).pop();
+                      // TODO: replace allRecipes with filteredRecipes
                       getRandomRecipe(context, allRecipes);
                     },
                     style: FilledButton.styleFrom(

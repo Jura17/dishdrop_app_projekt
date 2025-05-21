@@ -8,7 +8,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Sesame Chicken",
     category: "Main Courses",
-    difficulty: "Not too tricky",
+    difficulty: "Not Too Tricky",
     description:
         "Crispy, golden-brown chicken bites coated in a sweet and savory sesame sauce—this takeout favorite is surprisingly easy to make at home. With a perfect balance of crunch and flavor, it’s a guaranteed crowd-pleaser!",
     notes: "",
@@ -59,7 +59,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Shiitake Mushroom Stir Fry",
     category: "Main Courses",
-    difficulty: "Not too tricky",
+    difficulty: "Not Too Tricky",
     description:
         "A rich umami-packed dish featuring tender shiitake mushrooms stir-fried with garlic, soy sauce, and fresh vegetables. This quick and healthy meal is bursting with deep, earthy flavors and pairs perfectly with rice or noodles.",
     notes: "",
@@ -155,7 +155,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Chocolate Brownies",
     category: "Sweet Stuff",
-    difficulty: "Not too tricky",
+    difficulty: "Not Too Tricky",
     description:
         "Fudgy, rich, and irresistibly chocolatey—these homemade brownies are the perfect indulgence. With a crackly top and gooey center, every bite melts in your mouth, making it impossible to eat just one!",
     notes: "",
@@ -219,7 +219,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Grilled Chicken Salad",
     category: "Salads",
-    difficulty: "Medium",
+    difficulty: "Not Too Tricky",
     description:
         "Juicy, seasoned grilled chicken served over a fresh bed of crisp greens, cherry tomatoes, and cucumbers, drizzled with a light vinaigrette. It’s the perfect balance of protein, crunch, and vibrant flavors.",
     notes: "",
@@ -249,7 +249,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Spaghetti Carbonara",
     category: "Main Courses",
-    difficulty: "Medium",
+    difficulty: "Not Too Tricky",
     description:
         "A rich and creamy Italian classic made with just a handful of ingredients—al dente spaghetti tossed in a silky sauce of eggs, Parmesan cheese, crispy pancetta, and black pepper. Simple, yet deeply satisfying!",
     notes: "",
@@ -280,7 +280,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Chocolate Lava Cake",
     category: "Sweet Stuff",
-    difficulty: "Tricky",
+    difficulty: "Impressive",
     description:
         "A decadent dessert with a perfectly baked outer shell and a warm, gooey chocolate center. One bite into this rich, molten treat, and you’ll be in chocolate heaven! Best served with a scoop of vanilla ice cream.",
     notes: "",
@@ -343,7 +343,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Pasta Primavera",
     category: "Main Courses",
-    difficulty: "Medium",
+    difficulty: "Not Too Tricky",
     description:
         "A vibrant, veggie-packed pasta dish that celebrates the freshness of the season. Lightly sautéed vegetables tossed with tender pasta in a simple garlic and olive oil sauce—healthy, colorful, and full of flavor!",
     notes: "",
@@ -377,7 +377,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Crispy Tofu Stir-Fry",
     category: "Side Dishes",
-    difficulty: "Medium",
+    difficulty: "Not Too Tricky",
     description:
         "Golden, crispy tofu tossed with colorful stir-fried veggies and a flavorful soy-garlic sauce. This protein-packed dish is crunchy on the outside, tender on the inside, and perfect for a quick meal!",
     notes: "",
@@ -472,7 +472,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Vegetable Fried Rice",
     category: "Side Dishes",
-    difficulty: "Medium",
+    difficulty: "Not Too Tricky",
     description:
         "A quick and flavorful dish made with perfectly stir-fried rice, crisp vegetables, and savory soy sauce. Light, delicious, and a great way to use up leftover rice!",
     notes: "",
@@ -506,7 +506,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Mushroom Risotto",
     category: "Main Courses",
-    difficulty: "Tricky",
+    difficulty: "Impressive",
     description:
         "Creamy, rich, and deeply comforting, this risotto is loaded with the earthy goodness of mushrooms and a touch of Parmesan cheese. A luxurious dish that’s worth every stir!",
     notes: "",
@@ -542,7 +542,7 @@ final List<Recipe> recipeData = [
   Recipe(
     title: "Lemon Bars",
     category: "Sweet Stuff",
-    difficulty: "Medium",
+    difficulty: "Not Too Tricky",
     description:
         "Tangy, buttery, and perfectly sweet, these bright and zesty lemon bars are the perfect dessert for citrus lovers. With a melt-in-your-mouth shortbread crust and a smooth lemon filling, they’re simply irresistible!",
     notes: "",

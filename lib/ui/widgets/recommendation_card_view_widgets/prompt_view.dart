@@ -1,4 +1,6 @@
-import 'package:dishdrop_app_projekt/data/models/recommendation_question.dart';
+import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/data/models/recommendation_prompt.dart';
+
 import 'package:flutter/material.dart';
 
 class PromptView extends StatelessWidget {
@@ -17,6 +19,9 @@ class PromptView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get the list of enabled (clickable) options from the prompt
+    final enabledOptions = recommendationPrompt.enabledOptions;
+
     return Column(
       children: [
         Text(
@@ -24,18 +29,32 @@ class PromptView extends StatelessWidget {
           style: Theme.of(context).textTheme.headlineLarge,
           textAlign: TextAlign.center,
         ),
+        const SizedBox(height: 16),
         Column(
-          children: recommendationPrompt.options.keys
-              .map(
-                (optionKey) => ElevatedButton(
-                  onPressed: () {
-                    updateAnswersFunc(currentQuestionIndex, recommendationPrompt.options[optionKey]);
-                    incrementQuestionIndexFunc();
-                  },
-                  child: Text(optionKey),
+          children: recommendationPrompt.options.entries.map((entry) {
+            final optionText = entry.key;
+            final optionValue = entry.value;
+
+            final isEnabled = enabledOptions.contains(optionValue);
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: ElevatedButton(
+                onPressed: isEnabled
+                    ? () {
+                        updateAnswersFunc(currentQuestionIndex, optionValue);
+                        incrementQuestionIndexFunc();
+                      }
+                    // Disable the button if not enabled
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: isEnabled ? AppColors.lightGreen : Colors.grey.shade400,
+                  foregroundColor: isEnabled ? AppColors.primary : Colors.white,
                 ),
-              )
-              .toList(),
+                child: Text(optionText),
+              ),
+            );
+          }).toList(),
         ),
       ],
     );

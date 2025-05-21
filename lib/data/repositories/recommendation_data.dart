@@ -1,10 +1,10 @@
-import 'package:dishdrop_app_projekt/data/models/recommendation_question.dart';
+import 'package:dishdrop_app_projekt/data/models/recommendation_prompt.dart';
 
 enum CategoriesPreference { appetizers, mainCourses, sideDishes, salads, sweetStuff, drinks }
 
 enum DifficultyPreference { simple, notTooTricky, impressive, irrelevant }
 
-enum TimePreference { little, medium, high, irrelevant }
+enum TimePreference { little, medium, irrelevant }
 
 enum FamiliarityPreference { familiar, unfamiliar, veryFamiliar, irrelevant }
 
