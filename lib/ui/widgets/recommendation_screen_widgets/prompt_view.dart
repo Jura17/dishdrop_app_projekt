@@ -42,13 +42,14 @@ class PromptView extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: isEnabled
                     ? () {
+                        // update map holding given answers and check available options for next prompt
                         updateAnswersFunc(currentQuestionIndex, optionValue);
                         incrementQuestionIndexFunc();
                       }
                     // Disable the button if not enabled
                     : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: isEnabled ? AppColors.lightGreen : Colors.grey.shade400,
+                  backgroundColor: isEnabled ? AppColors.lightGreen : AppColors.darkGrey,
                   foregroundColor: isEnabled ? AppColors.primary : Colors.white,
                 ),
                 child: Text(optionText),

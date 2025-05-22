@@ -5,12 +5,20 @@ import 'package:flutter/material.dart';
 
 class RecipeNotifier extends ChangeNotifier {
   final DatabaseRepository _databaseRepository;
+  List<Recipe> _filteredRecipes = [];
 
   RecipeNotifier(this._databaseRepository);
 
   List<Recipe> get allRecipes {
     return _databaseRepository.getAllRecipes();
   }
+
+  void updateFilteredRecipe(List<Recipe> filteredRecipes) {
+    _filteredRecipes = filteredRecipes;
+    notifyListeners();
+  }
+
+  List<Recipe> get filteredRecipes => _filteredRecipes;
 
   void addRecipe(Recipe newRecipe) {
     _databaseRepository.addRecipe(newRecipe);

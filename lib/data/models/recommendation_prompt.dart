@@ -11,5 +11,6 @@ class RecommendationPrompt {
     required this.question,
     required this.options,
     Set<Enum>? enabledOptions,
+    // if there are no valid options specified just use all options
   }) : enabledOptions = enabledOptions ?? options.values.toSet();
 }

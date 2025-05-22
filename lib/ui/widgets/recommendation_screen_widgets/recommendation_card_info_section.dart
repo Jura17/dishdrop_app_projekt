@@ -17,7 +17,8 @@ class RecommendationCardInfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Recipe> allRecipes = context.read<RecipeNotifier>().allRecipes;
+    // When seeing the card we've already filtered through all recipes at least once, so use filtered list here
+    final List<Recipe> recipes = context.read<RecipeNotifier>().filteredRecipes;
 
     return Expanded(
       child: Container(
@@ -90,16 +91,23 @@ class RecommendationCardInfoSection extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FilledButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      // TODO: replace allRecipes with filteredRecipes
-                      getRandomRecipe(context, allRecipes);
-                    },
-                    style: FilledButton.styleFrom(
-                      side: BorderSide(color: AppColors.primary),
-                      backgroundColor: AppColors.lightGreen,
-                      foregroundColor: AppColors.primary,
-                    ),
+                    // disable button if there is only 1 matching recipe
+                    onPressed: recipes.length < 2
+                        ? null
+                        : () {
+                            Navigator.of(context).pop();
+                            getRandomRecipe(context, recipes);
+                          },
+                    style: recipes.length < 2
+                        ? FilledButton.styleFrom(
+                            backgroundColor: AppColors.darkGrey,
+                            foregroundColor: AppColors.dishDropBlack,
+                          )
+                        : FilledButton.styleFrom(
+                            side: BorderSide(color: AppColors.primary),
+                            backgroundColor: AppColors.lightGreen,
+                            foregroundColor: AppColors.primary,
+                          ),
                     child: Text("Look again"),
                   ),
                   FilledButton(

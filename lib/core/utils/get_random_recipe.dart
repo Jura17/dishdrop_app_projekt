@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/recommendation_card_view_widgets/recommendation_card.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recommendation_screen_widgets/recommendation_card.dart';
 import 'package:flutter/material.dart';
 
 void getRandomRecipe(context, allRecipes) {

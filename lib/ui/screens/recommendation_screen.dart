@@ -2,10 +2,10 @@ import 'package:dishdrop_app_projekt/core/utils/get_random_recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:dishdrop_app_projekt/data/repositories/recommendation_data.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/recipe_search/filter_recipe.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/recommendation_button.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/recommendation_card_view_widgets/entry_prompt_view.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/recommendation_card_view_widgets/prompt_view.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recommendation_screen_widgets/filter_recipe.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recommendation_screen_widgets/recommendation_button.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recommendation_screen_widgets/entry_prompt_view.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recommendation_screen_widgets/prompt_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +19,10 @@ class RecommendationScreen extends StatefulWidget {
 }
 
 class _RecommendationScreenState extends State<RecommendationScreen> {
-  int _currentQuestionIndex = -1;
-  Map<int, Enum> answers = {};
+  int currentQuestionIndex = -1;
+  // the size of 'answers' is fixed to the number of questions we have
+  // and pre-filled with null-values for unanswered questions so we can always safely assign values
+  List<Enum?> answers = List.filled(recommendationPrompts.length, null);
 
   @override
   Widget build(BuildContext context) {
@@ -30,18 +32,18 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _currentQuestionIndex < 0
+            currentQuestionIndex < 0
                 ? EntryPromptView()
                 : PromptView(
-                    currentQuestionIndex: _currentQuestionIndex,
+                    currentQuestionIndex: currentQuestionIndex,
                     incrementQuestionIndexFunc: incrementQuestionIndex,
                     updateAnswersFunc: updateAnswers,
-                    recommendationPrompt: recommendationPrompts[_currentQuestionIndex],
+                    recommendationPrompt: recommendationPrompts[currentQuestionIndex],
                   ),
             Spacer(),
             RecommendationButton(
               incrementQuestionIndexFunc: incrementQuestionIndex,
-              currentQuestionIndex: _currentQuestionIndex,
+              currentQuestionIndex: currentQuestionIndex,
               answers: answers,
               resetQuestions: resetPrompts,
             ),
@@ -53,15 +55,15 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
   }
 
   void incrementQuestionIndex() {
-    if (_currentQuestionIndex < recommendationPrompts.length - 1) {
-      _currentQuestionIndex++;
+    if (currentQuestionIndex < recommendationPrompts.length - 1) {
+      currentQuestionIndex++;
       setState(() {});
     }
   }
 
   void resetPrompts() {
-    _currentQuestionIndex = -1;
-    answers.clear();
+    currentQuestionIndex = -1;
+    answers = List.filled(recommendationPrompts.length, null);
     setState(() {});
   }
 
@@ -84,9 +86,16 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
       });
     } else {
       // All questions answered -> pick recipe
-      final finalFiltered = filterRecipes(context.read<RecipeNotifier>().allRecipes, answers);
+      final finalFiltered = filterRecipes(
+        context.read<RecipeNotifier>().allRecipes,
+        answers,
+        context,
+      );
 
-      getRandomRecipe(context, finalFiltered.isNotEmpty ? finalFiltered : context.read<RecipeNotifier>().allRecipes);
+      getRandomRecipe(
+        context,
+        finalFiltered.isNotEmpty ? finalFiltered : context.read<RecipeNotifier>().allRecipes,
+      );
       resetPrompts();
     }
 
@@ -96,16 +105,17 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
   Set<Enum> getValidOptionsForQuestion({
     required int questionIndex,
     required List<Recipe> allRecipes,
-    required Map<int, Enum> currentAnswers,
+    required List<Enum?> currentAnswers,
     required List<MapEntry<String, Enum>> allOptions,
   }) {
     final validOptions = <Enum>{};
 
     for (final option in allOptions) {
-      final tempAnswers = Map<int, Enum>.from(currentAnswers);
+      // create a shallow copy of currentAnswers instead using the same list
+      final tempAnswers = List<Enum?>.from(currentAnswers);
       tempAnswers[questionIndex] = option.value;
 
-      final result = filterRecipes(allRecipes, tempAnswers);
+      final result = filterRecipes(allRecipes, tempAnswers, context);
       if (result.isNotEmpty) {
         validOptions.add(option.value);
       }
