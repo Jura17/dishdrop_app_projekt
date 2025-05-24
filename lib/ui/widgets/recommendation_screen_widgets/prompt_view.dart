@@ -58,7 +58,10 @@ class PromptView extends StatelessWidget {
                   foregroundColor: isEnabled ? Colors.white : Color(0xFF9E9E9E),
                   shadowColor: isEnabled ? Color.fromARGB(255, 38, 47, 40) : Color.fromARGB(0, 214, 214, 214),
                 ),
-                child: Text(optionText),
+                child: Text(
+                  optionText,
+                  textAlign: TextAlign.center,
+                ),
               ),
             );
           },

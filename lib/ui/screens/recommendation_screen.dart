@@ -50,7 +50,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
                       recommendationPrompt: recommendationPrompts[currentQuestionIndex],
                     ),
                   ),
-            SizedBox(height: 40),
+            currentQuestionIndex < 0 ? SizedBox(height: 40) : Spacer(),
             RecommendationButton(
               incrementQuestionIndexFunc: incrementQuestionIndex,
               currentQuestionIndex: currentQuestionIndex,
