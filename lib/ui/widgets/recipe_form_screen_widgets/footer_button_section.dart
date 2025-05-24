@@ -64,6 +64,7 @@ class FooterButtonSection extends StatelessWidget {
               if (recipeFormProvider.isEditingRecipe) {
                 // UPDATE NEW RECIPE
                 if (recipeFormProvider.recipe != null) {
+                  recipeFormProvider.recipe!.timesCooked = recipeFormProvider.timesCooked!;
                   context.read<RecipeNotifier>().updateRecipe(recipeFormProvider.recipe!.id, newRecipe);
                 } else {
                   return;
@@ -111,8 +112,6 @@ class FooterButtonSection extends StatelessWidget {
     final int cookingTime = int.tryParse(allTextFormCtrl["cookingTimeCtrl"]!.text) ?? 0;
     final List<CookingDirection> directions = complexInputValues["directions"] as List<CookingDirection>;
     final List<ListItem> ingredients = complexInputValues["ingredients"] as List<ListItem>;
-
-    // final recipeID = isEditingRecipe ? widget.recipe?.id : Uuid().v4();
 
     Recipe newRecipe = Recipe(
       title: title,

@@ -32,22 +32,33 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            if (currentQuestionIndex >= 0)
+              Text(
+                recommendationPrompts[currentQuestionIndex].question,
+                style: Theme.of(context).textTheme.headlineLarge,
+                textAlign: TextAlign.center,
+              ),
+            Spacer(),
             currentQuestionIndex < 0
                 ? EntryPromptView()
-                : PromptView(
-                    currentQuestionIndex: currentQuestionIndex,
-                    incrementQuestionIndexFunc: incrementQuestionIndex,
-                    updateAnswersFunc: updateAnswers,
-                    recommendationPrompt: recommendationPrompts[currentQuestionIndex],
+                : Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: PromptView(
+                      currentQuestionIndex: currentQuestionIndex,
+                      incrementQuestionIndexFunc: incrementQuestionIndex,
+                      updateAnswersFunc: updateAnswers,
+                      recommendationPrompt: recommendationPrompts[currentQuestionIndex],
+                    ),
                   ),
-            Spacer(),
+            SizedBox(height: 40),
             RecommendationButton(
               incrementQuestionIndexFunc: incrementQuestionIndex,
               currentQuestionIndex: currentQuestionIndex,
               answers: answers,
               resetQuestions: resetPrompts,
             ),
-            Spacer(),
+            if (currentQuestionIndex < 0) Spacer(),
+            SizedBox(height: 50)
           ],
         ),
       ),

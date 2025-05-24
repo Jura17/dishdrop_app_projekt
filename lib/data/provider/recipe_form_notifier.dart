@@ -30,6 +30,7 @@ class RecipeFormNotifier extends ChangeNotifier with WidgetsBindingObserver {
     "directions": <CookingDirection>[]
   };
 
+  int? timesCooked;
   Map<String, dynamic> allInputFields = {
     "images": {
       "titleImg": "",
@@ -62,6 +63,7 @@ class RecipeFormNotifier extends ChangeNotifier with WidgetsBindingObserver {
       } else {
         await sharedPrefsRepo.deleteCachedEditInput();
       }
+
       loadRecipeDataForEditing();
     } else {
       await loadCachedInput(isEditingRecipe);
@@ -109,6 +111,7 @@ class RecipeFormNotifier extends ChangeNotifier with WidgetsBindingObserver {
     allTextControllers["notesCtrl"]?.text = recipe!.notes;
     complexInputValues["ingredients"] = recipe!.ingredients;
     complexInputValues["directions"] = recipe!.directions;
+    timesCooked = recipe!.timesCooked;
   }
 
   void saveAllInputToList() {

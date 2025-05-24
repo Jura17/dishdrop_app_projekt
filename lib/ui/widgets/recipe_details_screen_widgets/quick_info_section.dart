@@ -61,7 +61,7 @@ class QuickInfoSection extends StatelessWidget {
                         text: "${recipe.timesCooked}",
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
                       ),
-                      TextSpan(text: " times")
+                      TextSpan(text: recipe.timesCooked == 1 ? " time" : " times")
                     ],
                   ),
                 );

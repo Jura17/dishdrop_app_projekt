@@ -22,20 +22,20 @@ class PromptView extends StatelessWidget {
     // Get the list of enabled (clickable) options from the prompt
     final enabledOptions = recommendationPrompt.enabledOptions;
 
-    return Column(
+    return GridView.count(
+      crossAxisCount: 2,
+      childAspectRatio: 2.4,
+      crossAxisSpacing: 16,
+      mainAxisSpacing: 16,
+      shrinkWrap: true,
       children: [
-        Text(
-          recommendationPrompt.question,
-          style: Theme.of(context).textTheme.headlineLarge,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 16),
-        Column(
-          children: recommendationPrompt.options.entries.map((entry) {
+        ...recommendationPrompt.options.entries.map(
+          (entry) {
             final optionText = entry.key;
             final optionValue = entry.value;
 
             final isEnabled = enabledOptions.contains(optionValue);
+            const infoSnackBar = SnackBar(content: Text("No such recipes found"));
 
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -46,17 +46,23 @@ class PromptView extends StatelessWidget {
                         updateAnswersFunc(currentQuestionIndex, optionValue);
                         incrementQuestionIndexFunc();
                       }
-                    // Disable the button if not enabled
-                    : null,
+                    : () {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(infoSnackBar);
+                        }
+                        return;
+                      },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: isEnabled ? AppColors.lightGreen : AppColors.darkGrey,
-                  foregroundColor: isEnabled ? AppColors.primary : Colors.white,
+                  textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  backgroundColor: isEnabled ? AppColors.primary : Color(0xFFE0E0E0),
+                  foregroundColor: isEnabled ? Colors.white : Color(0xFF9E9E9E),
+                  shadowColor: isEnabled ? Color.fromARGB(255, 38, 47, 40) : Color.fromARGB(0, 214, 214, 214),
                 ),
                 child: Text(optionText),
               ),
             );
-          }).toList(),
-        ),
+          },
+        )
       ],
     );
   }

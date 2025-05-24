@@ -34,7 +34,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
   @override
   Widget build(BuildContext context) {
     final recipeFormNotifier = context.watch<RecipeFormNotifier>();
-    final recipeNotifier = context.watch<RecipeNotifier>();
+    // final recipeNotifier = context.watch<RecipeNotifier>();
     Recipe? recipe = recipeFormNotifier.recipe;
 
     return GestureDetector(
@@ -97,35 +97,39 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        RichText(
+                          text: TextSpan(
+                            text: "You have cooked this recipe ",
                             style: Theme.of(context).textTheme.bodyLarge,
-                            'You have cooked this recipe ${recipeFormNotifier.recipe?.timesCooked} ${recipeFormNotifier.recipe?.timesCooked == 1 ? 'time' : 'times.'}'),
+                            children: [
+                              TextSpan(
+                                text: "${recipeFormNotifier.timesCooked} ",
+                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(text: recipeFormNotifier.timesCooked == 1 ? 'time.' : 'times.')
+                            ],
+                          ),
+                        ),
                         SizedBox(height: 10),
                         ElevatedButton(
                           onPressed: recipe?.timesCooked == 0
                               ? null
                               : () {
-                                  recipe?.timesCooked = 0;
-                                  recipeNotifier.updateRecipe(recipe!.id, recipe);
+                                  recipeFormNotifier.timesCooked = 0;
+                                  setState(() {});
                                 },
                           child: Text(
                             "Reset counter",
                             style:
                                 recipe?.timesCooked == 0 ? TextStyle(color: Colors.grey) : TextStyle(color: Colors.red),
-                            // style: TextStyle(color: Colors.red),
                           ),
                         )
                       ],
                     ),
-                  SizedBox(height: 30),
                   ElevatedButton(
                     style: TextButton.styleFrom(foregroundColor: Colors.red),
                     onPressed: () => recipeFormNotifier.resetAllCtrl(),
                     child: Text("Reset all fields"),
-                  ),
-                  Text(
-                    "Warning: This cannot be undone!",
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(fontStyle: FontStyle.italic),
                   ),
                   SizedBox(height: 30),
                   FooterButtonSection(),

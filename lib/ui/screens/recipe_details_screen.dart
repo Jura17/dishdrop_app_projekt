@@ -119,7 +119,9 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                     text: "${recipe!.timesCooked}",
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
                   ),
-                  TextSpan(text: " times so far.\nTap the button below when you're done!")
+                  TextSpan(
+                      text:
+                          " ${recipe!.timesCooked == 1 ? "time" : "times"} so far.\nTap the button below when you're done!")
                 ],
               ),
             ),

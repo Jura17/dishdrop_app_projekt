@@ -39,35 +39,59 @@ class _RecommendationButtonState extends State<RecommendationButton> {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      style: ElevatedButton.styleFrom(
-        shape: CircleBorder(),
-        padding: EdgeInsets.all(20),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-      ),
-      label: Icon(
-        Icons.lightbulb_outline_rounded,
-        size: 125,
-      ),
-      onPressed: () {
-        // if current index is < 0 we haven't started yet and increment the index
-        // else we go through all recipes and filter them by answer
-        if (widget.currentQuestionIndex < 0) {
-          widget.incrementQuestionIndexFunc();
-          return;
-        }
+    return Column(
+      children: [
+        ElevatedButton.icon(
+          label: widget.currentQuestionIndex < 0
+              ? Text(
+                  "Start here",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )
+              : Text("Give me something now"),
+          icon: Icon(
+            Icons.lightbulb_outline_rounded,
+            color: widget.currentQuestionIndex < 0 ? Colors.white : AppColors.primary,
+          ),
+          style: ButtonStyle(
+            iconSize: WidgetStateProperty.all(30),
+            backgroundColor: widget.currentQuestionIndex < 0
+                ? WidgetStateProperty.all(AppColors.primary)
+                : WidgetStateProperty.all(AppColors.lightGreen),
+            foregroundColor: widget.currentQuestionIndex < 0
+                ? WidgetStateProperty.all(Colors.white)
+                : WidgetStateProperty.all(AppColors.primary),
+          ),
+          onPressed: () {
+            // if current index is < 0 we haven't started yet and increment the index
+            // else we go through all recipes and filter them by answer
+            if (widget.currentQuestionIndex < 0) {
+              widget.incrementQuestionIndexFunc();
+              return;
+            }
 
-        final filtered = filterRecipes(allRecipes, widget.answers, context);
+            final filtered = filterRecipes(allRecipes, widget.answers, context);
 
-        if (filtered.isEmpty) {
-          getRandomRecipe(context, allRecipes);
-        } else {
-          getRandomRecipe(context, filtered);
-        }
+            if (filtered.isEmpty) {
+              getRandomRecipe(context, allRecipes);
+            } else {
+              getRandomRecipe(context, filtered);
+            }
 
-        widget.resetQuestions();
-      },
+            widget.resetQuestions();
+          },
+        ),
+        SizedBox(height: 10),
+        if (widget.currentQuestionIndex >= 0)
+          TextButton.icon(
+            label: Text("Start over"),
+            icon: Icon(Icons.replay_outlined),
+            style: ButtonStyle(
+              iconSize: WidgetStateProperty.all(30),
+              foregroundColor: WidgetStateProperty.all(Colors.red),
+            ),
+            onPressed: () => widget.resetQuestions(),
+          ),
+      ],
     );
   }
 }
