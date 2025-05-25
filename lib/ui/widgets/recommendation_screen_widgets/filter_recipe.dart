@@ -65,6 +65,7 @@ List<Recipe> _filterByDifficulty(List<Recipe> recipes, Enum answer) {
 
 List<Recipe> _filterByTime(List<Recipe> recipes, Enum answer) {
   return switch (answer) {
+    TimePreference.veryLittle => recipes.where((recipe) => recipe.prepTime + recipe.cookingTime <= 15).toList(),
     TimePreference.little => recipes.where((recipe) => recipe.prepTime + recipe.cookingTime <= 30).toList(),
     TimePreference.medium => recipes.where((recipe) => recipe.prepTime + recipe.cookingTime <= 60).toList(),
     TimePreference.irrelevant => recipes,

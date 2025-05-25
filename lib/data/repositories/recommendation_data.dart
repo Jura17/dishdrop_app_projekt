@@ -4,7 +4,7 @@ enum CategoriesPreference { appetizers, mainCourses, sideDishes, salads, sweetSt
 
 enum DifficultyPreference { simple, notTooTricky, impressive, irrelevant }
 
-enum TimePreference { little, medium, irrelevant }
+enum TimePreference { veryLittle, little, medium, irrelevant }
 
 enum FamiliarityPreference { familiar, unfamiliar, veryFamiliar, irrelevant }
 
@@ -34,7 +34,8 @@ final List<RecommendationPrompt> recommendationPrompts = [
   RecommendationPrompt(
     question: "How much time do you have?",
     options: {
-      "30 minutes max": TimePreference.little,
+      "15 minutes": TimePreference.veryLittle,
+      "30 minutes": TimePreference.little,
       "Not more than one hour": TimePreference.medium,
       "Time doesn't matter": TimePreference.irrelevant
     },

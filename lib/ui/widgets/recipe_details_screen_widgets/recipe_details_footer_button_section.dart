@@ -1,5 +1,4 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
-import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';
@@ -94,7 +93,14 @@ class RecipeDetailsFooterButtonSection extends StatelessWidget {
       shoppingListNotifier.loadRecipeShoppingLists();
     }
     recipeNotifier.removeRecipe(recipe);
-    showCustomAlertBanner(context, Colors.red, "Recipe removed from cookbook.");
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Recipe removed from cookbook."),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
     Navigator.pop(context, true);
   }
 }

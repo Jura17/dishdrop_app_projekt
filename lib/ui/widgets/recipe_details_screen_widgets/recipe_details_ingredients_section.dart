@@ -1,4 +1,5 @@
-import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
+import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
@@ -71,10 +72,11 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
                         shoppingListNotifier.loadRecipeShoppingLists();
 
                         if (context.mounted) {
-                          showCustomAlertBanner(
-                            context,
-                            Theme.of(context).primaryColor,
-                            "Ingredients added to shopping list!",
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Ingredients added to shopping list!"),
+                              backgroundColor: AppColors.primary,
+                            ),
                           );
                         }
                       }

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
+import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
@@ -44,11 +44,22 @@ class FooterButtonSection extends StatelessWidget {
               }
 
               if (context.mounted) {
-                showCustomAlertBanner(context, Colors.green,
-                    recipeFormProvider.isEditingRecipe ? "Recipe was edited!" : "Recipe added to cookbook!");
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: recipeFormProvider.isEditingRecipe
+                        ? Text("Recipe was edited!")
+                        : Text("Recipe added to cookbook!"),
+                    backgroundColor: AppColors.primary,
+                  ),
+                );
               }
             } else {
-              showCustomAlertBanner(context, Colors.red, "Please make sure all fields are filled in correctly.");
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Please make sure all fields are filled out correctly."),
+                  backgroundColor: AppColors.primary,
+                ),
+              );
             }
           },
           child: Text(recipeFormProvider.isEditingRecipe ? "Update recipe" : "Save recipe"),
@@ -76,8 +87,15 @@ class FooterButtonSection extends StatelessWidget {
 
               recipeFormProvider.resetAllCtrl();
               if (context.mounted) {
-                showCustomAlertBanner(context, Colors.green,
-                    recipeFormProvider.isEditingRecipe ? "Recipe was edited!" : "Recipe added to cookbook!");
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: recipeFormProvider.isEditingRecipe
+                        ? Text("Recipe was edited!")
+                        : Text("Recipe added to cookbook!"),
+                    backgroundColor: AppColors.primary,
+                  ),
+                );
+
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (BuildContext context) => RecipeDetailsScreen(
@@ -89,7 +107,12 @@ class FooterButtonSection extends StatelessWidget {
                 );
               }
             } else {
-              showCustomAlertBanner(context, Colors.red, "Please fill out all required fields");
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Please fill out all required fields."),
+                  backgroundColor: Colors.red,
+                ),
+              );
             }
           },
           child: Text(recipeFormProvider.isEditingRecipe ? "Update and open" : "Save and open"),

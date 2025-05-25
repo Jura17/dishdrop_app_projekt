@@ -35,7 +35,6 @@ class PromptView extends StatelessWidget {
             final optionValue = entry.value;
 
             final isEnabled = enabledOptions.contains(optionValue);
-            const infoSnackBar = SnackBar(content: Text("No such recipes found"));
 
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -48,14 +47,18 @@ class PromptView extends StatelessWidget {
                       }
                     : () {
                         if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(infoSnackBar);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("No such recipes found"),
+                            ),
+                          );
                         }
                         return;
                       },
                 style: ElevatedButton.styleFrom(
                   textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                  backgroundColor: isEnabled ? AppColors.primary : Color(0xFFE0E0E0),
-                  foregroundColor: isEnabled ? Colors.white : Color(0xFF9E9E9E),
+                  backgroundColor: isEnabled ? AppColors.lightGreen : Color(0xFFE0E0E0),
+                  foregroundColor: isEnabled ? AppColors.primary : Color(0xFF9E9E9E),
                   shadowColor: isEnabled ? Color.fromARGB(255, 38, 47, 40) : Color.fromARGB(0, 214, 214, 214),
                 ),
                 child: Text(

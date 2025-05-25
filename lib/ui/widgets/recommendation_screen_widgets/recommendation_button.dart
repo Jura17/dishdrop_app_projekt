@@ -50,17 +50,12 @@ class _RecommendationButtonState extends State<RecommendationButton> {
               : Text("Give me something now"),
           icon: Icon(
             Icons.lightbulb_outline_rounded,
-            color: widget.currentQuestionIndex < 0 ? Colors.white : AppColors.primary,
+            color: Colors.white,
           ),
           style: ButtonStyle(
-            iconSize: WidgetStateProperty.all(30),
-            backgroundColor: widget.currentQuestionIndex < 0
-                ? WidgetStateProperty.all(AppColors.primary)
-                : WidgetStateProperty.all(AppColors.lightGreen),
-            foregroundColor: widget.currentQuestionIndex < 0
-                ? WidgetStateProperty.all(Colors.white)
-                : WidgetStateProperty.all(AppColors.primary),
-          ),
+              iconSize: WidgetStateProperty.all(30),
+              backgroundColor: WidgetStateProperty.all(AppColors.primary),
+              foregroundColor: WidgetStateProperty.all(Colors.white)),
           onPressed: () {
             // if current index is < 0 we haven't started yet and increment the index
             // else we go through all recipes and filter them by answer

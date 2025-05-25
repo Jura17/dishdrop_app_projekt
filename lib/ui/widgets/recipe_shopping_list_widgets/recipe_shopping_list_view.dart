@@ -1,4 +1,3 @@
-import 'package:dishdrop_app_projekt/core/utils/show_custom_alert_banner.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_shopping_list_widgets/recipe_shopping_list_items.dart';
@@ -50,7 +49,12 @@ class RecipeShoppingListView extends StatelessWidget {
               onPressed: () {
                 context.read<ShoppingListNotifier>().removeRecipeShoppingList(recipeShoppingList);
                 context.read<ShoppingListNotifier>().loadRecipeShoppingLists();
-                showCustomAlertBanner(context, Colors.red, "Ingredients removed from shopping list.");
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Ingredients removed from shopping list."),
+                    backgroundColor: Colors.red,
+                  ),
+                );
               },
               label: Text("Remove from list"),
               icon: Icon(
