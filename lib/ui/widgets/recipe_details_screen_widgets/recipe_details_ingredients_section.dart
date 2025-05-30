@@ -6,7 +6,7 @@ import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';
 import 'package:dishdrop_app_projekt/ui/screens/shopping_list_screen.dart';
 
-import 'package:dishdrop_app_projekt/ui/widgets/ingredient_list_view.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/ingredient_list_view.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/servings_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,59 +35,58 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
     Recipe? recipe = recipeNotifier.getRecipeById(widget.recipeId);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text("Ingredients", style: Theme.of(context).textTheme.headlineMedium),
+        Align(
+            alignment: Alignment.centerLeft,
+            child: Text("Ingredients", style: Theme.of(context).textTheme.headlineMedium)),
         SizedBox(height: 15),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ServingsPicker(
-              updateServingsFunc: widget.updateServingsFunc,
-              servings: servings,
-            ),
-            // Recipe already on the shopping lists? ==> go to Shopping list screen, otherwise create shopping list
-            recipe != null && recipe.shoppingList.targetId != 0
-                ? FilledButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ShoppingListScreen()),
-                      );
-                    },
-                    style: Theme.of(context).filledButtonTheme.style,
-                    child: Text("Go to shopping lists"),
-                  )
-                : FilledButton.icon(
-                    icon: Icon(Icons.shopping_cart),
-                    onPressed: () {
-                      if (recipe != null) {
-                        final newShoppingList = ShoppingList(
-                          title: recipe.title,
-                          imgUrl: recipe.images["titleImg"],
-                          servings: servings,
-                        );
-                        newShoppingList.shoppingItems.addAll(recipe.ingredients);
-
-                        recipeNotifier.assignShoppingListToRecipe(recipe, newShoppingList);
-                        shoppingListNotifier.loadRecipeShoppingLists();
-
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("Ingredients added to shopping list!"),
-                              backgroundColor: AppColors.primary,
-                            ),
-                          );
-                        }
-                      }
-                    },
-                    style: Theme.of(context).filledButtonTheme.style,
-                    label: Text("Add to shopping list"),
-                  ),
-          ],
+        ServingsPicker(
+          updateServingsFunc: widget.updateServingsFunc,
+          servings: servings,
         ),
-        SizedBox(height: 15),
+
+        // Recipe already on the shopping lists? ==> go to Shopping list screen, otherwise create shopping list
+        recipe != null && recipe.shoppingList.targetId != 0
+            ? FilledButton.icon(
+                icon: Icon(Icons.shopping_cart),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ShoppingListScreen()),
+                  );
+                },
+                style: Theme.of(context).filledButtonTheme.style,
+                label: Text("Go to shopping lists"),
+              )
+            : FittedBox(
+                child: FilledButton(
+                  onPressed: () {
+                    if (recipe != null) {
+                      final newShoppingList = ShoppingList(
+                        title: recipe.title,
+                        imgUrl: recipe.images["titleImg"],
+                        servings: servings,
+                      );
+                      newShoppingList.shoppingItems.addAll(recipe.ingredients);
+
+                      recipeNotifier.assignShoppingListToRecipe(recipe, newShoppingList);
+                      shoppingListNotifier.loadRecipeShoppingLists();
+
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Ingredients added to shopping list!"),
+                            backgroundColor: AppColors.primary,
+                          ),
+                        );
+                      }
+                    }
+                  },
+                  style: Theme.of(context).filledButtonTheme.style,
+                  child: Text("Add to shopping list"),
+                ),
+              ),
+        SizedBox(height: 30),
         if (recipe != null)
           IngredientListView(
             recipe: recipe,

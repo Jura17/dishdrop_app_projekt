@@ -23,7 +23,7 @@ final List<RecommendationPrompt> recommendationPrompts = [
     },
   ),
   RecommendationPrompt(
-    question: "What difficulty shall it be?",
+    question: "Choose a difficulty",
     options: {
       "A simple one": DifficultyPreference.simple,
       "Not too tricky": DifficultyPreference.notTooTricky,
@@ -43,7 +43,7 @@ final List<RecommendationPrompt> recommendationPrompts = [
   RecommendationPrompt(
     question: "Something you have tried before? A new recipe maybe?",
     options: {
-      "Give me something fresh": FamiliarityPreference.unfamiliar,
+      "Give me a new one": FamiliarityPreference.unfamiliar,
       "Something I've cooked before": FamiliarityPreference.familiar,
       "One that I've cooked a lot": FamiliarityPreference.veryFamiliar,
       "I don't care": FamiliarityPreference.irrelevant,
@@ -52,8 +52,8 @@ final List<RecommendationPrompt> recommendationPrompts = [
   RecommendationPrompt(
     question: "Do you want one of your favorites?",
     options: {
-      "Yeah, favorites only": FavoriteRecipePreference.onlyFavorites,
-      "None-favorites, please": FavoriteRecipePreference.excludeFavorites,
+      "Favorites only": FavoriteRecipePreference.onlyFavorites,
+      "None-favorites": FavoriteRecipePreference.excludeFavorites,
       "Doesn't matter": FavoriteRecipePreference.irrelevant,
     },
   )

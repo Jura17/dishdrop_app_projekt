@@ -28,6 +28,7 @@ class _ServingsPickerState extends State<ServingsPicker> {
       children: [
         Icon(Icons.person, size: 40),
         Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
               onPressed: () {
@@ -44,7 +45,7 @@ class _ServingsPickerState extends State<ServingsPicker> {
               ),
             ),
             SizedBox(
-              width: 40,
+              width: 25,
               child: Align(
                 alignment: Alignment.center,
                 child: Text(

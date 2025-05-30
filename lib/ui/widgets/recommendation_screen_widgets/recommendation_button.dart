@@ -29,33 +29,36 @@ class RecommendationButton extends StatefulWidget {
 class _RecommendationButtonState extends State<RecommendationButton> {
   late List<Recipe> allRecipes;
   late List<Recipe> filteredRecipes;
+  bool showStartOverButton = false;
 
   @override
   void initState() {
+    super.initState();
     allRecipes = context.read<RecipeNotifier>().allRecipes;
     filteredRecipes = allRecipes;
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ElevatedButton.icon(
+        TextButton.icon(
           label: widget.currentQuestionIndex < 0
               ? Text(
                   "Start here",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.w500),
                 )
-              : Text("Give me something now"),
+              : Text("Just give me something"),
           icon: Icon(
             Icons.lightbulb_outline_rounded,
-            color: Colors.white,
+            color: widget.currentQuestionIndex < 0 ? Colors.white : AppColors.primary,
           ),
           style: ButtonStyle(
               iconSize: WidgetStateProperty.all(30),
-              backgroundColor: WidgetStateProperty.all(AppColors.primary),
-              foregroundColor: WidgetStateProperty.all(Colors.white)),
+              backgroundColor: widget.currentQuestionIndex < 0 ? WidgetStateProperty.all(AppColors.primary) : null,
+              foregroundColor: widget.currentQuestionIndex < 0
+                  ? WidgetStateProperty.all(Colors.white)
+                  : WidgetStateProperty.all(AppColors.primary)),
           onPressed: () {
             // if current index is < 0 we haven't started yet and increment the index
             // else we go through all recipes and filter them by answer
@@ -75,7 +78,6 @@ class _RecommendationButtonState extends State<RecommendationButton> {
             widget.resetQuestions();
           },
         ),
-        SizedBox(height: 10),
         if (widget.currentQuestionIndex >= 0)
           TextButton.icon(
             label: Text("Start over"),

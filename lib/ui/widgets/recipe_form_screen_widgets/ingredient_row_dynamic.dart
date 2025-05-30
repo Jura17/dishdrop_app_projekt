@@ -30,7 +30,7 @@ class _IngredientRowDynamicState extends State<IngredientRowDynamic> {
   @override
   void initState() {
     super.initState();
-    _amountController.text = widget.ingredient.amount.toString();
+    _amountController.text = widget.ingredient.amount == null ? "" : widget.ingredient.amount.toString();
     _amountController.addListener(() {
       double? newAmount = double.tryParse(_amountController.text);
       if (newAmount != null) {
@@ -148,7 +148,9 @@ class _IngredientRowDynamicState extends State<IngredientRowDynamic> {
                 },
                 child: _isEditingDescription
                     ? DescriptionTextField(
-                        descriptionController: _descriptionController, descriptionFocusNode: _descriptionFocusNode)
+                        descriptionController: _descriptionController,
+                        descriptionFocusNode: _descriptionFocusNode,
+                      )
                     : DescriptionText(descriptionController: _descriptionController),
               ),
             )
@@ -200,20 +202,22 @@ class AmountText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        text: convertedAmount[0],
-        style: Theme.of(context).textTheme.bodyLarge,
-        children: [
-          TextSpan(
-            text: convertedAmount[1],
-            style: TextStyle(
-              fontFeatures: [FontFeature.fractions()],
+    return convertedAmount[0] == '' && convertedAmount[1] == ''
+        ? Text('      ')
+        : RichText(
+            text: TextSpan(
+              text: convertedAmount[0],
+              style: Theme.of(context).textTheme.bodyLarge,
+              children: [
+                TextSpan(
+                  text: convertedAmount[1],
+                  style: TextStyle(
+                    fontFeatures: [FontFeature.fractions()],
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
   }
 }
 
@@ -258,7 +262,7 @@ class UnitText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      _unitController.text,
+      _unitController.text.isEmpty ? "      " : _unitController.text,
       style: Theme.of(context).textTheme.bodyLarge,
     );
   }
@@ -278,7 +282,7 @@ class DescriptionTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      maxLength: 40,
+      maxLength: 20,
       controller: _descriptionController,
       textAlign: TextAlign.right,
       focusNode: _descriptionFocusNode,

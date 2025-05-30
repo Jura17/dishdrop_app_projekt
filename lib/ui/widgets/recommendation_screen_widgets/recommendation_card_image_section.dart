@@ -1,5 +1,5 @@
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
-import 'package:dishdrop_app_projekt/ui/widgets/dismiss_button.dart';
+import 'package:dishdrop_app_projekt/ui/widgets/recommendation_screen_widgets/dismiss_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
 

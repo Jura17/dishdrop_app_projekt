@@ -36,7 +36,11 @@ class _AllPurposeListInputSectionState extends State<AllPurposeListInputSection>
                 },
                 maxLength: 60,
                 controller: widget.allTextControllers["itemDescCtrl"],
-                decoration: const InputDecoration(border: OutlineInputBorder(), hintText: "Item description"),
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: "Item description",
+                  counterText: "",
+                ),
               ),
               Row(
                 spacing: 10,
@@ -65,6 +69,18 @@ class _AllPurposeListInputSectionState extends State<AllPurposeListInputSection>
                       decoration: const InputDecoration(border: OutlineInputBorder(), hintText: "Unit"),
                     ),
                   ),
+                  IconButton(
+                    onPressed: () {
+                      if (widget.formKey.currentState!.validate()) {
+                        widget.updateListFunction();
+                        context.read<ShoppingListNotifier>().loadAllPurposeShoppingList();
+                      }
+                    },
+                    icon: Icon(
+                      Icons.add_box_outlined,
+                      size: 50,
+                    ),
+                  )
                 ],
               ),
               Text(
@@ -74,18 +90,6 @@ class _AllPurposeListInputSectionState extends State<AllPurposeListInputSection>
             ],
           ),
         ),
-        IconButton(
-          onPressed: () {
-            if (widget.formKey.currentState!.validate()) {
-              widget.updateListFunction();
-              context.read<ShoppingListNotifier>().loadAllPurposeShoppingList();
-            }
-          },
-          icon: Icon(
-            Icons.add_box_outlined,
-            size: 35,
-          ),
-        )
       ],
     );
   }

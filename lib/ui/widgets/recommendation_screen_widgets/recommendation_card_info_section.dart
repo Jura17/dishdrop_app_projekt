@@ -20,20 +20,22 @@ class RecommendationCardInfoSection extends StatelessWidget {
     // When seeing the card we've already filtered through all recipes at least once, so use filtered list here
     final List<Recipe> recipes = context.read<RecipeNotifier>().filteredRecipes;
 
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.lightGrey,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.lightGrey,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
           child: Column(
             spacing: 4,
             children: [
-              Text(
-                recipe.title,
-                style: Theme.of(context).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+              FittedBox(
+                child: Text(
+                  recipe.title,
+                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
               ),
               SizedBox(height: 5),
               Text(
@@ -42,7 +44,7 @@ class RecommendationCardInfoSection extends StatelessWidget {
                 maxLines: 3,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-              Spacer(),
+              SizedBox(height: 15),
               Row(
                 spacing: 4,
                 children: [
@@ -120,7 +122,7 @@ class RecommendationCardInfoSection extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Text("Open recipe"),
+                    child: Text("Open"),
                   ),
                 ],
               )

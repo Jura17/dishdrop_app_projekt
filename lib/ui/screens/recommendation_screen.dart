@@ -23,43 +23,56 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
   // the size of 'answers' is fixed to the number of questions we have
   // and pre-filled with null-values for unanswered questions so we can always safely assign values
   List<Enum?> answers = List.filled(recommendationPrompts.length, null);
+  late double screenHeight;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            if (currentQuestionIndex >= 0)
-              Text(
-                recommendationPrompts[currentQuestionIndex].question,
-                style: Theme.of(context).textTheme.headlineLarge,
-                textAlign: TextAlign.center,
-              ),
-            Spacer(),
-            currentQuestionIndex < 0
-                ? EntryPromptView()
-                : Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: PromptView(
-                      currentQuestionIndex: currentQuestionIndex,
-                      incrementQuestionIndexFunc: incrementQuestionIndex,
-                      updateAnswersFunc: updateAnswers,
-                      recommendationPrompt: recommendationPrompts[currentQuestionIndex],
+        child: AnimatedContainer(
+          height: currentQuestionIndex < 0 ? screenHeight / 1.5 : screenHeight,
+          duration: Duration(seconds: 1),
+          curve: Curves.easeInOut,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (currentQuestionIndex >= 0)
+                Text(
+                  recommendationPrompts[currentQuestionIndex].question,
+                  style: Theme.of(context).textTheme.headlineLarge,
+                  textAlign: TextAlign.center,
+                ),
+              if (currentQuestionIndex >= 0) Spacer(),
+              currentQuestionIndex < 0
+                  ? EntryPromptView()
+                  : Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: PromptView(
+                        currentQuestionIndex: currentQuestionIndex,
+                        incrementQuestionIndexFunc: incrementQuestionIndex,
+                        updateAnswersFunc: updateAnswers,
+                        recommendationPrompt: recommendationPrompts[currentQuestionIndex],
+                      ),
                     ),
-                  ),
-            currentQuestionIndex < 0 ? SizedBox(height: 40) : Spacer(),
-            RecommendationButton(
-              incrementQuestionIndexFunc: incrementQuestionIndex,
-              currentQuestionIndex: currentQuestionIndex,
-              answers: answers,
-              resetQuestions: resetPrompts,
-            ),
-            if (currentQuestionIndex < 0) Spacer(),
-            SizedBox(height: 50)
-          ],
+              currentQuestionIndex < 0 ? SizedBox(height: 40) : Spacer(),
+              RecommendationButton(
+                incrementQuestionIndexFunc: incrementQuestionIndex,
+                currentQuestionIndex: currentQuestionIndex,
+                answers: answers,
+                resetQuestions: resetPrompts,
+              ),
+              SizedBox(height: 50)
+            ],
+          ),
         ),
       ),
     );

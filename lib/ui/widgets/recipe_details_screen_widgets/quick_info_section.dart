@@ -15,59 +15,66 @@ class QuickInfoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 4,
       children: [
-        Row(
-          spacing: 4,
-          children: [
-            Icon(
-              Icons.timer_outlined,
-              size: 30,
-            ),
-            Text(
-              "${recipe.prepTime + recipe.cookingTime} min (Prep: ${recipe.prepTime} min, Cook: ${recipe.cookingTime} min)",
-              style: Theme.of(context).textTheme.bodyLarge,
-            )
-          ],
+        FittedBox(
+          child: Row(
+            spacing: 4,
+            children: [
+              Icon(
+                Icons.timer_outlined,
+                size: 30,
+              ),
+              Text(
+                "${recipe.prepTime + recipe.cookingTime} min (Prep: ${recipe.prepTime} min, Cook: ${recipe.cookingTime} min)",
+                style: Theme.of(context).textTheme.bodyLarge,
+              )
+            ],
+          ),
         ),
-        Row(
-          spacing: 4,
-          children: [
-            Icon(
-              Icons.workspace_premium_sharp,
-              size: 30,
-            ),
-            Text(
-              recipe.difficulty,
-              style: Theme.of(context).textTheme.bodyLarge,
-            )
-          ],
+        FittedBox(
+          child: Row(
+            spacing: 4,
+            children: [
+              Icon(
+                Icons.workspace_premium_sharp,
+                size: 30,
+              ),
+              Text(
+                recipe.difficulty,
+                style: Theme.of(context).textTheme.bodyLarge,
+              )
+            ],
+          ),
         ),
-        Row(
-          spacing: 4,
-          children: [
-            Icon(
-              Icons.check_circle_outline_outlined,
-              size: 30,
-            ),
-            Consumer<RecipeNotifier>(
-              builder: (context, value, child) {
-                return RichText(
-                  text: TextSpan(
-                    text: "Cooked ",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    children: [
-                      TextSpan(
-                        text: "${recipe.timesCooked}",
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      TextSpan(text: recipe.timesCooked == 1 ? " time" : " times")
-                    ],
-                  ),
-                );
-              },
-            )
-          ],
+        FittedBox(
+          child: Row(
+            spacing: 4,
+            children: [
+              Icon(
+                Icons.check_circle_outline_outlined,
+                size: 30,
+              ),
+              Consumer<RecipeNotifier>(
+                builder: (context, value, child) {
+                  return RichText(
+                    text: TextSpan(
+                      text: "Cooked ",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      children: [
+                        TextSpan(
+                          text: "${recipe.timesCooked}",
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(text: recipe.timesCooked == 1 ? " time" : " times")
+                      ],
+                    ),
+                  );
+                },
+              )
+            ],
+          ),
         ),
       ],
     );

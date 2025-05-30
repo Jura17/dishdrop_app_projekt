@@ -17,6 +17,7 @@ class CookingDirectionInputSection extends StatelessWidget {
             maxLines: null,
             controller: recipeFormProvider.allTextControllers["directionDescCtrl"],
             decoration: const InputDecoration(
+              counterText: "",
               border: OutlineInputBorder(),
               hintText: "Add cooking directions",
             ),

@@ -27,7 +27,6 @@ class IngredientInputSection extends StatelessWidget {
                 ),
               ),
               Row(
-                spacing: 10,
                 children: [
                   Expanded(
                     child: TextFormField(
@@ -51,6 +50,7 @@ class IngredientInputSection extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(width: 10),
                   Expanded(
                     child: TextFormField(
                       maxLength: 10,
@@ -63,6 +63,15 @@ class IngredientInputSection extends StatelessWidget {
                       ),
                     ),
                   ),
+                  IconButton(
+                    onPressed: () {
+                      recipeFormProvider.addIngredientToList();
+                    },
+                    icon: Icon(
+                      Icons.add_box_outlined,
+                      size: 50,
+                    ),
+                  )
                 ],
               ),
               Text(
@@ -72,15 +81,6 @@ class IngredientInputSection extends StatelessWidget {
             ],
           ),
         ),
-        IconButton(
-          onPressed: () {
-            recipeFormProvider.addIngredientToList();
-          },
-          icon: Icon(
-            Icons.add_box_outlined,
-            size: 50,
-          ),
-        )
       ],
     );
   }
