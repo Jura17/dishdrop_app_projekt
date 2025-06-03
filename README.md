@@ -12,20 +12,20 @@ DishDrop ist eine moderne offline-first Rezept-App, entwickelt mit Flutter. Sie 
 - Servings Picker zur automatischen Mengenanpassung
 - Direktes Erstellen von Einkaufsisten aus den Zutaten eines Rezepts
 
-![Rezeptkategorien](<Simulator Screenshot - iPhone 16 Plus - 2025-06-03 at 12.58.54.png>)![Rezeptdetailansicht 1](<Simulator Screenshot - iPhone 16 Plus - 2025-06-03 at 12.59.59.png>)
+![Rezeptkategorien](assets/images/categories_screenshot.png)![Rezeptdetailansicht 1](assets/images/recipe_details_top_screenshot.png)
 
 
 - zusätzliche Suchleiste am oberen Bildschirm, inkl. Filterung nach Favoriten/Nicht-Favoriten
 
-![Rezeptdetailansicht 2](<Simulator Screenshot - iPhone 16 Plus - 2025-06-03 at 13.00.12.png>)![Suchfunktion](<Simulator Screenshot - iPhone 16 Plus - 2025-06-03 at 13.01.08.png>)
+![Rezeptdetailansicht 2](assets/images/recipe_details_bottom_screenshot.png)![Suchfunktion](assets/images/searchbar_screenshot.png)
 
-![Rezept bearbeiten 1](<Simulator Screenshot - iPhone 16 Plus - 2025-06-03 at 13.05.48.png>)![Rezept bearbeiten 2](<Simulator Screenshot - iPhone 16 Plus - 2025-06-03 at 13.06.00.png>)
+![Rezept bearbeiten 1](assets/images/edit_recipe_screenshot.png)![Rezept bearbeiten 2](assets/images/edit_recipe_ingredients_screenshot.png)
 
 ### Einkaufslisten 🛒
 - Zwei Typen: Allzweckliste & rezeptgebundene Liste
 - Einkaufsartikel können abgehakt und gelöscht werden
 
-![rezeptgebundene Einkaufsliste](<Simulator Screenshot - iPhone 16 Plus - 2025-06-03 at 13.04.54.png>)![Allzweckliste](<Simulator Screenshot - iPhone 16 Plus - 2025-06-03 at 13.04.48.png>)
+![rezeptgebundene Einkaufsliste](assets/images/recipe_shopping_list_screenshot.png)![Allzweckliste](assets/images/all_purpose_list_screenshot.png)
 
 
 ### Vorschlagsfunktion 🎲
@@ -33,7 +33,7 @@ DishDrop ist eine moderne offline-first Rezept-App, entwickelt mit Flutter. Sie 
 - Alternativ: “Just give me something”-Button für schnelle Inspiration
 - Integrierte Suchfunktion mit Filteroptionen
 
-![Vorschlagsbildschirm](<Simulator Screenshot - iPhone 16 Plus - 2025-06-03 at 13.01.39.png>)![Rezeptvorschlag](<Simulator Screenshot - iPhone 16 Plus - 2025-06-03 at 13.02.25.png>)
+![Vorschlagsbildschirm](assets/images/recommendation_screen_screenshot.png)![Rezeptvorschlag](assets/images/recommendation_card_screenshot.png)
 
 
 ## Technologiestack/Packages 🧱
