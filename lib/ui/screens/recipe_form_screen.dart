@@ -1,4 +1,3 @@
-import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

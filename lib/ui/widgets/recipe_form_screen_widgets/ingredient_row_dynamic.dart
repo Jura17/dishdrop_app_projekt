@@ -106,7 +106,7 @@ class _IngredientRowDynamicState extends State<IngredientRowDynamic> {
           });
         },
         child: Row(
-          spacing: 10,
+          spacing: 35,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -175,13 +175,14 @@ class AmountTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 60,
+      width: 80,
       child: TextField(
         maxLength: 6,
         keyboardType: TextInputType.numberWithOptions(decimal: true),
         controller: _amountController,
         focusNode: _amountFocusNode,
         decoration: const InputDecoration(
+          hintText: "Amount",
           border: OutlineInputBorder(),
           counterText: "",
           contentPadding: EdgeInsets.only(left: 5, right: 5),
@@ -241,6 +242,7 @@ class UnitTextField extends StatelessWidget {
         controller: _unitController,
         focusNode: _unitFocusNode,
         decoration: const InputDecoration(
+          hintText: "Unit",
           border: OutlineInputBorder(),
           counterText: "",
           contentPadding: EdgeInsets.only(left: 5, right: 5),
@@ -287,6 +289,7 @@ class DescriptionTextField extends StatelessWidget {
       textAlign: TextAlign.right,
       focusNode: _descriptionFocusNode,
       decoration: const InputDecoration(
+        hintText: "Description",
         border: OutlineInputBorder(),
         counterText: "",
         contentPadding: EdgeInsets.only(left: 5, right: 5),

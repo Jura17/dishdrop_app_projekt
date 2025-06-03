@@ -115,7 +115,7 @@ class FooterButtonSection extends StatelessWidget {
               );
             }
           },
-          child: Text(recipeFormProvider.isEditingRecipe ? "Update and open" : "Save and open"),
+          child: Text(recipeFormProvider.isEditingRecipe ? "Update & open" : "Save & open"),
         )
       ],
     );

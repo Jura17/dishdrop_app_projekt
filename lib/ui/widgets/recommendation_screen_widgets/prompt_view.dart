@@ -1,4 +1,3 @@
-import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/recommendation_prompt.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recommendation_screen_widgets/answer_button.dart';
 

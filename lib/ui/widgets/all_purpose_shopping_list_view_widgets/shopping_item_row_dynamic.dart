@@ -20,6 +20,7 @@ class ShoppingItemRowDynamic extends StatefulWidget {
   State<ShoppingItemRowDynamic> createState() => _ShoppingItemRowDynamicState();
 }
 
+// TODO: make empty fields clickable just like in recipe form screen
 class _ShoppingItemRowDynamicState extends State<ShoppingItemRowDynamic> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _unitController = TextEditingController();
@@ -111,7 +112,7 @@ class _ShoppingItemRowDynamicState extends State<ShoppingItemRowDynamic> {
           });
         },
         child: Row(
-          spacing: 10,
+          spacing: 35,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -192,13 +193,14 @@ class AmountTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 60,
+      width: 80,
       child: TextField(
         maxLength: 6,
         keyboardType: TextInputType.numberWithOptions(decimal: true),
         controller: _amountController,
         focusNode: _amountFocusNode,
         decoration: const InputDecoration(
+          hintText: "Amount",
           border: OutlineInputBorder(),
           counterText: "",
           contentPadding: EdgeInsets.only(left: 5, right: 5),
@@ -217,23 +219,25 @@ class AmountText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        text: convertedAmount[0],
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              decoration: isDone ? TextDecoration.lineThrough : null,
+    return convertedAmount[0] == '' && convertedAmount[1] == ''
+        ? Text('      ')
+        : RichText(
+            text: TextSpan(
+              text: convertedAmount[0],
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    decoration: isDone ? TextDecoration.lineThrough : null,
+                  ),
+              children: [
+                TextSpan(
+                  text: convertedAmount[1],
+                  style: TextStyle(
+                    fontFeatures: [FontFeature.fractions()],
+                    decoration: isDone ? TextDecoration.lineThrough : null,
+                  ),
+                ),
+              ],
             ),
-        children: [
-          TextSpan(
-            text: convertedAmount[1],
-            style: TextStyle(
-              fontFeatures: [FontFeature.fractions()],
-              decoration: isDone ? TextDecoration.lineThrough : null,
-            ),
-          ),
-        ],
-      ),
-    );
+          );
   }
 }
 
@@ -257,6 +261,7 @@ class UnitTextField extends StatelessWidget {
         controller: _unitController,
         focusNode: _unitFocusNode,
         decoration: const InputDecoration(
+          hintText: "Unit",
           border: OutlineInputBorder(),
           counterText: "",
           contentPadding: EdgeInsets.only(left: 5, right: 5),
@@ -280,7 +285,7 @@ class UnitText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      _unitController.text,
+      _unitController.text.isEmpty ? "      " : _unitController.text,
       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             decoration: isDone ? TextDecoration.lineThrough : null,
           ),
@@ -302,11 +307,12 @@ class DescriptionTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      maxLength: 40,
+      maxLength: 20,
       controller: _descriptionController,
       textAlign: TextAlign.right,
       focusNode: _descriptionFocusNode,
       decoration: const InputDecoration(
+        hintText: "Description",
         border: OutlineInputBorder(),
         counterText: "",
         contentPadding: EdgeInsets.only(left: 5, right: 5),
