@@ -41,7 +41,7 @@ final List<RecommendationPrompt> recommendationPrompts = [
     },
   ),
   RecommendationPrompt(
-    question: "Something you have tried before? A new recipe maybe?",
+    question: "A recipe you have tried before? A new one maybe?",
     options: {
       "Give me a new one": FamiliarityPreference.unfamiliar,
       "Something I've cooked before": FamiliarityPreference.familiar,
