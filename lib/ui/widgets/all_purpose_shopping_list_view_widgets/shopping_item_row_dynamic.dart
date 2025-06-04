@@ -20,7 +20,6 @@ class ShoppingItemRowDynamic extends StatefulWidget {
   State<ShoppingItemRowDynamic> createState() => _ShoppingItemRowDynamicState();
 }
 
-// TODO: make empty fields clickable just like in recipe form screen
 class _ShoppingItemRowDynamicState extends State<ShoppingItemRowDynamic> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _unitController = TextEditingController();

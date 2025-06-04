@@ -1,0 +1,2 @@
+/Users/julianrakow/development/App Akademie/Abgaben/dishdrop_app_projekt/android/app/.cxx/Debug/341b2w4n/x86_64/CMakeFiles/edit_cache.dir
+/Users/julianrakow/development/App Akademie/Abgaben/dishdrop_app_projekt/android/app/.cxx/Debug/341b2w4n/x86_64/CMakeFiles/rebuild_cache.dir
