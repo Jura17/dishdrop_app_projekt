@@ -122,7 +122,7 @@ class RecommendationCardInfoSection extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Text("Open"),
+                    child: Text("Open recipe"),
                   ),
                 ],
               )

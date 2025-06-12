@@ -59,7 +59,8 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
                 label: Text("Go to shopping lists"),
               )
             : FittedBox(
-                child: FilledButton(
+                child: FilledButton.icon(
+                  icon: Icon(Icons.shopping_cart),
                   onPressed: () {
                     if (recipe != null) {
                       final newShoppingList = ShoppingList(
@@ -83,7 +84,7 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
                     }
                   },
                   style: Theme.of(context).filledButtonTheme.style,
-                  child: Text("Add to shopping list"),
+                  label: Text("Add to shopping list"),
                 ),
               ),
         SizedBox(height: 30),

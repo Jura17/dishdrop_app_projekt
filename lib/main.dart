@@ -16,6 +16,7 @@ void main() async {
   final objectbox = await ObjectBox.create();
   final db = ObjectboxDatabase(objectbox.store);
 
+  // TODO: write some tests, for example for adding new recipes, removing etc. where you check if the number of recipes has changed (and is saved to DB properly)
   runApp(
     MultiProvider(
       providers: [
