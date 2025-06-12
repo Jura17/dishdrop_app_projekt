@@ -34,7 +34,7 @@ class _ShoppingItemRowDynamicState extends State<ShoppingItemRowDynamic> {
   @override
   void initState() {
     super.initState();
-    _amountController.text = widget.ingredient.amount.toString();
+    _amountController.text = widget.ingredient.amount == null ? "Amount" : widget.ingredient.amount.toString();
     _amountController.addListener(() {
       double? newAmount = double.tryParse(_amountController.text);
       if (newAmount != null) {

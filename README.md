@@ -111,8 +111,9 @@ lib/
 
 
 ## To Do / Further Potential 📝
-- User authentication (for ObjectBox Sync)
 - Deployment for Android
+- Settings screen
+- User authentication (for ObjectBox Sync)
 - Light mode / dark mode toggle
 - Timer with stay-awake functionality (keeps screen on)
 - Group ingredients (e.g., ingredients for roast, ingredients for sauce, etc.)
