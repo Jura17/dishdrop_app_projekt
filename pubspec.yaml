@@ -20,9 +20,10 @@ dependencies:
   build_runner: ^2.4.15
   path_provider: ^2.1.5
   path: ^1.9.1
-  objectbox_flutter_libs: any
+  objectbox_flutter_libs: any 
   provider: ^6.1.4
   app_settings: ^6.1.1
+  mockito: ^5.4.6
 
 dev_dependencies:
   flutter_test:
