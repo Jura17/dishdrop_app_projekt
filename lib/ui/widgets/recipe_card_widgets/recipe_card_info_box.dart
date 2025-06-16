@@ -19,13 +19,13 @@ class RecipeCardInfoBox extends StatelessWidget {
       height: 130,
       width: double.infinity,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             recipe.title,
             style: Theme.of(context).textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),
-          Spacer(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
