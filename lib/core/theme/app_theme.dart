@@ -54,7 +54,7 @@ class AppTheme {
           fillColor: WidgetStatePropertyAll(Colors.white),
           checkColor: WidgetStateProperty.all(AppColors.primary),
         ),
-        dialogTheme: DialogTheme(
+        dialogTheme: DialogThemeData(
           backgroundColor: Colors.white,
         ),
       );
