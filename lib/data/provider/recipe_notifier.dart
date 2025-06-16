@@ -9,9 +9,7 @@ class RecipeNotifier extends ChangeNotifier {
 
   RecipeNotifier(this._databaseRepository);
 
-  List<Recipe> get allRecipes {
-    return _databaseRepository.getAllRecipes();
-  }
+  List<Recipe> get allRecipes => _databaseRepository.getAllRecipes();
 
   void updateFilteredRecipe(List<Recipe> filteredRecipes) {
     _filteredRecipes = filteredRecipes;
@@ -25,9 +23,7 @@ class RecipeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  Recipe? getRecipeById(int id) {
-    return _databaseRepository.getRecipeById(id);
-  }
+  Recipe? getRecipeById(int id) => _databaseRepository.getRecipeById(id);
 
   void assignShoppingListToRecipe(Recipe recipe, ShoppingList shoppingList) {
     _databaseRepository.assignShoppingListToRecipe(recipe, shoppingList);
