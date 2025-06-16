@@ -21,6 +21,7 @@ class Recipe {
   int cookingTime;
   int timesCooked = 0;
   bool isFavorite = false;
+  DateTime lastUpdated;
 
   final ToOne<ShoppingList> shoppingList = ToOne<ShoppingList>();
 
@@ -34,6 +35,7 @@ class Recipe {
   // List<CookingDirection> directions;
   // List<ListItem> ingredients;
   // TODO: ingredients probably needs to be a map so I can have ingredient group titles
+
   /*
   ingredients = {
   "chicken" : [a, b, c],
@@ -52,6 +54,7 @@ class Recipe {
     required this.tags,
     required this.prepTime,
     required this.cookingTime,
+    required this.lastUpdated,
   });
 
   Map<String, dynamic> get images => jsonDecode(imagesJson);
@@ -59,28 +62,33 @@ class Recipe {
     imagesJson = jsonEncode(newImages);
   }
 
-  // -------------------------------
-
   Map<String, dynamic> toMap() {
     return {
       'title': title,
       'category': category,
-      // ...
+      'description': description,
+      'notes': notes,
+      'difficulty': difficulty,
+      'imagesJson': imagesJson,
+      'tags': tags,
+      'prepTime': prepTime,
+      'cookingTime': cookingTime,
+      'lastUpdated': lastUpdated
     };
   }
 
   factory Recipe.fromMap(Map<String, dynamic> map) {
     return Recipe(
-      title: map['title'],
-      category: map['category'],
-      description: map['description'],
-      notes: map['notes'],
-      difficulty: map['difficulty'],
-      imagesJson: map['imagesJson'],
-      tags: map['tags'],
-      prepTime: map['prepTime'],
-      cookingTime: map['cookingTime'],
-    );
+        title: map['title'],
+        category: map['category'],
+        description: map['description'],
+        notes: map['notes'],
+        difficulty: map['difficulty'],
+        imagesJson: map['imagesJson'],
+        tags: map['tags'],
+        prepTime: map['prepTime'],
+        cookingTime: map['cookingTime'],
+        lastUpdated: map['lastUpdated']);
   }
 
   void updateCounterTimesCooked() {

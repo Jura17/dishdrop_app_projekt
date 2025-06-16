@@ -19,6 +19,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 20,
     cookingTime: 20,
+    lastUpdated: DateTime.now(),
   )
     ..timesCooked = 12
     ..directions.addAll([
@@ -70,6 +71,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 15,
     cookingTime: 20,
+    lastUpdated: DateTime.now(),
   )..timesCooked = 9,
   Recipe(
     title: "3-Ingredient-Pizza",
@@ -85,6 +87,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 15,
     cookingTime: 22,
+    lastUpdated: DateTime.now(),
   )..timesCooked = 19,
   Recipe(
     title: "Bruschetta",
@@ -100,6 +103,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 15,
     cookingTime: 5,
+    lastUpdated: DateTime.now(),
   )
     ..timesCooked = 1
     ..directions.addAll([
@@ -139,6 +143,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 10,
     cookingTime: 0,
+    lastUpdated: DateTime.now(),
   )
     ..directions.addAll([
       CookingDirection(description: "Chop romaine lettuce and place in a bowl."),
@@ -166,6 +171,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 15,
     cookingTime: 25,
+    lastUpdated: DateTime.now(),
   )
     ..directions.addAll([
       CookingDirection(description: "Preheat oven to 350°F (175°C)."),
@@ -198,6 +204,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 5,
     cookingTime: 0,
+    lastUpdated: DateTime.now(),
   )
     ..timesCooked = 2
     ..directions.addAll(
@@ -230,6 +237,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 15,
     cookingTime: 15,
+    lastUpdated: DateTime.now(),
   )
     ..timesCooked = 6
     ..directions.addAll([
@@ -260,6 +268,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 10,
     cookingTime: 15,
+    lastUpdated: DateTime.now(),
   )
     ..timesCooked = 45
     ..directions.addAll([
@@ -291,6 +300,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 15,
     cookingTime: 15,
+    lastUpdated: DateTime.now(),
   )
     ..timesCooked = 11
     ..directions.addAll([
@@ -325,6 +335,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 5,
     cookingTime: 0,
+    lastUpdated: DateTime.now(),
   )
     ..timesCooked = 9
     ..directions.addAll([
@@ -354,6 +365,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 10,
     cookingTime: 20,
+    lastUpdated: DateTime.now(),
   )
     ..directions.addAll([
       CookingDirection(description: "Cook pasta according to package instructions."),
@@ -388,6 +400,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 15,
     cookingTime: 20,
+    lastUpdated: DateTime.now(),
   )
     ..timesCooked = 22
     ..directions.addAll([
@@ -420,6 +433,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 5,
     cookingTime: 0,
+    lastUpdated: DateTime.now(),
   )
     ..timesCooked = 7
     ..directions.addAll([
@@ -450,6 +464,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 10,
     cookingTime: 20,
+    lastUpdated: DateTime.now(),
   )
     ..timesCooked = 14
     ..directions.addAll([
@@ -483,6 +498,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 10,
     cookingTime: 15,
+    lastUpdated: DateTime.now(),
   )
     ..timesCooked = 31
     ..directions.addAll([
@@ -517,6 +533,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 10,
     cookingTime: 25,
+    lastUpdated: DateTime.now(),
   )
     ..timesCooked = 2
     ..directions.addAll([
@@ -553,6 +570,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 15,
     cookingTime: 30,
+    lastUpdated: DateTime.now(),
   )
     ..timesCooked = 1
     ..directions.addAll([
@@ -590,6 +608,7 @@ final List<Recipe> recipeData = [
     }),
     prepTime: 5,
     cookingTime: 0,
+    lastUpdated: DateTime.now(),
   )
     ..timesCooked = 30
     ..directions.addAll([

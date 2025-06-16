@@ -6,12 +6,16 @@ import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';
 import 'package:dishdrop_app_projekt/data/repositories/objectbox.dart';
 import 'package:dishdrop_app_projekt/data/repositories/objectbox_database.dart';
 import 'package:dishdrop_app_projekt/dish_drop_app.dart';
+import 'package:dishdrop_app_projekt/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   final objectbox = await ObjectBox.create();
   final db = ObjectboxDatabase(objectbox.store);

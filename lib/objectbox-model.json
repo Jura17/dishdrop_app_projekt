@@ -87,7 +87,7 @@
     },
     {
       "id": "3:5045249167998957265",
-      "lastPropertyId": "13:1445850548061494535",
+      "lastPropertyId": "14:9160286232368477945",
       "name": "Recipe",
       "properties": [
         {
@@ -158,6 +158,11 @@
           "flags": 520,
           "indexId": "5:8590506496505158829",
           "relationTarget": "ShoppingList"
+        },
+        {
+          "id": "14:9160286232368477945",
+          "name": "lastUpdated",
+          "type": 10
         }
       ],
       "relations": []

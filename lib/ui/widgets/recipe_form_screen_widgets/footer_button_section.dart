@@ -146,6 +146,7 @@ class FooterButtonSection extends StatelessWidget {
       imagesJson: jsonEncode(imagesInput),
       prepTime: prepTime,
       cookingTime: cookingTime,
+      lastUpdated: DateTime.now(),
     );
 
     newRecipe.directions.addAll(directions);
