@@ -1,5 +1,6 @@
 import 'package:dishdrop_app_projekt/ui/screens/categories_screen.dart';
 import 'package:dishdrop_app_projekt/ui/screens/recommendation_screen.dart';
+import 'package:dishdrop_app_projekt/ui/screens/settings_screen.dart';
 import 'package:dishdrop_app_projekt/ui/screens/shopping_list_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ class _DishDropAppState extends State<DishDropApp> {
   int activeIndex = 0;
 
   final List<GlobalKey<NavigatorState>> _navigatorKeys = [
+    GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
@@ -38,15 +40,18 @@ class _DishDropAppState extends State<DishDropApp> {
           _buildTabNavigator(0, CategoriesScreen()),
           _buildTabNavigator(1, RecommendationScreen()),
           _buildTabNavigator(2, ShoppingListScreen()),
+          _buildTabNavigator(3, SettingsScreen()),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: activeIndex,
         onTap: _onTap,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.menu_book_rounded, size: 40), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.lightbulb_outline, size: 40), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.local_grocery_store_outlined, size: 40), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.menu_book_rounded, size: 32), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.lightbulb_outline, size: 32), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.local_grocery_store_outlined, size: 32), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.settings_outlined, size: 32), label: ""),
         ],
       ),
     );
