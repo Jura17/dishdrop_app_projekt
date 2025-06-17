@@ -30,6 +30,7 @@ void main() async {
           tags: [],
           prepTime: 20,
           cookingTime: 15,
+          lastUpdated: DateTime.now(),
         );
 
         final DatabaseRepository mockDB = MockDatabase();
@@ -71,6 +72,7 @@ void main() async {
           tags: [],
           prepTime: 20,
           cookingTime: 15,
+          lastUpdated: DateTime.now(),
         );
 
         final DatabaseRepository mockDB = MockDatabase();
