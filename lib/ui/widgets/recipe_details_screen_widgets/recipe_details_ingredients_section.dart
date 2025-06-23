@@ -4,11 +4,11 @@ import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';
-import 'package:dishdrop_app_projekt/ui/screens/shopping_list_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/ingredient_list_view.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/servings_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class RecipeDetailsIngredientsSection extends StatefulWidget {
@@ -50,11 +50,7 @@ class _RecipeDetailsIngredientsSectionState extends State<RecipeDetailsIngredien
         recipe != null && recipe.shoppingList.targetId != 0
             ? FilledButton.icon(
                 icon: Icon(Icons.shopping_cart),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => ShoppingListScreen()),
-                  );
-                },
+                onPressed: () => context.push('/shopping-list'),
                 style: Theme.of(context).filledButtonTheme.style,
                 label: Text("Go to shopping lists"),
               )

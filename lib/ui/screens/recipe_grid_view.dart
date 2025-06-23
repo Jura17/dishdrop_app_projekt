@@ -1,13 +1,13 @@
+import 'package:dishdrop_app_projekt/core/constants/category_routes.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
-import 'package:dishdrop_app_projekt/data/provider/recipe_form_notifier.dart';
-import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 
-import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_card_widgets/recipe_card.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_search/custom_search_delegate.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class RecipeGridView extends StatefulWidget {
@@ -80,7 +80,10 @@ class _RecipeGridViewState extends State<RecipeGridView> {
                     mainAxisSpacing: 16,
                     children: [
                         ...filteredRecipes.map(
-                          (recipe) => RecipeCard(recipeId: recipe.id),
+                          (recipe) => RecipeCard(
+                            recipeId: recipe.id,
+                            categorySlug: categoryTitleRoutes[widget.category]!,
+                          ),
                         )
                       ]),
           ),
@@ -89,14 +92,7 @@ class _RecipeGridViewState extends State<RecipeGridView> {
       floatingActionButton: CustomFilledIconButton(
         text: "Add Recipe",
         iconData: Icons.add_box_outlined,
-        newScreen: ChangeNotifierProvider(
-          create: (_) {
-            final RecipeFormNotifier recipeFormNotifier = RecipeFormNotifier();
-            recipeFormNotifier.init();
-            return recipeFormNotifier;
-          },
-          child: RecipeFormScreen(),
-        ),
+        onPressed: () => context.push('/categories/add-recipe'),
       ),
     );
   }

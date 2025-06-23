@@ -4,21 +4,23 @@ import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 
-import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/like_button.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_card_widgets/recipe_card_info_box.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class RecipeCard extends StatelessWidget {
   const RecipeCard({
     super.key,
     required this.recipeId,
+    required this.categorySlug,
   });
 
   final int recipeId;
+  final String categorySlug;
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +37,7 @@ class RecipeCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => RecipeDetailsScreen(
-              recipeId: recipeId,
-            ),
-          ),
-        );
+        context.push('/categories/recipe-detail/${recipe.id}');
       },
       child: Container(
         decoration: BoxDecoration(

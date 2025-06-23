@@ -12,6 +12,7 @@ import 'package:dishdrop_app_projekt/data/repositories/objectbox.dart';
 import 'package:dishdrop_app_projekt/data/repositories/objectbox_database.dart';
 import 'package:dishdrop_app_projekt/dish_drop_app.dart';
 import 'package:dishdrop_app_projekt/firebase_options.dart';
+import 'package:dishdrop_app_projekt/core/router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -48,10 +49,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      routerConfig: router,
       theme: AppTheme.appTheme,
-      home: DishDropApp(),
+      title: 'DishDrop',
     );
   }
 }

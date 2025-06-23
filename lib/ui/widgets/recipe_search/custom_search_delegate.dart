@@ -1,11 +1,12 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
-import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
+
 import 'package:dishdrop_app_projekt/ui/widgets/file_title_img.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_search/search_result_image.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_search/search_result_row.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   final RecipeNotifier recipeNotifier;
@@ -89,9 +90,7 @@ class CustomSearchDelegate extends SearchDelegate {
           imageWidget = FileTitleImg(imgPath: recipe.images["titleImg"]);
         }
         return GestureDetector(
-          onTap: () => Navigator.of(context).push((MaterialPageRoute(
-            builder: (context) => RecipeDetailsScreen(recipeId: recipe.id),
-          ))),
+          onTap: () => context.push('/categories/recipe-detail/${recipe.id}'),
           child: Container(
             color: index.isEven ? AppColors.lightGrey : Colors.white,
             child: Padding(
@@ -134,17 +133,18 @@ class _FavoriteFilterToggleState extends State<FavoriteFilterToggle> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        onPressed: () {
-          setState(() {
-            showFavorite = !showFavorite;
-            widget.toggleFavoriteFunc(showFavorite);
-          });
-        },
-        icon: showFavorite
-            ? Icon(
-                Icons.favorite,
-                color: AppColors.primary,
-              )
-            : Icon(Icons.favorite_outline));
+      onPressed: () {
+        setState(() {
+          showFavorite = !showFavorite;
+          widget.toggleFavoriteFunc(showFavorite);
+        });
+      },
+      icon: showFavorite
+          ? Icon(
+              Icons.favorite,
+              color: AppColors.primary,
+            )
+          : Icon(Icons.favorite_outline),
+    );
   }
 }

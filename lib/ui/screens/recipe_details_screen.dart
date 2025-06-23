@@ -1,9 +1,7 @@
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/shopping_list.dart';
-import 'package:dishdrop_app_projekt/data/provider/recipe_form_notifier.dart';
-import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 
-import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/description_section.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_details_screen_widgets/directions_section.dart';
@@ -18,6 +16,7 @@ import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_search/custom_search_delegate.dart';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class RecipeDetailsScreen extends StatefulWidget {
@@ -140,26 +139,14 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
           CustomFilledIconButton(
             text: "Edit Recipe",
             iconData: Icons.edit,
-            newScreen: ChangeNotifierProvider(
-              create: (_) {
-                final RecipeFormNotifier recipeFormNotifier = RecipeFormNotifier(recipe: recipe);
-                recipeFormNotifier.init();
-                return recipeFormNotifier;
-              },
-              child: RecipeFormScreen(),
+            onPressed: () => context.push(
+              '/categories/edit-recipe/${recipe!.id.toString()}',
             ),
           ),
           CustomFilledIconButton(
             text: "Add Recipe",
             iconData: Icons.add_box_outlined,
-            newScreen: ChangeNotifierProvider(
-              create: (_) {
-                final RecipeFormNotifier recipeFormNotifier = RecipeFormNotifier();
-                recipeFormNotifier.init();
-                return recipeFormNotifier;
-              },
-              child: RecipeFormScreen(),
-            ),
+            onPressed: () => context.push('/categories/add-recipe'),
           ),
         ],
       ),

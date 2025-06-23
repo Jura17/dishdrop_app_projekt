@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dishdrop_app_projekt/core/constants/category_routes.dart';
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
 import 'package:dishdrop_app_projekt/data/models/cooking_direction.dart';
 import 'package:dishdrop_app_projekt/data/models/list_item.dart';
@@ -9,6 +10,7 @@ import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 
 import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class FooterButtonSection extends StatelessWidget {
@@ -95,16 +97,21 @@ class FooterButtonSection extends StatelessWidget {
                     backgroundColor: AppColors.primary,
                   ),
                 );
+                int recipeId;
+                String categorySlug;
 
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => RecipeDetailsScreen(
-                      recipeId: recipeFormProvider.isEditingRecipe && recipeFormProvider.recipe != null
-                          ? recipeFormProvider.recipe!.id
-                          : newRecipe.id,
-                    ),
-                  ),
-                );
+                if (recipeFormProvider.isEditingRecipe && recipeFormProvider.recipe != null) {
+                  recipeId = recipeFormProvider.recipe!.id;
+                  final categoryTitle = recipeFormProvider.recipe!.category;
+                  categorySlug = categoryTitleRoutes[categoryTitle]!;
+                } else {
+                  recipeId = newRecipe.id;
+                  final categoryTitle = newRecipe.category;
+                  categorySlug = categoryTitleRoutes[categoryTitle]!;
+                }
+
+                // context.pushReplacement('/categories/recipes/$categorySlug/recipe-detail/$recipeId');
+                context.pushNamed('recipeDetail', pathParameters: {'id': recipeId.toString()});
               }
             } else {
               ScaffoldMessenger.of(context).showSnackBar(

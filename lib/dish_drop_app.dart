@@ -1,32 +1,32 @@
-import 'package:dishdrop_app_projekt/ui/screens/categories_screen.dart';
-import 'package:dishdrop_app_projekt/ui/screens/recommendation_screen.dart';
-import 'package:dishdrop_app_projekt/ui/screens/settings_screen.dart';
-import 'package:dishdrop_app_projekt/ui/screens/shopping_list_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DishDropApp extends StatefulWidget {
-  const DishDropApp({super.key});
+  final StatefulNavigationShell shell;
+  final List<GlobalKey<NavigatorState>> navigatorKeys;
+
+  const DishDropApp({
+    super.key,
+    required this.shell,
+    required this.navigatorKeys,
+  });
 
   @override
   State<DishDropApp> createState() => _DishDropAppState();
 }
 
 class _DishDropAppState extends State<DishDropApp> {
-  int activeIndex = 0;
+  int _currentIndex = 0;
 
-  final List<GlobalKey<NavigatorState>> _navigatorKeys = [
-    GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
-  ];
-
+  // go back to root of tab when tapping more than once
   void _onTap(int index) {
-    if (index == activeIndex) {
-      _navigatorKeys[index].currentState?.popUntil((route) => route.isFirst);
+    if (index == _currentIndex) {
+      final key = widget.navigatorKeys[index];
+      key.currentState?.popUntil((route) => route.isFirst);
     } else {
+      widget.shell.goBranch(index);
       setState(() {
-        activeIndex = index;
+        _currentIndex = index;
       });
     }
   }
@@ -34,18 +34,10 @@ class _DishDropAppState extends State<DishDropApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: activeIndex,
-        children: [
-          _buildTabNavigator(0, CategoriesScreen()),
-          _buildTabNavigator(1, RecommendationScreen()),
-          _buildTabNavigator(2, ShoppingListScreen()),
-          _buildTabNavigator(3, SettingsScreen()),
-        ],
-      ),
+      body: widget.shell,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        currentIndex: activeIndex,
+        currentIndex: _currentIndex,
         onTap: _onTap,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.menu_book_rounded, size: 32), label: ""),
@@ -54,17 +46,6 @@ class _DishDropAppState extends State<DishDropApp> {
           BottomNavigationBarItem(icon: Icon(Icons.settings_outlined, size: 32), label: ""),
         ],
       ),
-    );
-  }
-
-  Widget _buildTabNavigator(int index, Widget child) {
-    return Navigator(
-      key: _navigatorKeys[index],
-      onGenerateRoute: (settings) {
-        return MaterialPageRoute(
-          builder: (_) => child,
-        );
-      },
     );
   }
 }

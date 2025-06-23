@@ -7,24 +7,20 @@ class CustomFilledIconButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.iconData,
-    required this.newScreen,
+    required this.onPressed,
     this.backgroundColor,
   });
 
   final String text;
   final IconData iconData;
-  final Widget newScreen;
+  final VoidCallback onPressed;
   final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     return FilledButton.icon(
       style: FilledButton.styleFrom(backgroundColor: AppColors.lightGreen),
-      onPressed: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => newScreen),
-        );
-      },
+      onPressed: onPressed,
       label: Text(
         text,
         style: Theme.of(context).textTheme.labelLarge?.copyWith(

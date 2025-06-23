@@ -1,7 +1,8 @@
 import 'package:dishdrop_app_projekt/core/theme/app_colors.dart';
+import 'package:dishdrop_app_projekt/core/constants/category_routes.dart';
 
-import 'package:dishdrop_app_projekt/ui/screens/recipe_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard({
@@ -16,11 +17,14 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => RecipeGridView(category: categoryTitle),
-        ),
-      ),
+      onTap: () {
+        final routeSlug = categoryTitleRoutes[categoryTitle];
+        if (routeSlug != null) {
+          context.push('/categories/recipes/$routeSlug');
+        } else {
+          debugPrint('Unknown category title: $categoryTitle');
+        }
+      },
       child: Container(
         width: 100,
         height: 100,

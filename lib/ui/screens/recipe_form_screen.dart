@@ -1,3 +1,4 @@
+import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,33 @@ import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/tags_
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/tags_text_form_field.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_form_screen_widgets/title_text_form_field.dart';
 
+class RecipeFormScreenWrapper extends StatelessWidget {
+  const RecipeFormScreenWrapper({
+    super.key,
+    this.recipeId,
+  });
+
+  final int? recipeId;
+
+  @override
+  Widget build(BuildContext context) {
+    final recipeNotifier = context.read<RecipeNotifier>();
+    Recipe? recipe;
+
+    if (recipeId != null) {
+      recipe = recipeNotifier.getRecipeById(recipeId!);
+    }
+    return ChangeNotifierProvider(
+      create: (_) {
+        final RecipeFormNotifier recipeFormNotifier = RecipeFormNotifier(recipe: recipe);
+        recipeFormNotifier.init();
+        return recipeFormNotifier;
+      },
+      child: RecipeFormScreen(),
+    );
+  }
+}
+
 class RecipeFormScreen extends StatefulWidget {
   const RecipeFormScreen({
     super.key,
@@ -33,7 +61,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> with WidgetsBinding
   @override
   Widget build(BuildContext context) {
     final recipeFormNotifier = context.watch<RecipeFormNotifier>();
-    // final recipeNotifier = context.watch<RecipeNotifier>();
+
     Recipe? recipe = recipeFormNotifier.recipe;
 
     return GestureDetector(

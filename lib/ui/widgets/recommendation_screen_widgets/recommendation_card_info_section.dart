@@ -3,8 +3,8 @@ import 'package:dishdrop_app_projekt/core/utils/get_random_recipe.dart';
 import 'package:dishdrop_app_projekt/data/models/recipe.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 
-import 'package:dishdrop_app_projekt/ui/screens/recipe_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class RecommendationCardInfoSection extends StatelessWidget {
@@ -114,13 +114,8 @@ class RecommendationCardInfoSection extends StatelessWidget {
                   ),
                   FilledButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => RecipeDetailsScreen(
-                            recipeId: recipe.id,
-                          ),
-                        ),
-                      );
+                      Navigator.of(context).pop();
+                      context.push('/categories/recipe-detail/${recipe.id}');
                     },
                     child: Text("Open recipe"),
                   ),

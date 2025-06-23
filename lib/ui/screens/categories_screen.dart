@@ -1,8 +1,5 @@
-import 'package:dishdrop_app_projekt/data/provider/recipe_form_notifier.dart';
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:dishdrop_app_projekt/gen/assets.gen.dart';
-
-import 'package:dishdrop_app_projekt/ui/screens/recipe_form_screen.dart';
 
 import 'package:dishdrop_app_projekt/ui/widgets/category_card.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';
@@ -10,6 +7,7 @@ import 'package:dishdrop_app_projekt/ui/widgets/custom_filled_icon_button.dart';
 import 'package:dishdrop_app_projekt/ui/widgets/recipe_search/custom_search_delegate.dart';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class CategoriesScreen extends StatefulWidget {
@@ -79,14 +77,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       floatingActionButton: CustomFilledIconButton(
         text: "Add Recipe",
         iconData: Icons.add_box_outlined,
-        newScreen: ChangeNotifierProvider(
-          create: (_) {
-            final RecipeFormNotifier recipeFormNotifier = RecipeFormNotifier();
-            recipeFormNotifier.init();
-            return recipeFormNotifier;
-          },
-          child: RecipeFormScreen(),
-        ),
+        onPressed: () => context.push('/categories/add-recipe'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
