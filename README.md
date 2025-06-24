@@ -82,6 +82,7 @@ DishDrop is a modern offline-first recipe app, developed with Flutter. It allows
 - Flutter: Cross-platform UI toolkit
 - Dart: Programming language for Flutter
 - ObjectBox: High-performance local NoSQL database
+- GoRouter: Flutter navigation using declarative routes 
 - Provider: State management
 - Shared Preferences: Simple data storage
 - Image Picker: Load images from gallery
