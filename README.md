@@ -48,7 +48,7 @@ DishDrop is a modern offline-first recipe app, developed with Flutter. It allows
 </table>
 
 
-### EinkaufslShopping Listsisten 🛒
+### Shopping Lists 🛒
 - Two types: all-purpose list & recipe-bound list
 - Shopping items can be checked off and deleted
 
