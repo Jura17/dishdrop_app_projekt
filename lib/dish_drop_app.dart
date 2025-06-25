@@ -3,12 +3,10 @@ import 'package:go_router/go_router.dart';
 
 class DishDropApp extends StatefulWidget {
   final StatefulNavigationShell shell;
-  final List<GlobalKey<NavigatorState>> navigatorKeys;
 
   const DishDropApp({
     super.key,
     required this.shell,
-    required this.navigatorKeys,
   });
 
   @override
@@ -16,19 +14,9 @@ class DishDropApp extends StatefulWidget {
 }
 
 class _DishDropAppState extends State<DishDropApp> {
-  int _currentIndex = 0;
-
-  // go back to root of tab when tapping more than once
   void _onTap(int index) {
-    if (index == _currentIndex) {
-      final key = widget.navigatorKeys[index];
-      key.currentState?.popUntil((route) => route.isFirst);
-    } else {
-      widget.shell.goBranch(index);
-      setState(() {
-        _currentIndex = index;
-      });
-    }
+    // go back to root of tab when tapping more than once
+    widget.shell.goBranch(index, initialLocation: index == widget.shell.currentIndex);
   }
 
   @override
@@ -37,7 +25,7 @@ class _DishDropAppState extends State<DishDropApp> {
       body: widget.shell,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
+        currentIndex: widget.shell.currentIndex,
         onTap: _onTap,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.menu_book_rounded, size: 32), label: ""),

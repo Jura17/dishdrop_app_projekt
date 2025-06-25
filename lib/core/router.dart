@@ -19,17 +19,9 @@ final router = GoRouter(
   initialLocation: '/categories',
   routes: [
     StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) => DishDropApp(
-        shell: navigationShell,
-        navigatorKeys: [
-          _categoriesNavigatorKey,
-          _recommendationNavigatorKey,
-          _shoppingListNavigatorKey,
-          _settingsNavigatorKey,
-        ],
-      ),
+      builder: (context, state, navigationShell) => DishDropApp(shell: navigationShell),
       branches: [
-        /// ---------- CATEGORIES ----------
+        /// ---------- RECIPES ----------
         StatefulShellBranch(
           navigatorKey: _categoriesNavigatorKey,
           routes: [
@@ -41,12 +33,7 @@ final router = GoRouter(
                   path: 'recipes/:category',
                   builder: (context, state) {
                     final slug = state.pathParameters['category'];
-                    final categoryTitle = categoryTitleRoutes.entries
-                        .firstWhere(
-                          (entry) => entry.value == slug,
-                          orElse: () => const MapEntry('Unknown', 'unknown'),
-                        )
-                        .key;
+                    final categoryTitle = categoryTitleRoutes.entries.firstWhere((entry) => entry.value == slug).key;
                     return RecipeGridView(category: categoryTitle);
                   },
                 ),

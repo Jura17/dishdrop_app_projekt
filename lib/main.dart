@@ -10,9 +10,10 @@ import 'package:dishdrop_app_projekt/data/repositories/auth/user_repository.dart
 
 import 'package:dishdrop_app_projekt/data/repositories/objectbox.dart';
 import 'package:dishdrop_app_projekt/data/repositories/objectbox_database.dart';
-import 'package:dishdrop_app_projekt/dish_drop_app.dart';
+
 import 'package:dishdrop_app_projekt/firebase_options.dart';
-import 'package:dishdrop_app_projekt/core/router.dart';
+
+import 'package:dishdrop_app_projekt/main_app.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -42,18 +43,4 @@ void main() async {
       child: MainApp(),
     ),
   );
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerConfig: router,
-      theme: AppTheme.appTheme,
-      title: 'DishDrop',
-    );
-  }
 }
