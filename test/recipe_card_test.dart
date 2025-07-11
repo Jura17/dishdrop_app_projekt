@@ -43,7 +43,10 @@ void main() async {
               body: Center(
                 child: ChangeNotifierProvider<RecipeNotifier>.value(
                   value: mockRecipeNotifier,
-                  child: RecipeCard(recipeId: 1),
+                  child: RecipeCard(
+                    recipeId: 1,
+                    categorySlug: '',
+                  ),
                 ),
               ),
             ),
@@ -89,7 +92,10 @@ void main() async {
             child: MaterialApp(
               home: Scaffold(
                 body: Center(
-                  child: RecipeCard(recipeId: 1),
+                  child: RecipeCard(
+                    recipeId: 1,
+                    categorySlug: '',
+                  ),
                 ),
               ),
             ),
