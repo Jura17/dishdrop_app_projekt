@@ -10,7 +10,7 @@ import 'package:dishdrop_app_projekt/data/repositories/auth/user_repository.dart
 import 'package:dishdrop_app_projekt/data/repositories/objectbox.dart';
 import 'package:dishdrop_app_projekt/data/repositories/objectbox_database.dart';
 
-import 'package:dishdrop_app_projekt/firebase_options.dart';
+import '../firebase_options.dart';
 
 import 'package:dishdrop_app_projekt/main_app.dart';
 import 'package:firebase_auth/firebase_auth.dart';
