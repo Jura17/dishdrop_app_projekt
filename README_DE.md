@@ -113,6 +113,7 @@ lib/
 
 ## To Do / Weiteres Potenzial 📝
 - User Authentication (für ObjectBox Sync)
+- Settings screen (in Bearbeitung)
 - Deployment auf Android
 - Light Mode/Dark Mode Einstellung
 - Timer inkl. Stay-Awake-Funktion (lässt Bildschirm angeschalten)

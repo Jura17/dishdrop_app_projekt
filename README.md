@@ -116,7 +116,7 @@ lib/
 
 ## To Do / Further Potential 📝
 - Deployment for Android
-- Settings screen
+- Settings screen (work in progress)
 - User authentication (for ObjectBox Sync)
 - Light mode / dark mode toggle
 - Timer with stay-awake functionality (keeps screen on)
