@@ -14,7 +14,7 @@ final List<Recipe> recipeData = [
     notes: "",
     tags: ["comfort food", "chicken", "Friday night", "high protein"],
     imagesJson: jsonEncode({
-      "titleImg": "assets/images/sesame_chicken.webp",
+      "titleImg": "assets/images/sesame_chicken.jpg",
       "cookingDirectionImg": [],
     }),
     prepTime: 20,

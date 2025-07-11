@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dishdrop_app_projekt/core/theme/app_theme.dart';
 
 import 'package:dishdrop_app_projekt/data/provider/recipe_notifier.dart';
 import 'package:dishdrop_app_projekt/data/provider/shopping_list_notifier.dart';

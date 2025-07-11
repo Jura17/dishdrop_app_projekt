@@ -21,6 +21,10 @@ class ObjectboxDatabase implements DatabaseRepository {
         _cookingDirectionBox = store.box<CookingDirection>() {
     // Use to fill database with mock data:
     if (_recipeBox.isEmpty()) _recipeBox.putMany(recipeData);
+    // remove all recipes
+    // _recipeBox.removeAll();
+    // remove all shopping lists
+    // _shoppingListBox.removeAll();
 
     if (_shoppingListBox.isEmpty()) {
       _shoppingListBox.put(
